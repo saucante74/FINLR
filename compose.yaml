@@ -1,4 +1,21 @@
 services:
+    pgsql:
+        image: 'postgres:15-alpine'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - 'sail-pgsql:/var/lib/postgresql/data'
+        networks:
+            - sail
+        healthcheck:
+            test: [ 'CMD-SHELL', 'pg_isready -U ${DB_USERNAME}' ]
+            retries: 3
+            timeout: 5s
+
     laravel.test:
         build:
             context: './vendor/laravel/sail/runtimes/8.5'
@@ -21,7 +38,14 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
-        depends_on: {}
+        depends_on:
+            pgsql:
+                condition: service_healthy
+
 networks:
     sail:
         driver: bridge
+
+volumes:
+    sail-pgsql:
+        driver: local
