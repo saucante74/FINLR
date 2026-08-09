@@ -8,24 +8,28 @@
 ```bash
 ./vendor/bin/sail up -d
 ```
-Or
+OR
 ```bash
 docker compose up -d
 ```
-Or (Alias)
+OR
+Create Alias
 ```bash
 echo "alias sail='./vendor/bin/sail'" >> ~/.bashrc && source ~/.bashrc
+```
+Run
+```bash
 sail up -d
 ```
 
 ### 2. Generate key
 ```bash
-./vendor/bin/sail artisan key:generate
-./vendor/bin/sail artisan migrate
+sail artisan key:generate
+sail artisan migrate
 ```
 
 ### 3. Run front
 ```bash
-./vendor/bin/sail npm install --legacy-peer-deps
-./vendor/bin/sail npm run dev
+sail npm install
+sail npm run dev
 ```
