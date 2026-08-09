@@ -7,7 +7,10 @@
 ### 1. Run
 ```bash
 ./vendor/bin/sail up -d
-
+```
+Or
+```bash
+docker compose up -d
 ```
 
 ### 2. Generate key
