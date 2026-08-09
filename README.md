@@ -12,6 +12,11 @@ Or
 ```bash
 docker compose up -d
 ```
+Or (Alias)
+```bash
+echo "alias sail='./vendor/bin/sail'" >> ~/.bashrc && source ~/.bashrc
+sail up -d
+```
 
 ### 2. Generate key
 ```bash
