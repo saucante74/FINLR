@@ -1,0 +1,66 @@
+{
+    "nav": {
+        "brand": "Finlr",
+        "language": "Language",
+        "toggleTheme": "Toggle theme",
+        "login": "Log in",
+        "register": "Sign up",
+        "languages": {
+            "fr": "Français",
+            "en": "English",
+            "it": "Italiano"
+        }
+    },
+    "hero": {
+        "eyebrow": "Simulator",
+        "title": "Compound Interest Calculator",
+        "description": "Project the growth of your savings, accounting for scheduled contributions, fees, and capital gains tax."
+    },
+    "form": {
+        "title": "Simulation parameters",
+        "description": "Adjust your investment assumptions.",
+        "initialCapital": "Initial capital",
+        "monthlyContribution": "Monthly contributions",
+        "annualRate": "Gross annual rate",
+        "years": "Duration",
+        "yearsUnit_one": "year",
+        "yearsUnit_other": "years",
+        "currencyUnit": "€",
+        "percentUnit": "%",
+        "feesTitle": "Fees",
+        "wrapperFee": "Wrapper fee",
+        "fundFee": "Fund fee",
+        "taxTitle": "Taxation",
+        "taxRate": "Capital gains tax",
+        "suggestions": "Suggestions:",
+        "wrappers": {
+            "pea": "PEA",
+            "av": "Life insurance",
+            "cto": "Taxable account"
+        }
+    },
+    "kpi": {
+        "invested": "Capital invested",
+        "investedHint": "Total contributions",
+        "grossGains": "Gross gains",
+        "grossGainsHint": "before fees & tax",
+        "finalGross": "Gross total",
+        "finalGrossHint": "Capital + gross gains",
+        "netRealGains": "Real net gains",
+        "netRealGainsHint": "after fees & tax",
+        "finalNetReal": "Real net total",
+        "finalNetRealHint": "Capital + real net gains",
+        "shortfallLabel": "Shortfall from fees & tax"
+    },
+    "chart": {
+        "title_one": "Growth over {{count}} year",
+        "title_other": "Growth over {{count}} years",
+        "description": "Comparison of contributions, gross gains, and gains net of fees and taxes.",
+        "contributions": "Cumulative contributions",
+        "gross": "Gross gains",
+        "netReal": "Real net",
+        "yearTick_one": "{{count}} yr",
+        "yearTick_other": "{{count}} yrs",
+        "tooltipYear": "Year {{year}}"
+    }
+}

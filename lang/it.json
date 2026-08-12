@@ -1,0 +1,66 @@
+{
+    "nav": {
+        "brand": "Finlr",
+        "language": "Lingua",
+        "toggleTheme": "Cambia tema",
+        "login": "Accedi",
+        "register": "Registrati",
+        "languages": {
+            "fr": "Français",
+            "en": "English",
+            "it": "Italiano"
+        }
+    },
+    "hero": {
+        "eyebrow": "Simulatore",
+        "title": "Calcolatrice di interesse composto",
+        "description": "Proietta la crescita dei tuoi risparmi tenendo conto dei versamenti programmati, delle commissioni e della tassazione sulle plusvalenze."
+    },
+    "form": {
+        "title": "Parametri di simulazione",
+        "description": "Regola le tue ipotesi di investimento.",
+        "initialCapital": "Capitale iniziale",
+        "monthlyContribution": "Versamenti mensili",
+        "annualRate": "Tasso lordo annuo",
+        "years": "Durata",
+        "yearsUnit_one": "anno",
+        "yearsUnit_other": "anni",
+        "currencyUnit": "€",
+        "percentUnit": "%",
+        "feesTitle": "Commissioni",
+        "wrapperFee": "Commissione di involucro",
+        "fundFee": "Commissione dei fondi",
+        "taxTitle": "Fiscalità",
+        "taxRate": "Tassa sulla plusvalenza",
+        "suggestions": "Suggerimenti:",
+        "wrappers": {
+            "pea": "PEA",
+            "av": "Assicurazione vita",
+            "cto": "Conto titoli"
+        }
+    },
+    "kpi": {
+        "invested": "Capitale investito",
+        "investedHint": "Totale versamenti",
+        "grossGains": "Guadagni lordi",
+        "grossGainsHint": "prima di commissioni e tasse",
+        "finalGross": "Totale lordo",
+        "finalGrossHint": "Capitale + guadagni lordi",
+        "netRealGains": "Guadagni netti reali",
+        "netRealGainsHint": "dopo commissioni e tasse",
+        "finalNetReal": "Totale netto reale",
+        "finalNetRealHint": "Capitale + guadagni netti reali",
+        "shortfallLabel": "Mancato guadagno per commissioni e tasse"
+    },
+    "chart": {
+        "title_one": "Evoluzione su {{count}} anno",
+        "title_other": "Evoluzione su {{count}} anni",
+        "description": "Confronto tra versamenti, guadagni lordi e guadagni netti da commissioni e tasse.",
+        "contributions": "Versamenti cumulati",
+        "gross": "Guadagni lordi",
+        "netReal": "Netti reali",
+        "yearTick_one": "{{count}} anno",
+        "yearTick_other": "{{count}} anni",
+        "tooltipYear": "Anno {{year}}"
+    }
+}
