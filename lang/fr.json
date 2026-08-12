@@ -80,6 +80,20 @@
             "submit": "Se connecter",
             "noAccount": "Pas encore de compte ?",
             "registerLink": "S'inscrire"
+        },
+        "register": {
+            "eyebrow": "Espace membre",
+            "title": "S'inscrire",
+            "description": "Créez votre compte pour sauvegarder vos simulations.",
+            "name": "Nom complet",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "passwordConfirmation": "Confirmation du mot de passe",
+            "showPassword": "Afficher le mot de passe",
+            "hidePassword": "Masquer le mot de passe",
+            "submit": "S'inscrire",
+            "alreadyRegistered": "Déjà un compte ?",
+            "loginLink": "Se connecter"
         }
     }
 }
