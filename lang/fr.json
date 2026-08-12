@@ -62,5 +62,8 @@
         "yearTick_one": "{{count}} an",
         "yearTick_other": "{{count}} ans",
         "tooltipYear": "Année {{year}}"
+    },
+    "footer": {
+        "copyright": "© {{year}} Finlr. Tous droits réservés."
     }
 }
