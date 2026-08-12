@@ -1,0 +1,66 @@
+{
+    "nav": {
+        "brand": "Finlr",
+        "language": "Langue",
+        "toggleTheme": "Changer de thème",
+        "login": "Connexion",
+        "register": "S'inscrire",
+        "languages": {
+            "fr": "Français",
+            "en": "English",
+            "it": "Italiano"
+        }
+    },
+    "hero": {
+        "eyebrow": "Simulateur",
+        "title": "Calculatrice d'intérêts composés",
+        "description": "Projetez la croissance de votre épargne en tenant compte des versements programmés, des frais et de la fiscalité sur la plus-value."
+    },
+    "form": {
+        "title": "Paramètres de simulation",
+        "description": "Ajustez vos hypothèses d'investissement.",
+        "initialCapital": "Capital initial",
+        "monthlyContribution": "Versements mensuels",
+        "annualRate": "Taux brut annuel",
+        "years": "Durée",
+        "yearsUnit_one": "an",
+        "yearsUnit_other": "ans",
+        "currencyUnit": "€",
+        "percentUnit": "%",
+        "feesTitle": "Frais",
+        "wrapperFee": "Frais d'enveloppe",
+        "fundFee": "Frais des fonds",
+        "taxTitle": "Fiscalité",
+        "taxRate": "Taxe sur la plus-value",
+        "suggestions": "Suggestions :",
+        "wrappers": {
+            "pea": "PEA",
+            "av": "Assurance-vie",
+            "cto": "CTO"
+        }
+    },
+    "kpi": {
+        "invested": "Capital investi",
+        "investedHint": "Total des versements",
+        "grossGains": "Gains bruts",
+        "grossGainsHint": "avant frais & taxe",
+        "finalGross": "Total brut",
+        "finalGrossHint": "Capital + gains bruts",
+        "netRealGains": "Gains nets",
+        "netRealGainsHint": "après frais & taxe",
+        "finalNetReal": "Total net réel",
+        "finalNetRealHint": "Capital + gains nets réels",
+        "shortfallLabel": "Manque à gagner lié aux frais & taxes"
+    },
+    "chart": {
+        "title_one": "Évolution sur {{count}} an",
+        "title_other": "Évolution sur {{count}} ans",
+        "description": "Comparaison des versements, des gains bruts et des gains nets de frais et de taxes.",
+        "contributions": "Versements cumulés",
+        "gross": "Gains bruts",
+        "netReal": "Nets réels",
+        "yearTick_one": "{{count}} an",
+        "yearTick_other": "{{count}} ans",
+        "tooltipYear": "Année {{year}}"
+    }
+}
