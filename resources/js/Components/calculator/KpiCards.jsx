@@ -53,13 +53,13 @@ export default function KpiCards({ result }) {
                     key={item.key}
                     className={cn(
                         'relative gap-0 overflow-hidden py-5',
-                        item.accent && 'border-primary/30 bg-primary/5',
+                        item.accent && 'border-brand/30 bg-brand/5',
                     )}
                 >
                     {item.accent && (
                         <span
                             aria-hidden
-                            className="absolute inset-x-0 top-0 h-1 bg-primary"
+                            className="absolute inset-x-0 top-0 h-1 bg-brand"
                         />
                     )}
                     <div className="flex flex-col gap-2 px-5">
@@ -69,7 +69,7 @@ export default function KpiCards({ result }) {
                         <span
                             className={cn(
                                 'text-xl font-semibold tracking-tight tabular-nums xl:text-2xl',
-                                item.accent && 'text-primary',
+                                item.accent && 'text-brand',
                             )}
                         >
                             {formatCurrency(item.value, locale)}

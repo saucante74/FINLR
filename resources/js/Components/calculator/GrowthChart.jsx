@@ -6,7 +6,7 @@ import { formatCompact, formatCurrency } from '@/lib/compound';
 const SERIES = [
     { key: 'contributions', labelKey: 'chart.contributions', color: 'var(--chart-1)' },
     { key: 'gross', labelKey: 'chart.gross', color: 'var(--chart-2)' },
-    { key: 'netReal', labelKey: 'chart.netReal', color: 'var(--primary)' },
+    { key: 'netReal', labelKey: 'chart.netReal', color: 'var(--brand)' },
 ];
 
 function niceCeil(value) {

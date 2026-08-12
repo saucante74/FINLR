@@ -134,7 +134,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }) {
                                     className={cn(
                                         'rounded-full border px-2.5 py-1 text-xs font-medium transition-colors',
                                         active
-                                            ? 'border-primary bg-primary text-primary-foreground'
+                                            ? 'border-brand bg-brand text-brand-foreground'
                                             : 'border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground',
                                     )}
                                 >
