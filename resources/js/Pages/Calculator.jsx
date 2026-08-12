@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import CalculatorForm from '@/Components/calculator/CalculatorForm';
 import GrowthChart from '@/Components/calculator/GrowthChart';
 import KpiCards from '@/Components/calculator/KpiCards';
+import Footer from '@/Components/Footer';
 import Navbar from '@/Components/Navbar';
 import {
     Card,
@@ -25,12 +26,12 @@ export default function Calculator({ canLogin, canRegister, financial }) {
         setInputs((prev) => ({ ...prev, ...patch }));
 
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="flex min-h-screen flex-col bg-background text-foreground">
             <Head title={t('hero.title')} />
 
             <Navbar canLogin={canLogin} canRegister={canRegister} />
 
-            <main className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+            <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
                 <header className="flex flex-col gap-2">
                     <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
                         <span aria-hidden className="size-1.5 rounded-full bg-brand" />
@@ -70,6 +71,8 @@ export default function Calculator({ canLogin, canRegister, financial }) {
                     </div>
                 </div>
             </main>
+
+            <Footer />
         </div>
     );
 }
