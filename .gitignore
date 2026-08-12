@@ -29,6 +29,10 @@ Homestead.yaml
 Thumbs.db
 CLAUDE.md
 USE_CASES.md
+CODE_EXAMPLE_v0.txt
+PROMPT.txt
+/v0app-screenshots
+
 /database/*.sqlite
 /database/*.sqlite-journal
 *.sqlite
