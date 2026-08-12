@@ -65,5 +65,21 @@
     },
     "footer": {
         "copyright": "© {{year}} Finlr. All rights reserved."
+    },
+    "auth": {
+        "login": {
+            "eyebrow": "Member area",
+            "title": "Log in",
+            "description": "Access your account to find your simulations.",
+            "email": "Email address",
+            "password": "Password",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot your password?",
+            "submit": "Log in",
+            "noAccount": "Don't have an account yet?",
+            "registerLink": "Sign up"
+        }
     }
 }
