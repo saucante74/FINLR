@@ -4,6 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -15,6 +16,25 @@ class AuthenticationTest extends TestCase
         $response = $this->get('/login');
 
         $response->assertStatus(200);
+    }
+
+    public function test_login_screen_renders_the_expected_inertia_component(): void
+    {
+        $response = $this->get('/login');
+
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('Auth/Login')
+            ->has('canResetPassword')
+        );
+    }
+
+    public function test_login_fails_validation_with_missing_credentials(): void
+    {
+        $response = $this->from('/login')->post('/login', []);
+
+        $response->assertRedirect('/login');
+        $response->assertSessionHasErrors(['email']);
+        $this->assertGuest();
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void
