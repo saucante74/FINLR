@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\Permission;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -29,10 +30,19 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+                'plan' => $user?->subscription_plan?->value,
+                'permissions' => $user
+                    ? collect(Permission::cases())
+                        ->filter(fn (Permission $permission) => $user->hasPermission($permission))
+                        ->map(fn (Permission $permission) => $permission->value)
+                        ->values()
+                    : [],
             ],
         ];
     }
