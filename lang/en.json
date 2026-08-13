@@ -5,6 +5,7 @@
         "toggleTheme": "Toggle theme",
         "login": "Log in",
         "register": "Sign up",
+        "logout": "Log out",
         "languages": {
             "fr": "Français",
             "en": "English",

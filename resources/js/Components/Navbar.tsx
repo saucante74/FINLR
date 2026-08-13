@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Moon, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +6,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import useDarkMode from '@/hooks/useDarkMode';
+import type { PageProps } from '@/types';
 
 const LOCALES = ['fr', 'en', 'it'] as const;
 
@@ -65,6 +66,8 @@ interface NavbarProps {
 
 export default function Navbar({ canLogin, canRegister }: NavbarProps) {
     const { t } = useTranslation();
+    const { auth } = usePage<PageProps>().props;
+    const user = auth?.user ?? null;
 
     return (
         <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
@@ -81,18 +84,39 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                     <LanguageSelector />
                     <ThemeToggle />
 
-                    {canLogin && (
-                        <Button asChild variant="ghost">
-                            <Link href={route('login')}>{t('nav.login')}</Link>
-                        </Button>
-                    )}
+                    {user ? (
+                        <div className="flex items-center gap-2">
+                            <span className="hidden text-sm text-muted-foreground sm:inline">
+                                {user.name || user.email}
+                            </span>
+                            <Button asChild variant="ghost">
+                                <Link
+                                    href={route('logout')}
+                                    method="post"
+                                    as="button"
+                                >
+                                    {t('nav.logout')}
+                                </Link>
+                            </Button>
+                        </div>
+                    ) : (
+                        <>
+                            {canLogin && (
+                                <Button asChild variant="ghost">
+                                    <Link href={route('login')}>
+                                        {t('nav.login')}
+                                    </Link>
+                                </Button>
+                            )}
 
-                    {canRegister && (
-                        <Button asChild variant="default">
-                            <Link href={route('register')}>
-                                {t('nav.register')}
-                            </Link>
-                        </Button>
+                            {canRegister && (
+                                <Button asChild variant="default">
+                                    <Link href={route('register')}>
+                                        {t('nav.register')}
+                                    </Link>
+                                </Button>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
