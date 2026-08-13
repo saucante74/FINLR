@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DeleteAccountAction
 {
-    /**
-     * Log the user out and delete their account.
-     */
     public function handle(Request $request, User $user): void
     {
         Auth::logout();

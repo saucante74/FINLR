@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class SendEmailVerificationNotificationController extends Controller
 {
-    /**
-     * Send a new email verification notification.
-     */
     public function __invoke(Request $request, SendEmailVerificationNotificationAction $action): RedirectResponse
     {
         if (! $action->handle($request->user())) {

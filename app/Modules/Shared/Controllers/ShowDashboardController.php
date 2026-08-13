@@ -7,9 +7,6 @@ use Inertia\Response;
 
 class ShowDashboardController extends Controller
 {
-    /**
-     * Display the authenticated user's dashboard.
-     */
     public function __invoke(): Response
     {
         return Inertia::render('Dashboard');

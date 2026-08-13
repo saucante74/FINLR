@@ -7,8 +7,6 @@ use App\Modules\Shared\Models\User;
 class UpdateProfileAction
 {
     /**
-     * Update the user's profile information.
-     *
      * @param  array{name: string, email: string}  $data
      */
     public function handle(User $user, array $data): void

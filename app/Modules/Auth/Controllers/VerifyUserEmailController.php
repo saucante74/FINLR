@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class VerifyUserEmailController extends Controller
 {
-    /**
-     * Mark the authenticated user's email address as verified.
-     */
     public function __invoke(EmailVerificationRequest $request, VerifyEmailAction $action): RedirectResponse
     {
         $action->handle($request->user());

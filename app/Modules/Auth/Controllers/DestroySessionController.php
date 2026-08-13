@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class DestroySessionController extends Controller
 {
-    /**
-     * Destroy an authenticated session.
-     */
     public function __invoke(Request $request, DestroySessionAction $action): RedirectResponse
     {
         $action->handle($request);

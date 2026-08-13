@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class UpdatePasswordController extends Controller
 {
-    /**
-     * Update the user's password.
-     */
     public function __invoke(UpdatePasswordRequest $request, UpdatePasswordAction $action): RedirectResponse
     {
         $action->handle($request->user(), $request->validated('password'));

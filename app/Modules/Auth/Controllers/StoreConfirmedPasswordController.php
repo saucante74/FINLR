@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreConfirmedPasswordController extends Controller
 {
-    /**
-     * Confirm the user's password.
-     */
     public function __invoke(ConfirmPasswordRequest $request, ConfirmPasswordAction $action): RedirectResponse
     {
         $action->handle($request->user(), $request->validated('password'));

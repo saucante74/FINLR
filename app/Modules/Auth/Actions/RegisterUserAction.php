@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Hash;
 class RegisterUserAction
 {
     /**
-     * Create the user, fire the Registered event and log them in.
-     *
      * @param  array{name: string, email: string, password: string}  $data
      */
     public function handle(array $data): User

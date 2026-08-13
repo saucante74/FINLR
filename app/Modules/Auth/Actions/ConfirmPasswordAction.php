@@ -9,8 +9,6 @@ use Illuminate\Validation\ValidationException;
 class ConfirmPasswordAction
 {
     /**
-     * Verify the given password matches the user's current password.
-     *
      * @throws ValidationException
      */
     public function handle(User $user, string $password): void

@@ -11,8 +11,6 @@ use Illuminate\Validation\ValidationException;
 class ResetPasswordAction
 {
     /**
-     * Reset the user's password for the given credentials.
-     *
      * @param  array{token: string, email: string, password: string}  $data
      *
      * @throws ValidationException

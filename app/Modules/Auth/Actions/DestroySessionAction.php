@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DestroySessionAction
 {
-    /**
-     * Log the user out and invalidate their session.
-     */
     public function handle(Request $request): void
     {
         Auth::guard('web')->logout();

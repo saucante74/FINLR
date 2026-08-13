@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreUserController extends Controller
 {
-    /**
-     * Handle an incoming registration request.
-     */
     public function __invoke(RegisterUserRequest $request, RegisterUserAction $action): RedirectResponse
     {
         $action->handle($request->validated());

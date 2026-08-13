@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class ResetPasswordController extends Controller
 {
-    /**
-     * Handle an incoming new password request.
-     */
     public function __invoke(NewPasswordRequest $request, ResetPasswordAction $action): RedirectResponse
     {
         $status = $action->handle($request->validated());

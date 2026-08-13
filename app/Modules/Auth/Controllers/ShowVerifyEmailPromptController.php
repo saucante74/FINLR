@@ -10,9 +10,6 @@ use Inertia\Response;
 
 class ShowVerifyEmailPromptController extends Controller
 {
-    /**
-     * Display the email verification prompt.
-     */
     public function __invoke(Request $request): RedirectResponse|Response
     {
         return $request->user()->hasVerifiedEmail()

@@ -10,9 +10,6 @@ use Inertia\Response;
 
 class ShowCalculatorController extends Controller
 {
-    /**
-     * Display the calculator landing page.
-     */
     public function __invoke(): Response
     {
         return Inertia::render('Calculator', [

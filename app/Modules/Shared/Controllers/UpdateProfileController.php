@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class UpdateProfileController extends Controller
 {
-    /**
-     * Update the user's profile information.
-     */
     public function __invoke(ProfileUpdateRequest $request, UpdateProfileAction $action): RedirectResponse
     {
         $action->handle($request->user(), $request->validated());

@@ -9,9 +9,6 @@ use Inertia\Response;
 
 class ShowResetPasswordFormController extends Controller
 {
-    /**
-     * Display the password reset view.
-     */
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Auth/ResetPassword', [

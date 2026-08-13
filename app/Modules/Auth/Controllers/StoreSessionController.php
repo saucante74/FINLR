@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreSessionController extends Controller
 {
-    /**
-     * Handle an incoming authentication request.
-     */
     public function __invoke(LoginRequest $request, AuthenticateSessionAction $action): RedirectResponse
     {
         $action->handle($request);

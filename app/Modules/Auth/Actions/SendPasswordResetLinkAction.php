@@ -8,8 +8,6 @@ use Illuminate\Validation\ValidationException;
 class SendPasswordResetLinkAction
 {
     /**
-     * Send a password reset link for the given credentials.
-     *
      * @param  array{email: string}  $data
      *
      * @throws ValidationException

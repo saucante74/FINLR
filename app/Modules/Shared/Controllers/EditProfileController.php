@@ -9,9 +9,6 @@ use Inertia\Response;
 
 class EditProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Profile/Edit', [

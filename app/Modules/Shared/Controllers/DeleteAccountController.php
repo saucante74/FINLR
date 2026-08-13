@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class DeleteAccountController extends Controller
 {
-    /**
-     * Delete the user's account.
-     */
     public function __invoke(DeleteAccountRequest $request, DeleteAccountAction $action): RedirectResponse
     {
         $action->handle($request, $request->user());

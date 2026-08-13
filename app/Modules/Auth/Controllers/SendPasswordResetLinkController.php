@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 
 class SendPasswordResetLinkController extends Controller
 {
-    /**
-     * Handle an incoming password reset link request.
-     */
     public function __invoke(PasswordResetLinkRequest $request, SendPasswordResetLinkAction $action): RedirectResponse
     {
         $status = $action->handle($request->validated());

@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UpdatePasswordAction
 {
-    /**
-     * Update the user's password.
-     */
     public function handle(User $user, string $password): void
     {
         $user->update([

@@ -9,9 +9,6 @@ use Inertia\Response;
 
 class ShowLoginFormController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function __invoke(): Response
     {
         return Inertia::render('Auth/Login', [

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Shared\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Modules\Subscriptions\Enums\Permission;
 use App\Modules\Subscriptions\Enums\Plan;
 use Database\Factories\UserFactory;
@@ -20,26 +19,12 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * Create a new factory instance for the model.
-     *
-     * Required because the model lives outside the conventional
-     * App\Models namespace, which HasFactory's default resolver assumes.
-     *
-     * @return UserFactory
-     */
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
     }
 
     /**
-     * The model's default attribute values.
-     *
-     * Mirrors the `subscription_plan` column's database default so a
-     * freshly instantiated (unsaved or just-created) model already
-     * reflects it, instead of only the persisted row.
-     *
      * @var array<string, mixed>
      */
     protected $attributes = [
@@ -47,8 +32,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
