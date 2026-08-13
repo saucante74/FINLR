@@ -17,16 +17,16 @@ const SERIES: Series[] = [
     { key: 'netReal', labelKey: 'chart.netReal', color: 'var(--brand)' },
 ];
 
+const Y_AXIS_MARGIN_RATIO = 0.05;
+const Y_AXIS_SMALL_STEP = 10_000;
+const Y_AXIS_LARGE_STEP = 50_000;
+const Y_AXIS_STEP_THRESHOLD = 200_000;
+
 function niceCeil(value: number): number {
     if (value <= 0) return 1;
-    const exponent = Math.floor(Math.log10(value));
-    const magnitude = 10 ** exponent;
-    const residual = value / magnitude;
-    let niceResidual = 10;
-    if (residual <= 1) niceResidual = 1;
-    else if (residual <= 2) niceResidual = 2;
-    else if (residual <= 5) niceResidual = 5;
-    return niceResidual * magnitude;
+    const withMargin = value * (1 + Y_AXIS_MARGIN_RATIO);
+    const step = withMargin < Y_AXIS_STEP_THRESHOLD ? Y_AXIS_SMALL_STEP : Y_AXIS_LARGE_STEP;
+    return Math.ceil(withMargin / step) * step;
 }
 
 interface GrowthChartProps {
