@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Modules\Shared\Models\User;
 use App\Modules\Subscriptions\Enums\Permission;
 use App\Modules\Subscriptions\Enums\Plan;
-use App\Modules\Shared\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;
@@ -50,7 +50,7 @@ class SubscriptionPermissionsTest extends TestCase
         $this->assertSame(Plan::PRO_YEARLY, $user->subscription_plan);
     }
 
-    public function test_plan_isPaid_and_maxProjectsAllowed(): void
+    public function test_plan_is_paid_and_max_projects_allowed(): void
     {
         $this->assertFalse(Plan::FREE->isPaid());
         $this->assertTrue(Plan::PRO_MONTHLY->isPaid());
