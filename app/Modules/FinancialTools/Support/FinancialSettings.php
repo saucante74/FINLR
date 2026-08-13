@@ -7,8 +7,7 @@ class FinancialSettings
     public function __construct(
         private readonly array $taxSuggestions,
         private readonly array $defaults,
-    ) {
-    }
+    ) {}
 
     public static function fromConfig(): self
     {

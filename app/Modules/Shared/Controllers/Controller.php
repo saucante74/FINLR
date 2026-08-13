@@ -2,6 +2,4 @@
 
 namespace App\Modules\Shared\Controllers;
 
-abstract class Controller
-{
-}
+abstract class Controller {}
