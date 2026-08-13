@@ -1,26 +1,22 @@
 <?php
 
-use App\Modules\FinancialTools\Support\FinancialSettings;
-use App\Modules\Shared\Controllers\ProfileController;
+use App\Modules\FinancialTools\Controllers\ShowCalculatorController;
+use App\Modules\Shared\Controllers\DeleteAccountController;
+use App\Modules\Shared\Controllers\EditProfileController;
+use App\Modules\Shared\Controllers\ShowDashboardController;
+use App\Modules\Shared\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Calculator', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'financial' => FinancialSettings::fromConfig()->toArray(),
-    ]);
-});
+Route::get('/', ShowCalculatorController::class);
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', ShowDashboardController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', EditProfileController::class)->name('profile.edit');
+    Route::patch('/profile', UpdateProfileController::class)->name('profile.update');
+    Route::delete('/profile', DeleteAccountController::class)->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

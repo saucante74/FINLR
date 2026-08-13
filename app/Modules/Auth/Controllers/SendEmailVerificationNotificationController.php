@@ -2,22 +2,21 @@
 
 namespace App\Modules\Auth\Controllers;
 
+use App\Modules\Auth\Actions\SendEmailVerificationNotificationAction;
 use App\Modules\Shared\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class EmailVerificationNotificationController extends Controller
+class SendEmailVerificationNotificationController extends Controller
 {
     /**
      * Send a new email verification notification.
      */
-    public function store(Request $request): RedirectResponse
+    public function __invoke(Request $request, SendEmailVerificationNotificationAction $action): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        if (! $action->handle($request->user())) {
             return redirect()->intended(route('dashboard', absolute: false));
         }
-
-        $request->user()->sendEmailVerificationNotification();
 
         return back()->with('status', 'verification-link-sent');
     }
