@@ -5,6 +5,7 @@
         "toggleTheme": "Cambia tema",
         "login": "Accedi",
         "register": "Registrati",
+        "logout": "Esci",
         "languages": {
             "fr": "Français",
             "en": "English",

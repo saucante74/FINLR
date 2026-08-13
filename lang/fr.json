@@ -5,6 +5,7 @@
         "toggleTheme": "Changer de thème",
         "login": "Connexion",
         "register": "S'inscrire",
+        "logout": "Déconnexion",
         "languages": {
             "fr": "Français",
             "en": "English",
