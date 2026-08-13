@@ -2,7 +2,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import type { PageProps } from '@/types';
+import type { AuthenticatedPageProps } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import type { FormEvent } from 'react';
@@ -18,7 +18,7 @@ export default function UpdateProfileInformation({
     status,
     className = '',
 }: UpdateProfileInformationProps) {
-    const user = usePage<PageProps>().props.auth.user;
+    const user = usePage<AuthenticatedPageProps>().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
