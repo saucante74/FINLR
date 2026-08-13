@@ -2,7 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import type { PageProps } from '@/types';
+import type { AuthenticatedPageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { useState, type PropsWithChildren, type ReactNode } from 'react';
 
@@ -11,7 +11,7 @@ interface AuthenticatedLayoutProps extends PropsWithChildren {
 }
 
 export default function AuthenticatedLayout({ header, children }: AuthenticatedLayoutProps) {
-    const user = usePage<PageProps>().props.auth.user;
+    const user = usePage<AuthenticatedPageProps>().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
