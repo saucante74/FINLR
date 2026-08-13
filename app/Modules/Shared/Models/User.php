@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Modules\Shared\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\Permission;
-use App\Enums\Plan;
+use App\Modules\Subscriptions\Enums\Permission;
+use App\Modules\Subscriptions\Enums\Plan;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -19,6 +19,19 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * Required because the model lives outside the conventional
+     * App\Models namespace, which HasFactory's default resolver assumes.
+     *
+     * @return UserFactory
+     */
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
+    }
 
     /**
      * The model's default attribute values.

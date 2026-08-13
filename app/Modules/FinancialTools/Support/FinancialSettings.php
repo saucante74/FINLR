@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Financial;
+namespace App\Modules\FinancialTools\Support;
 
 class FinancialSettings
 {

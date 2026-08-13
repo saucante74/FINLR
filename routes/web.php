@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\Financial\FinancialSettings;
-use App\Http\Controllers\ProfileController;
+use App\Modules\FinancialTools\Support\FinancialSettings;
+use App\Modules\Shared\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

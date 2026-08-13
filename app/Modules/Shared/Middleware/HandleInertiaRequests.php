@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Modules\Shared\Middleware;
 
-use App\Enums\Permission;
+use App\Modules\Subscriptions\Enums\Permission;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
