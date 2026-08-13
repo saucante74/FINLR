@@ -10,9 +10,13 @@ on:
       - develop
       - master
 
+env:
+  PHP_VERSION: '8.3'
+  PHP_EXTENSIONS: mbstring, dom, fileinfo, curl, libxml, bcmath, ctype, json, tokenizer, xml, pdo, pdo_sqlite, sqlite3
+
 jobs:
-  backend:
-    name: Backend (Laravel / Pest)
+  lint:
+    name: Lint (Pint & TypeScript)
     runs-on: ubuntu-latest
 
     steps:
@@ -22,19 +26,15 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
-          extensions: mbstring, dom, fileinfo, curl, libxml, bcmath, ctype, json, tokenizer, xml, pdo, pdo_sqlite, sqlite3
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
           coverage: none
           tools: composer:v2
-
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ~/.composer/cache/files
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
@@ -42,51 +42,88 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
+      - name: Check code style (Pint)
+        run: vendor/bin/pint --test
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Build assets
-        run: npm run build
+      - name: Type-check (TypeScript)
+        run: npx tsc --noEmit
 
-      - name: Prepare environment
-        run: |
-          cp .env.example .env
-          php artisan key:generate
-
-      - name: Check code style (Pint)
-        run: vendor/bin/pint --test
-
-      - name: Static analysis (Larastan)
-        run: vendor/bin/phpstan analyse
-
-      - name: Run test suite
-        run: php artisan test
-
-  frontend:
-    name: Frontend (React / Vite)
+  quality:
+    name: Quality (Static Analysis)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          node-version: '24'
-          cache: npm
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          coverage: none
+          tools: composer:v2
 
-      - name: Install npm dependencies
-        run: npm ci
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
-      - name: Build assets
-        run: npm run build
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
 
-      - name: Run frontend tests
-        run: npm run test
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Static analysis (Larastan)
+        run: vendor/bin/phpstan analyse
+
+  tests:
+    name: Tests (Pest / PHPUnit)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Run test suite
+        run: php artisan test
