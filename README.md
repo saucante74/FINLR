@@ -80,10 +80,29 @@ sail artisan pail
 
 - Web UI: http://localhost:8025
 
+Test mail :
+```bash
+sail artisan tinker --execute="Mail::raw('Test Mailpit', function(\$m) { \$m->to('test@example.com')->subject('Hello Mailpit'); });"
+```
+
 ### Stripe webhooks (Stripe CLI)
 
 `sail up -d` also starts a `stripe-cli` container that automatically forwards Stripe webhook events to `http://laravel.test:80/api/stripe/webhook`. Set `STRIPE_SECRET_KEY` in `.env` and the tunnel authenticates and starts on its own — no local Stripe CLI installation or `stripe login` needed.
 
+Check logs
+```bash
+sail logs stripe-cli
+```
+
+Trigger a fake payment stripe conteneur
+```bash
+sail exec stripe-cli stripe trigger payment_intent.succeeded
+```
+
+Check payment on Laravel side
+```bash
+sail logs stripe-cli --tail 20
+```
 ---
 
 ## 4. Running the automated tests
