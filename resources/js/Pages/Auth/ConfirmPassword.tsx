@@ -1,12 +1,20 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import Footer from '@/Components/Footer';
+import Navbar from '@/Components/Navbar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 export default function ConfirmPassword() {
+    const { t } = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         password: '',
     });
@@ -20,37 +28,100 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Confirm Password" />
+        <div className="flex min-h-screen flex-col bg-background text-foreground">
+            <Head title={t('auth.confirmPassword.title')} />
 
-            <div className="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your
-                password before continuing.
-            </div>
+            <Navbar />
 
-            <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+            <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-8 px-4 py-12 lg:px-8">
+                <header className="flex flex-col items-center gap-2 text-center">
+                    <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                        {t('auth.confirmPassword.eyebrow')}
+                    </span>
+                    <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">
+                        {t('auth.confirmPassword.title')}
+                    </h1>
+                    <p className="max-w-sm text-sm text-pretty text-muted-foreground">
+                        {t('auth.confirmPassword.description')}
+                    </p>
+                </header>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
+                <Card className="w-full max-w-md gap-0 py-0">
+                    <CardContent className="flex flex-col gap-5 py-6">
+                        <form onSubmit={submit} className="flex flex-col gap-5">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="password">
+                                    {t('auth.confirmPassword.password')}
+                                </Label>
+                                <div className="relative">
+                                    <Input
+                                        id="password"
+                                        type={
+                                            showPassword ? 'text' : 'password'
+                                        }
+                                        name="password"
+                                        value={data.password}
+                                        autoComplete="current-password"
+                                        autoFocus
+                                        aria-invalid={Boolean(
+                                            errors.password,
+                                        )}
+                                        className="pr-10"
+                                        onChange={(e) =>
+                                            setData(
+                                                'password',
+                                                e.target.value,
+                                            )
+                                        }
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowPassword((v) => !v)
+                                        }
+                                        aria-label={
+                                            showPassword
+                                                ? t(
+                                                      'auth.confirmPassword.hidePassword',
+                                                  )
+                                                : t(
+                                                      'auth.confirmPassword.showPassword',
+                                                  )
+                                        }
+                                        className={cn(
+                                            'absolute inset-y-0 right-0 flex items-center px-3',
+                                            'text-muted-foreground hover:text-foreground',
+                                        )}
+                                    >
+                                        {showPassword ? (
+                                            <EyeOff className="size-4" />
+                                        ) : (
+                                            <Eye className="size-4" />
+                                        )}
+                                    </button>
+                                </div>
+                                {errors.password && (
+                                    <p className="text-xs text-destructive">
+                                        {errors.password}
+                                    </p>
+                                )}
+                            </div>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
+                            <Button
+                                type="submit"
+                                variant="brand"
+                                className="w-full"
+                                disabled={processing}
+                            >
+                                {t('auth.confirmPassword.submit')}
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
+            </main>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+            <Footer />
+        </div>
     );
 }

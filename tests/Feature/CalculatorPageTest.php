@@ -39,6 +39,8 @@ class CalculatorPageTest extends TestCase
             ->where('financial.defaults.wrapperFee', config('financial.defaults.wrapper_fee'))
             ->where('financial.defaults.fundFee', config('financial.defaults.fund_fee'))
             ->where('financial.defaults.taxRate', config('financial.defaults.tax_rate'))
+            ->where('financial.defaults.inflationRate', config('financial.defaults.inflation_rate'))
+            ->where('financial.defaults.inflationEnabled', config('financial.defaults.inflation_enabled'))
         );
     }
 

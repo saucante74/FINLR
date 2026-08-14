@@ -6,6 +6,7 @@
         "login": "Connexion",
         "register": "S'inscrire",
         "logout": "Déconnexion",
+        "profile": "Profil",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -30,7 +31,12 @@
         "percentUnit": "%",
         "feesTitle": "Frais",
         "wrapperFee": "Frais d'enveloppe",
-        "fundFee": "Frais des fonds",
+        "wrapperFeeInfo": "Frais prélevés directement par l'assureur ou la banque pour la tenue de votre contrat (ex: frais sur encours d'une Assurance-Vie ou droits de garde d'un compte titres).",
+        "fundFee": "Frais de gestion",
+        "fundFeeInfo": "Frais internes prélevés par les sociétés de gestion qui gèrent les fonds/supports au sein de votre enveloppe (ex: frais de gestion d'un ETF, d'un fonds d'investissement ou d'une SCPI).",
+        "inflationTitle": "Inflation",
+        "inflationRate": "Inflation annuelle",
+        "inflationEnabled": "Prendre en compte l'inflation dans le calcul",
         "taxTitle": "Fiscalité",
         "taxRate": "Taxe sur la plus-value",
         "suggestions": "Suggestions :",
@@ -41,16 +47,15 @@
         }
     },
     "kpi": {
-        "invested": "Capital investi",
-        "investedHint": "Total des versements",
-        "grossGains": "Gains bruts",
-        "grossGainsHint": "avant frais & taxe",
-        "finalGross": "Total brut",
-        "finalGrossHint": "Capital + gains bruts",
-        "netRealGains": "Gains nets",
-        "netRealGainsHint": "après frais & taxe",
-        "finalNetReal": "Total net réel",
-        "finalNetRealHint": "Capital + gains nets réels",
+        "totalContributions": "Total versements",
+        "totalContributionsHint": "Capital injecté",
+        "totalGross": "Total brut",
+        "totalGrossInfo": "Attention : Chiffre théorique avant fiscalité et inflation.",
+        "grossGainBadge": "Gain brut",
+        "totalNet": "Total net",
+        "netGainBadge": "Gain net",
+        "totalNetAdjusted": "Total net ajusté",
+        "totalNetAdjustedHint": "Capital net corrigé de l'inflation",
         "shortfallLabel": "Manque à gagner lié aux frais & taxes"
     },
     "chart": {
@@ -60,6 +65,7 @@
         "contributions": "Versements cumulés",
         "gross": "Gains bruts",
         "netReal": "Nets réels",
+        "netRealAdjusted": "Nets réels ajustés de l'inflation",
         "yearTick_one": "{{count}} an",
         "yearTick_other": "{{count}} ans",
         "tooltipYear": "Année {{year}}"
@@ -95,6 +101,85 @@
             "submit": "S'inscrire",
             "alreadyRegistered": "Déjà un compte ?",
             "loginLink": "Se connecter"
+        },
+        "forgotPassword": {
+            "eyebrow": "Mot de passe oublié",
+            "title": "Mot de passe oublié ?",
+            "description": "Indiquez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+            "email": "Adresse e-mail",
+            "submit": "Envoyer le lien de réinitialisation",
+            "backToLogin": "Retour à la connexion"
+        },
+        "resetPassword": {
+            "eyebrow": "Nouveau mot de passe",
+            "title": "Réinitialiser le mot de passe",
+            "description": "Choisissez un nouveau mot de passe pour sécuriser votre compte.",
+            "email": "Adresse e-mail",
+            "password": "Nouveau mot de passe",
+            "passwordConfirmation": "Confirmation du mot de passe",
+            "showPassword": "Afficher le mot de passe",
+            "hidePassword": "Masquer le mot de passe",
+            "submit": "Réinitialiser le mot de passe"
+        },
+        "confirmPassword": {
+            "eyebrow": "Zone sécurisée",
+            "title": "Confirmer le mot de passe",
+            "description": "Ceci est une zone sécurisée de l'application. Merci de confirmer votre mot de passe avant de continuer.",
+            "password": "Mot de passe",
+            "showPassword": "Afficher le mot de passe",
+            "hidePassword": "Masquer le mot de passe",
+            "submit": "Confirmer"
+        },
+        "verifyEmail": {
+            "eyebrow": "Vérification",
+            "title": "Vérifiez votre adresse e-mail",
+            "description": "Merci de vous être inscrit ! Avant de commencer, merci de vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer. Si vous ne l'avez pas reçu, nous pouvons vous en envoyer un nouveau.",
+            "statusSent": "Un nouveau lien de vérification a été envoyé à l'adresse e-mail fournie lors de votre inscription.",
+            "resend": "Renvoyer l'e-mail de vérification",
+            "logout": "Déconnexion"
+        }
+    },
+    "dashboard": {
+        "eyebrow": "Espace membre",
+        "title": "Tableau de bord",
+        "description": "Retrouvez ici un aperçu de votre activité.",
+        "welcomeMessage": "Vous êtes connecté."
+    },
+    "profile": {
+        "eyebrow": "Compte",
+        "title": "Profil",
+        "description": "Gérez vos informations personnelles et les paramètres de votre compte.",
+        "information": {
+            "title": "Informations du profil",
+            "description": "Mettez à jour les informations de votre profil et votre adresse e-mail.",
+            "name": "Nom complet",
+            "email": "Adresse e-mail",
+            "unverified": "Votre adresse e-mail n'est pas vérifiée.",
+            "resendLink": "Cliquez ici pour renvoyer l'e-mail de vérification.",
+            "verificationSent": "Un nouveau lien de vérification a été envoyé à votre adresse e-mail.",
+            "save": "Enregistrer",
+            "saved": "Enregistré."
+        },
+        "password": {
+            "title": "Mot de passe",
+            "description": "Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé.",
+            "currentPassword": "Mot de passe actuel",
+            "newPassword": "Nouveau mot de passe",
+            "passwordConfirmation": "Confirmation du mot de passe",
+            "showPassword": "Afficher le mot de passe",
+            "hidePassword": "Masquer le mot de passe",
+            "save": "Enregistrer",
+            "saved": "Enregistré."
+        },
+        "deleteAccount": {
+            "title": "Supprimer le compte",
+            "description": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Avant de supprimer votre compte, téléchargez toutes les données ou informations que vous souhaitez conserver.",
+            "button": "Supprimer le compte",
+            "confirmTitle": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+            "confirmDescription": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Merci de saisir votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte.",
+            "password": "Mot de passe",
+            "cancel": "Annuler",
+            "confirm": "Supprimer le compte"
         }
     }
 }

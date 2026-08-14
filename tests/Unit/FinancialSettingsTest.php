@@ -16,11 +16,13 @@ class FinancialSettingsTest extends TestCase
             'years' => 10,
             'wrapper_fee' => 0.4,
             'fund_fee' => 0.2,
-            'tax_rate' => 17.2,
+            'tax_rate' => 18.6,
+            'inflation_rate' => 2.0,
+            'inflation_enabled' => false,
         ]);
         config()->set('financial.tax_suggestions', [
-            'pea' => 17.2,
-            'cto' => 30,
+            'pea' => 18.6,
+            'cto' => 31.4,
             'av' => 24.7,
         ]);
 
@@ -33,24 +35,26 @@ class FinancialSettingsTest extends TestCase
             'years' => 10,
             'wrapperFee' => 0.4,
             'fundFee' => 0.2,
-            'taxRate' => 17.2,
+            'taxRate' => 18.6,
+            'inflationRate' => 2.0,
+            'inflationEnabled' => false,
         ], $result['defaults']);
     }
 
     public function test_from_config_orders_tax_suggestions_as_pea_av_cto(): void
     {
         config()->set('financial.tax_suggestions', [
-            'pea' => 17.2,
-            'cto' => 30,
+            'pea' => 18.6,
+            'cto' => 31.4,
             'av' => 24.7,
         ]);
 
         $result = FinancialSettings::fromConfig()->toArray();
 
         $this->assertSame([
-            ['wrapper' => 'pea', 'rate' => 17.2],
+            ['wrapper' => 'pea', 'rate' => 18.6],
             ['wrapper' => 'av', 'rate' => 24.7],
-            ['wrapper' => 'cto', 'rate' => 30],
+            ['wrapper' => 'cto', 'rate' => 31.4],
         ], $result['taxSuggestions']);
     }
 
@@ -58,8 +62,8 @@ class FinancialSettingsTest extends TestCase
     {
         $result = FinancialSettings::fromConfig()->toArray();
 
-        $this->assertSame(17.2, $result['taxSuggestions'][0]['rate']);
+        $this->assertSame(18.6, $result['taxSuggestions'][0]['rate']);
         $this->assertSame(24.7, $result['taxSuggestions'][1]['rate']);
-        $this->assertSame(30, $result['taxSuggestions'][2]['rate']);
+        $this->assertSame(31.4, $result['taxSuggestions'][2]['rate']);
     }
 }

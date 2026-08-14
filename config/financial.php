@@ -13,8 +13,8 @@ return [
     */
 
     'tax_suggestions' => [
-        'pea' => 17.2,
-        'cto' => 30,
+        'pea' => 18.6,
+        'cto' => 31.4,
         'av' => 24.7,
     ],
 
@@ -35,7 +35,9 @@ return [
         'years' => 20,
         'wrapper_fee' => 0.5,
         'fund_fee' => 0.3,
-        'tax_rate' => 17.2,
+        'tax_rate' => 18.6,
+        'inflation_rate' => 2,
+        'inflation_enabled' => false,
     ],
 
 ];

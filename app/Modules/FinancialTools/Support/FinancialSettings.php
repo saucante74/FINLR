@@ -28,6 +28,8 @@ class FinancialSettings
                 'wrapperFee' => $this->defaults['wrapper_fee'],
                 'fundFee' => $this->defaults['fund_fee'],
                 'taxRate' => $this->defaults['tax_rate'],
+                'inflationRate' => $this->defaults['inflation_rate'],
+                'inflationEnabled' => $this->defaults['inflation_enabled'],
             ],
             'taxSuggestions' => [
                 ['wrapper' => 'pea', 'rate' => $this->taxSuggestions['pea']],

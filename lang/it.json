@@ -6,6 +6,7 @@
         "login": "Accedi",
         "register": "Registrati",
         "logout": "Esci",
+        "profile": "Profilo",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -30,7 +31,12 @@
         "percentUnit": "%",
         "feesTitle": "Commissioni",
         "wrapperFee": "Commissione di involucro",
-        "fundFee": "Commissione dei fondi",
+        "wrapperFeeInfo": "Commissioni addebitate direttamente dall'assicuratore o dalla banca per la gestione del tuo contratto (es. spese sulla giacenza di un'Assicurazione vita o diritti di custodia di un conto titoli).",
+        "fundFee": "Commissione di gestione",
+        "fundFeeInfo": "Commissioni interne addebitate dalle società di gestione che gestiscono i fondi/strumenti all'interno del tuo involucro (es. commissioni di gestione di un ETF, di un fondo d'investimento o di una SCPI).",
+        "inflationTitle": "Inflazione",
+        "inflationRate": "Inflazione annua",
+        "inflationEnabled": "Tenere conto dell'inflazione nel calcolo",
         "taxTitle": "Fiscalità",
         "taxRate": "Tassa sulla plusvalenza",
         "suggestions": "Suggerimenti:",
@@ -41,16 +47,15 @@
         }
     },
     "kpi": {
-        "invested": "Capitale investito",
-        "investedHint": "Totale versamenti",
-        "grossGains": "Guadagni lordi",
-        "grossGainsHint": "prima di commissioni e tasse",
-        "finalGross": "Totale lordo",
-        "finalGrossHint": "Capitale + guadagni lordi",
-        "netRealGains": "Guadagni netti reali",
-        "netRealGainsHint": "dopo commissioni e tasse",
-        "finalNetReal": "Totale netto reale",
-        "finalNetRealHint": "Capitale + guadagni netti reali",
+        "totalContributions": "Totale versamenti",
+        "totalContributionsHint": "Capitale investito",
+        "totalGross": "Totale lordo",
+        "totalGrossInfo": "Attenzione: valore teorico prima di tassazione e inflazione.",
+        "grossGainBadge": "Guadagno lordo",
+        "totalNet": "Totale netto",
+        "netGainBadge": "Guadagno netto",
+        "totalNetAdjusted": "Totale netto rettificato",
+        "totalNetAdjustedHint": "Capitale netto corretto per l'inflazione",
         "shortfallLabel": "Mancato guadagno per commissioni e tasse"
     },
     "chart": {
@@ -60,6 +65,7 @@
         "contributions": "Versamenti cumulati",
         "gross": "Guadagni lordi",
         "netReal": "Netti reali",
+        "netRealAdjusted": "Netti reali rettificati per l'inflazione",
         "yearTick_one": "{{count}} anno",
         "yearTick_other": "{{count}} anni",
         "tooltipYear": "Anno {{year}}"
@@ -95,6 +101,85 @@
             "submit": "Registrati",
             "alreadyRegistered": "Hai già un account?",
             "loginLink": "Accedi"
+        },
+        "forgotPassword": {
+            "eyebrow": "Password dimenticata",
+            "title": "Password dimenticata?",
+            "description": "Inserisci il tuo indirizzo e-mail e ti invieremo un link per reimpostare la password.",
+            "email": "Indirizzo e-mail",
+            "submit": "Invia link di reimpostazione",
+            "backToLogin": "Torna al login"
+        },
+        "resetPassword": {
+            "eyebrow": "Nuova password",
+            "title": "Reimposta la password",
+            "description": "Scegli una nuova password per proteggere il tuo account.",
+            "email": "Indirizzo e-mail",
+            "password": "Nuova password",
+            "passwordConfirmation": "Conferma password",
+            "showPassword": "Mostra password",
+            "hidePassword": "Nascondi password",
+            "submit": "Reimposta la password"
+        },
+        "confirmPassword": {
+            "eyebrow": "Area sicura",
+            "title": "Conferma la password",
+            "description": "Questa è un'area sicura dell'applicazione. Conferma la tua password prima di continuare.",
+            "password": "Password",
+            "showPassword": "Mostra password",
+            "hidePassword": "Nascondi password",
+            "submit": "Conferma"
+        },
+        "verifyEmail": {
+            "eyebrow": "Verifica",
+            "title": "Verifica il tuo indirizzo e-mail",
+            "description": "Grazie per esserti registrato! Prima di iniziare, verifica il tuo indirizzo e-mail cliccando sul link che ti abbiamo appena inviato. Se non l'hai ricevuto, possiamo inviartene un altro.",
+            "statusSent": "Un nuovo link di verifica è stato inviato all'indirizzo e-mail fornito durante la registrazione.",
+            "resend": "Invia di nuovo l'e-mail di verifica",
+            "logout": "Disconnetti"
+        }
+    },
+    "dashboard": {
+        "eyebrow": "Area membri",
+        "title": "Bacheca",
+        "description": "Ecco una panoramica della tua attività.",
+        "welcomeMessage": "Hai effettuato l'accesso."
+    },
+    "profile": {
+        "eyebrow": "Account",
+        "title": "Profilo",
+        "description": "Gestisci le tue informazioni personali e le impostazioni dell'account.",
+        "information": {
+            "title": "Informazioni del profilo",
+            "description": "Aggiorna le informazioni del tuo profilo e il tuo indirizzo e-mail.",
+            "name": "Nome completo",
+            "email": "Indirizzo e-mail",
+            "unverified": "Il tuo indirizzo e-mail non è verificato.",
+            "resendLink": "Clicca qui per inviare di nuovo l'e-mail di verifica.",
+            "verificationSent": "Un nuovo link di verifica è stato inviato al tuo indirizzo e-mail.",
+            "save": "Salva",
+            "saved": "Salvato."
+        },
+        "password": {
+            "title": "Password",
+            "description": "Assicurati che il tuo account utilizzi una password lunga e casuale per rimanere sicuro.",
+            "currentPassword": "Password attuale",
+            "newPassword": "Nuova password",
+            "passwordConfirmation": "Conferma password",
+            "showPassword": "Mostra password",
+            "hidePassword": "Nascondi password",
+            "save": "Salva",
+            "saved": "Salvato."
+        },
+        "deleteAccount": {
+            "title": "Elimina account",
+            "description": "Una volta eliminato il tuo account, tutte le sue risorse e i suoi dati verranno eliminati definitivamente. Prima di eliminare il tuo account, scarica tutti i dati o le informazioni che desideri conservare.",
+            "button": "Elimina account",
+            "confirmTitle": "Sei sicuro di voler eliminare il tuo account?",
+            "confirmDescription": "Una volta eliminato il tuo account, tutte le sue risorse e i suoi dati verranno eliminati definitivamente. Inserisci la tua password per confermare che desideri eliminare definitivamente il tuo account.",
+            "password": "Password",
+            "cancel": "Annulla",
+            "confirm": "Elimina account"
         }
     }
 }
