@@ -56,7 +56,7 @@ export default function Calculator({ canLogin, canRegister, financial }: Calcula
                     </p>
                 </header>
 
-                <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:items-stretch">
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:items-start">
                     <CalculatorForm
                         inputs={inputs}
                         onChange={handleChange}

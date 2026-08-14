@@ -1,3 +1,4 @@
+import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -25,13 +26,21 @@ interface FieldProps {
     unit?: string;
     step?: number;
     min?: number;
+    tooltip?: string;
     onChange: (value: number) => void;
 }
 
-function Field({ id, label, value, unit, step = 1, min = 0, onChange }: FieldProps) {
+function Field({ id, label, value, unit, step = 1, min = 0, tooltip, onChange }: FieldProps) {
     return (
         <div className="flex flex-col gap-2">
-            <Label htmlFor={id}>{label}</Label>
+            <Label htmlFor={id} className="flex items-center gap-1.5">
+                {label}
+                {tooltip && (
+                    <span title={tooltip} className="inline-flex shrink-0 text-muted-foreground">
+                        <Info className="size-3.5" />
+                    </span>
+                )}
+            </Label>
             <div className="relative">
                 <Input
                     id={id}
@@ -63,7 +72,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
     const { t } = useTranslation();
 
     return (
-        <Card className="h-full gap-0 py-0">
+        <Card className="gap-0 py-0">
             <CardHeader className="border-b border-border py-5">
                 <CardTitle className="text-base">{t('form.title')}</CardTitle>
                 <CardDescription>{t('form.description')}</CardDescription>
@@ -117,6 +126,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             unit={t('form.percentUnit')}
                             step={0.1}
                             value={inputs.wrapperFee}
+                            tooltip={t('form.wrapperFeeInfo')}
                             onChange={(v) => onChange({ wrapperFee: v })}
                         />
                         <Field
@@ -125,6 +135,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             unit={t('form.percentUnit')}
                             step={0.1}
                             value={inputs.fundFee}
+                            tooltip={t('form.fundFeeInfo')}
                             onChange={(v) => onChange({ fundFee: v })}
                         />
                     </div>
