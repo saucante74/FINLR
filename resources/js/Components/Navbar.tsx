@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import ApplicationLogo from '@/Components/ApplicationLogo';
@@ -89,6 +89,16 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             <span className="hidden text-sm text-muted-foreground sm:inline">
                                 {user.name || user.email}
                             </span>
+                            <Button
+                                asChild
+                                variant="ghost"
+                                size="icon"
+                                aria-label={t('nav.profile')}
+                            >
+                                <Link href={route('profile.edit')}>
+                                    <UserRound className="size-4" />
+                                </Link>
+                            </Button>
                             <Button asChild variant="ghost">
                                 <Link
                                     href={route('logout')}

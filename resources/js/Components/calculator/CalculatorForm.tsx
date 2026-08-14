@@ -1,3 +1,4 @@
+import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -7,6 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -24,13 +26,21 @@ interface FieldProps {
     unit?: string;
     step?: number;
     min?: number;
+    tooltip?: string;
     onChange: (value: number) => void;
 }
 
-function Field({ id, label, value, unit, step = 1, min = 0, onChange }: FieldProps) {
+function Field({ id, label, value, unit, step = 1, min = 0, tooltip, onChange }: FieldProps) {
     return (
         <div className="flex flex-col gap-2">
-            <Label htmlFor={id}>{label}</Label>
+            <Label htmlFor={id} className="flex items-center gap-1.5">
+                {label}
+                {tooltip && (
+                    <span title={tooltip} className="inline-flex shrink-0 text-muted-foreground">
+                        <Info className="size-3.5" />
+                    </span>
+                )}
+            </Label>
             <div className="relative">
                 <Input
                     id={id}
@@ -116,6 +126,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             unit={t('form.percentUnit')}
                             step={0.1}
                             value={inputs.wrapperFee}
+                            tooltip={t('form.wrapperFeeInfo')}
                             onChange={(v) => onChange({ wrapperFee: v })}
                         />
                         <Field
@@ -124,8 +135,35 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             unit={t('form.percentUnit')}
                             step={0.1}
                             value={inputs.fundFee}
+                            tooltip={t('form.fundFeeInfo')}
                             onChange={(v) => onChange({ fundFee: v })}
                         />
+                    </div>
+                </section>
+
+                <section className="flex flex-col gap-4 rounded-lg border border-border bg-muted/40 p-4">
+                    <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                        {t('form.inflationTitle')}
+                    </h3>
+                    <Field
+                        id="inflationRate"
+                        label={t('form.inflationRate')}
+                        unit={t('form.percentUnit')}
+                        step={0.1}
+                        value={inputs.inflationRate}
+                        onChange={(v) => onChange({ inflationRate: v })}
+                    />
+                    <div className="flex items-center gap-2">
+                        <Checkbox
+                            id="inflationEnabled"
+                            checked={inputs.inflationEnabled}
+                            onCheckedChange={(checked) =>
+                                onChange({ inflationEnabled: checked === true })
+                            }
+                        />
+                        <Label htmlFor="inflationEnabled" className="text-sm font-normal">
+                            {t('form.inflationEnabled')}
+                        </Label>
                     </div>
                 </section>
 

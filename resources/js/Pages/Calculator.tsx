@@ -63,10 +63,10 @@ export default function Calculator({ canLogin, canRegister, financial }: Calcula
                         taxSuggestions={financial.taxSuggestions}
                     />
 
-                    <div className="flex flex-col gap-6">
-                        <KpiCards result={result} />
+                    <div className="flex h-full flex-col gap-6">
+                        <KpiCards result={result} inflationEnabled={inputs.inflationEnabled} />
 
-                        <Card className="gap-0 py-0">
+                        <Card className="flex-1 gap-0 py-0">
                             <CardHeader className="border-b border-border py-5">
                                 <CardTitle className="text-base">
                                     {t('chart.title', { count: inputs.years })}
@@ -76,7 +76,10 @@ export default function Calculator({ canLogin, canRegister, financial }: Calcula
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="py-6">
-                                <GrowthChart result={result} />
+                                <GrowthChart
+                                    result={result}
+                                    inflationEnabled={inputs.inflationEnabled}
+                                />
                             </CardContent>
                         </Card>
                     </div>
