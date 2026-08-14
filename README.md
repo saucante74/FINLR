@@ -67,6 +67,42 @@ To follow application logs live (Laravel Pail):
 sail artisan pail
 ```
 
+### Local S3 storage (MinIO)
+
+`sail up -d` also starts a MinIO container that emulates S3 for local development. A `reports-bucket` bucket is created automatically (`minio-setup` service). `FILESYSTEM_DISK` is set to `s3` and already points at it in `.env.example`.
+
+- API S3: http://127.0.0.1:9000
+- Web console: http://127.0.0.1:9001 (login with `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` from `.env`)
+
+### Local mail testing (Mailpit)
+
+`sail up -d` also starts a [Mailpit](https://github.com/axllent/mailpit) container that catches every email sent by the app locally (`MAIL_MAILER=smtp` points at it in `.env.example`).
+
+- Web UI: http://localhost:8025
+
+Test mail :
+```bash
+sail artisan tinker --execute="Mail::raw('Test Mailpit', function(\$m) { \$m->to('test@example.com')->subject('Hello Mailpit'); });"
+```
+
+### Stripe webhooks (Stripe CLI)
+
+`sail up -d` also starts a `stripe-cli` container that automatically forwards Stripe webhook events to `http://laravel.test:80/api/stripe/webhook`. Set `STRIPE_SECRET_KEY` in `.env` and the tunnel authenticates and starts on its own — no local Stripe CLI installation or `stripe login` needed.
+
+Check logs
+```bash
+sail logs stripe-cli
+```
+
+Trigger a fake payment stripe conteneur
+```bash
+sail exec stripe-cli stripe trigger payment_intent.succeeded
+```
+
+Check payment on Laravel side
+```bash
+sail logs stripe-cli --tail 20
+```
 ---
 
 ## 4. Running the automated tests
