@@ -14,10 +14,10 @@ interface Series {
 }
 
 const SERIES: Series[] = [
-    { key: 'contributions', labelKey: 'chart.contributions', color: 'var(--chart-1)' },
-    { key: 'gross', labelKey: 'chart.gross', color: '#F59E0B' },
-    { key: 'netReal', labelKey: 'chart.netReal', color: 'var(--brand)' },
-    { key: 'netRealAdjusted', labelKey: 'chart.netRealAdjusted', color: '#D97706', dashed: true },
+    { key: 'contributions', labelKey: 'chart.contributions', color: '#64748B' },
+    { key: 'gross', labelKey: 'chart.gross', color: '#8B5CF6' },
+    { key: 'netReal', labelKey: 'chart.netReal', color: '#10B981' },
+    { key: 'netRealAdjusted', labelKey: 'chart.netRealAdjusted', color: '#F97316', dashed: true },
 ];
 
 const Y_AXIS_MARGIN_RATIO = 0.05;

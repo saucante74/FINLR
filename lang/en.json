@@ -47,6 +47,7 @@
         "totalContributions": "Total contributions",
         "totalContributionsHint": "Capital invested",
         "totalGross": "Gross total",
+        "totalGrossInfo": "Note: theoretical figure before tax and inflation.",
         "grossGainBadge": "Gross gain",
         "totalNet": "Net total",
         "netGainBadge": "Net gain",

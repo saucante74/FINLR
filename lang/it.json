@@ -47,6 +47,7 @@
         "totalContributions": "Totale versamenti",
         "totalContributionsHint": "Capitale investito",
         "totalGross": "Totale lordo",
+        "totalGrossInfo": "Attenzione: valore teorico prima di tassazione e inflazione.",
         "grossGainBadge": "Guadagno lordo",
         "totalNet": "Totale netto",
         "netGainBadge": "Guadagno netto",

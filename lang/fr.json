@@ -47,6 +47,7 @@
         "totalContributions": "Total versements",
         "totalContributionsHint": "Capital injecté",
         "totalGross": "Total brut",
+        "totalGrossInfo": "Attention : Chiffre théorique avant fiscalité et inflation.",
         "grossGainBadge": "Gain brut",
         "totalNet": "Total net",
         "netGainBadge": "Gain net",
