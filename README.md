@@ -74,15 +74,15 @@ sail artisan pail
 - API S3: http://127.0.0.1:9000
 - Web console: http://127.0.0.1:9001 (login with `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` from `.env`)
 
+### Local mail testing (Mailpit)
+
+`sail up -d` also starts a [Mailpit](https://github.com/axllent/mailpit) container that catches every email sent by the app locally (`MAIL_MAILER=smtp` points at it in `.env.example`).
+
+- Web UI: http://localhost:8025
+
 ### Stripe webhooks (Stripe CLI)
 
-Install and authenticate the [Stripe CLI](https://docs.stripe.com/stripe-cli) (`stripe login`), then forward webhook events to the local app:
-
-```bash
-stripe listen --forward-to localhost:8000/api/stripe/webhook
-```
-
-`./dev-setup.sh` starts the Sail environment and runs this command in one step.
+`sail up -d` also starts a `stripe-cli` container that automatically forwards Stripe webhook events to `http://laravel.test:80/api/stripe/webhook`. Set `STRIPE_SECRET_KEY` in `.env` and the tunnel authenticates and starts on its own — no local Stripe CLI installation or `stripe login` needed.
 
 ---
 
