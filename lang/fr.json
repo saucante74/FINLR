@@ -31,6 +31,9 @@
         "feesTitle": "Frais",
         "wrapperFee": "Frais d'enveloppe",
         "fundFee": "Frais des fonds",
+        "inflationTitle": "Inflation",
+        "inflationRate": "Inflation annuelle",
+        "inflationEnabled": "Prendre en compte l'inflation dans le calcul",
         "taxTitle": "Fiscalité",
         "taxRate": "Taxe sur la plus-value",
         "suggestions": "Suggestions :",
@@ -41,16 +44,14 @@
         }
     },
     "kpi": {
-        "invested": "Capital investi",
-        "investedHint": "Total des versements",
-        "grossGains": "Gains bruts",
-        "grossGainsHint": "avant frais & taxe",
-        "finalGross": "Total brut",
-        "finalGrossHint": "Capital + gains bruts",
-        "netRealGains": "Gains nets",
-        "netRealGainsHint": "après frais & taxe",
-        "finalNetReal": "Total net réel",
-        "finalNetRealHint": "Capital + gains nets réels",
+        "totalContributions": "Total versements",
+        "totalContributionsHint": "Capital injecté",
+        "totalGross": "Total brut",
+        "grossGainBadge": "Gain brut",
+        "totalNet": "Total net",
+        "netGainBadge": "Gain net",
+        "totalNetAdjusted": "Total net ajusté",
+        "totalNetAdjustedHint": "Capital net corrigé de l'inflation",
         "shortfallLabel": "Manque à gagner lié aux frais & taxes"
     },
     "chart": {
@@ -60,6 +61,7 @@
         "contributions": "Versements cumulés",
         "gross": "Gains bruts",
         "netReal": "Nets réels",
+        "netRealAdjusted": "Nets réels ajustés de l'inflation",
         "yearTick_one": "{{count}} an",
         "yearTick_other": "{{count}} ans",
         "tooltipYear": "Année {{year}}"

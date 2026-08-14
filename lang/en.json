@@ -31,6 +31,9 @@
         "feesTitle": "Fees",
         "wrapperFee": "Wrapper fee",
         "fundFee": "Fund fee",
+        "inflationTitle": "Inflation",
+        "inflationRate": "Annual inflation",
+        "inflationEnabled": "Account for inflation in the calculation",
         "taxTitle": "Taxation",
         "taxRate": "Capital gains tax",
         "suggestions": "Suggestions:",
@@ -41,16 +44,14 @@
         }
     },
     "kpi": {
-        "invested": "Capital invested",
-        "investedHint": "Total contributions",
-        "grossGains": "Gross gains",
-        "grossGainsHint": "before fees & tax",
-        "finalGross": "Gross total",
-        "finalGrossHint": "Capital + gross gains",
-        "netRealGains": "Real net gains",
-        "netRealGainsHint": "after fees & tax",
-        "finalNetReal": "Real net total",
-        "finalNetRealHint": "Capital + real net gains",
+        "totalContributions": "Total contributions",
+        "totalContributionsHint": "Capital invested",
+        "totalGross": "Gross total",
+        "grossGainBadge": "Gross gain",
+        "totalNet": "Net total",
+        "netGainBadge": "Net gain",
+        "totalNetAdjusted": "Inflation-adjusted total",
+        "totalNetAdjustedHint": "Net capital adjusted for inflation",
         "shortfallLabel": "Shortfall from fees & tax"
     },
     "chart": {
@@ -60,6 +61,7 @@
         "contributions": "Cumulative contributions",
         "gross": "Gross gains",
         "netReal": "Real net",
+        "netRealAdjusted": "Real net, inflation-adjusted",
         "yearTick_one": "{{count}} yr",
         "yearTick_other": "{{count}} yrs",
         "tooltipYear": "Year {{year}}"

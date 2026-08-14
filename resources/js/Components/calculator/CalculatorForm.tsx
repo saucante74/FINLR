@@ -7,6 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -126,6 +127,32 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             value={inputs.fundFee}
                             onChange={(v) => onChange({ fundFee: v })}
                         />
+                    </div>
+                </section>
+
+                <section className="flex flex-col gap-4 rounded-lg border border-border bg-muted/40 p-4">
+                    <h3 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                        {t('form.inflationTitle')}
+                    </h3>
+                    <Field
+                        id="inflationRate"
+                        label={t('form.inflationRate')}
+                        unit={t('form.percentUnit')}
+                        step={0.1}
+                        value={inputs.inflationRate}
+                        onChange={(v) => onChange({ inflationRate: v })}
+                    />
+                    <div className="flex items-center gap-2">
+                        <Checkbox
+                            id="inflationEnabled"
+                            checked={inputs.inflationEnabled}
+                            onCheckedChange={(checked) =>
+                                onChange({ inflationEnabled: checked === true })
+                            }
+                        />
+                        <Label htmlFor="inflationEnabled" className="text-sm font-normal">
+                            {t('form.inflationEnabled')}
+                        </Label>
                     </div>
                 </section>
 

@@ -2,19 +2,22 @@ import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { formatCompact, formatCurrency, type CompoundPoint, type CompoundResult } from '@/lib/compound';
+import { cn } from '@/lib/utils';
 
-type SeriesKey = 'contributions' | 'gross' | 'netReal';
+type SeriesKey = 'contributions' | 'gross' | 'netReal' | 'netRealAdjusted';
 
 interface Series {
     key: SeriesKey;
     labelKey: string;
     color: string;
+    dashed?: boolean;
 }
 
 const SERIES: Series[] = [
     { key: 'contributions', labelKey: 'chart.contributions', color: 'var(--chart-1)' },
-    { key: 'gross', labelKey: 'chart.gross', color: 'var(--chart-2)' },
+    { key: 'gross', labelKey: 'chart.gross', color: '#F59E0B' },
     { key: 'netReal', labelKey: 'chart.netReal', color: 'var(--brand)' },
+    { key: 'netRealAdjusted', labelKey: 'chart.netRealAdjusted', color: '#D97706', dashed: true },
 ];
 
 const Y_AXIS_MARGIN_RATIO = 0.05;
@@ -31,14 +34,20 @@ function niceCeil(value: number): number {
 
 interface GrowthChartProps {
     result: CompoundResult;
+    inflationEnabled: boolean;
 }
 
-export default function GrowthChart({ result }: GrowthChartProps) {
+export default function GrowthChart({ result, inflationEnabled }: GrowthChartProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage;
     const containerRef = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(600);
     const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+
+    const activeSeries = useMemo(
+        () => (inflationEnabled ? SERIES : SERIES.filter((s) => s.key !== 'netRealAdjusted')),
+        [inflationEnabled],
+    );
 
     useEffect(() => {
         const el = containerRef.current;
@@ -61,7 +70,7 @@ export default function GrowthChart({ result }: GrowthChartProps) {
     const maxYear = points[points.length - 1]?.year || 1;
     const maxValue = Math.max(
         1,
-        ...points.flatMap((p) => [p.contributions, p.gross, p.netReal]),
+        ...points.flatMap((p) => activeSeries.map((s) => p[s.key])),
     );
     const niceMax = niceCeil(maxValue);
 
@@ -104,15 +113,22 @@ export default function GrowthChart({ result }: GrowthChartProps) {
     return (
         <div className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                {SERIES.map((s) => (
+                {activeSeries.map((s) => (
                     <span
                         key={s.key}
                         className="flex items-center gap-2 text-xs text-muted-foreground"
                     >
                         <span
                             aria-hidden
-                            className="h-2.5 w-4 rounded-full"
-                            style={{ backgroundColor: s.color }}
+                            className={cn(
+                                'h-2.5 w-4 rounded-full',
+                                s.dashed && 'border-b-2 border-dashed bg-transparent',
+                            )}
+                            style={
+                                s.dashed
+                                    ? { borderColor: s.color }
+                                    : { backgroundColor: s.color }
+                            }
                         />
                         {t(s.labelKey)}
                     </span>
@@ -128,7 +144,7 @@ export default function GrowthChart({ result }: GrowthChartProps) {
                 <svg width={width} height={height}>
                     <g transform={`translate(${margin.left},${margin.top})`}>
                         <defs>
-                            {SERIES.map((s) => (
+                            {activeSeries.map((s) => (
                                 <linearGradient
                                     key={s.key}
                                     id={`fill-${s.key}`}
@@ -179,7 +195,7 @@ export default function GrowthChart({ result }: GrowthChartProps) {
                             </text>
                         ))}
 
-                        {SERIES.map((s) => (
+                        {activeSeries.map((s) => (
                             <path
                                 key={`area-${s.key}`}
                                 d={areaPath(s.key)}
@@ -187,13 +203,14 @@ export default function GrowthChart({ result }: GrowthChartProps) {
                                 stroke="none"
                             />
                         ))}
-                        {SERIES.map((s) => (
+                        {activeSeries.map((s) => (
                             <path
                                 key={`line-${s.key}`}
                                 d={linePath(s.key)}
                                 fill="none"
                                 stroke={s.color}
                                 strokeWidth={s.key === 'netReal' ? 2.5 : 2}
+                                strokeDasharray={s.dashed ? '6 4' : undefined}
                             />
                         ))}
 
@@ -206,7 +223,7 @@ export default function GrowthChart({ result }: GrowthChartProps) {
                                     y2={innerHeight}
                                     stroke="var(--border)"
                                 />
-                                {SERIES.map((s) => (
+                                {activeSeries.map((s) => (
                                     <circle
                                         key={s.key}
                                         cx={xScale(hoverPoint.year)}
@@ -229,7 +246,7 @@ export default function GrowthChart({ result }: GrowthChartProps) {
                             {t('chart.tooltipYear', { year: hoverPoint.year })}
                         </p>
                         <ul className="flex flex-col gap-1.5">
-                            {SERIES.map((s) => (
+                            {activeSeries.map((s) => (
                                 <li
                                     key={s.key}
                                     className="flex items-center justify-between gap-4 text-xs"

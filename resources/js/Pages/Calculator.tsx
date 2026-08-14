@@ -64,7 +64,7 @@ export default function Calculator({ canLogin, canRegister, financial }: Calcula
                     />
 
                     <div className="flex flex-col gap-6">
-                        <KpiCards result={result} />
+                        <KpiCards result={result} inflationEnabled={inputs.inflationEnabled} />
 
                         <Card className="gap-0 py-0">
                             <CardHeader className="border-b border-border py-5">
@@ -76,7 +76,10 @@ export default function Calculator({ canLogin, canRegister, financial }: Calcula
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="py-6">
-                                <GrowthChart result={result} />
+                                <GrowthChart
+                                    result={result}
+                                    inflationEnabled={inputs.inflationEnabled}
+                                />
                             </CardContent>
                         </Card>
                     </div>

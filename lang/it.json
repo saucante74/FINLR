@@ -31,6 +31,9 @@
         "feesTitle": "Commissioni",
         "wrapperFee": "Commissione di involucro",
         "fundFee": "Commissione dei fondi",
+        "inflationTitle": "Inflazione",
+        "inflationRate": "Inflazione annua",
+        "inflationEnabled": "Tenere conto dell'inflazione nel calcolo",
         "taxTitle": "Fiscalità",
         "taxRate": "Tassa sulla plusvalenza",
         "suggestions": "Suggerimenti:",
@@ -41,16 +44,14 @@
         }
     },
     "kpi": {
-        "invested": "Capitale investito",
-        "investedHint": "Totale versamenti",
-        "grossGains": "Guadagni lordi",
-        "grossGainsHint": "prima di commissioni e tasse",
-        "finalGross": "Totale lordo",
-        "finalGrossHint": "Capitale + guadagni lordi",
-        "netRealGains": "Guadagni netti reali",
-        "netRealGainsHint": "dopo commissioni e tasse",
-        "finalNetReal": "Totale netto reale",
-        "finalNetRealHint": "Capitale + guadagni netti reali",
+        "totalContributions": "Totale versamenti",
+        "totalContributionsHint": "Capitale investito",
+        "totalGross": "Totale lordo",
+        "grossGainBadge": "Guadagno lordo",
+        "totalNet": "Totale netto",
+        "netGainBadge": "Guadagno netto",
+        "totalNetAdjusted": "Totale netto rettificato",
+        "totalNetAdjustedHint": "Capitale netto corretto per l'inflazione",
         "shortfallLabel": "Mancato guadagno per commissioni e tasse"
     },
     "chart": {
@@ -60,6 +61,7 @@
         "contributions": "Versamenti cumulati",
         "gross": "Guadagni lordi",
         "netReal": "Netti reali",
+        "netRealAdjusted": "Netti reali rettificati per l'inflazione",
         "yearTick_one": "{{count}} anno",
         "yearTick_other": "{{count}} anni",
         "tooltipYear": "Anno {{year}}"

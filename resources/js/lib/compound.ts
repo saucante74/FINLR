@@ -6,6 +6,8 @@ export interface CompoundInputs {
     wrapperFee: number;
     fundFee: number;
     taxRate: number;
+    inflationRate: number;
+    inflationEnabled: boolean;
 }
 
 export interface CompoundPoint {
@@ -13,6 +15,7 @@ export interface CompoundPoint {
     contributions: number;
     gross: number;
     netReal: number;
+    netRealAdjusted: number;
 }
 
 export interface CompoundResult {
@@ -22,6 +25,7 @@ export interface CompoundResult {
     finalGross: number;
     netRealGains: number;
     finalNetReal: number;
+    finalNetRealAdjusted: number;
     shortfall: number;
 }
 
@@ -31,6 +35,7 @@ function buildPoint(
     grossCapital: number,
     netCapital: number,
     taxRate: number,
+    inflationRate: number,
 ): CompoundPoint {
     const netGainsBeforeTax = netCapital - contributions;
     const netReal =
@@ -38,12 +43,15 @@ function buildPoint(
         (netGainsBeforeTax > 0
             ? netGainsBeforeTax * (1 - taxRate / 100)
             : netGainsBeforeTax);
+    const inflationFactor = (1 + inflationRate / 100) ** year;
+    const netRealAdjusted = inflationFactor > 0 ? netReal / inflationFactor : netReal;
 
     return {
         year,
         contributions,
         gross: grossCapital,
         netReal,
+        netRealAdjusted,
     };
 }
 
@@ -56,6 +64,7 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
         wrapperFee,
         fundFee,
         taxRate,
+        inflationRate,
     } = inputs;
 
     const safeYears = Math.max(0, Math.round(years) || 0);
@@ -69,7 +78,9 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
     let netCapital = initialCapital;
     let contributions = initialCapital;
 
-    const points = [buildPoint(0, contributions, grossCapital, netCapital, taxRate)];
+    const points = [
+        buildPoint(0, contributions, grossCapital, netCapital, taxRate, inflationRate),
+    ];
 
     for (let month = 1; month <= months; month += 1) {
         grossCapital = grossCapital * (1 + grossMonthlyRate) + monthlyContribution;
@@ -78,7 +89,14 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
 
         if (month % 12 === 0) {
             points.push(
-                buildPoint(month / 12, contributions, grossCapital, netCapital, taxRate),
+                buildPoint(
+                    month / 12,
+                    contributions,
+                    grossCapital,
+                    netCapital,
+                    taxRate,
+                    inflationRate,
+                ),
             );
         }
     }
@@ -94,6 +112,7 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
         finalGross: last.gross,
         netRealGains,
         finalNetReal: last.netReal,
+        finalNetRealAdjusted: last.netRealAdjusted,
         shortfall: grossGains - netRealGains,
     };
 }
