@@ -29,14 +29,31 @@ export function useForm(initialValues) {
     const post = vi.fn((_url, options) => {
         options?.onFinish?.();
     });
+    const patch = vi.fn((_url, options) => {
+        options?.onSuccess?.();
+        options?.onFinish?.();
+    });
+    const put = vi.fn((_url, options) => {
+        options?.onSuccess?.();
+        options?.onFinish?.();
+    });
+    const destroy = vi.fn((_url, options) => {
+        options?.onSuccess?.();
+        options?.onFinish?.();
+    });
 
     return {
         data,
         setData,
         post,
+        patch,
+        put,
+        delete: destroy,
         processing,
         errors,
         reset: vi.fn(),
+        clearErrors: vi.fn(),
+        recentlySuccessful: false,
     };
 }
 

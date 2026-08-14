@@ -1,5 +1,8 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
+
+import Footer from '@/Components/Footer';
+import Navbar from '@/Components/Navbar';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
@@ -10,35 +13,39 @@ interface EditProps {
 }
 
 export default function Edit({ mustVerifyEmail, status }: EditProps) {
+    const { t } = useTranslation();
+
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
-            <Head title="Profile" />
+        <div className="flex min-h-screen flex-col bg-background text-foreground">
+            <Head title={t('profile.title')} />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+            <Navbar />
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+            <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
+                <header className="flex flex-col gap-2">
+                    <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                        {t('profile.eyebrow')}
+                    </span>
+                    <h1 className="text-2xl font-semibold tracking-tight text-balance lg:text-3xl">
+                        {t('profile.title')}
+                    </h1>
+                    <p className="max-w-2xl text-sm text-pretty text-muted-foreground">
+                        {t('profile.description')}
+                    </p>
+                </header>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+                <UpdateProfileInformationForm
+                    mustVerifyEmail={mustVerifyEmail}
+                    status={status}
+                />
+
+                <UpdatePasswordForm />
+
+                <DeleteUserForm />
+            </main>
+
+            <Footer />
+        </div>
     );
 }

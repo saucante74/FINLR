@@ -1,19 +1,23 @@
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput, { type TextInputRef } from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
 import { useRef, useState, type FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
-interface DeleteUserFormProps {
-    className?: string;
-}
+import Modal from '@/Components/Modal';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
-export default function DeleteUserForm({ className = '' }: DeleteUserFormProps) {
+export default function DeleteUserForm() {
+    const { t } = useTranslation();
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
-    const passwordInput = useRef<TextInputRef>(null);
+    const passwordInput = useRef<HTMLInputElement>(null);
 
     const {
         data,
@@ -50,75 +54,76 @@ export default function DeleteUserForm({ className = '' }: DeleteUserFormProps) 
     };
 
     return (
-        <section className={`space-y-6 ${className}`}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Delete Account
-                </h2>
+        <Card className="gap-0 py-0">
+            <CardHeader className="border-b border-border py-5">
+                <CardTitle className="text-base">
+                    {t('profile.deleteAccount.title')}
+                </CardTitle>
+                <CardDescription>
+                    {t('profile.deleteAccount.description')}
+                </CardDescription>
+            </CardHeader>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Once your account is deleted, all of its resources and data
-                    will be permanently deleted. Before deleting your account,
-                    please download any data or information that you wish to
-                    retain.
-                </p>
-            </header>
+            <CardContent className="py-6">
+                <Button variant="destructive" onClick={confirmUserDeletion}>
+                    {t('profile.deleteAccount.button')}
+                </Button>
 
-            <DangerButton onClick={confirmUserDeletion}>
-                Delete Account
-            </DangerButton>
+                <Modal show={confirmingUserDeletion} onClose={closeModal}>
+                    <form onSubmit={deleteUser} className="flex flex-col gap-4 p-6">
+                        <h2 className="text-lg font-semibold text-foreground">
+                            {t('profile.deleteAccount.confirmTitle')}
+                        </h2>
 
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
-                    </h2>
+                        <p className="text-sm text-muted-foreground">
+                            {t('profile.deleteAccount.confirmDescription')}
+                        </p>
 
-                    <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and
-                        data will be permanently deleted. Please enter your
-                        password to confirm you would like to permanently delete
-                        your account.
-                    </p>
+                        <div className="flex flex-col gap-2">
+                            <Label htmlFor="password" className="sr-only">
+                                {t('profile.deleteAccount.password')}
+                            </Label>
+                            <Input
+                                id="password"
+                                type="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
+                                placeholder={t(
+                                    'profile.deleteAccount.password',
+                                )}
+                                autoFocus
+                                aria-invalid={Boolean(errors.password)}
+                            />
+                            {errors.password && (
+                                <p className="text-xs text-destructive">
+                                    {errors.password}
+                                </p>
+                            )}
+                        </div>
 
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="password"
-                            value="Password"
-                            className="sr-only"
-                        />
+                        <div className="flex justify-end gap-3">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={closeModal}
+                            >
+                                {t('profile.deleteAccount.cancel')}
+                            </Button>
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError
-                            message={errors.password}
-                            className="mt-2"
-                        />
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
-                            Cancel
-                        </SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
-        </section>
+                            <Button
+                                type="submit"
+                                variant="destructive"
+                                disabled={processing}
+                            >
+                                {t('profile.deleteAccount.confirm')}
+                            </Button>
+                        </div>
+                    </form>
+                </Modal>
+            </CardContent>
+        </Card>
     );
 }

@@ -6,6 +6,7 @@
         "login": "Log in",
         "register": "Sign up",
         "logout": "Log out",
+        "profile": "Profile",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -100,6 +101,85 @@
             "submit": "Sign up",
             "alreadyRegistered": "Already have an account?",
             "loginLink": "Log in"
+        },
+        "forgotPassword": {
+            "eyebrow": "Forgot password",
+            "title": "Forgot your password?",
+            "description": "Enter your email address and we'll send you a link to reset your password.",
+            "email": "Email address",
+            "submit": "Send password reset link",
+            "backToLogin": "Back to login"
+        },
+        "resetPassword": {
+            "eyebrow": "New password",
+            "title": "Reset password",
+            "description": "Choose a new password to secure your account.",
+            "email": "Email address",
+            "password": "New password",
+            "passwordConfirmation": "Confirm password",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password",
+            "submit": "Reset password"
+        },
+        "confirmPassword": {
+            "eyebrow": "Secure area",
+            "title": "Confirm password",
+            "description": "This is a secure area of the application. Please confirm your password before continuing.",
+            "password": "Password",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password",
+            "submit": "Confirm"
+        },
+        "verifyEmail": {
+            "eyebrow": "Verification",
+            "title": "Verify your email address",
+            "description": "Thanks for signing up! Before getting started, please verify your email address by clicking the link we just emailed you. If you didn't receive it, we can send you another.",
+            "statusSent": "A new verification link has been sent to the email address you provided during registration.",
+            "resend": "Resend verification email",
+            "logout": "Log out"
+        }
+    },
+    "dashboard": {
+        "eyebrow": "Member area",
+        "title": "Dashboard",
+        "description": "Here's an overview of your activity.",
+        "welcomeMessage": "You're logged in."
+    },
+    "profile": {
+        "eyebrow": "Account",
+        "title": "Profile",
+        "description": "Manage your personal information and account settings.",
+        "information": {
+            "title": "Profile information",
+            "description": "Update your account's profile information and email address.",
+            "name": "Full name",
+            "email": "Email address",
+            "unverified": "Your email address is unverified.",
+            "resendLink": "Click here to resend the verification email.",
+            "verificationSent": "A new verification link has been sent to your email address.",
+            "save": "Save",
+            "saved": "Saved."
+        },
+        "password": {
+            "title": "Password",
+            "description": "Ensure your account is using a long, random password to stay secure.",
+            "currentPassword": "Current password",
+            "newPassword": "New password",
+            "passwordConfirmation": "Confirm password",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password",
+            "save": "Save",
+            "saved": "Saved."
+        },
+        "deleteAccount": {
+            "title": "Delete account",
+            "description": "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.",
+            "button": "Delete account",
+            "confirmTitle": "Are you sure you want to delete your account?",
+            "confirmDescription": "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+            "password": "Password",
+            "cancel": "Cancel",
+            "confirm": "Delete account"
         }
     }
 }

@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import i18n from '@/i18n';
 
 vi.mock('@inertiajs/react');
 
+import * as inertia from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 
 describe('Navbar', () => {
@@ -12,6 +13,10 @@ describe('Navbar', () => {
         localStorage.clear();
         document.documentElement.classList.remove('dark');
         await i18n.changeLanguage('fr');
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it('renders the brand, language selector and theme toggle', () => {
@@ -61,6 +66,36 @@ describe('Navbar', () => {
         expect(
             screen.getByRole('button', { name: 'en' }),
         ).toHaveAttribute('aria-pressed', 'true');
+    });
+
+    it('shows the profile link and logout button when authenticated', () => {
+        vi.spyOn(inertia, 'usePage').mockReturnValue({
+            props: {
+                auth: {
+                    user: {
+                        id: 1,
+                        name: 'Jane Doe',
+                        email: 'jane@example.com',
+                        email_verified_at: null,
+                        subscription_plan: 'free',
+                    },
+                    plan: 'free',
+                    permissions: [],
+                },
+            },
+        } as unknown as ReturnType<typeof inertia.usePage>);
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.profile') }),
+        ).toHaveAttribute('href', '/profile.edit');
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.logout') }),
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByRole('link', { name: i18n.t('nav.login') }),
+        ).not.toBeInTheDocument();
     });
 
     it('toggles the dark class on the html element', async () => {

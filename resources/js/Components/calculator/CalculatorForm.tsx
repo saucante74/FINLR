@@ -72,7 +72,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
     const { t } = useTranslation();
 
     return (
-        <Card className="gap-0 py-0">
+        <Card className="h-full gap-0 py-0">
             <CardHeader className="border-b border-border py-5">
                 <CardTitle className="text-base">{t('form.title')}</CardTitle>
                 <CardDescription>{t('form.description')}</CardDescription>
