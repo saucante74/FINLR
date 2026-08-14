@@ -67,6 +67,23 @@ To follow application logs live (Laravel Pail):
 sail artisan pail
 ```
 
+### Local S3 storage (MinIO)
+
+`sail up -d` also starts a MinIO container that emulates S3 for local development. A `reports-bucket` bucket is created automatically (`minio-setup` service). `FILESYSTEM_DISK` is set to `s3` and already points at it in `.env.example`.
+
+- API S3: http://127.0.0.1:9000
+- Web console: http://127.0.0.1:9001 (login with `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` from `.env`)
+
+### Stripe webhooks (Stripe CLI)
+
+Install and authenticate the [Stripe CLI](https://docs.stripe.com/stripe-cli) (`stripe login`), then forward webhook events to the local app:
+
+```bash
+stripe listen --forward-to localhost:8000/api/stripe/webhook
+```
+
+`./dev-setup.sh` starts the Sail environment and runs this command in one step.
+
 ---
 
 ## 4. Running the automated tests
