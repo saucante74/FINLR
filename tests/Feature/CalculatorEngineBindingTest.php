@@ -15,6 +15,7 @@ class CalculatorEngineBindingTest extends TestCase
         if (! class_exists('saucante74\\CalculatorEngine\\CalculatorEngine')) {
             $this->markTestSkipped('The private saucante74\\CalculatorEngine package is not installed.');
         }
+        config(['calculator.force_dummy' => false]);
 
         $engine = $this->app->make(CalculatorEngineInterface::class);
 
