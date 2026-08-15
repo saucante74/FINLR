@@ -3,7 +3,6 @@
 namespace App\Modules\Calculator\Requests;
 
 use App\Modules\Calculator\DTOs\FreeCalculationInput;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CalculateFreeInvestmentRequest extends FormRequest
@@ -14,7 +13,7 @@ class CalculateFreeInvestmentRequest extends FormRequest
     }
 
     /**
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {

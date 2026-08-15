@@ -9,7 +9,7 @@ use App\Modules\User\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowCalculatorController::class);
-Route::post('/api/calculator/free', CalculateFreeInvestmentController::class)->name('calculator.free');
+Route::post('/calculator/free', CalculateFreeInvestmentController::class)->name('calculator.free');
 
 Route::get('/dashboard', ShowDashboardController::class)
     ->middleware(['auth', 'verified'])
