@@ -22,8 +22,8 @@ class PrivateCalculatorEngineAdapterTest extends TestCase
 
     private function skipUnlessFreeCalculationIsSupported(): void
     {
-        if (! method_exists(CalculatorEngine::class, 'calculateFree')) {
-            $this->markTestSkipped('The installed saucante74\\CalculatorEngine package does not expose calculateFree() yet.');
+        if (! method_exists(CalculatorEngine::class, 'calculateFreemium')) {
+            $this->markTestSkipped('The installed saucante74\\CalculatorEngine package does not expose calculateFreemium() yet.');
         }
     }
 
