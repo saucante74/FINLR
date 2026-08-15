@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Modules\Shared\Models\User;
 use App\Modules\Subscriptions\Enums\Permission;
 use App\Modules\Subscriptions\Enums\Plan;
+use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Auth\Actions;
 
-use App\Modules\Shared\Models\User;
+use App\Modules\User\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
