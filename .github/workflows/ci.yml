@@ -85,6 +85,8 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.FINLR_ENGINE_CI }}"}}'
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Prepare environment
@@ -120,6 +122,8 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.FINLR_ENGINE_CI }}"}}'
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Prepare environment
