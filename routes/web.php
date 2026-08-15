@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Calculator\Controllers\CalculateFreeInvestmentController;
 use App\Modules\Calculator\Controllers\ShowCalculatorController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
 use App\Modules\User\Controllers\DeleteAccountController;
@@ -8,6 +9,7 @@ use App\Modules\User\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowCalculatorController::class);
+Route::post('/calculator/free', CalculateFreeInvestmentController::class)->name('calculator.free');
 
 Route::get('/dashboard', ShowDashboardController::class)
     ->middleware(['auth', 'verified'])
