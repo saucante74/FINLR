@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Modules\FinancialTools\Support\FinancialSettings;
+use App\Modules\Calculator\Support\FinancialSettings;
 use Tests\TestCase;
 
 class FinancialSettingsTest extends TestCase

@@ -3,6 +3,7 @@
 namespace App\Modules\Auth\Controllers;
 
 use App\Modules\Auth\Actions\ResetPasswordAction;
+use App\Modules\Auth\DTOs\ResetPasswordData;
 use App\Modules\Auth\Requests\NewPasswordRequest;
 use App\Modules\Shared\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +12,7 @@ class ResetPasswordController extends Controller
 {
     public function __invoke(NewPasswordRequest $request, ResetPasswordAction $action): RedirectResponse
     {
-        $status = $action->handle($request->validated());
+        $status = $action->handle(ResetPasswordData::fromRequest($request));
 
         return redirect()->route('login')->with('status', __($status));
     }

@@ -1,10 +1,10 @@
 <?php
 
-use App\Modules\FinancialTools\Controllers\ShowCalculatorController;
-use App\Modules\Shared\Controllers\DeleteAccountController;
-use App\Modules\Shared\Controllers\EditProfileController;
+use App\Modules\Calculator\Controllers\ShowCalculatorController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
-use App\Modules\Shared\Controllers\UpdateProfileController;
+use App\Modules\User\Controllers\DeleteAccountController;
+use App\Modules\User\Controllers\EditProfileController;
+use App\Modules\User\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowCalculatorController::class);

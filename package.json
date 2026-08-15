@@ -5,7 +5,8 @@
     "scripts": {
         "build": "tsc --noEmit && vite build",
         "dev": "vite",
-        "test": "vitest run"
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
