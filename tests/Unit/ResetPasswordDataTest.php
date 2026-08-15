@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Modules\Auth\DTOs\ResetPasswordData;
 use App\Modules\Auth\Requests\NewPasswordRequest;
+use Illuminate\Support\Str;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
@@ -15,11 +16,9 @@ class ResetPasswordDataTest extends TestCase
     public function test_from_request_maps_validated_data_to_the_dto(): void
     {
         $request = Mockery::mock(NewPasswordRequest::class);
-        $request->shouldReceive('validated')->andReturn([
-            'token' => 'reset-token',
-            'email' => 'john@example.com',
-            'password' => 'new-secret-password',
-        ]);
+        $request->shouldReceive('string')->with('token')->andReturn(Str::of('reset-token'));
+        $request->shouldReceive('string')->with('email')->andReturn(Str::of('john@example.com'));
+        $request->shouldReceive('string')->with('password')->andReturn(Str::of('new-secret-password'));
 
         $data = ResetPasswordData::fromRequest($request);
 

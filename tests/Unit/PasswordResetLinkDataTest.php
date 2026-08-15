@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Modules\Auth\DTOs\PasswordResetLinkData;
 use App\Modules\Auth\Requests\PasswordResetLinkRequest;
+use Illuminate\Support\Str;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
@@ -15,9 +16,7 @@ class PasswordResetLinkDataTest extends TestCase
     public function test_from_request_maps_validated_data_to_the_dto(): void
     {
         $request = Mockery::mock(PasswordResetLinkRequest::class);
-        $request->shouldReceive('validated')->andReturn([
-            'email' => 'john@example.com',
-        ]);
+        $request->shouldReceive('string')->with('email')->andReturn(Str::of('john@example.com'));
 
         $data = PasswordResetLinkData::fromRequest($request);
 

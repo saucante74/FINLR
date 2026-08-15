@@ -14,13 +14,10 @@ readonly class ResetPasswordData
 
     public static function fromRequest(NewPasswordRequest $request): self
     {
-        /** @var array{token: string, email: string, password: string} $validated */
-        $validated = $request->validated();
-
         return new self(
-            token: $validated['token'],
-            email: $validated['email'],
-            password: $validated['password'],
+            token: $request->string('token')->toString(),
+            email: $request->string('email')->toString(),
+            password: $request->string('password')->toString(),
         );
     }
 

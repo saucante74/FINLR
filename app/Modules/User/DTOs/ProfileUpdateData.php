@@ -13,12 +13,9 @@ readonly class ProfileUpdateData
 
     public static function fromRequest(ProfileUpdateRequest $request): self
     {
-        /** @var array{name: string, email: string} $validated */
-        $validated = $request->validated();
-
         return new self(
-            name: $validated['name'],
-            email: $validated['email'],
+            name: $request->string('name')->toString(),
+            email: $request->string('email')->toString(),
         );
     }
 }

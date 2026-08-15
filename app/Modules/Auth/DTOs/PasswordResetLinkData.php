@@ -12,11 +12,8 @@ readonly class PasswordResetLinkData
 
     public static function fromRequest(PasswordResetLinkRequest $request): self
     {
-        /** @var array{email: string} $validated */
-        $validated = $request->validated();
-
         return new self(
-            email: $validated['email'],
+            email: $request->string('email')->toString(),
         );
     }
 
