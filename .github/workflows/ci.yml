@@ -40,6 +40,8 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.EXTRA_PACKAGES_TOKEN }}"}}'
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Check code style (Pint)
