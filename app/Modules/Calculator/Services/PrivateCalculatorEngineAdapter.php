@@ -6,10 +6,15 @@ use App\Modules\Calculator\Contracts\CalculatorEngineInterface;
 use App\Modules\Calculator\DTOs\CalculationInputData;
 use App\Modules\Calculator\DTOs\CalculationResultData;
 use App\Modules\Calculator\DTOs\CompoundPointData;
+use App\Modules\Calculator\DTOs\FreeCalculationInput;
+use App\Modules\Calculator\DTOs\FreeCalculationResult;
 use App\Modules\Calculator\Enums\TaxWrapper;
 use saucante74\CalculatorEngine\CalculatorEngine;
 use saucante74\CalculatorEngine\DTOs\CalculationInput as PackageCalculationInput;
 use saucante74\CalculatorEngine\DTOs\CalculationResult as PackageCalculationResult;
+use saucante74\CalculatorEngine\DTOs\FreeCalculationInput as PackageFreeCalculationInput;
+use saucante74\CalculatorEngine\DTOs\FreeCalculationResult as PackageFreeCalculationResult;
+use saucante74\CalculatorEngine\DTOs\FreeYearlyPoint as PackageFreeYearlyPoint;
 use saucante74\CalculatorEngine\DTOs\YearlyResult as PackageYearlyResult;
 use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
 
@@ -35,6 +40,13 @@ class PrivateCalculatorEngineAdapter implements CalculatorEngineInterface
         $result = $this->engine->calculate($this->toPackageInput($input));
 
         return $this->toCalculationResultData($input, $result);
+    }
+
+    public function calculateFree(FreeCalculationInput $input): FreeCalculationResult
+    {
+        $result = $this->engine->calculateFree($this->toPackageFreeInput($input));
+
+        return $this->toFreeCalculationResult($result);
     }
 
     private function toPackageInput(CalculationInputData $input): PackageCalculationInput
@@ -98,6 +110,50 @@ class PrivateCalculatorEngineAdapter implements CalculatorEngineInterface
             gross: $yearlyResult->grossBalance,
             netReal: $yearlyResult->netBalance,
             netRealAdjusted: $yearlyResult->realNetBalanceWithInflation,
+        );
+    }
+
+    private function toPackageFreeInput(FreeCalculationInput $input): PackageFreeCalculationInput
+    {
+        return new PackageFreeCalculationInput(
+            initialAmount: $input->initialCapital,
+            monthlyContribution: $input->monthlyContribution,
+            durationYears: $input->years,
+            annualReturnRate: $input->annualRate / 100,
+            wrapperFeeRate: $input->wrapperFee / 100,
+            fundFeeRate: $input->fundFee / 100,
+            taxRate: $input->taxRate / 100,
+            inflationRate: $input->inflationEnabled ? $input->inflationRate / 100 : 0.0,
+        );
+    }
+
+    private function toFreeCalculationResult(PackageFreeCalculationResult $result): FreeCalculationResult
+    {
+        $points = array_map(
+            $this->toFreeCompoundPointData(...),
+            $result->yearlyBreakdown,
+        );
+
+        return new FreeCalculationResult(
+            points: $points,
+            invested: $result->invested,
+            grossGains: $result->grossGains,
+            finalGross: $result->finalGross,
+            netRealGains: $result->netRealGains,
+            finalNetReal: $result->finalNetReal,
+            finalNetRealAdjusted: $result->finalNetRealAdjusted,
+            shortfall: $result->shortfall,
+        );
+    }
+
+    private function toFreeCompoundPointData(PackageFreeYearlyPoint $point): CompoundPointData
+    {
+        return new CompoundPointData(
+            year: $point->year,
+            contributions: $point->totalDeposited,
+            gross: $point->grossBalance,
+            netReal: $point->netRealBalance,
+            netRealAdjusted: $point->netRealBalanceAdjusted,
         );
     }
 }
