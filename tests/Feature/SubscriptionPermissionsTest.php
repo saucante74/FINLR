@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Modules\Shared\Models\User;
 use App\Modules\Subscriptions\Enums\Permission;
 use App\Modules\Subscriptions\Enums\Plan;
+use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
 use Tests\TestCase;

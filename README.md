@@ -139,3 +139,32 @@ sail npm run test -- resources/js/test/Pages/Auth/Login.test.jsx
 - **Dark Mode** — handled by the `resources/js/hooks/useDarkMode.js` hook, which persists the theme choice in `localStorage` and toggles the `dark` class on `<html>`. An inline script in `resources/views/app.blade.php` applies the theme before the first render to avoid any flash of unstyled content (FOUC).
 
 ---
+
+## 6. Calculator Engine Architecture (Strategy Pattern)
+
+This project uses the **Strategy Pattern** to decouple the core application logic from the underlying calculation engine. It supports two execution strategies out of the box:
+
+1. **`PrivateCalculatorEngineAdapter` (Production / Default)**  
+   Delegates complex financial calculations, tax rules, and inflation adjustments to the proprietary package [`saucante74/finlr-engine`](https://github.com/saucante74/FINLR-ENGINE).
+2. **`DummyCalculatorEngine` (Fallback / Testing)**  
+   A lightweight, zero-dependency local engine used when the private package is unavailable (e.g., open-source contributors, public CI/CD pipelines) or explicitly forced via configuration.
+
+
+### How It Works Under the Hood
+
+The application relies on Laravel's Service Container to dynamically bind `CalculatorEngineInterface`:
+
+When `CalculatorEngineInterface` is injected into actions or controllers, the `CalculatorServiceProvider` determines which implementation to instantiate:
+- If `saucante74\CalculatorEngine\CalculatorEngine` is loaded **AND** `CALCULATOR_FORCE_DUMMY` is `false` → Uses the **Private Package**.
+- Otherwise → Silently falls back to the **Dummy Engine**.
+
+
+### Testing & Switching Calculator Engine Locally
+
+You can explicitly toggle between the private package and the dummy fallback in your environment.
+
+#### Force the Dummy Engine (Local Dev / Offline Test)
+Add this line to your `.env` file:
+
+```env
+CALCULATOR_FORCE_DUMMY=true

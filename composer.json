@@ -15,6 +15,7 @@
         "laravel/framework": "^13.8",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
+        "saucante74/finlr-engine": "^1.0",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
@@ -97,6 +98,12 @@
             "php-http/discovery": true
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:saucante74/finlr-engine.git"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }
