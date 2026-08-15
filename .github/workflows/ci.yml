@@ -41,7 +41,7 @@ jobs:
 
       - name: Install Composer dependencies
         env:
-          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.EXTRA_PACKAGES_TOKEN }}"}}'
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.FINLR-ENGINE-CI }}"}}'
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Check code style (Pint)
