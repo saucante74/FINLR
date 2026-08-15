@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\FinancialTools\Controllers;
+namespace App\Modules\Calculator\Controllers;
 
-use App\Modules\FinancialTools\Support\FinancialSettings;
+use App\Modules\Calculator\Support\FinancialSettings;
 use App\Modules\Shared\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

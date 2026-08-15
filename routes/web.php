@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\FinancialTools\Controllers\ShowCalculatorController;
+use App\Modules\Calculator\Controllers\ShowCalculatorController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
 use App\Modules\User\Controllers\DeleteAccountController;
 use App\Modules\User\Controllers\EditProfileController;

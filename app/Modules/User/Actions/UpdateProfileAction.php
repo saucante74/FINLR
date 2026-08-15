@@ -2,16 +2,17 @@
 
 namespace App\Modules\User\Actions;
 
+use App\Modules\User\DTOs\ProfileUpdateData;
 use App\Modules\User\Models\User;
 
 class UpdateProfileAction
 {
-    /**
-     * @param  array{name: string, email: string}  $data
-     */
-    public function handle(User $user, array $data): void
+    public function handle(User $user, ProfileUpdateData $data): void
     {
-        $user->fill($data);
+        $user->fill([
+            'name' => $data->name,
+            'email' => $data->email,
+        ]);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
