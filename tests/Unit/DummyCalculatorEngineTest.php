@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Modules\Calculator\DTOs\CalculationInputData;
+use App\Modules\Calculator\DTOs\FreeCalculationInput;
 use App\Modules\Calculator\Enums\TaxWrapper;
 use App\Modules\Calculator\Services\DummyCalculatorEngine;
 use PHPUnit\Framework\TestCase;
@@ -53,6 +54,67 @@ class DummyCalculatorEngineTest extends TestCase
         ));
 
         $this->assertEqualsWithDelta(909.09, $result->finalNetRealAdjusted, 0.01);
+    }
+
+    public function test_it_computes_a_simulated_free_calculation(): void
+    {
+        $engine = new DummyCalculatorEngine;
+
+        $result = $engine->calculateFree($this->makeFreeInput(annualRate: 12.0, years: 1));
+
+        $this->assertSame(1000.0, $result->invested);
+        $this->assertEqualsWithDelta(1126.83, $result->finalGross, 0.01);
+        $this->assertSame($result->finalGross, $result->finalNetReal);
+        $this->assertSame(0.0, $result->shortfall);
+    }
+
+    public function test_free_calculation_ignores_wrapper_fund_fees_and_tax_rate(): void
+    {
+        $engine = new DummyCalculatorEngine;
+
+        $withoutCosts = $engine->calculateFree($this->makeFreeInput(wrapperFee: 0.0, fundFee: 0.0, taxRate: 0.0));
+        $withCosts = $engine->calculateFree($this->makeFreeInput(wrapperFee: 2.0, fundFee: 2.0, taxRate: 30.0));
+
+        $this->assertSame($withoutCosts->finalGross, $withCosts->finalGross);
+        $this->assertSame($withoutCosts->finalNetReal, $withCosts->finalNetReal);
+    }
+
+    public function test_free_calculation_adjusts_the_final_point_for_inflation_when_enabled(): void
+    {
+        $engine = new DummyCalculatorEngine;
+
+        $result = $engine->calculateFree($this->makeFreeInput(
+            annualRate: 0.0,
+            years: 1,
+            inflationRate: 10.0,
+            inflationEnabled: true,
+        ));
+
+        $this->assertEqualsWithDelta(909.09, $result->finalNetRealAdjusted, 0.01);
+    }
+
+    private function makeFreeInput(
+        float $initialCapital = 1000.0,
+        float $monthlyContribution = 0.0,
+        float $annualRate = 0.0,
+        int $years = 1,
+        float $wrapperFee = 0.0,
+        float $fundFee = 0.0,
+        float $taxRate = 0.0,
+        float $inflationRate = 0.0,
+        bool $inflationEnabled = false,
+    ): FreeCalculationInput {
+        return new FreeCalculationInput(
+            initialCapital: $initialCapital,
+            monthlyContribution: $monthlyContribution,
+            annualRate: $annualRate,
+            years: $years,
+            wrapperFee: $wrapperFee,
+            fundFee: $fundFee,
+            taxRate: $taxRate,
+            inflationRate: $inflationRate,
+            inflationEnabled: $inflationEnabled,
+        );
     }
 
     private function makeInput(

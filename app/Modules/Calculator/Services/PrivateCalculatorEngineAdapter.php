@@ -6,22 +6,29 @@ use App\Modules\Calculator\Contracts\CalculatorEngineInterface;
 use App\Modules\Calculator\DTOs\CalculationInputData;
 use App\Modules\Calculator\DTOs\CalculationResultData;
 use App\Modules\Calculator\DTOs\CompoundPointData;
+use App\Modules\Calculator\DTOs\FreeCalculationInput;
+use App\Modules\Calculator\DTOs\FreeCalculationResult;
 use App\Modules\Calculator\Enums\TaxWrapper;
 use saucante74\CalculatorEngine\CalculatorEngine;
-use saucante74\CalculatorEngine\DTOs\CalculationInput as PackageCalculationInput;
-use saucante74\CalculatorEngine\DTOs\CalculationResult as PackageCalculationResult;
-use saucante74\CalculatorEngine\DTOs\YearlyResult as PackageYearlyResult;
 use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
+use saucante74\CalculatorEngine\Freemium\DTOs\FreemiumCalculationInput as PackageFreemiumCalculationInput;
+use saucante74\CalculatorEngine\Freemium\DTOs\FreemiumCalculationResult as PackageFreemiumCalculationResult;
+use saucante74\CalculatorEngine\Freemium\DTOs\FreemiumYearlyPoint as PackageFreemiumYearlyPoint;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationInput as PackageCalculationInput;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationResult as PackageCalculationResult;
+use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult;
 
 /**
  * Adapter around the private saucante74\CalculatorEngine package: translates
  * this module's DTOs to/from the private package's own DTOs so the rest
  * of the application never depends on the private package directly.
  *
- * The private engine only models two fiscal regimes (PEA/CTO) and computes
- * their tax internally, so wrapperFee/fundFee/taxRate have no equivalent on
- * the package side and are not forwarded; TaxWrapper::Av is treated as CTO
- * since it has no preferential/ceiling rule of its own.
+ * calculate() delegates to the package's Premium engine, which only models
+ * two fiscal regimes (PEA/CTO) and computes their tax internally, so
+ * wrapperFee/fundFee/taxRate have no equivalent there and are not forwarded;
+ * TaxWrapper::Av is treated as CTO since it has no preferential/ceiling rule
+ * of its own. calculateFree() delegates to the package's Freemium engine,
+ * which does apply wrapperFee/fundFee/taxRate directly.
  *
  * This class is excluded from PHPStan analysis (see phpstan.neon) because
  * the private package is not installed in every environment.
@@ -35,6 +42,13 @@ class PrivateCalculatorEngineAdapter implements CalculatorEngineInterface
         $result = $this->engine->calculate($this->toPackageInput($input));
 
         return $this->toCalculationResultData($input, $result);
+    }
+
+    public function calculateFree(FreeCalculationInput $input): FreeCalculationResult
+    {
+        $result = $this->engine->calculateFreemium($this->toPackageFreemiumInput($input));
+
+        return $this->toFreeCalculationResult($result);
     }
 
     private function toPackageInput(CalculationInputData $input): PackageCalculationInput
@@ -98,6 +112,50 @@ class PrivateCalculatorEngineAdapter implements CalculatorEngineInterface
             gross: $yearlyResult->grossBalance,
             netReal: $yearlyResult->netBalance,
             netRealAdjusted: $yearlyResult->realNetBalanceWithInflation,
+        );
+    }
+
+    private function toPackageFreemiumInput(FreeCalculationInput $input): PackageFreemiumCalculationInput
+    {
+        return new PackageFreemiumCalculationInput(
+            initialAmount: $input->initialCapital,
+            monthlyContribution: $input->monthlyContribution,
+            durationYears: $input->years,
+            annualReturnRate: $input->annualRate / 100,
+            wrapperFeeRate: $input->wrapperFee / 100,
+            fundFeeRate: $input->fundFee / 100,
+            taxRate: $input->taxRate / 100,
+            inflationRate: $input->inflationEnabled ? $input->inflationRate / 100 : 0.0,
+        );
+    }
+
+    private function toFreeCalculationResult(PackageFreemiumCalculationResult $result): FreeCalculationResult
+    {
+        $points = array_map(
+            $this->toFreeCompoundPointData(...),
+            $result->yearlyBreakdown,
+        );
+
+        return new FreeCalculationResult(
+            points: $points,
+            invested: $result->invested,
+            grossGains: $result->grossGains,
+            finalGross: $result->finalGross,
+            netRealGains: $result->netRealGains,
+            finalNetReal: $result->finalNetReal,
+            finalNetRealAdjusted: $result->finalNetRealAdjusted,
+            shortfall: $result->shortfall,
+        );
+    }
+
+    private function toFreeCompoundPointData(PackageFreemiumYearlyPoint $point): CompoundPointData
+    {
+        return new CompoundPointData(
+            year: $point->year,
+            contributions: $point->totalDeposited,
+            gross: $point->grossBalance,
+            netReal: $point->netRealBalance,
+            netRealAdjusted: $point->netRealBalanceAdjusted,
         );
     }
 }

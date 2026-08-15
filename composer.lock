@@ -5239,22 +5239,25 @@
         },
         {
             "name": "saucante74/finlr-engine",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:saucante74/FINLR-ENGINE.git",
-                "reference": "34b968b63a9a1b630703edf46b3cd0ab0800ca31"
+                "reference": "e364bf5fa0d2f3251559b1968fb3ea0f12980d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saucante74/FINLR-ENGINE/zipball/34b968b63a9a1b630703edf46b3cd0ab0800ca31",
-                "reference": "34b968b63a9a1b630703edf46b3cd0ab0800ca31",
+                "url": "https://api.github.com/repos/saucante74/FINLR-ENGINE/zipball/e364bf5fa0d2f3251559b1968fb3ea0f12980d9b",
+                "reference": "e364bf5fa0d2f3251559b1968fb3ea0f12980d9b",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.3"
             },
             "require-dev": {
+                "laravel/pint": "^1.0",
+                "pestphp/pest": "^4.7",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^12.5"
             },
             "type": "library",
@@ -5278,10 +5281,10 @@
             ],
             "description": "Moteur de calcul financier autonome (intérêts composés, fiscalité PEA/CTO, inflation).",
             "support": {
-                "source": "https://github.com/saucante74/FINLR-ENGINE/tree/v1.0.1",
+                "source": "https://github.com/saucante74/FINLR-ENGINE/tree/v1.0.2",
                 "issues": "https://github.com/saucante74/FINLR-ENGINE/issues"
             },
-            "time": "2026-08-15T19:28:40+00:00"
+            "time": "2026-08-15T21:54:12+00:00"
         },
         {
             "name": "scrivo/highlight.php",
