@@ -6,6 +6,7 @@ use App\Modules\Calculator\Actions\CalculateInvestmentAction;
 use App\Modules\Calculator\Contracts\CalculatorEngineInterface;
 use App\Modules\Calculator\DTOs\CalculationInputData;
 use App\Modules\Calculator\DTOs\CalculationResultData;
+use App\Modules\Calculator\Enums\TaxWrapper;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
@@ -26,6 +27,7 @@ class CalculateInvestmentActionTest extends TestCase
             taxRate: 0.0,
             inflationRate: 0.0,
             inflationEnabled: false,
+            wrapper: TaxWrapper::Cto,
         );
 
         $expected = new CalculationResultData(

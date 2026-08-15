@@ -2,6 +2,8 @@
 
 namespace App\Modules\Calculator\DTOs;
 
+use App\Modules\Calculator\Enums\TaxWrapper;
+
 readonly class CalculationInputData
 {
     public function __construct(
@@ -14,5 +16,6 @@ readonly class CalculationInputData
         public float $taxRate,
         public float $inflationRate,
         public bool $inflationEnabled,
+        public TaxWrapper $wrapper,
     ) {}
 }

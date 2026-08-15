@@ -13,7 +13,7 @@ class CalculatorServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CalculatorEngineInterface::class, function (Application $app): CalculatorEngineInterface {
-            if (class_exists('saucante74\\CalculatorEngine\\CalculatorEngine')) {
+            if (class_exists('saucante74\\CalculatorEngine\\CalculatorEngine') && ! config('calculator.force_dummy')) {
                 return $app->make(PrivateCalculatorEngineAdapter::class);
             }
 

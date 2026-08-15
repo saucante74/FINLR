@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Modules\Calculator\DTOs\CalculationInputData;
+use App\Modules\Calculator\Enums\TaxWrapper;
 use App\Modules\Calculator\Services\DummyCalculatorEngine;
 use PHPUnit\Framework\TestCase;
 
@@ -64,6 +65,7 @@ class DummyCalculatorEngineTest extends TestCase
         float $taxRate = 0.0,
         float $inflationRate = 0.0,
         bool $inflationEnabled = false,
+        TaxWrapper $wrapper = TaxWrapper::Cto,
     ): CalculationInputData {
         return new CalculationInputData(
             initialCapital: $initialCapital,
@@ -75,6 +77,7 @@ class DummyCalculatorEngineTest extends TestCase
             taxRate: $taxRate,
             inflationRate: $inflationRate,
             inflationEnabled: $inflationEnabled,
+            wrapper: $wrapper,
         );
     }
 }
