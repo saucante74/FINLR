@@ -22,9 +22,6 @@ use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult
  * their tax internally, so wrapperFee/fundFee/taxRate have no equivalent on
  * the package side and are not forwarded; TaxWrapper::Av is treated as CTO
  * since it has no preferential/ceiling rule of its own.
- *
- * This class is excluded from PHPStan analysis (see phpstan.neon) because
- * the private package is not installed in every environment.
  */
 class PrivateCalculatorEngineAdapter implements CalculatorEngineInterface
 {
