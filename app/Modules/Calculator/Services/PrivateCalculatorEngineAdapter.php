@@ -8,10 +8,10 @@ use App\Modules\Calculator\DTOs\CalculationResultData;
 use App\Modules\Calculator\DTOs\CompoundPointData;
 use App\Modules\Calculator\Enums\TaxWrapper;
 use saucante74\CalculatorEngine\CalculatorEngine;
-use saucante74\CalculatorEngine\DTOs\CalculationInput as PackageCalculationInput;
-use saucante74\CalculatorEngine\DTOs\CalculationResult as PackageCalculationResult;
-use saucante74\CalculatorEngine\DTOs\YearlyResult as PackageYearlyResult;
 use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationInput as PackageCalculationInput;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationResult as PackageCalculationResult;
+use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult;
 
 /**
  * Adapter around the private saucante74\CalculatorEngine package: translates
