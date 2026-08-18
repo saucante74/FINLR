@@ -77,7 +77,6 @@ describe('Navbar', () => {
                         name: 'Jane Doe',
                         email: 'jane@example.com',
                         email_verified_at: null,
-                        subscription_plan: 'free',
                     },
                     plan: 'free',
                     permissions: [],

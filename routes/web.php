@@ -13,7 +13,7 @@ Route::get('/dashboard', ShowDashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', EditProfileController::class)->name('profile.edit');
     Route::patch('/profile', UpdateProfileController::class)->name('profile.update');
     Route::delete('/profile', DeleteAccountController::class)->name('profile.destroy');

@@ -25,7 +25,14 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $user,
+                // Never share the whole Eloquent model: these props are serialised
+                // into the HTML of every page, including the public calculator.
+                'user' => $user === null ? null : [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'email_verified_at' => $user->email_verified_at,
+                ],
                 'plan' => $user?->subscription_plan?->value,
                 'permissions' => $user
                     ? collect(Permission::cases())

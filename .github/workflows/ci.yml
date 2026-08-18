@@ -98,7 +98,7 @@ jobs:
         run: vendor/bin/phpstan analyse
 
   tests:
-    name: Tests (Pest / PHPUnit)
+    name: Tests (PHPUnit)
     runs-on: ubuntu-latest
 
     steps:
@@ -143,5 +143,8 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Run test suite
+      - name: Run front-end test suite (Vitest)
+        run: npm run test
+
+      - name: Run back-end test suite (PHPUnit)
         run: php artisan test
