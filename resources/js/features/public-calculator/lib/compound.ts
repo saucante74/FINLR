@@ -46,6 +46,7 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
         fundFee,
         taxRate,
         inflationRate,
+        inflationEnabled,
     } = inputs;
 
     const safeYears = Math.max(0, Math.round(years) || 0);
@@ -60,7 +61,7 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
     let contributions = initialCapital;
 
     const points = [
-        buildPoint(0, contributions, grossCapital, netCapital, taxRate, inflationRate),
+        buildPoint(0, contributions, grossCapital, netCapital, taxRate, inflationEnabled ? inflationRate : 0),
     ];
 
     for (let month = 1; month <= months; month += 1) {
@@ -76,7 +77,7 @@ export function computeCompound(inputs: CompoundInputs): CompoundResult {
                     grossCapital,
                     netCapital,
                     taxRate,
-                    inflationRate,
+                    inflationEnabled ? inflationRate : 0,
                 ),
             );
         }
