@@ -12,3 +12,8 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+composer.lock linguist-generated=true
+package-lock.json linguist-generated=true
+resources/js/components/ui/* linguist-vendored=true
+public/build/** linguist-generated=true
