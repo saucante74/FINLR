@@ -14,6 +14,7 @@ import {
 import CalculatorForm from '@/features/public-calculator/components/CalculatorForm';
 import GrowthChart from '@/features/public-calculator/components/GrowthChart';
 import KpiCards from '@/features/public-calculator/components/KpiCards';
+import { FORM_DEFAULTS, TAX_SUGGESTIONS } from '@/features/public-calculator/constants';
 import { computeCompound } from '@/features/public-calculator/lib/compound';
 import type {
     CompoundInputs,
@@ -23,10 +24,9 @@ import type {
 export default function PublicCalculator({
     canLogin,
     canRegister,
-    financial,
 }: PublicCalculatorPageProps) {
     const { t } = useTranslation();
-    const [inputs, setInputs] = useState<CompoundInputs>(financial.defaults);
+    const [inputs, setInputs] = useState<CompoundInputs>(FORM_DEFAULTS);
 
     const result = useMemo(() => computeCompound(inputs), [inputs]);
 
@@ -57,7 +57,7 @@ export default function PublicCalculator({
                     <CalculatorForm
                         inputs={inputs}
                         onChange={handleChange}
-                        taxSuggestions={financial.taxSuggestions}
+                        taxSuggestions={TAX_SUGGESTIONS}
                     />
 
                     <div className="flex h-full flex-col gap-6">

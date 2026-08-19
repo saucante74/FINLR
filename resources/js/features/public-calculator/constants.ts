@@ -1,4 +1,30 @@
-import type { ChartSeries } from '@/features/public-calculator/types';
+import type { ChartSeries, CompoundInputs, TaxSuggestion } from '@/features/public-calculator/types';
+
+/**
+ * Default values pre-filled in the calculator form on first render.
+ *
+ * The public calculator is a purely indicative, client-side tool: it never
+ * calls the server to compute or validate anything, so these values live
+ * here rather than behind an Inertia prop.
+ */
+export const FORM_DEFAULTS: CompoundInputs = {
+    initialCapital: 10000,
+    monthlyContribution: 300,
+    annualRate: 7,
+    years: 20,
+    wrapperFee: 0.5,
+    fundFee: 0.3,
+    taxRate: 18.6,
+    inflationRate: 2,
+    inflationEnabled: false,
+};
+
+/** Suggested capital gains tax rate per tax wrapper, in display order. */
+export const TAX_SUGGESTIONS: TaxSuggestion[] = [
+    { wrapper: 'pea', rate: 18.6 },
+    { wrapper: 'av', rate: 24.7 },
+    { wrapper: 'cto', rate: 31.4 },
+];
 
 /** ISO 4217 code used to format every amount displayed by the public calculator. */
 export const CURRENCY = 'EUR';
