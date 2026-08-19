@@ -1,0 +1,51 @@
+<?php
+
+namespace Tests\Unit\Simulator;
+
+use App\Modules\Simulator\Actions\CalculateProjectionAction;
+use App\Modules\Simulator\Contracts\SimulationEngineInterface;
+use App\Modules\Simulator\DTOs\CalculationInputData;
+use App\Modules\Simulator\DTOs\CalculationResultData;
+use App\Modules\Simulator\Enums\TaxWrapper;
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
+
+class CalculateProjectionActionTest extends TestCase
+{
+    use MockeryPHPUnitIntegration;
+
+    public function test_it_delegates_the_calculation_to_the_injected_engine(): void
+    {
+        $input = new CalculationInputData(
+            initialCapital: 1000.0,
+            monthlyContribution: 0.0,
+            annualRate: 0.0,
+            years: 0,
+            wrapperFee: 0.0,
+            fundFee: 0.0,
+            taxRate: 0.0,
+            inflationRate: 0.0,
+            inflationEnabled: false,
+            wrapper: TaxWrapper::Cto,
+        );
+
+        $expected = new CalculationResultData(
+            points: [],
+            invested: 1000.0,
+            grossGains: 0.0,
+            finalGross: 1000.0,
+            netRealGains: 0.0,
+            finalNetReal: 1000.0,
+            finalNetRealAdjusted: 1000.0,
+            shortfall: 0.0,
+        );
+
+        $engine = Mockery::mock(SimulationEngineInterface::class);
+        $engine->shouldReceive('calculate')->once()->with($input)->andReturn($expected);
+
+        $action = new CalculateProjectionAction($engine);
+
+        $this->assertSame($expected, $action->handle($input));
+    }
+}

@@ -73,7 +73,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
         <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
                 <Link
-                    href="/"
+                    href={route('calculator.freemium')}
                     className="flex items-center gap-2 font-semibold tracking-tight text-foreground"
                 >
                     <ApplicationLogo className="size-6 fill-current text-primary" />

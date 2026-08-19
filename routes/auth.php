@@ -21,7 +21,8 @@ Route::middleware('guest')->group(function () {
     Route::get('register', ShowRegistrationFormController::class)
         ->name('register');
 
-    Route::post('register', StoreUserController::class);
+    Route::post('register', StoreUserController::class)
+        ->middleware('throttle:register');
 
     Route::get('login', ShowLoginFormController::class)
         ->name('login');
@@ -32,12 +33,14 @@ Route::middleware('guest')->group(function () {
         ->name('password.request');
 
     Route::post('forgot-password', SendPasswordResetLinkController::class)
+        ->middleware('throttle:forgot-password')
         ->name('password.email');
 
     Route::get('reset-password/{token}', ShowResetPasswordFormController::class)
         ->name('password.reset');
 
     Route::post('reset-password', ResetPasswordController::class)
+        ->middleware('throttle:reset-password')
         ->name('password.store');
 });
 

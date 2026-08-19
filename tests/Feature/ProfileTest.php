@@ -21,6 +21,25 @@ class ProfileTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_profile_routes_are_closed_to_users_with_an_unverified_email(): void
+    {
+        $user = User::factory()->unverified()->create();
+
+        $this->actingAs($user)->get('/profile')
+            ->assertRedirect(route('verification.notice'));
+
+        $this->actingAs($user)->patch('/profile', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ])->assertRedirect(route('verification.notice'));
+
+        $this->actingAs($user)->delete('/profile', [
+            'password' => 'password',
+        ])->assertRedirect(route('verification.notice'));
+
+        $this->assertNotNull($user->fresh());
+    }
+
     public function test_profile_information_can_be_updated(): void
     {
         $user = User::factory()->create();
