@@ -13,7 +13,6 @@ const user = {
     name: 'Jane Doe',
     email: 'jane@example.com',
     email_verified_at: '2024-01-01T00:00:00.000Z',
-    subscription_plan: 'free' as const,
 };
 
 describe('Profile Edit page', () => {

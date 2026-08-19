@@ -10,8 +10,5 @@ parameters:
 
     excludePaths:
         - app/Providers/
-        # References the private saucante74\CalculatorEngine package, which is not
-        # installed in every environment (see CalculatorServiceProvider).
-        - app/Modules/Calculator/Services/PrivateCalculatorEngineAdapter.php
 
     parseModelCastsMethod: true
