@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import i18n from '@/i18n';
 
-import CalculatorForm from '@/features/public-calculator/components/CalculatorForm';
-import type { CompoundInputs } from '@/features/public-calculator/types';
+import CalculatorForm from '@/features/freemium-calculator/components/CalculatorForm';
+import type { CompoundInputs } from '@/features/freemium-calculator/types';
 
 const inputs: CompoundInputs = {
     initialCapital: 1000,

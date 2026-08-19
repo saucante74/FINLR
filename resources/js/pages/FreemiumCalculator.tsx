@@ -11,20 +11,20 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import CalculatorForm from '@/features/public-calculator/components/CalculatorForm';
-import GrowthChart from '@/features/public-calculator/components/GrowthChart';
-import KpiCards from '@/features/public-calculator/components/KpiCards';
-import { FORM_DEFAULTS, TAX_SUGGESTIONS } from '@/features/public-calculator/constants';
-import { computeCompound } from '@/features/public-calculator/lib/compound';
+import CalculatorForm from '@/features/freemium-calculator/components/CalculatorForm';
+import GrowthChart from '@/features/freemium-calculator/components/GrowthChart';
+import KpiCards from '@/features/freemium-calculator/components/KpiCards';
+import { FORM_DEFAULTS, TAX_SUGGESTIONS } from '@/features/freemium-calculator/constants';
+import { computeCompound } from '@/features/freemium-calculator/lib/compound';
 import type {
     CompoundInputs,
-    PublicCalculatorPageProps,
-} from '@/features/public-calculator/types';
+    FreemiumCalculatorPageProps,
+} from '@/features/freemium-calculator/types';
 
-export default function PublicCalculator({
+export default function FreemiumCalculator({
     canLogin,
     canRegister,
-}: PublicCalculatorPageProps) {
+}: FreemiumCalculatorPageProps) {
     const { t } = useTranslation();
     const [inputs, setInputs] = useState<CompoundInputs>(FORM_DEFAULTS);
 

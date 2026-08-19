@@ -1,4 +1,4 @@
-import type { ChartSeries, CompoundInputs, TaxSuggestion } from '@/features/public-calculator/types';
+import type { ChartSeries, CompoundInputs, TaxSuggestion } from '@/features/freemium-calculator/types';
 
 /**
  * Default values pre-filled in the calculator form on first render.

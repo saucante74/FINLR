@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { computeCompound } from '@/features/public-calculator/lib/compound';
-import type { CompoundInputs } from '@/features/public-calculator/types';
+import { computeCompound } from '@/features/freemium-calculator/lib/compound';
+import type { CompoundInputs } from '@/features/freemium-calculator/types';
 
 /**
  * Every expected value in this file is derived from the closed-form ordinary

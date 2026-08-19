@@ -3,12 +3,12 @@ import {
     CURRENCY,
     CURRENCY_FRACTION_DIGITS,
     FALLBACK_LOCALE,
-} from '@/features/public-calculator/constants';
+} from '@/features/freemium-calculator/constants';
 import type {
     CompoundInputs,
     CompoundPoint,
     CompoundResult,
-} from '@/features/public-calculator/types';
+} from '@/features/freemium-calculator/types';
 
 function buildPoint(
     year: number,

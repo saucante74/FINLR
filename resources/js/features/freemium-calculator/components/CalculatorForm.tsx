@@ -14,8 +14,8 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { buildCompoundInputsSchema } from '@/features/public-calculator/lib/validation';
-import type { CompoundInputs, TaxSuggestion } from '@/features/public-calculator/types';
+import { buildCompoundInputsSchema } from '@/features/freemium-calculator/lib/validation';
+import type { CompoundInputs, TaxSuggestion } from '@/features/freemium-calculator/types';
 import { cn } from '@/lib/utils';
 
 interface FieldProps {

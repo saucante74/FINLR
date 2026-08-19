@@ -2,8 +2,8 @@ import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Card } from '@/components/ui/card';
-import { formatCurrency } from '@/features/public-calculator/lib/compound';
-import type { CompoundResult } from '@/features/public-calculator/types';
+import { formatCurrency } from '@/features/freemium-calculator/lib/compound';
+import type { CompoundResult } from '@/features/freemium-calculator/types';
 import { cn } from '@/lib/utils';
 
 interface KpiCardsProps {

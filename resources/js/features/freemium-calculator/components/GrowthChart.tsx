@@ -7,13 +7,13 @@ import {
     Y_AXIS_MARGIN_RATIO,
     Y_AXIS_SMALL_STEP,
     Y_AXIS_STEP_THRESHOLD,
-} from '@/features/public-calculator/constants';
-import { formatCompact, formatCurrency } from '@/features/public-calculator/lib/compound';
+} from '@/features/freemium-calculator/constants';
+import { formatCompact, formatCurrency } from '@/features/freemium-calculator/lib/compound';
 import type {
     ChartSeriesKey,
     CompoundPoint,
     CompoundResult,
-} from '@/features/public-calculator/types';
+} from '@/features/freemium-calculator/types';
 import { cn } from '@/lib/utils';
 
 function niceCeil(value: number): number {

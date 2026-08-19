@@ -34,7 +34,7 @@ export interface TaxSuggestion {
     rate: number;
 }
 
-export interface PublicCalculatorPageProps {
+export interface FreemiumCalculatorPageProps {
     canLogin: boolean;
     canRegister: boolean;
 }
