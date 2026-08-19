@@ -1,13 +1,13 @@
 <?php
 
-use App\Modules\Calculator\Controllers\ShowCalculatorController;
+use App\Modules\PublicCalculator\Controllers\ShowPublicCalculatorController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
 use App\Modules\User\Controllers\DeleteAccountController;
 use App\Modules\User\Controllers\EditProfileController;
 use App\Modules\User\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ShowCalculatorController::class);
+Route::get('/', ShowPublicCalculatorController::class);
 
 Route::get('/dashboard', ShowDashboardController::class)
     ->middleware(['auth', 'verified'])

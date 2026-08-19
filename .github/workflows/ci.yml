@@ -94,6 +94,9 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
+      - name: Check lock file is in sync with composer.json
+        run: composer validate --check-lock --no-check-publish
+
       - name: Static analysis (Larastan)
         run: vendor/bin/phpstan analyse
 
