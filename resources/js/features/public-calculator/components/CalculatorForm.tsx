@@ -1,4 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Info } from 'lucide-react';
+import { useEffect, useMemo } from 'react';
+import { useForm, type UseFormRegisterReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -11,21 +14,22 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import { buildCompoundInputsSchema } from '@/features/public-calculator/lib/validation';
 import type { CompoundInputs, TaxSuggestion } from '@/features/public-calculator/types';
+import { cn } from '@/lib/utils';
 
 interface FieldProps {
     id: string;
     label: string;
-    value: number;
     unit?: string;
     step?: number;
     min?: number;
     tooltip?: string;
-    onChange: (value: number) => void;
+    error?: string;
+    registration: UseFormRegisterReturn;
 }
 
-function Field({ id, label, value, unit, step = 1, min = 0, tooltip, onChange }: FieldProps) {
+function Field({ id, label, unit, step = 1, min = 0, tooltip, error, registration }: FieldProps) {
     return (
         <div className="flex flex-col gap-2">
             <Label htmlFor={id} className="flex items-center gap-1.5">
@@ -41,11 +45,11 @@ function Field({ id, label, value, unit, step = 1, min = 0, tooltip, onChange }:
                     id={id}
                     type="number"
                     inputMode="decimal"
-                    value={Number.isFinite(value) ? value : ''}
                     step={step}
                     min={min}
-                    onChange={(e) => onChange(Number.parseFloat(e.target.value) || 0)}
+                    aria-invalid={Boolean(error)}
                     className={cn(unit && 'pr-10', 'tabular-nums')}
+                    {...registration}
                 />
                 {unit && (
                     <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
@@ -53,6 +57,7 @@ function Field({ id, label, value, unit, step = 1, min = 0, tooltip, onChange }:
                     </span>
                 )}
             </div>
+            {error && <p className="text-xs text-destructive">{error}</p>}
         </div>
     );
 }
@@ -65,6 +70,46 @@ interface CalculatorFormProps {
 
 export default function CalculatorForm({ inputs, onChange, taxSuggestions }: CalculatorFormProps) {
     const { t } = useTranslation();
+    const schema = useMemo(() => buildCompoundInputsSchema(t), [t]);
+
+    const {
+        register,
+        watch,
+        setValue,
+        formState: { errors, touchedFields },
+    } = useForm<CompoundInputs>({
+        resolver: zodResolver(schema),
+        defaultValues: inputs,
+        mode: 'onChange',
+    });
+
+    // Propagate each field to the parent (and trigger a recompute) the
+    // instant it validates, independently of react-hook-form's own async
+    // validation cycle so there is no race between the two.
+    useEffect(() => {
+        const subscription = watch((values, { name, type }) => {
+            if (!name || type !== 'change') return;
+
+            const fieldSchema = schema.shape[name];
+            const parsed = fieldSchema.safeParse(values[name]);
+
+            if (parsed.success) {
+                onChange({ [name]: parsed.data } as Partial<CompoundInputs>);
+            }
+        });
+
+        return () => subscription.unsubscribe();
+    }, [watch, schema, onChange]);
+
+    const liveYears = watch('years');
+
+    const handleTaxSuggestionClick = (rate: number) => {
+        setValue('taxRate', rate, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
+        onChange({ taxRate: rate });
+    };
+
+    const errorFor = (id: keyof CompoundInputs): string | undefined =>
+        touchedFields[id] ? errors[id]?.message : undefined;
 
     return (
         <Card className="h-full gap-0 py-0">
@@ -80,33 +125,33 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                         label={t('form.initialCapital')}
                         unit={t('form.currencyUnit')}
                         step={100}
-                        value={inputs.initialCapital}
-                        onChange={(v) => onChange({ initialCapital: v })}
+                        error={errorFor('initialCapital')}
+                        registration={register('initialCapital', { valueAsNumber: true })}
                     />
                     <Field
                         id="monthlyContribution"
                         label={t('form.monthlyContribution')}
                         unit={t('form.currencyUnit')}
                         step={50}
-                        value={inputs.monthlyContribution}
-                        onChange={(v) => onChange({ monthlyContribution: v })}
+                        error={errorFor('monthlyContribution')}
+                        registration={register('monthlyContribution', { valueAsNumber: true })}
                     />
                     <Field
                         id="annualRate"
                         label={t('form.annualRate')}
                         unit={t('form.percentUnit')}
                         step={0.1}
-                        value={inputs.annualRate}
-                        onChange={(v) => onChange({ annualRate: v })}
+                        error={errorFor('annualRate')}
+                        registration={register('annualRate', { valueAsNumber: true })}
                     />
                     <Field
                         id="years"
                         label={t('form.years')}
-                        unit={t('form.yearsUnit', { count: inputs.years })}
+                        unit={t('form.yearsUnit', { count: liveYears })}
                         step={1}
                         min={1}
-                        value={inputs.years}
-                        onChange={(v) => onChange({ years: v })}
+                        error={errorFor('years')}
+                        registration={register('years', { valueAsNumber: true })}
                     />
                 </div>
 
@@ -120,18 +165,18 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                             label={t('form.wrapperFee')}
                             unit={t('form.percentUnit')}
                             step={0.1}
-                            value={inputs.wrapperFee}
                             tooltip={t('form.wrapperFeeInfo')}
-                            onChange={(v) => onChange({ wrapperFee: v })}
+                            error={errorFor('wrapperFee')}
+                            registration={register('wrapperFee', { valueAsNumber: true })}
                         />
                         <Field
                             id="fundFee"
                             label={t('form.fundFee')}
                             unit={t('form.percentUnit')}
                             step={0.1}
-                            value={inputs.fundFee}
                             tooltip={t('form.fundFeeInfo')}
-                            onChange={(v) => onChange({ fundFee: v })}
+                            error={errorFor('fundFee')}
+                            registration={register('fundFee', { valueAsNumber: true })}
                         />
                     </div>
                 </section>
@@ -145,8 +190,8 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                         label={t('form.inflationRate')}
                         unit={t('form.percentUnit')}
                         step={0.1}
-                        value={inputs.inflationRate}
-                        onChange={(v) => onChange({ inflationRate: v })}
+                        error={errorFor('inflationRate')}
+                        registration={register('inflationRate', { valueAsNumber: true })}
                     />
                     <div className="flex items-center gap-2">
                         <Checkbox
@@ -171,8 +216,8 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                         label={t('form.taxRate')}
                         unit={t('form.percentUnit')}
                         step={0.1}
-                        value={inputs.taxRate}
-                        onChange={(v) => onChange({ taxRate: v })}
+                        error={errorFor('taxRate')}
+                        registration={register('taxRate', { valueAsNumber: true })}
                     />
                     <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs text-muted-foreground">
@@ -184,7 +229,7 @@ export default function CalculatorForm({ inputs, onChange, taxSuggestions }: Cal
                                 <button
                                     key={s.wrapper}
                                     type="button"
-                                    onClick={() => onChange({ taxRate: s.rate })}
+                                    onClick={() => handleTaxSuggestionClick(s.rate)}
                                     aria-pressed={active}
                                     className={cn(
                                         'rounded-full border px-2.5 py-1 text-xs font-medium transition-colors',
