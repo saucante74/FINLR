@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Simulator;
+namespace Tests\Unit\SimulationEngine;
 
-use App\Modules\Simulator\DTOs\CalculationInputData;
-use App\Modules\Simulator\Enums\TaxWrapper;
-use App\Modules\Simulator\Services\FinlrEngineAdapter;
+use App\Modules\SimulationEngine\DTOs\CalculationInputData;
+use App\Modules\SimulationEngine\Enums\TaxWrapper;
+use App\Modules\SimulationEngine\Services\FinlrEngineAdapter;
 use PHPUnit\Framework\TestCase;
 use saucante74\CalculatorEngine\CalculatorEngine;
 

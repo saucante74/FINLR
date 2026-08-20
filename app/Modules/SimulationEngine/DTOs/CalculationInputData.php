@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Simulator\DTOs;
+namespace App\Modules\SimulationEngine\DTOs;
 
-use App\Modules\Simulator\Enums\TaxWrapper;
+use App\Modules\SimulationEngine\Enums\TaxWrapper;
 
 readonly class CalculationInputData
 {

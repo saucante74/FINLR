@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Simulator\DTOs;
+namespace App\Modules\SimulationEngine\DTOs;
 
 readonly class CalculationResultData
 {

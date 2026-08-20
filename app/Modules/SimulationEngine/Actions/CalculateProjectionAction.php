@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Simulator\Actions;
+namespace App\Modules\SimulationEngine\Actions;
 
-use App\Modules\Simulator\Contracts\SimulationEngineInterface;
-use App\Modules\Simulator\DTOs\CalculationInputData;
-use App\Modules\Simulator\DTOs\CalculationResultData;
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
+use App\Modules\SimulationEngine\DTOs\CalculationInputData;
+use App\Modules\SimulationEngine\DTOs\CalculationResultData;
 
 class CalculateProjectionAction
 {

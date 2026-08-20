@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Modules\Simulator\Services;
+namespace App\Modules\SimulationEngine\Services;
 
-use App\Modules\Simulator\Contracts\SimulationEngineInterface;
-use App\Modules\Simulator\DTOs\CalculationInputData;
-use App\Modules\Simulator\DTOs\CalculationResultData;
-use App\Modules\Simulator\DTOs\CompoundPointData;
-use App\Modules\Simulator\Enums\TaxWrapper;
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
+use App\Modules\SimulationEngine\DTOs\CalculationInputData;
+use App\Modules\SimulationEngine\DTOs\CalculationResultData;
+use App\Modules\SimulationEngine\DTOs\CompoundPointData;
+use App\Modules\SimulationEngine\Enums\TaxWrapper;
 use saucante74\CalculatorEngine\CalculatorEngine;
 use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
 use saucante74\CalculatorEngine\Premium\DTOs\CalculationInput as PackageCalculationInput;
