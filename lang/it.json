@@ -151,6 +151,12 @@
         "description": "Ecco una panoramica della tua attività.",
         "welcomeMessage": "Hai effettuato l'accesso."
     },
+    "scenario": {
+        "eyebrow": "Scenario salvato",
+        "title": "Risultato della simulazione",
+        "idLabel": "ID scenario",
+        "comingSoon": "Risultati in arrivo."
+    },
     "profile": {
         "eyebrow": "Account",
         "title": "Profilo",
