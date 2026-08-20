@@ -43,10 +43,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
         // PHP value round-tripped through json_encode/json_decode. The
         // expected side is normalized through the same round-trip so the
         // comparison reflects what the browser actually receives.
-        $expectedDefaults = json_decode(
-            json_encode(SimulatorDefaultsData::default()->toArray()),
-            true,
-        );
+        $expectedDefaults = $this->normalizeForJsonComparison(SimulatorDefaultsData::default()->toArray());
 
         $response->assertInertia(fn (Assert $page) => $page
             ->component('simulator/SingleEnvelopeSimulator')

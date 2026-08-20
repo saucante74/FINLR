@@ -67,9 +67,12 @@ describe('SingleEnvelopeForm', () => {
         expect(
             screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.inflationEnabled')),
         ).not.toBeChecked();
+        // Radix Select doesn't render a native <select>, so there is no
+        // form value to assert on the trigger — it displays the selected
+        // item's translated label instead.
         expect(
             screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.wrapper')),
-        ).toHaveValue('pea');
+        ).toHaveTextContent(i18n.t('simulator.singleEnvelope.form.wrapperOptions.pea'));
     });
 
     it('disables the submit button while the form is processing', () => {

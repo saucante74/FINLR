@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SingleEnvelopeFormValues, TaxWrapper } from '@/features/single-envelope-simulator/types';
 
 const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto', 'av'];
@@ -136,20 +137,18 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
 
             <div className="flex flex-col gap-2">
                 <Label htmlFor="wrapper">{t('simulator.singleEnvelope.form.wrapper')}</Label>
-                <select
-                    id="wrapper"
-                    name="wrapper"
-                    value={data.wrapper}
-                    aria-invalid={Boolean(errors.wrapper)}
-                    onChange={(e) => setData('wrapper', e.target.value as TaxWrapper)}
-                    className="h-8 w-full rounded-lg border border-input bg-background px-2.5 py-1 text-sm text-foreground shadow-xs outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive"
-                >
-                    {WRAPPER_OPTIONS.map((option) => (
-                        <option key={option} value={option}>
-                            {t(`simulator.singleEnvelope.form.wrapperOptions.${option}`)}
-                        </option>
-                    ))}
-                </select>
+                <Select value={data.wrapper} onValueChange={(value) => setData('wrapper', value as TaxWrapper)}>
+                    <SelectTrigger id="wrapper" aria-invalid={Boolean(errors.wrapper)} className="w-full">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {WRAPPER_OPTIONS.map((option) => (
+                            <SelectItem key={option} value={option}>
+                                {t(`simulator.singleEnvelope.form.wrapperOptions.${option}`)}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
                 {errors.wrapper && <p className="text-xs text-destructive">{errors.wrapper}</p>}
             </div>
 
