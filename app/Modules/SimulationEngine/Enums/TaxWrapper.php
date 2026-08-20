@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Simulator\Enums;
+namespace App\Modules\SimulationEngine\Enums;
 
 enum TaxWrapper: string
 {

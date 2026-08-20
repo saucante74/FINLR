@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Simulator;
+namespace Tests\Unit\SimulationEngine;
 
-use App\Modules\Simulator\Actions\CalculateProjectionAction;
-use App\Modules\Simulator\Contracts\SimulationEngineInterface;
-use App\Modules\Simulator\DTOs\CalculationInputData;
-use App\Modules\Simulator\DTOs\CalculationResultData;
-use App\Modules\Simulator\Enums\TaxWrapper;
+use App\Modules\SimulationEngine\Actions\CalculateProjectionAction;
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
+use App\Modules\SimulationEngine\DTOs\CalculationInputData;
+use App\Modules\SimulationEngine\DTOs\CalculationResultData;
+use App\Modules\SimulationEngine\Enums\TaxWrapper;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;

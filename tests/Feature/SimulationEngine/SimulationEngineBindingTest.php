@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\Simulator;
+namespace Tests\Feature\SimulationEngine;
 
-use App\Modules\Simulator\Actions\CalculateProjectionAction;
-use App\Modules\Simulator\Contracts\SimulationEngineInterface;
-use App\Modules\Simulator\Services\FinlrEngineAdapter;
+use App\Modules\SimulationEngine\Actions\CalculateProjectionAction;
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
+use App\Modules\SimulationEngine\Services\FinlrEngineAdapter;
 use Tests\TestCase;
 
 class SimulationEngineBindingTest extends TestCase
