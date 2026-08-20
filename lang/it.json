@@ -161,7 +161,24 @@
         "singleEnvelope": {
             "eyebrow": "Simulatore mono-involucro",
             "title": "Simulazione mono-involucro",
-            "formComingSoon": "Modulo in arrivo."
+            "form": {
+                "initialCapital": "Capitale iniziale",
+                "monthlyContribution": "Versamenti mensili",
+                "annualRate": "Tasso lordo annuo",
+                "years": "Durata (anni)",
+                "wrapperFee": "Costi dell'involucro",
+                "fundFee": "Costi di gestione",
+                "taxRate": "Aliquota fiscale",
+                "inflationRate": "Inflazione annua",
+                "inflationEnabled": "Tieni conto dell'inflazione nel calcolo",
+                "wrapper": "Involucro fiscale",
+                "wrapperOptions": {
+                    "pea": "PEA",
+                    "cto": "Conto titoli",
+                    "av": "Assicurazione sulla vita"
+                },
+                "submit": "Avvia la simulazione"
+            }
         }
     },
     "profile": {

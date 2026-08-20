@@ -161,7 +161,24 @@
         "singleEnvelope": {
             "eyebrow": "Single-envelope simulator",
             "title": "Single-envelope simulation",
-            "formComingSoon": "Form coming soon."
+            "form": {
+                "initialCapital": "Initial capital",
+                "monthlyContribution": "Monthly contributions",
+                "annualRate": "Annual gross rate",
+                "years": "Duration (years)",
+                "wrapperFee": "Wrapper fee",
+                "fundFee": "Fund fee",
+                "taxRate": "Tax rate",
+                "inflationRate": "Annual inflation",
+                "inflationEnabled": "Account for inflation in the calculation",
+                "wrapper": "Tax wrapper",
+                "wrapperOptions": {
+                    "pea": "PEA",
+                    "cto": "Brokerage account",
+                    "av": "Life insurance"
+                },
+                "submit": "Run the simulation"
+            }
         }
     },
     "profile": {

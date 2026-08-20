@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Card, CardContent } from '@/components/ui/card';
+import SingleEnvelopeForm from '@/features/single-envelope-simulator/components/SingleEnvelopeForm';
+import type { SingleEnvelopeSimulatorPageProps } from '@/features/single-envelope-simulator/types';
 
-export default function SingleEnvelopeSimulator() {
+export default function SingleEnvelopeSimulator({ defaults }: SingleEnvelopeSimulatorPageProps) {
     const { t } = useTranslation();
 
     return (
@@ -27,7 +29,7 @@ export default function SingleEnvelopeSimulator() {
 
                 <Card>
                     <CardContent>
-                        <p className="text-sm text-muted-foreground">{t('simulator.singleEnvelope.formComingSoon')}</p>
+                        <SingleEnvelopeForm defaults={defaults} />
                     </CardContent>
                 </Card>
             </main>

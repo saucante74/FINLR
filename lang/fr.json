@@ -161,7 +161,24 @@
         "singleEnvelope": {
             "eyebrow": "Simulateur mono-enveloppe",
             "title": "Simulation mono-enveloppe",
-            "formComingSoon": "Formulaire à venir."
+            "form": {
+                "initialCapital": "Capital initial",
+                "monthlyContribution": "Versements mensuels",
+                "annualRate": "Taux brut annuel",
+                "years": "Durée (années)",
+                "wrapperFee": "Frais d'enveloppe",
+                "fundFee": "Frais de gestion",
+                "taxRate": "Taux d'imposition",
+                "inflationRate": "Inflation annuelle",
+                "inflationEnabled": "Prendre en compte l'inflation dans le calcul",
+                "wrapper": "Enveloppe fiscale",
+                "wrapperOptions": {
+                    "pea": "PEA",
+                    "cto": "CTO",
+                    "av": "Assurance-vie"
+                },
+                "submit": "Lancer la simulation"
+            }
         }
     },
     "profile": {
