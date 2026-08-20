@@ -157,6 +157,13 @@
         "idLabel": "ID scenario",
         "comingSoon": "Risultati in arrivo."
     },
+    "simulator": {
+        "singleEnvelope": {
+            "eyebrow": "Simulatore mono-involucro",
+            "title": "Simulazione mono-involucro",
+            "formComingSoon": "Modulo in arrivo."
+        }
+    },
     "profile": {
         "eyebrow": "Account",
         "title": "Profilo",

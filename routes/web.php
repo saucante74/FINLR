@@ -4,6 +4,7 @@ use App\Modules\FreemiumCalculator\Controllers\ShowFreemiumCalculatorController;
 use App\Modules\Scenarios\Controllers\ShowScenarioController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\RunSingleEnvelopeSimulationController;
+use App\Modules\SingleEnvelopeSimulator\Controllers\ShowSingleEnvelopeSimulatorController;
 use App\Modules\User\Controllers\DeleteAccountController;
 use App\Modules\User\Controllers\EditProfileController;
 use App\Modules\User\Controllers\UpdateProfileController;
@@ -22,6 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/scenarios/{scenario}', ShowScenarioController::class)->name('scenarios.show');
 });
+
+Route::get('/simulators/single-envelope', ShowSingleEnvelopeSimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.single-envelope.show');
 
 Route::post('/simulators/single-envelope', RunSingleEnvelopeSimulationController::class)
     ->middleware(['auth', 'verified', 'can:advanced_calculator'])

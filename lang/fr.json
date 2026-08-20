@@ -157,6 +157,13 @@
         "idLabel": "Identifiant du scénario",
         "comingSoon": "Résultats à venir."
     },
+    "simulator": {
+        "singleEnvelope": {
+            "eyebrow": "Simulateur mono-enveloppe",
+            "title": "Simulation mono-enveloppe",
+            "formComingSoon": "Formulaire à venir."
+        }
+    },
     "profile": {
         "eyebrow": "Compte",
         "title": "Profil",

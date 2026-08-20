@@ -157,6 +157,13 @@
         "idLabel": "Scenario ID",
         "comingSoon": "Results coming soon."
     },
+    "simulator": {
+        "singleEnvelope": {
+            "eyebrow": "Single-envelope simulator",
+            "title": "Single-envelope simulation",
+            "formComingSoon": "Form coming soon."
+        }
+    },
     "profile": {
         "eyebrow": "Account",
         "title": "Profile",
