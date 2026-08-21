@@ -213,7 +213,8 @@
                     "pea": "PEA",
                     "cto": "CTO"
                 },
-                "submit": "Lancer la simulation"
+                "submit": "Lancer la simulation",
+                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants."
             }
         }
     },

@@ -49,6 +49,10 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
     const { t } = useTranslation();
     const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>(defaults);
 
+    // Not a field of SingleEnvelopeFormValues: flashed by the controller
+    // when the calculation itself fails, so it isn't tied to any one input.
+    const simulationError = (errors as Record<string, string | undefined>).simulation;
+
     const submit = (e: FormEvent) => {
         e.preventDefault();
         post(route('simulators.single-envelope.run'));
@@ -56,6 +60,12 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
 
     return (
         <form onSubmit={submit} className="flex flex-col gap-6">
+            {simulationError && (
+                <p role="alert" className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+                    {simulationError}
+                </p>
+            )}
+
             <div className="grid gap-4 sm:grid-cols-2">
                 <NumberField
                     id="initialCapital"

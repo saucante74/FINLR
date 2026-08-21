@@ -4,10 +4,12 @@ namespace Tests\Feature\SingleEnvelopeSimulator;
 
 use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
 use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Composer\InstalledVersions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use RuntimeException;
 use Tests\TestCase;
 
 class RunSingleEnvelopeSimulationTest extends TestCase
@@ -80,6 +82,24 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasErrors('wrapper');
+        $this->assertDatabaseCount('scenarios', 0);
+    }
+
+    public function test_a_container_resolution_failure_redirects_with_a_flashed_error_instead_of_a_500(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        // Simulates SimulationEngineServiceProvider's own failure mode (the
+        // private finlr-engine package missing) without depending on it
+        // actually being absent from this environment.
+        $this->app->bind(SimulationEngineInterface::class, function (): never {
+            throw new RuntimeException('The private saucante74/finlr-engine package is not installed.');
+        });
+
+        $response = $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+
+        $response->assertRedirect();
+        $response->assertSessionHasErrors('simulation');
         $this->assertDatabaseCount('scenarios', 0);
     }
 

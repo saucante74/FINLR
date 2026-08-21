@@ -213,7 +213,8 @@
                     "pea": "PEA",
                     "cto": "Conto titoli"
                 },
-                "submit": "Avvia la simulazione"
+                "submit": "Avvia la simulazione",
+                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante."
             }
         }
     },

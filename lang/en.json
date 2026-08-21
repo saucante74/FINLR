@@ -213,7 +213,8 @@
                     "pea": "PEA",
                     "cto": "Brokerage account"
                 },
-                "submit": "Run the simulation"
+                "submit": "Run the simulation",
+                "calculationFailed": "The calculation could not be completed. Please try again shortly."
             }
         }
     },
