@@ -7,6 +7,7 @@
         "register": "Registrati",
         "logout": "Esci",
         "profile": "Profilo",
+        "dashboard": "Bacheca",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,7 +150,28 @@
         "eyebrow": "Area membri",
         "title": "Bacheca",
         "description": "Ecco una panoramica della tua attività.",
-        "welcomeMessage": "Hai effettuato l'accesso."
+        "simulators": {
+            "singleEnvelope": {
+                "title": "Simulatore mono-involucro",
+                "description": "Proietta l'evoluzione di un investimento su un unico involucro fiscale.",
+                "lockedNote": "Passa all'offerta premium per accedervi."
+            },
+            "multiEnvelope": {
+                "title": "Simulatore multi-involucro",
+                "description": "Confronta più involucri fiscali nella stessa simulazione."
+            }
+        },
+        "simulatorCard": {
+            "lockedBadge": "Premium",
+            "comingSoonBadge": "Prossimamente"
+        },
+        "scenarioList": {
+            "title": "Scenari salvati",
+            "empty": "Non hai ancora nessuno scenario salvato.",
+            "calculatorTypes": {
+                "single_envelope": "Mono-involucro"
+            }
+        }
     },
     "scenario": {
         "eyebrow": "Scenario salvato",

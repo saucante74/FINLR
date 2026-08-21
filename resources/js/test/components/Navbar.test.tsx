@@ -87,6 +87,9 @@ describe('Navbar', () => {
         render(<Navbar canLogin={true} canRegister={true} />);
 
         expect(
+            screen.getByRole('link', { name: i18n.t('nav.dashboard') }),
+        ).toHaveAttribute('href', '/dashboard');
+        expect(
             screen.getByRole('link', { name: i18n.t('nav.profile') }),
         ).toHaveAttribute('href', '/profile.edit');
         expect(
