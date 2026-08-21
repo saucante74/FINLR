@@ -7,6 +7,7 @@
         "register": "Sign up",
         "logout": "Log out",
         "profile": "Profile",
+        "dashboard": "Dashboard",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,7 +150,28 @@
         "eyebrow": "Member area",
         "title": "Dashboard",
         "description": "Here's an overview of your activity.",
-        "welcomeMessage": "You're logged in."
+        "simulators": {
+            "singleEnvelope": {
+                "title": "Single-envelope simulator",
+                "description": "Project how an investment grows within a single tax wrapper.",
+                "lockedNote": "Upgrade to premium to access it."
+            },
+            "multiEnvelope": {
+                "title": "Multi-envelope simulator",
+                "description": "Compare several tax wrappers within the same simulation."
+            }
+        },
+        "simulatorCard": {
+            "lockedBadge": "Premium",
+            "comingSoonBadge": "Coming soon"
+        },
+        "scenarioList": {
+            "title": "Saved scenarios",
+            "empty": "You don't have any saved scenario yet.",
+            "calculatorTypes": {
+                "single_envelope": "Single-envelope"
+            }
+        }
     },
     "scenario": {
         "eyebrow": "Saved scenario",

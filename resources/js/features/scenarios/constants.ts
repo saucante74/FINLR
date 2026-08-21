@@ -1,17 +1,5 @@
 import type { ScenarioChartSeries } from '@/features/scenarios/types';
 
-/** ISO 4217 code used to format every amount displayed on a scenario page. */
-export const CURRENCY = 'EUR';
-
-/** Locale used when i18next has not resolved one yet. */
-export const FALLBACK_LOCALE = 'fr';
-
-/** Digits kept by the currency formatter. */
-export const CURRENCY_FRACTION_DIGITS = 0;
-
-/** Digits kept by the compact currency formatter used on the chart's Y axis. */
-export const COMPACT_CURRENCY_FRACTION_DIGITS = 1;
-
 /** Scenario chart series, in stacking order. */
 export const SCENARIO_CHART_SERIES: ScenarioChartSeries[] = [
     { key: 'contributions', labelKey: 'scenario.chart.contributions', color: '#64748B' },

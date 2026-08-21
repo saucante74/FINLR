@@ -7,6 +7,7 @@
         "register": "S'inscrire",
         "logout": "Déconnexion",
         "profile": "Profil",
+        "dashboard": "Tableau de bord",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,7 +150,28 @@
         "eyebrow": "Espace membre",
         "title": "Tableau de bord",
         "description": "Retrouvez ici un aperçu de votre activité.",
-        "welcomeMessage": "Vous êtes connecté."
+        "simulators": {
+            "singleEnvelope": {
+                "title": "Simulateur mono-enveloppe",
+                "description": "Projetez l'évolution d'un placement sur une enveloppe fiscale unique.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "multiEnvelope": {
+                "title": "Simulateur multi-enveloppe",
+                "description": "Comparez plusieurs enveloppes fiscales dans une même simulation."
+            }
+        },
+        "simulatorCard": {
+            "lockedBadge": "Premium",
+            "comingSoonBadge": "Bientôt disponible"
+        },
+        "scenarioList": {
+            "title": "Scénarios sauvegardés",
+            "empty": "Vous n'avez pas encore de scénario sauvegardé.",
+            "calculatorTypes": {
+                "single_envelope": "Mono-enveloppe"
+            }
+        }
     },
     "scenario": {
         "eyebrow": "Scénario sauvegardé",

@@ -1,12 +1,17 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import { Card, CardContent } from '@/components/ui/card';
+import ScenarioList from '@/features/dashboard/components/ScenarioList';
+import SimulatorCard from '@/features/dashboard/components/SimulatorCard';
+import type { DashboardPageProps } from '@/features/dashboard/types';
+import type { AuthenticatedPageProps } from '@/types';
 
-export default function Dashboard() {
+export default function Dashboard({ scenarios }: DashboardPageProps) {
     const { t } = useTranslation();
+    const { auth } = usePage<AuthenticatedPageProps>().props;
+    const canAccessSingleEnvelopeSimulator = auth.permissions.includes('advanced_calculator');
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -28,9 +33,30 @@ export default function Dashboard() {
                     </p>
                 </header>
 
-                <Card>
-                    <CardContent>{t('dashboard.welcomeMessage')}</CardContent>
-                </Card>
+                <div className="grid gap-4 sm:grid-cols-2">
+                    <SimulatorCard
+                        title={t('dashboard.simulators.singleEnvelope.title')}
+                        description={t('dashboard.simulators.singleEnvelope.description')}
+                        state={canAccessSingleEnvelopeSimulator ? 'active' : 'locked'}
+                        href={
+                            canAccessSingleEnvelopeSimulator
+                                ? route('simulators.single-envelope.show')
+                                : undefined
+                        }
+                        note={
+                            canAccessSingleEnvelopeSimulator
+                                ? undefined
+                                : t('dashboard.simulators.singleEnvelope.lockedNote')
+                        }
+                    />
+                    <SimulatorCard
+                        title={t('dashboard.simulators.multiEnvelope.title')}
+                        description={t('dashboard.simulators.multiEnvelope.description')}
+                        state="comingSoon"
+                    />
+                </div>
+
+                <ScenarioList scenarios={scenarios} />
             </main>
 
             <Footer />

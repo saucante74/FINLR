@@ -89,6 +89,11 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             <span className="hidden text-sm text-muted-foreground sm:inline">
                                 {user.name || user.email}
                             </span>
+                            <Button asChild variant="ghost">
+                                <Link href={route('dashboard')}>
+                                    {t('nav.dashboard')}
+                                </Link>
+                            </Button>
                             <Button
                                 asChild
                                 variant="ghost"

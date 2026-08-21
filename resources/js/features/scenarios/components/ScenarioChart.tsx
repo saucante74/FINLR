@@ -9,8 +9,8 @@ import {
     Y_AXIS_SMALL_STEP,
     Y_AXIS_STEP_THRESHOLD,
 } from '@/features/scenarios/constants';
-import { formatCompact, formatCurrency } from '@/features/scenarios/lib/format';
 import type { ScenarioChartSeriesKey, ScenarioResult, ScenarioResultPoint } from '@/features/scenarios/types';
+import { formatCompact, formatCurrency } from '@/lib/currency';
 import { cn } from '@/lib/utils';
 
 function niceCeil(value: number): number {
