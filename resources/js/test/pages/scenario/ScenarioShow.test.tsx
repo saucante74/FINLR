@@ -21,7 +21,10 @@ const props: ScenarioProps = {
         wrapper: 'pea',
     },
     result: {
-        points: [{ year: 0, contributions: 1000, gross: 1000, netReal: 1000, netRealAdjusted: 1000 }],
+        points: [
+            { year: 0, contributions: 1000, gross: 1000, netReal: 1000, netRealAdjusted: 1000 },
+            { year: 10, contributions: 25000, gross: 34567.89, netReal: 31234.56, netRealAdjusted: 29000.12 },
+        ],
         invested: 25000,
         grossGains: 9567.89,
         finalGross: 34567.89,
@@ -44,6 +47,7 @@ describe('ScenarioShow page', () => {
 
         expect(screen.getByText(i18n.t('scenario.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.summary.title'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.chart.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.details.title'))).toBeInTheDocument();
         expect(screen.queryByText(/scenarioId/i)).not.toBeInTheDocument();
     });

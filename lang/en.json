@@ -155,6 +155,16 @@
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
         "createdAtLabel": "Simulated on {{date}}",
+        "chart": {
+            "title": "Capital growth",
+            "contributions": "Total contributions",
+            "gross": "Gross capital",
+            "netReal": "Real net capital",
+            "netRealAdjusted": "Real net capital (inflation-adjusted)",
+            "tooltipYear": "Year {{year}}",
+            "yearTick_one": "{{count}} year",
+            "yearTick_other": "{{count}} years"
+        },
         "summary": {
             "title": "Results",
             "invested": "Total contributed",

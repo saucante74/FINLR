@@ -40,3 +40,13 @@ export interface ScenarioProps {
     calculatorType: CalculatorType;
     createdAt: string;
 }
+
+/** The numeric series of a ScenarioResultPoint that the chart can plot. */
+export type ScenarioChartSeriesKey = 'contributions' | 'gross' | 'netReal' | 'netRealAdjusted';
+
+export interface ScenarioChartSeries {
+    key: ScenarioChartSeriesKey;
+    labelKey: string;
+    color: string;
+    dashed?: boolean;
+}

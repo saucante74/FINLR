@@ -1,10 +1,24 @@
-import { CURRENCY, CURRENCY_FRACTION_DIGITS, FALLBACK_LOCALE } from '@/features/scenarios/constants';
+import {
+    COMPACT_CURRENCY_FRACTION_DIGITS,
+    CURRENCY,
+    CURRENCY_FRACTION_DIGITS,
+    FALLBACK_LOCALE,
+} from '@/features/scenarios/constants';
 
 export function formatCurrency(value: number, locale = FALLBACK_LOCALE): string {
     return new Intl.NumberFormat(locale, {
         style: 'currency',
         currency: CURRENCY,
         maximumFractionDigits: CURRENCY_FRACTION_DIGITS,
+    }).format(Number.isFinite(value) ? value : 0);
+}
+
+export function formatCompact(value: number, locale = FALLBACK_LOCALE): string {
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: CURRENCY,
+        notation: 'compact',
+        maximumFractionDigits: COMPACT_CURRENCY_FRACTION_DIGITS,
     }).format(Number.isFinite(value) ? value : 0);
 }
 

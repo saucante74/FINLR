@@ -155,6 +155,16 @@
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "chart": {
+            "title": "Evoluzione del capitale",
+            "contributions": "Versamenti cumulati",
+            "gross": "Capitale lordo",
+            "netReal": "Capitale netto reale",
+            "netRealAdjusted": "Capitale netto reale rettificato per l'inflazione",
+            "tooltipYear": "Anno {{year}}",
+            "yearTick_one": "{{count}} anno",
+            "yearTick_other": "{{count}} anni"
+        },
         "summary": {
             "title": "Risultati",
             "invested": "Totale versato",

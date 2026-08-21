@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
 import ScenarioSummary from '@/features/scenarios/components/ScenarioSummary';
 import { formatDate } from '@/features/scenarios/lib/format';
@@ -32,6 +33,7 @@ export default function ScenarioShow({ input, result, createdAt }: ScenarioProps
                 </header>
 
                 <ScenarioSummary result={result} />
+                <ScenarioChart result={result} />
                 <ScenarioDetails input={input} />
             </main>
 
