@@ -151,6 +151,73 @@
         "description": "Retrouvez ici un aperçu de votre activité.",
         "welcomeMessage": "Vous êtes connecté."
     },
+    "scenario": {
+        "eyebrow": "Scénario sauvegardé",
+        "title": "Résultat de simulation",
+        "createdAtLabel": "Simulé le {{date}}",
+        "chart": {
+            "title": "Évolution du capital",
+            "contributions": "Versements cumulés",
+            "gross": "Capital brut",
+            "netReal": "Capital net réel",
+            "netRealAdjusted": "Capital net réel ajusté de l'inflation",
+            "tooltipYear": "Année {{year}}",
+            "yearTick_one": "{{count}} an",
+            "yearTick_other": "{{count}} ans"
+        },
+        "summary": {
+            "title": "Résultats",
+            "invested": "Total versé",
+            "finalGross": "Capital brut final",
+            "finalNetReal": "Capital net final",
+            "finalNetRealAdjusted": "Capital net final (ajusté de l'inflation)",
+            "shortfall": "Manque à gagner (fiscalité & frais)"
+        },
+        "details": {
+            "title": "Paramètres de la simulation",
+            "initialCapital": "Capital initial",
+            "monthlyContribution": "Versements mensuels",
+            "annualRate": "Taux brut annuel",
+            "years": "Durée (années)",
+            "wrapperFee": "Frais d'enveloppe",
+            "fundFee": "Frais de gestion",
+            "taxRate": "Taux d'imposition",
+            "inflationRate": "Inflation annuelle",
+            "inflationEnabled": "Inflation prise en compte",
+            "wrapper": "Enveloppe fiscale",
+            "wrapperOptions": {
+                "pea": "PEA",
+                "cto": "CTO",
+                "av": "Assurance-vie"
+            },
+            "inflationYes": "Oui",
+            "inflationNo": "Non"
+        }
+    },
+    "simulator": {
+        "singleEnvelope": {
+            "eyebrow": "Simulateur mono-enveloppe",
+            "title": "Simulation mono-enveloppe",
+            "form": {
+                "initialCapital": "Capital initial",
+                "monthlyContribution": "Versements mensuels",
+                "annualRate": "Taux brut annuel",
+                "years": "Durée (années)",
+                "wrapperFee": "Frais d'enveloppe",
+                "fundFee": "Frais de gestion",
+                "taxRate": "Taux d'imposition",
+                "inflationRate": "Inflation annuelle",
+                "inflationEnabled": "Prendre en compte l'inflation dans le calcul",
+                "wrapper": "Enveloppe fiscale",
+                "wrapperOptions": {
+                    "pea": "PEA",
+                    "cto": "CTO"
+                },
+                "submit": "Lancer la simulation",
+                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants."
+            }
+        }
+    },
     "profile": {
         "eyebrow": "Compte",
         "title": "Profil",

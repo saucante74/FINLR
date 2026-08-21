@@ -113,15 +113,21 @@ export default function LoginForm({ canResetPassword }: LoginFormProps) {
                         )}
                     </div>
 
-                    <label className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
                         <Checkbox
+                            id="remember"
                             checked={data.remember}
                             onCheckedChange={(checked) =>
                                 setData('remember', checked === true)
                             }
                         />
-                        {t('auth.login.rememberMe')}
-                    </label>
+                        <Label
+                            htmlFor="remember"
+                            className="font-normal text-muted-foreground"
+                        >
+                            {t('auth.login.rememberMe')}
+                        </Label>
+                    </div>
 
                     <Button
                         type="submit"

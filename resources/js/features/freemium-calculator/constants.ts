@@ -1,6 +1,35 @@
 import type { ChartSeries, CompoundInputs, TaxSuggestion } from '@/features/freemium-calculator/types';
 
 /**
+ * Tax rates below reflect the same legal reality as the named constants in
+ * tests/Unit/SimulationEngine/FinlrEngineAdapterTest.php (PEA/CTO tax rules
+ * documented by the private saucante74/finlr-engine package). There is no
+ * technical link between the two: the free calculator is deliberately
+ * server-free (purely indicative, client-side tool — no PHP logic, no
+ * server call), and the private engine has no notion of a Laravel config to
+ * read from — its rates are internal to the package. Keeping these two
+ * places in sync when the legal rate changes is a manual step; this comment
+ * is the reminder for it.
+ */
+
+/** PEA capital gains rate, holding period >= 5 years, under the 150,000€ ceiling. */
+export const PEA_PREFERENTIAL_RATE_PERCENT = 18.6;
+
+/** PEA capital gains rate outside the preferential conditions (holding period < 5 years or ceiling exceeded). */
+export const PEA_STANDARD_RATE_PERCENT = 31.4;
+
+/** CTO capital gains rate, always applicable regardless of holding period. */
+export const CTO_RATE_PERCENT = 31.4;
+
+/**
+ * Suggested AV (assurance-vie) capital gains rate. The private engine does
+ * not model AV as its own wrapper — FinlrEngineAdapter treats it as a CTO —
+ * so this value is purely indicative on the free calculator side, with no
+ * tested equivalent server-side.
+ */
+export const AV_SUGGESTED_RATE_PERCENT = 24.7;
+
+/**
  * Default values pre-filled in the calculator form on first render.
  *
  * The public calculator is a purely indicative, client-side tool: it never
@@ -14,16 +43,16 @@ export const FORM_DEFAULTS: CompoundInputs = {
     years: 20,
     wrapperFee: 0.5,
     fundFee: 0.3,
-    taxRate: 18.6,
+    taxRate: PEA_PREFERENTIAL_RATE_PERCENT,
     inflationRate: 2,
     inflationEnabled: false,
 };
 
 /** Suggested capital gains tax rate per tax wrapper, in display order. */
 export const TAX_SUGGESTIONS: TaxSuggestion[] = [
-    { wrapper: 'pea', rate: 18.6 },
-    { wrapper: 'av', rate: 24.7 },
-    { wrapper: 'cto', rate: 31.4 },
+    { wrapper: 'pea', rate: PEA_PREFERENTIAL_RATE_PERCENT },
+    { wrapper: 'av', rate: AV_SUGGESTED_RATE_PERCENT },
+    { wrapper: 'cto', rate: CTO_RATE_PERCENT },
 ];
 
 /** ISO 4217 code used to format every amount displayed by the public calculator. */
