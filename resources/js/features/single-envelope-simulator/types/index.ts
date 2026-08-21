@@ -1,4 +1,4 @@
-export type TaxWrapper = 'pea' | 'cto' | 'av';
+export type TaxWrapper = 'pea' | 'cto';
 
 export interface SingleEnvelopeFormValues {
     initialCapital: number;

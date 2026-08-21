@@ -211,8 +211,7 @@
                 "wrapper": "Enveloppe fiscale",
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "CTO",
-                    "av": "Assurance-vie"
+                    "cto": "CTO"
                 },
                 "submit": "Lancer la simulation"
             }

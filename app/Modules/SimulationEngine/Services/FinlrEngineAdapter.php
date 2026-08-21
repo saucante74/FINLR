@@ -20,8 +20,7 @@ use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult
  *
  * The private engine only models two fiscal regimes (PEA/CTO) and computes
  * their tax internally, so wrapperFee/fundFee/taxRate have no equivalent on
- * the package side and are not forwarded; TaxWrapper::Av is treated as CTO
- * since it has no preferential/ceiling rule of its own.
+ * the package side and are not forwarded.
  */
 class FinlrEngineAdapter implements SimulationEngineInterface
 {
@@ -50,7 +49,7 @@ class FinlrEngineAdapter implements SimulationEngineInterface
     {
         return match ($wrapper) {
             TaxWrapper::Pea => PackageAccountType::PEA,
-            TaxWrapper::Cto, TaxWrapper::Av => PackageAccountType::CTO,
+            TaxWrapper::Cto => PackageAccountType::CTO,
         };
     }
 

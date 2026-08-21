@@ -61,6 +61,28 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $this->assertDatabaseCount('scenarios', 0);
     }
 
+    public function test_a_post_with_the_av_wrapper_is_rejected_by_the_plain_enum_rule(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        // TaxWrapper no longer has an Av case, so Rule::enum(TaxWrapper::class)
+        // rejects 'av' on its own — no dedicated validation code for this case.
+        //
+        // Not a 422: bootstrap/app.php's shouldRenderJsonWhen() renders JSON
+        // exceptions only for `api/*` routes, so this web route's
+        // ValidationException always redirects (302) with flashed session
+        // errors, Accept header notwithstanding — verified directly against
+        // the running app rather than assumed.
+        $response = $this->actingAs($user)->postJson(
+            '/simulators/single-envelope',
+            array_merge($this->validPayload(), ['wrapper' => 'av']),
+        );
+
+        $response->assertRedirect();
+        $response->assertSessionHasErrors('wrapper');
+        $this->assertDatabaseCount('scenarios', 0);
+    }
+
     public function test_the_eleventh_request_within_a_minute_receives_a_429(): void
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);

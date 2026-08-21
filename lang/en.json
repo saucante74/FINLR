@@ -211,8 +211,7 @@
                 "wrapper": "Tax wrapper",
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "Brokerage account",
-                    "av": "Life insurance"
+                    "cto": "Brokerage account"
                 },
                 "submit": "Run the simulation"
             }

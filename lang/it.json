@@ -211,8 +211,7 @@
                 "wrapper": "Involucro fiscale",
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "Conto titoli",
-                    "av": "Assicurazione sulla vita"
+                    "cto": "Conto titoli"
                 },
                 "submit": "Avvia la simulazione"
             }

@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SingleEnvelopeFormValues, TaxWrapper } from '@/features/single-envelope-simulator/types';
 
-const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto', 'av'];
+const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto'];
 
 interface NumberFieldProps {
     id: keyof Omit<SingleEnvelopeFormValues, 'inflationEnabled' | 'wrapper'>;
