@@ -113,6 +113,55 @@ class FinlrEngineAdapterTest extends TestCase
         $this->assertEqualsWithDelta($result->grossGains - $result->netRealGains, $result->shortfall, 0.01);
     }
 
+    public function test_shortfall_is_never_negative_when_gains_are_positive(): void
+    {
+        $adapter = $this->makeAdapter();
+
+        $result = $adapter->calculate($this->makeInput(
+            years: 6,
+            annualRate: 5.0,
+            wrapper: TaxWrapper::Pea,
+        ));
+
+        // The net result can never exceed the gross one, whatever the tax
+        // rules applied internally by the engine.
+        $this->assertGreaterThanOrEqual(0.0, $result->shortfall);
+    }
+
+    public function test_shortfall_never_exceeds_the_gross_gains(): void
+    {
+        $adapter = $this->makeAdapter();
+
+        $result = $adapter->calculate($this->makeInput(
+            years: 6,
+            annualRate: 5.0,
+            wrapper: TaxWrapper::Pea,
+        ));
+
+        // You cannot lose more to tax/fees than you gained: the shortfall is
+        // a share of grossGains, never more than the whole of it.
+        $this->assertLessThanOrEqual($result->grossGains, $result->shortfall);
+    }
+
+    public function test_it_matches_the_publicly_documented_pea_preferential_rate_after_five_years(): void
+    {
+        $adapter = $this->makeAdapter();
+
+        $result = $adapter->calculate($this->makeInput(
+            years: 6,
+            annualRate: 5.0,
+            wrapper: TaxWrapper::Pea,
+        ));
+
+        // 18.6% is the PEA rate for holdings >= 5 years under the 150,000€
+        // ceiling, as documented in vendor/saucante74/finlr-engine/README.md
+        // ("Durée ≥ 5 ans et versements ≤ 150 000 € | 18,6 %"). This is the
+        // package's public contract, not a reimplementation of its internal
+        // tax logic — the test data (1,000€ initial + 100€/month over 6
+        // years) stays far under the ceiling.
+        $this->assertEqualsWithDelta($result->grossGains * (1 - 0.186), $result->netRealGains, 0.01);
+    }
+
     private function makeAdapter(): FinlrEngineAdapter
     {
         return new FinlrEngineAdapter(new CalculatorEngine);

@@ -3,6 +3,7 @@
 namespace App\Modules\Scenarios\Controllers;
 
 use App\Modules\Scenarios\Models\Scenario;
+use App\Modules\Shared\Controllers\Concerns\AuthorizesResourceOwnership;
 use App\Modules\Shared\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,13 +11,11 @@ use Inertia\Response;
 
 class ShowScenarioController extends Controller
 {
+    use AuthorizesResourceOwnership;
+
     public function __invoke(Request $request, Scenario $scenario): Response
     {
-        $user = $request->user();
-
-        if (! $user || $scenario->user_id !== $user->id) {
-            abort(404);
-        }
+        $this->abortUnlessOwner($request->user(), $scenario->user_id);
 
         return Inertia::render('scenario/ScenarioShow', [
             'input' => $scenario->input_payload,
