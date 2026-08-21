@@ -61,6 +61,21 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $this->assertDatabaseCount('scenarios', 0);
     }
 
+    public function test_the_eleventh_request_within_a_minute_receives_a_429(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $this->actingAs($user);
+
+        for ($i = 0; $i < 10; $i++) {
+            $response = $this->post('/simulators/single-envelope', $this->validPayload());
+            $response->assertRedirect();
+        }
+
+        $eleventh = $this->post('/simulators/single-envelope', $this->validPayload());
+
+        $eleventh->assertStatus(429);
+    }
+
     /**
      * @return array<string, mixed>
      */

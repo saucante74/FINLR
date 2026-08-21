@@ -29,7 +29,7 @@ Route::get('/simulators/single-envelope', ShowSingleEnvelopeSimulatorController:
     ->name('simulators.single-envelope.show');
 
 Route::post('/simulators/single-envelope', RunSingleEnvelopeSimulationController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
     ->name('simulators.single-envelope.run');
 
 require __DIR__.'/auth.php';
