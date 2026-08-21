@@ -64,15 +64,18 @@ class FinlrEngineAdapter implements SimulationEngineInterface
 
         $summary = $result->summary;
 
+        $grossGains = $summary->totalGains;
+        $netRealGains = $summary->netBalance - $summary->totalDeposited;
+
         return new CalculationResultData(
             points: $points,
             invested: $summary->totalDeposited,
-            grossGains: $summary->totalGains,
+            grossGains: $grossGains,
             finalGross: $summary->grossBalance,
-            netRealGains: $summary->netBalance - $summary->totalDeposited,
+            netRealGains: $netRealGains,
             finalNetReal: $summary->netBalance,
             finalNetRealAdjusted: $summary->realNetBalanceWithInflation,
-            shortfall: 0.0,
+            shortfall: $grossGains - $netRealGains,
         );
     }
 

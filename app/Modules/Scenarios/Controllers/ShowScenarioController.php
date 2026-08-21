@@ -19,7 +19,10 @@ class ShowScenarioController extends Controller
         }
 
         return Inertia::render('scenario/ScenarioShow', [
-            'scenarioId' => $scenario->id,
+            'input' => $scenario->input_payload,
+            'result' => $scenario->result_payload,
+            'calculatorType' => $scenario->calculator_type->value,
+            'createdAt' => $scenario->created_at?->toISOString(),
         ]);
     }
 }

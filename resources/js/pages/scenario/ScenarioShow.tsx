@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import { Card, CardContent } from '@/components/ui/card';
+import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
+import ScenarioSummary from '@/features/scenarios/components/ScenarioSummary';
+import { formatDate } from '@/features/scenarios/lib/format';
+import type { ScenarioProps } from '@/features/scenarios/types';
 
-interface ScenarioShowProps {
-    scenarioId: number;
-}
-
-export default function ScenarioShow({ scenarioId }: ScenarioShowProps) {
-    const { t } = useTranslation();
+export default function ScenarioShow({ input, result, createdAt }: ScenarioProps) {
+    const { t, i18n } = useTranslation();
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -27,16 +26,13 @@ export default function ScenarioShow({ scenarioId }: ScenarioShowProps) {
                     <h1 className="text-2xl font-semibold tracking-tight text-balance lg:text-3xl">
                         {t('scenario.title')}
                     </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {t('scenario.createdAtLabel', { date: formatDate(createdAt, i18n.resolvedLanguage) })}
+                    </p>
                 </header>
 
-                <Card>
-                    <CardContent>
-                        <p>
-                            {t('scenario.idLabel')}: {scenarioId}
-                        </p>
-                        <p className="text-sm text-muted-foreground">{t('scenario.comingSoon')}</p>
-                    </CardContent>
-                </Card>
+                <ScenarioSummary result={result} />
+                <ScenarioDetails input={input} />
             </main>
 
             <Footer />

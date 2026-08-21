@@ -154,8 +154,35 @@
     "scenario": {
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
-        "idLabel": "Scenario ID",
-        "comingSoon": "Results coming soon."
+        "createdAtLabel": "Simulated on {{date}}",
+        "summary": {
+            "title": "Results",
+            "invested": "Total contributed",
+            "finalGross": "Final gross capital",
+            "finalNetReal": "Final net capital",
+            "finalNetRealAdjusted": "Final net capital (inflation-adjusted)",
+            "shortfall": "Shortfall (tax & fees)"
+        },
+        "details": {
+            "title": "Simulation parameters",
+            "initialCapital": "Initial capital",
+            "monthlyContribution": "Monthly contributions",
+            "annualRate": "Annual gross rate",
+            "years": "Duration (years)",
+            "wrapperFee": "Wrapper fee",
+            "fundFee": "Fund fee",
+            "taxRate": "Tax rate",
+            "inflationRate": "Annual inflation",
+            "inflationEnabled": "Inflation taken into account",
+            "wrapper": "Tax wrapper",
+            "wrapperOptions": {
+                "pea": "PEA",
+                "cto": "CTO",
+                "av": "Life insurance"
+            },
+            "inflationYes": "Yes",
+            "inflationNo": "No"
+        }
     },
     "simulator": {
         "singleEnvelope": {

@@ -93,6 +93,26 @@ class FinlrEngineAdapterTest extends TestCase
         $this->assertEqualsWithDelta($result->finalNetReal, $result->finalNetRealAdjusted, 0.01);
     }
 
+    public function test_it_computes_shortfall_as_the_gap_between_gross_and_net_real_gains(): void
+    {
+        $adapter = $this->makeAdapter();
+
+        $result = $adapter->calculate($this->makeInput(
+            years: 6,
+            annualRate: 5.0,
+            wrapper: TaxWrapper::Pea,
+        ));
+
+        // The private engine computes grossGains/netRealGains internally (tax
+        // rules included), so there is no independent formula to hand-compute
+        // an expected number without duplicating that engine logic — forbidden
+        // by this project's rules. Like the other tests in this file, the
+        // assertion instead checks the relationship the fix is meant to
+        // restore: shortfall must equal the gap it is documented to measure.
+        $this->assertGreaterThan(0.0, $result->shortfall);
+        $this->assertEqualsWithDelta($result->grossGains - $result->netRealGains, $result->shortfall, 0.01);
+    }
+
     private function makeAdapter(): FinlrEngineAdapter
     {
         return new FinlrEngineAdapter(new CalculatorEngine);

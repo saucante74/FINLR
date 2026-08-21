@@ -154,8 +154,35 @@
     "scenario": {
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
-        "idLabel": "ID scenario",
-        "comingSoon": "Risultati in arrivo."
+        "createdAtLabel": "Simulato il {{date}}",
+        "summary": {
+            "title": "Risultati",
+            "invested": "Totale versato",
+            "finalGross": "Capitale lordo finale",
+            "finalNetReal": "Capitale netto finale",
+            "finalNetRealAdjusted": "Capitale netto finale (rettificato per l'inflazione)",
+            "shortfall": "Perdita da fiscalità e commissioni"
+        },
+        "details": {
+            "title": "Parametri della simulazione",
+            "initialCapital": "Capitale iniziale",
+            "monthlyContribution": "Versamenti mensili",
+            "annualRate": "Tasso lordo annuo",
+            "years": "Durata (anni)",
+            "wrapperFee": "Commissione dell'involucro",
+            "fundFee": "Commissione di gestione",
+            "taxRate": "Aliquota fiscale",
+            "inflationRate": "Inflazione annua",
+            "inflationEnabled": "Inflazione considerata",
+            "wrapper": "Involucro fiscale",
+            "wrapperOptions": {
+                "pea": "PEA",
+                "cto": "CTO",
+                "av": "Assicurazione vita"
+            },
+            "inflationYes": "Sì",
+            "inflationNo": "No"
+        }
     },
     "simulator": {
         "singleEnvelope": {
