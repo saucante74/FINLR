@@ -10,6 +10,26 @@ use saucante74\CalculatorEngine\CalculatorEngine;
 
 class FinlrEngineAdapterTest extends TestCase
 {
+    /**
+     * "CTO (Compte-Titres Ordinaire) | Toujours | 31,4 %"
+     * — vendor/saucante74/finlr-engine/README.md, tableau de fiscalité.
+     */
+    private const float CTO_RATE = 0.314;
+
+    /**
+     * "PEA (Plan d'Épargne en Actions) | Durée < 5 ans ou versements >
+     * 150 000 € | 31,4 %"
+     * — vendor/saucante74/finlr-engine/README.md, tableau de fiscalité.
+     */
+    private const float PEA_RATE_WITHOUT_PREFERENTIAL_CONDITIONS = 0.314;
+
+    /**
+     * "PEA | Durée ≥ 5 ans et versements ≤ 150 000 € | 18,6 % (prélèvements
+     * sociaux)"
+     * — vendor/saucante74/finlr-engine/README.md, tableau de fiscalité.
+     */
+    private const float PEA_PREFERENTIAL_RATE_AFTER_FIVE_YEARS = 0.186;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -34,7 +54,11 @@ class FinlrEngineAdapterTest extends TestCase
             wrapper: TaxWrapper::Pea,
         ));
 
-        $this->assertEqualsWithDelta($result->grossGains * 0.314, $result->finalGross - $result->finalNetReal, 0.01);
+        $this->assertEqualsWithDelta(
+            $result->grossGains * self::PEA_RATE_WITHOUT_PREFERENTIAL_CONDITIONS,
+            $result->finalGross - $result->finalNetReal,
+            0.01,
+        );
     }
 
     public function test_it_applies_the_pea_preferential_rate_after_five_years(): void
@@ -47,7 +71,11 @@ class FinlrEngineAdapterTest extends TestCase
             wrapper: TaxWrapper::Pea,
         ));
 
-        $this->assertEqualsWithDelta($result->grossGains * 0.186, $result->finalGross - $result->finalNetReal, 0.01);
+        $this->assertEqualsWithDelta(
+            $result->grossGains * self::PEA_PREFERENTIAL_RATE_AFTER_FIVE_YEARS,
+            $result->finalGross - $result->finalNetReal,
+            0.01,
+        );
     }
 
     public function test_it_applies_the_cto_flat_rate_regardless_of_duration(): void
@@ -60,7 +88,11 @@ class FinlrEngineAdapterTest extends TestCase
             wrapper: TaxWrapper::Cto,
         ));
 
-        $this->assertEqualsWithDelta($result->grossGains * 0.314, $result->finalGross - $result->finalNetReal, 0.01);
+        $this->assertEqualsWithDelta(
+            $result->grossGains * self::CTO_RATE,
+            $result->finalGross - $result->finalNetReal,
+            0.01,
+        );
     }
 
     public function test_it_adjusts_the_final_balance_for_inflation_when_enabled(): void
@@ -153,13 +185,15 @@ class FinlrEngineAdapterTest extends TestCase
             wrapper: TaxWrapper::Pea,
         ));
 
-        // 18.6% is the PEA rate for holdings >= 5 years under the 150,000€
-        // ceiling, as documented in vendor/saucante74/finlr-engine/README.md
-        // ("Durée ≥ 5 ans et versements ≤ 150 000 € | 18,6 %"). This is the
-        // package's public contract, not a reimplementation of its internal
-        // tax logic — the test data (1,000€ initial + 100€/month over 6
-        // years) stays far under the ceiling.
-        $this->assertEqualsWithDelta($result->grossGains * (1 - 0.186), $result->netRealGains, 0.01);
+        // PEA_PREFERENTIAL_RATE_AFTER_FIVE_YEARS is the package's public
+        // contract, not a reimplementation of its internal tax logic — the
+        // test data (1,000€ initial + 100€/month over 6 years) stays far
+        // under the 150,000€ ceiling.
+        $this->assertEqualsWithDelta(
+            $result->grossGains * (1 - self::PEA_PREFERENTIAL_RATE_AFTER_FIVE_YEARS),
+            $result->netRealGains,
+            0.01,
+        );
     }
 
     private function makeAdapter(): FinlrEngineAdapter
