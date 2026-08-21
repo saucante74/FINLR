@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Modules\SimulationEngine\Services;
+
+use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
+use App\Modules\SimulationEngine\DTOs\CalculationInputData;
+use App\Modules\SimulationEngine\DTOs\CalculationResultData;
+use App\Modules\SimulationEngine\DTOs\CompoundPointData;
+use App\Modules\SimulationEngine\Enums\TaxWrapper;
+use saucante74\CalculatorEngine\CalculatorEngine;
+use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationInput as PackageCalculationInput;
+use saucante74\CalculatorEngine\Premium\DTOs\CalculationResult as PackageCalculationResult;
+use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult;
+
+/**
+ * Adapter around the private saucante74\CalculatorEngine package: translates
+ * this module's DTOs to/from the private package's own DTOs so the rest
+ * of the application never depends on the private package directly.
+ *
+ * The private engine only models two fiscal regimes (PEA/CTO) and computes
+ * their tax internally, so wrapperFee/fundFee/taxRate have no equivalent on
+ * the package side and are not forwarded.
+ */
+class FinlrEngineAdapter implements SimulationEngineInterface
+{
+    public function __construct(private readonly CalculatorEngine $engine) {}
+
+    public function calculate(CalculationInputData $input): CalculationResultData
+    {
+        $result = $this->engine->calculate($this->toPackageInput($input));
+
+        return $this->toCalculationResultData($input, $result);
+    }
+
+    private function toPackageInput(CalculationInputData $input): PackageCalculationInput
+    {
+        return new PackageCalculationInput(
+            initialAmount: $input->initialCapital,
+            monthlyContribution: $input->monthlyContribution,
+            durationYears: $input->years,
+            annualReturnRate: $input->annualRate / 100,
+            inflationRate: $input->inflationEnabled ? $input->inflationRate / 100 : 0.0,
+            accountType: $this->toPackageAccountType($input->wrapper),
+        );
+    }
+
+    private function toPackageAccountType(TaxWrapper $wrapper): PackageAccountType
+    {
+        return match ($wrapper) {
+            TaxWrapper::Pea => PackageAccountType::PEA,
+            TaxWrapper::Cto => PackageAccountType::CTO,
+        };
+    }
+
+    private function toCalculationResultData(CalculationInputData $input, PackageCalculationResult $result): CalculationResultData
+    {
+        $points = [$this->buildInitialPoint($input)];
+
+        foreach ($result->yearlyBreakdown as $yearlyResult) {
+            $points[] = $this->toCompoundPointData($yearlyResult);
+        }
+
+        $summary = $result->summary;
+
+        $grossGains = $summary->totalGains;
+        $netRealGains = $summary->netBalance - $summary->totalDeposited;
+
+        return new CalculationResultData(
+            points: $points,
+            invested: $summary->totalDeposited,
+            grossGains: $grossGains,
+            finalGross: $summary->grossBalance,
+            netRealGains: $netRealGains,
+            finalNetReal: $summary->netBalance,
+            finalNetRealAdjusted: $summary->realNetBalanceWithInflation,
+            shortfall: $grossGains - $netRealGains,
+        );
+    }
+
+    private function buildInitialPoint(CalculationInputData $input): CompoundPointData
+    {
+        return new CompoundPointData(
+            year: 0,
+            contributions: $input->initialCapital,
+            gross: $input->initialCapital,
+            netReal: $input->initialCapital,
+            netRealAdjusted: $input->initialCapital,
+        );
+    }
+
+    private function toCompoundPointData(PackageYearlyResult $yearlyResult): CompoundPointData
+    {
+        return new CompoundPointData(
+            year: $yearlyResult->year,
+            contributions: $yearlyResult->totalDeposited,
+            gross: $yearlyResult->grossBalance,
+            netReal: $yearlyResult->netBalance,
+            netRealAdjusted: $yearlyResult->realNetBalanceWithInflation,
+        );
+    }
+}

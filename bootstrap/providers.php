@@ -1,11 +1,13 @@
 <?php
 
-use App\Modules\Auth\Providers\RateLimitServiceProvider;
-use App\Modules\Simulator\Providers\SimulatorServiceProvider;
+use App\Modules\Auth\Providers\RateLimitServiceProvider as AuthRateLimitServiceProvider;
+use App\Modules\SimulationEngine\Providers\SimulationEngineServiceProvider;
+use App\Modules\SingleEnvelopeSimulator\Providers\RateLimitServiceProvider as SingleEnvelopeSimulatorRateLimitServiceProvider;
 use App\Providers\AppServiceProvider;
 
 return [
     AppServiceProvider::class,
-    RateLimitServiceProvider::class,
-    SimulatorServiceProvider::class,
+    AuthRateLimitServiceProvider::class,
+    SimulationEngineServiceProvider::class,
+    SingleEnvelopeSimulatorRateLimitServiceProvider::class,
 ];

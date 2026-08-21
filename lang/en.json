@@ -151,6 +151,73 @@
         "description": "Here's an overview of your activity.",
         "welcomeMessage": "You're logged in."
     },
+    "scenario": {
+        "eyebrow": "Saved scenario",
+        "title": "Simulation result",
+        "createdAtLabel": "Simulated on {{date}}",
+        "chart": {
+            "title": "Capital growth",
+            "contributions": "Total contributions",
+            "gross": "Gross capital",
+            "netReal": "Real net capital",
+            "netRealAdjusted": "Real net capital (inflation-adjusted)",
+            "tooltipYear": "Year {{year}}",
+            "yearTick_one": "{{count}} year",
+            "yearTick_other": "{{count}} years"
+        },
+        "summary": {
+            "title": "Results",
+            "invested": "Total contributed",
+            "finalGross": "Final gross capital",
+            "finalNetReal": "Final net capital",
+            "finalNetRealAdjusted": "Final net capital (inflation-adjusted)",
+            "shortfall": "Shortfall (tax & fees)"
+        },
+        "details": {
+            "title": "Simulation parameters",
+            "initialCapital": "Initial capital",
+            "monthlyContribution": "Monthly contributions",
+            "annualRate": "Annual gross rate",
+            "years": "Duration (years)",
+            "wrapperFee": "Wrapper fee",
+            "fundFee": "Fund fee",
+            "taxRate": "Tax rate",
+            "inflationRate": "Annual inflation",
+            "inflationEnabled": "Inflation taken into account",
+            "wrapper": "Tax wrapper",
+            "wrapperOptions": {
+                "pea": "PEA",
+                "cto": "CTO",
+                "av": "Life insurance"
+            },
+            "inflationYes": "Yes",
+            "inflationNo": "No"
+        }
+    },
+    "simulator": {
+        "singleEnvelope": {
+            "eyebrow": "Single-envelope simulator",
+            "title": "Single-envelope simulation",
+            "form": {
+                "initialCapital": "Initial capital",
+                "monthlyContribution": "Monthly contributions",
+                "annualRate": "Annual gross rate",
+                "years": "Duration (years)",
+                "wrapperFee": "Wrapper fee",
+                "fundFee": "Fund fee",
+                "taxRate": "Tax rate",
+                "inflationRate": "Annual inflation",
+                "inflationEnabled": "Account for inflation in the calculation",
+                "wrapper": "Tax wrapper",
+                "wrapperOptions": {
+                    "pea": "PEA",
+                    "cto": "Brokerage account"
+                },
+                "submit": "Run the simulation",
+                "calculationFailed": "The calculation could not be completed. Please try again shortly."
+            }
+        }
+    },
     "profile": {
         "eyebrow": "Account",
         "title": "Profile",
