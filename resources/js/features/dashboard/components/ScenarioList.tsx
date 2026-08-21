@@ -2,8 +2,9 @@ import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatCurrency, formatDate } from '@/features/dashboard/lib/format';
+import { formatDate } from '@/features/dashboard/lib/format';
 import type { ScenarioSummary } from '@/features/dashboard/types';
+import { formatCurrency } from '@/lib/currency';
 
 interface ScenarioListProps {
     scenarios: ScenarioSummary[];

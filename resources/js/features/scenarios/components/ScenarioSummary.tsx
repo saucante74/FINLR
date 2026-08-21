@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatCurrency } from '@/features/scenarios/lib/format';
 import type { ScenarioResult } from '@/features/scenarios/types';
+import { formatCurrency } from '@/lib/currency';
 
 interface ScenarioSummaryProps {
     result: ScenarioResult;

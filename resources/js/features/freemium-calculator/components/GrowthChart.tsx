@@ -8,12 +8,12 @@ import {
     Y_AXIS_SMALL_STEP,
     Y_AXIS_STEP_THRESHOLD,
 } from '@/features/freemium-calculator/constants';
-import { formatCompact, formatCurrency } from '@/features/freemium-calculator/lib/compound';
 import type {
     ChartSeriesKey,
     CompoundPoint,
     CompoundResult,
 } from '@/features/freemium-calculator/types';
+import { formatCompact, formatCurrency } from '@/lib/currency';
 import { cn } from '@/lib/utils';
 
 function niceCeil(value: number): number {
