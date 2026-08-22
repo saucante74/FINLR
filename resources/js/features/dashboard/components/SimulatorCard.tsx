@@ -23,7 +23,7 @@ interface SimulatorCardProps {
 // slightly-divergent copy.
 export function DashboardBadge({ children }: { children: ReactNode }) {
     return (
-        <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+        <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {children}
         </span>
     );
