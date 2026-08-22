@@ -18,6 +18,7 @@ class ShowScenarioController extends Controller
         $this->abortUnlessOwner($request->user(), $scenario->user_id);
 
         return Inertia::render('scenario/ScenarioShow', [
+            'id' => $scenario->id,
             'input' => $scenario->input_payload,
             'result' => $scenario->result_payload,
             'calculatorType' => $scenario->calculator_type->value,

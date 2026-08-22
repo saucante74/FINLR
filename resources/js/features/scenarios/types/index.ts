@@ -35,10 +35,12 @@ export interface ScenarioResult {
 }
 
 export interface ScenarioProps {
+    id: number;
     input: ScenarioInput;
     result: ScenarioResult;
     calculatorType: CalculatorType;
     createdAt: string;
+    name: string | null;
 }
 
 /** The numeric series of a ScenarioResultPoint that the chart can plot. */

@@ -186,6 +186,12 @@
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "rename": {
+            "button": "Rinomina",
+            "label": "Nome dello scenario",
+            "save": "Salva",
+            "cancel": "Annulla"
+        },
         "chart": {
             "title": "Evoluzione del capitale",
             "contributions": "Versamenti cumulati",

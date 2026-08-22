@@ -186,6 +186,12 @@
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
         "createdAtLabel": "Simulated on {{date}}",
+        "rename": {
+            "button": "Rename",
+            "label": "Scenario name",
+            "save": "Save",
+            "cancel": "Cancel"
+        },
         "chart": {
             "title": "Capital growth",
             "contributions": "Total contributions",
