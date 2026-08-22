@@ -38,12 +38,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                             {t('dashboard.description')}
                         </p>
                     </div>
-                    <Button
-                        asChild
-                        variant="brand"
-                        size="lg"
-                        className="w-fit shrink-0 shadow-[0_0_32px_-4px_var(--brand)]"
-                    >
+                    <Button asChild variant="brand" size="lg" className="w-fit shrink-0">
                         <Link href={route('simulators.single-envelope.show')}>
                             {t('dashboard.newSimulation')}
                         </Link>
