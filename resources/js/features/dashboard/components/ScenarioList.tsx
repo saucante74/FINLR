@@ -50,7 +50,7 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                             <span>{t('dashboard.scenarioList.columns.name')}</span>
                             <span className="text-center">{t('dashboard.scenarioList.columns.wrapper')}</span>
                             <span className="text-center">{t('dashboard.scenarioList.columns.horizon')}</span>
-                            <span>{t('dashboard.scenarioList.columns.date')}</span>
+                            <span className="text-center">{t('dashboard.scenarioList.columns.date')}</span>
                             <span className="text-right">{t('dashboard.scenarioList.columns.amount')}</span>
                             {/* No label: icon-only "open" column, described per-row via the link's aria-label. */}
                             <span aria-hidden />
@@ -83,13 +83,13 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                                             <span className="text-xs text-muted-foreground sm:hidden">
                                                 {wrapperLabel} · {horizonLabel} · {dateLabel}
                                             </span>
-                                            <span className="hidden text-center text-muted-foreground sm:order-2 sm:block">
+                                            <span className="hidden ms-5 text-center text-muted-foreground sm:order-2 sm:block">
                                                 {wrapperLabel}
                                             </span>
-                                            <span className="hidden text-center text-muted-foreground sm:order-3 sm:block">
+                                            <span className="hidden ms-7 text-center text-muted-foreground sm:order-3 sm:block">
                                                 {horizonLabel}
                                             </span>
-                                            <span className="hidden text-muted-foreground sm:order-4 sm:block">
+                                            <span className="hidden ms-9 text-center text-muted-foreground sm:order-4 sm:block">
                                                 {dateLabel}
                                             </span>
                                             <ArrowRight

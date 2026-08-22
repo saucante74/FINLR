@@ -89,7 +89,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
                         <DashboardBadge>{t('dashboard.simulatorCard.comingSoonBadge')}</DashboardBadge>
-                        <Button type="button" variant="brand" disabled>
+                        <Button type="button" variant="brand" size="lg" className="w-fit shrink-0" disabled>
                             {t('dashboard.promo.cta')}
                         </Button>
                     </div>
