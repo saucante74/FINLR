@@ -54,7 +54,7 @@ export default function SimulatorCard({ index, title, description, state, href, 
                         className={cn(
                             'inline-flex size-9 shrink-0 items-center justify-center rounded-lg font-mono text-sm',
                             state === 'active'
-                                ? 'bg-brand/15 text-brand'
+                                ? 'bg-brand/15 text-brand shadow-[0_0_12px_-2px_var(--brand)]'
                                 : 'bg-muted text-muted-foreground',
                         )}
                     >
@@ -75,7 +75,7 @@ export default function SimulatorCard({ index, title, description, state, href, 
                 <p className="max-w-[40ch] text-sm text-muted-foreground">{description}</p>
                 {note && <p className="text-xs text-muted-foreground">{note}</p>}
                 {state === 'active' && (
-                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand">
+                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
                         {t('dashboard.simulatorCard.cta')}
                         <ArrowRight aria-hidden className="size-5" />
                     </span>

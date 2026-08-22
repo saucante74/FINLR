@@ -78,7 +78,10 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">
                             {PROMO_BENEFIT_KEYS.map((key) => (
                                 <li key={key} className="flex items-center gap-2">
-                                    <Check aria-hidden className="size-4 shrink-0 text-brand" />
+                                    <Check
+                                        aria-hidden
+                                        className="size-4 shrink-0 text-brand drop-shadow-[0_0_6px_var(--brand)]"
+                                    />
                                     {t(`dashboard.promo.benefits.${key}`)}
                                 </li>
                             ))}
