@@ -50,6 +50,31 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $this->assertSame(CalculatorType::SingleEnvelope, $scenario->calculator_type);
     }
 
+    public function test_a_scenario_created_without_a_name_has_name_null_in_the_database(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+
+        $scenario = Scenario::sole();
+
+        $this->assertNull($scenario->name);
+    }
+
+    public function test_a_scenario_created_with_a_name_stores_it_as_is(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        $this->actingAs($user)->post(
+            '/simulators/single-envelope',
+            array_merge($this->validPayload(), ['name' => 'Retraite à 62 ans']),
+        );
+
+        $scenario = Scenario::sole();
+
+        $this->assertSame('Retraite à 62 ans', $scenario->name);
+    }
+
     public function test_a_pro_plan_user_with_invalid_data_gets_validation_errors_and_no_scenario_is_created(): void
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);

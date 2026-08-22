@@ -19,6 +19,7 @@ describe('Profile Edit page', () => {
     beforeEach(async () => {
         await i18n.changeLanguage('fr');
         vi.spyOn(inertia, 'usePage').mockReturnValue({
+            url: '/profile',
             props: { auth: { user, plan: 'free', permissions: [] } },
         } as unknown as ReturnType<typeof inertia.usePage>);
     });

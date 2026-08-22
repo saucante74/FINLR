@@ -16,9 +16,9 @@ vi.mock('@inertiajs/react', () => ({
 }));
 
 import SingleEnvelopeForm from '@/features/single-envelope-simulator/components/SingleEnvelopeForm';
-import type { SingleEnvelopeFormValues } from '@/features/single-envelope-simulator/types';
+import type { SingleEnvelopeFormDefaults } from '@/features/single-envelope-simulator/types';
 
-const defaults: SingleEnvelopeFormValues = {
+const defaults: SingleEnvelopeFormDefaults = {
     initialCapital: 10000,
     monthlyContribution: 300,
     annualRate: 6,
@@ -37,9 +37,12 @@ describe('SingleEnvelopeForm', () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the ten fields, prefilled with the default values from props', () => {
+    it('renders the eleven fields, prefilled with the default values from props', () => {
         render(<SingleEnvelopeForm defaults={defaults} />);
 
+        expect(
+            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.name')),
+        ).toHaveValue('');
         expect(
             screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.initialCapital')),
         ).toHaveValue(10000);

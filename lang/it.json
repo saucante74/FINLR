@@ -8,6 +8,8 @@
         "logout": "Esci",
         "profile": "Profilo",
         "dashboard": "Bacheca",
+        "simulators": "Simulatori",
+        "resources": "Risorse",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,10 +151,12 @@
     "dashboard": {
         "eyebrow": "Area membri",
         "title": "Bacheca",
+        "greeting": "Ciao {{name}}.",
         "description": "Ecco una panoramica della tua attività.",
+        "newSimulation": "Nuova simulazione",
         "simulators": {
             "singleEnvelope": {
-                "title": "Simulatore mono-involucro",
+                "title": "Simulatore classico",
                 "description": "Proietta l'evoluzione di un investimento su un unico involucro fiscale.",
                 "lockedNote": "Passa all'offerta premium per accedervi."
             },
@@ -163,20 +167,47 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Prossimamente"
+            "comingSoonBadge": "Prossimamente",
+            "cta": "Avvia una proiezione"
         },
         "scenarioList": {
             "title": "Scenari salvati",
             "empty": "Non hai ancora nessuno scenario salvato.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenari",
+            "genericLabel": "Scenario senza nome",
+            "openAriaLabel": "Apri {{name}}",
+            "columns": {
+                "name": "Scenario",
+                "wrapper": "Involucro",
+                "horizon": "Orizzonte",
+                "date": "Data",
+                "amount": "Importo"
+            },
             "calculatorTypes": {
                 "single_envelope": "Mono-involucro"
             }
+        },
+        "promo": {
+            "title": "Passa a Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Scenari illimitati",
+                "multiEnvelopePreview": "Accesso anticipato al confronto multi-involucro",
+                "pdfExport": "Esportazione PDF per il tuo consulente"
+            },
+            "cta": "Prova 14 giorni"
         }
     },
     "scenario": {
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "rename": {
+            "button": "Rinomina",
+            "label": "Nome dello scenario",
+            "save": "Salva",
+            "cancel": "Annulla"
+        },
         "chart": {
             "title": "Evoluzione del capitale",
             "contributions": "Versamenti cumulati",
@@ -221,6 +252,7 @@
             "eyebrow": "Simulatore mono-involucro",
             "title": "Simulazione mono-involucro",
             "form": {
+                "name": "Nome dello scenario (facoltativo)",
                 "initialCapital": "Capitale iniziale",
                 "monthlyContribution": "Versamenti mensili",
                 "annualRate": "Tasso lordo annuo",

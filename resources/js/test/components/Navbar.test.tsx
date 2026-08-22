@@ -68,8 +68,9 @@ describe('Navbar', () => {
         ).toHaveAttribute('aria-pressed', 'true');
     });
 
-    it('shows the profile link when authenticated and no logout button', () => {
+    function mockAuthenticatedPage(url: string) {
         vi.spyOn(inertia, 'usePage').mockReturnValue({
+            url,
             props: {
                 auth: {
                     user: {
@@ -83,6 +84,10 @@ describe('Navbar', () => {
                 },
             },
         } as unknown as ReturnType<typeof inertia.usePage>);
+    }
+
+    it('shows the profile link when authenticated and no logout button', () => {
+        mockAuthenticatedPage('/profile');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 
@@ -97,6 +102,56 @@ describe('Navbar', () => {
         ).not.toBeInTheDocument();
         expect(
             screen.queryByRole('link', { name: i18n.t('nav.login') }),
+        ).not.toBeInTheDocument();
+    });
+
+    it('groups the user name and the profile icon inside a single pill link', () => {
+        mockAuthenticatedPage('/profile');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        const profileLink = screen.getByRole('link', { name: i18n.t('nav.profile') });
+
+        expect(profileLink).toHaveAttribute('href', '/profile.edit');
+        expect(profileLink).toHaveTextContent('Jane Doe');
+        expect(screen.getByText('|')).toBeInTheDocument();
+    });
+
+    it('marks the dashboard tab as the current page when already on the dashboard page', () => {
+        mockAuthenticatedPage('/dashboard');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.dashboard') }),
+        ).toHaveAttribute('aria-current', 'page');
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.profile') }),
+        ).toHaveAttribute('href', '/profile.edit');
+    });
+
+    it('does not mark the dashboard tab as current on other pages', () => {
+        mockAuthenticatedPage('/profile');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.dashboard') }),
+        ).not.toHaveAttribute('aria-current');
+    });
+
+    it('shows the simulators and resources tabs as plain non-clickable text', () => {
+        mockAuthenticatedPage('/dashboard');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(screen.getByText(i18n.t('nav.simulators'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('nav.resources'))).toBeInTheDocument();
+        expect(
+            screen.queryByRole('link', { name: i18n.t('nav.simulators') }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole('link', { name: i18n.t('nav.resources') }),
         ).not.toBeInTheDocument();
     });
 

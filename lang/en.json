@@ -8,6 +8,8 @@
         "logout": "Log out",
         "profile": "Profile",
         "dashboard": "Dashboard",
+        "simulators": "Simulators",
+        "resources": "Resources",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,10 +151,12 @@
     "dashboard": {
         "eyebrow": "Member area",
         "title": "Dashboard",
+        "greeting": "Hello {{name}}.",
         "description": "Here's an overview of your activity.",
+        "newSimulation": "New simulation",
         "simulators": {
             "singleEnvelope": {
-                "title": "Single-envelope simulator",
+                "title": "Classic simulator",
                 "description": "Project how an investment grows within a single tax wrapper.",
                 "lockedNote": "Upgrade to premium to access it."
             },
@@ -163,20 +167,47 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Coming soon"
+            "comingSoonBadge": "Coming soon",
+            "cta": "Start a projection"
         },
         "scenarioList": {
             "title": "Saved scenarios",
             "empty": "You don't have any saved scenario yet.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenarios",
+            "genericLabel": "Unnamed scenario",
+            "openAriaLabel": "Open {{name}}",
+            "columns": {
+                "name": "Scenario",
+                "wrapper": "Wrapper",
+                "horizon": "Horizon",
+                "date": "Date",
+                "amount": "Amount"
+            },
             "calculatorTypes": {
                 "single_envelope": "Single-envelope"
             }
+        },
+        "promo": {
+            "title": "Upgrade to Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Unlimited scenarios",
+                "multiEnvelopePreview": "Early access to multi-envelope comparison",
+                "pdfExport": "PDF export for your advisor"
+            },
+            "cta": "Try 14 days"
         }
     },
     "scenario": {
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
         "createdAtLabel": "Simulated on {{date}}",
+        "rename": {
+            "button": "Rename",
+            "label": "Scenario name",
+            "save": "Save",
+            "cancel": "Cancel"
+        },
         "chart": {
             "title": "Capital growth",
             "contributions": "Total contributions",
@@ -221,6 +252,7 @@
             "eyebrow": "Single-envelope simulator",
             "title": "Single-envelope simulation",
             "form": {
+                "name": "Scenario name (optional)",
                 "initialCapital": "Initial capital",
                 "monthlyContribution": "Monthly contributions",
                 "annualRate": "Annual gross rate",

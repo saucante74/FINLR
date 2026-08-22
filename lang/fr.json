@@ -8,6 +8,8 @@
         "logout": "Déconnexion",
         "profile": "Profil",
         "dashboard": "Tableau de bord",
+        "simulators": "Simulateurs",
+        "resources": "Ressources",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -149,10 +151,12 @@
     "dashboard": {
         "eyebrow": "Espace membre",
         "title": "Tableau de bord",
+        "greeting": "Bonjour {{name}}.",
         "description": "Retrouvez ici un aperçu de votre activité.",
+        "newSimulation": "Nouvelle simulation",
         "simulators": {
             "singleEnvelope": {
-                "title": "Simulateur mono-enveloppe",
+                "title": "Simulateur classique",
                 "description": "Projetez l'évolution d'un placement sur une enveloppe fiscale unique.",
                 "lockedNote": "Passez à l'offre premium pour y accéder."
             },
@@ -163,20 +167,47 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Bientôt disponible"
+            "comingSoonBadge": "Bientôt disponible",
+            "cta": "Lancer une projection"
         },
         "scenarioList": {
             "title": "Scénarios sauvegardés",
             "empty": "Vous n'avez pas encore de scénario sauvegardé.",
+            "count_one": "{{count}} scénario",
+            "count_other": "{{count}} scénarios",
+            "genericLabel": "Scénario sans nom",
+            "openAriaLabel": "Ouvrir {{name}}",
+            "columns": {
+                "name": "Scénario",
+                "wrapper": "Enveloppe",
+                "horizon": "Horizon",
+                "date": "Date",
+                "amount": "Montant"
+            },
             "calculatorTypes": {
                 "single_envelope": "Mono-enveloppe"
             }
+        },
+        "promo": {
+            "title": "Passez à Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Scénarios illimités",
+                "multiEnvelopePreview": "Comparaison multi-enveloppe en avant-première",
+                "pdfExport": "Export PDF pour votre conseiller"
+            },
+            "cta": "Essayer 14 jours"
         }
     },
     "scenario": {
         "eyebrow": "Scénario sauvegardé",
         "title": "Résultat de simulation",
         "createdAtLabel": "Simulé le {{date}}",
+        "rename": {
+            "button": "Renommer",
+            "label": "Nom du scénario",
+            "save": "Enregistrer",
+            "cancel": "Annuler"
+        },
         "chart": {
             "title": "Évolution du capital",
             "contributions": "Versements cumulés",
@@ -221,6 +252,7 @@
             "eyebrow": "Simulateur mono-enveloppe",
             "title": "Simulation mono-enveloppe",
             "form": {
+                "name": "Nom du scénario (facultatif)",
                 "initialCapital": "Capital initial",
                 "monthlyContribution": "Versements mensuels",
                 "annualRate": "Taux brut annuel",

@@ -5,16 +5,17 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
+import ScenarioNameEditor from '@/features/scenarios/components/ScenarioNameEditor';
 import ScenarioSummary from '@/features/scenarios/components/ScenarioSummary';
 import { formatDate } from '@/features/scenarios/lib/format';
 import type { ScenarioProps } from '@/features/scenarios/types';
 
-export default function ScenarioShow({ input, result, createdAt }: ScenarioProps) {
+export default function ScenarioShow({ id, input, result, createdAt, name }: ScenarioProps) {
     const { t, i18n } = useTranslation();
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
-            <Head title={t('scenario.title')} />
+            <Head title={name ?? t('scenario.title')} />
 
             <Navbar />
 
@@ -24,9 +25,7 @@ export default function ScenarioShow({ input, result, createdAt }: ScenarioProps
                         <span aria-hidden className="size-1.5 rounded-full bg-brand" />
                         {t('scenario.eyebrow')}
                     </span>
-                    <h1 className="text-2xl font-semibold tracking-tight text-balance lg:text-3xl">
-                        {t('scenario.title')}
-                    </h1>
+                    <ScenarioNameEditor id={id} name={name} />
                     <p className="text-sm text-muted-foreground">
                         {t('scenario.createdAtLabel', { date: formatDate(createdAt, i18n.resolvedLanguage) })}
                     </p>

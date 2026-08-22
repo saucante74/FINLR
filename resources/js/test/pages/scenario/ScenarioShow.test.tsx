@@ -8,6 +8,8 @@ import ScenarioShow from '@/pages/scenario/ScenarioShow';
 import type { ScenarioProps } from '@/features/scenarios/types';
 
 const props: ScenarioProps = {
+    id: 42,
+    name: null,
     input: {
         initialCapital: 1000,
         monthlyContribution: 200,

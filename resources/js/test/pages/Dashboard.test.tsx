@@ -10,6 +10,7 @@ import type { ScenarioSummary } from '@/features/dashboard/types';
 
 function mockAuth(permissions: string[]) {
     vi.spyOn(inertia, 'usePage').mockReturnValue({
+        url: '/dashboard',
         props: {
             auth: {
                 user: {
@@ -31,13 +32,28 @@ describe('Dashboard page', () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the dashboard title and description', () => {
+    it('renders a personalized greeting and description', () => {
         mockAuth(['advanced_calculator']);
 
         render(<Dashboard scenarios={[]} />);
 
-        expect(screen.getByRole('heading', { name: i18n.t('dashboard.title') })).toBeInTheDocument();
+        expect(
+            screen.getByRole('heading', {
+                name: i18n.t('dashboard.greeting', { name: 'Jane Doe' }),
+            }),
+        ).toBeInTheDocument();
         expect(screen.getByText(i18n.t('dashboard.description'))).toBeInTheDocument();
+    });
+
+    it('shows a single, always-active "new simulation" action button', () => {
+        mockAuth([]);
+
+        render(<Dashboard scenarios={[]} />);
+
+        const button = screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') });
+        expect(button).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        expect(button).toHaveAttribute('data-size', 'lg');
+        expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
     });
 
     it('shows an active link to the single-envelope simulator when the user has the permission', () => {
@@ -68,19 +84,50 @@ describe('Dashboard page', () => {
         render(<Dashboard scenarios={[]} />);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).toBeInTheDocument();
+        // Same "coming soon" label also appears on the promo block's badge.
+        expect(
+            screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge')).length,
+        ).toBeGreaterThan(0);
     });
 
-    it('renders the scenarios received in props', () => {
+    it('renders the scenarios received in props, falling back to the generic label when unnamed', () => {
         mockAuth(['advanced_calculator']);
         const scenarios: ScenarioSummary[] = [
-            { id: 1, calculatorType: 'single_envelope', headlineFigure: 31234.56, createdAt: '2026-01-15T10:00:00.000000Z' },
+            {
+                id: 1,
+                calculatorType: 'single_envelope',
+                headlineFigure: 31234.56,
+                createdAt: '2026-01-15T10:00:00.000000Z',
+                wrapper: 'pea',
+                years: 15,
+                name: null,
+            },
         ];
 
         render(<Dashboard scenarios={scenarios} />);
 
+        expect(screen.getByText(i18n.t('dashboard.scenarioList.genericLabel'))).toBeInTheDocument();
+    });
+
+    it('never renders a euro amount in the promo block', () => {
+        mockAuth(['advanced_calculator']);
+
+        render(<Dashboard scenarios={[]} />);
+
+        expect(screen.getByText(i18n.t('dashboard.promo.title'))).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeDisabled();
+        expect(screen.queryByText(/€/)).not.toBeInTheDocument();
+    });
+
+    it('renders the promo "coming soon" badge as plain text, not a second button', () => {
+        mockAuth(['advanced_calculator']);
+
+        render(<Dashboard scenarios={[]} />);
+
+        const badges = screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'));
+        expect(badges.some((badge) => badge.tagName === 'SPAN')).toBe(true);
         expect(
-            screen.getByText(i18n.t('dashboard.scenarioList.calculatorTypes.single_envelope')),
-        ).toBeInTheDocument();
+            screen.queryByRole('button', { name: i18n.t('dashboard.simulatorCard.comingSoonBadge') }),
+        ).not.toBeInTheDocument();
     });
 });
