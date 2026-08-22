@@ -27,8 +27,8 @@ interface SimulatorCardProps {
 const DECORATIVE_BAR_HEIGHTS = [8, 12, 15, 19, 24, 28, 34, 40] as const;
 
 function DecorativeGrowthGlyph() {
-    const barWidth = 6;
-    const gap = 3;
+    const barWidth = 9;
+    const gap = 5;
     const maxHeight = 40;
     const width = DECORATIVE_BAR_HEIGHTS.length * (barWidth + gap) - gap;
 
@@ -127,7 +127,7 @@ export default function SimulatorCard({
                     {showDecorativeChart && <DecorativeGrowthGlyph />}
                 </div>
                 {state === 'active' && (
-                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
+                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_40px_var(--brand)]">
                         {t('dashboard.simulatorCard.cta')}
                         <ArrowRight aria-hidden className="size-5" />
                     </span>
