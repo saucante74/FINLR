@@ -1,6 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
+import { Button } from '@/components/ui/button';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import DeleteUserForm from '@/features/user/components/DeleteUserForm';
@@ -43,6 +44,18 @@ export default function Edit({ mustVerifyEmail, status }: EditProps) {
                 <UpdatePasswordForm />
 
                 <DeleteUserForm />
+
+                <div className="flex justify-end border-t border-border pt-6">
+                    <Button asChild variant="ghost">
+                        <Link
+                            href={route('logout')}
+                            method="post"
+                            as="button"
+                        >
+                            {t('nav.logout')}
+                        </Link>
+                    </Button>
+                </div>
             </main>
 
             <Footer />

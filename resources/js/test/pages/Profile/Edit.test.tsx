@@ -39,6 +39,14 @@ describe('Profile Edit page', () => {
         ).toBeInTheDocument();
     });
 
+    it('renders a logout link', () => {
+        render(<Edit mustVerifyEmail={true} status={null} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.logout') }),
+        ).toHaveAttribute('href', '/logout');
+    });
+
     it('prefills the name and email fields from the current user', () => {
         render(<Edit mustVerifyEmail={true} status={null} />);
 

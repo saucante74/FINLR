@@ -81,14 +81,13 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                 </Link>
 
                 <div className="flex items-center gap-2">
-                    <LanguageSelector />
-                    <ThemeToggle />
-
                     {user ? (
                         <div className="flex items-center gap-2">
                             <span className="hidden text-sm text-muted-foreground sm:inline">
                                 {user.name || user.email}
                             </span>
+                            <ThemeToggle />
+                            <LanguageSelector />
                             <Button asChild variant="ghost">
                                 <Link href={route('dashboard')}>
                                     {t('nav.dashboard')}
@@ -104,18 +103,12 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                                     <UserRound className="size-4" />
                                 </Link>
                             </Button>
-                            <Button asChild variant="ghost">
-                                <Link
-                                    href={route('logout')}
-                                    method="post"
-                                    as="button"
-                                >
-                                    {t('nav.logout')}
-                                </Link>
-                            </Button>
                         </div>
                     ) : (
                         <>
+                            <LanguageSelector />
+                            <ThemeToggle />
+
                             {canLogin && (
                                 <Button asChild variant="ghost">
                                     <Link href={route('login')}>
