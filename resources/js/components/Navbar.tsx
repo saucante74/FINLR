@@ -76,19 +76,18 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                     href={route('calculator.freemium')}
                     className="flex items-center gap-2 font-semibold tracking-tight text-foreground"
                 >
-                    <ApplicationLogo className="size-6 fill-current text-primary" />
-                    <span>{t('nav.brand')}</span>
+                    <ApplicationLogo className="size-12" />
+                    <span className="text-2xl">{t('nav.brand')}</span>
                 </Link>
 
                 <div className="flex items-center gap-2">
-                    <LanguageSelector />
-                    <ThemeToggle />
-
                     {user ? (
                         <div className="flex items-center gap-2">
                             <span className="hidden text-sm text-muted-foreground sm:inline">
                                 {user.name || user.email}
                             </span>
+                            <ThemeToggle />
+                            <LanguageSelector />
                             <Button asChild variant="ghost">
                                 <Link href={route('dashboard')}>
                                     {t('nav.dashboard')}
@@ -104,18 +103,12 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                                     <UserRound className="size-4" />
                                 </Link>
                             </Button>
-                            <Button asChild variant="ghost">
-                                <Link
-                                    href={route('logout')}
-                                    method="post"
-                                    as="button"
-                                >
-                                    {t('nav.logout')}
-                                </Link>
-                            </Button>
                         </div>
                     ) : (
                         <>
+                            <LanguageSelector />
+                            <ThemeToggle />
+
                             {canLogin && (
                                 <Button asChild variant="ghost">
                                     <Link href={route('login')}>

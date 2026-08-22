@@ -68,7 +68,7 @@ describe('Navbar', () => {
         ).toHaveAttribute('aria-pressed', 'true');
     });
 
-    it('shows the profile link and logout button when authenticated', () => {
+    it('shows the profile link when authenticated and no logout button', () => {
         vi.spyOn(inertia, 'usePage').mockReturnValue({
             props: {
                 auth: {
@@ -93,8 +93,8 @@ describe('Navbar', () => {
             screen.getByRole('link', { name: i18n.t('nav.profile') }),
         ).toHaveAttribute('href', '/profile.edit');
         expect(
-            screen.getByRole('link', { name: i18n.t('nav.logout') }),
-        ).toBeInTheDocument();
+            screen.queryByRole('link', { name: i18n.t('nav.logout') }),
+        ).not.toBeInTheDocument();
         expect(
             screen.queryByRole('link', { name: i18n.t('nav.login') }),
         ).not.toBeInTheDocument();
