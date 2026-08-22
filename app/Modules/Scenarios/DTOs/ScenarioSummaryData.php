@@ -18,6 +18,8 @@ readonly class ScenarioSummaryData
         public CalculatorType $calculatorType,
         public float $headlineFigure,
         public ?Carbon $createdAt,
+        public string $wrapper,
+        public int $years,
     ) {}
 
     public static function fromModel(Scenario $scenario): self
@@ -26,17 +28,14 @@ readonly class ScenarioSummaryData
             id: $scenario->id,
             calculatorType: $scenario->calculator_type,
             headlineFigure: (float) ($scenario->result_payload['finalNetReal'] ?? 0.0),
-            // Kept as the Carbon instance Eloquent already casts created_at
-            // to (nullable, like the column itself), rather than converting
-            // to CarbonImmutable: it matches what the rest of the codebase
-            // already does when reading this same column — see
-            // ShowScenarioController's own `$scenario->created_at?->toISOString()`.
             createdAt: $scenario->created_at,
+            wrapper: (string) ($scenario->input_payload['wrapper'] ?? ''),
+            years: (int) ($scenario->input_payload['years'] ?? 0),
         );
     }
 
     /**
-     * @return array{id: int, calculatorType: string, headlineFigure: float, createdAt: string|null}
+     * @return array{id: int, calculatorType: string, headlineFigure: float, createdAt: string|null, wrapper: string, years: int}
      */
     public function toArray(): array
     {
@@ -45,6 +44,8 @@ readonly class ScenarioSummaryData
             'calculatorType' => $this->calculatorType->value,
             'headlineFigure' => $this->headlineFigure,
             'createdAt' => $this->createdAt?->toISOString(),
+            'wrapper' => $this->wrapper,
+            'years' => $this->years,
         ];
     }
 }
