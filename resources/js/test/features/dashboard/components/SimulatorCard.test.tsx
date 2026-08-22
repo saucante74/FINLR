@@ -14,6 +14,7 @@ describe('SimulatorCard', () => {
     it('renders as a link to href when active', () => {
         render(
             <SimulatorCard
+                index={1}
                 title="Simulateur mono-enveloppe"
                 description="Une description"
                 state="active"
@@ -29,6 +30,7 @@ describe('SimulatorCard', () => {
     it('shows a locked badge and note, with no link, when locked', () => {
         render(
             <SimulatorCard
+                index={1}
                 title="Simulateur mono-enveloppe"
                 description="Une description"
                 state="locked"
@@ -44,6 +46,7 @@ describe('SimulatorCard', () => {
     it('shows a coming-soon badge, with no link, when comingSoon', () => {
         render(
             <SimulatorCard
+                index={1}
                 title="Simulateur multi-enveloppe"
                 description="Une description"
                 state="comingSoon"

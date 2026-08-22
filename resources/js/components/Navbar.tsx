@@ -72,6 +72,17 @@ function isCurrentPath(url: string | undefined, routeName: string): boolean {
     return currentPath === routePath;
 }
 
+function getInitials(name: string): string {
+    return (
+        name
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map((part) => part.charAt(0).toUpperCase())
+            .join('') || '?'
+    );
+}
+
 export default function Navbar({ canLogin, canRegister }: NavbarProps) {
     const { t } = useTranslation();
     const page = usePage<PageProps>();
@@ -93,8 +104,16 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                 <div className="flex items-center gap-2">
                     {user ? (
                         <div className="flex items-center gap-2">
-                            <span className="hidden text-sm text-muted-foreground sm:inline">
-                                {user.name || user.email}
+                            <span className="hidden items-center gap-2 sm:flex">
+                                <span
+                                    aria-hidden
+                                    className="grid size-7 shrink-0 place-items-center rounded-full bg-brand text-[11px] font-semibold text-brand-foreground"
+                                >
+                                    {getInitials(user.name || user.email)}
+                                </span>
+                                <span className="text-sm text-muted-foreground">
+                                    {user.name || user.email}
+                                </span>
                             </span>
                             <ThemeToggle />
                             <LanguageSelector />

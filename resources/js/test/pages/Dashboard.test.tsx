@@ -32,12 +32,16 @@ describe('Dashboard page', () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the dashboard title and description', () => {
+    it('renders a personalized greeting and description', () => {
         mockAuth(['advanced_calculator']);
 
         render(<Dashboard scenarios={[]} />);
 
-        expect(screen.getByRole('heading', { name: i18n.t('dashboard.title') })).toBeInTheDocument();
+        expect(
+            screen.getByRole('heading', {
+                name: i18n.t('dashboard.greeting', { name: 'Jane Doe' }),
+            }),
+        ).toBeInTheDocument();
         expect(screen.getByText(i18n.t('dashboard.description'))).toBeInTheDocument();
     });
 

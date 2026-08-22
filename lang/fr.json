@@ -149,6 +149,7 @@
     "dashboard": {
         "eyebrow": "Espace membre",
         "title": "Tableau de bord",
+        "greeting": "Bonjour {{name}}.",
         "description": "Retrouvez ici un aperçu de votre activité.",
         "simulators": {
             "singleEnvelope": {
@@ -163,11 +164,19 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Bientôt disponible"
+            "comingSoonBadge": "Bientôt disponible",
+            "cta": "Lancer une projection"
         },
         "scenarioList": {
             "title": "Scénarios sauvegardés",
             "empty": "Vous n'avez pas encore de scénario sauvegardé.",
+            "count_one": "{{count}} scénario",
+            "count_other": "{{count}} scénarios",
+            "columns": {
+                "name": "Scénario",
+                "date": "Date",
+                "amount": "Montant"
+            },
             "calculatorTypes": {
                 "single_envelope": "Mono-enveloppe"
             }

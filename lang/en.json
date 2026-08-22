@@ -149,6 +149,7 @@
     "dashboard": {
         "eyebrow": "Member area",
         "title": "Dashboard",
+        "greeting": "Hello {{name}}.",
         "description": "Here's an overview of your activity.",
         "simulators": {
             "singleEnvelope": {
@@ -163,11 +164,19 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Coming soon"
+            "comingSoonBadge": "Coming soon",
+            "cta": "Start a projection"
         },
         "scenarioList": {
             "title": "Saved scenarios",
             "empty": "You don't have any saved scenario yet.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenarios",
+            "columns": {
+                "name": "Scenario",
+                "date": "Date",
+                "amount": "Amount"
+            },
             "calculatorTypes": {
                 "single_envelope": "Single-envelope"
             }

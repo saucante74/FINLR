@@ -149,6 +149,7 @@
     "dashboard": {
         "eyebrow": "Area membri",
         "title": "Bacheca",
+        "greeting": "Ciao {{name}}.",
         "description": "Ecco una panoramica della tua attività.",
         "simulators": {
             "singleEnvelope": {
@@ -163,11 +164,19 @@
         },
         "simulatorCard": {
             "lockedBadge": "Premium",
-            "comingSoonBadge": "Prossimamente"
+            "comingSoonBadge": "Prossimamente",
+            "cta": "Avvia una proiezione"
         },
         "scenarioList": {
             "title": "Scenari salvati",
             "empty": "Non hai ancora nessuno scenario salvato.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenari",
+            "columns": {
+                "name": "Scenario",
+                "date": "Data",
+                "amount": "Importo"
+            },
             "calculatorTypes": {
                 "single_envelope": "Mono-involucro"
             }

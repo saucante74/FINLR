@@ -20,13 +20,13 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
             <Navbar />
 
             <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
-                <header className="flex flex-col gap-2">
-                    <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
-                        <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                <header className="flex flex-col gap-3">
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand/25 bg-brand/8 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-brand" />
                         {t('dashboard.eyebrow')}
                     </span>
-                    <h1 className="text-2xl font-semibold tracking-tight text-balance lg:text-3xl">
-                        {t('dashboard.title')}
+                    <h1 className="text-3xl font-semibold tracking-tight text-balance lg:text-4xl">
+                        {t('dashboard.greeting', { name: auth.user.name })}
                     </h1>
                     <p className="max-w-2xl text-sm text-pretty text-muted-foreground">
                         {t('dashboard.description')}
@@ -35,6 +35,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                     <SimulatorCard
+                        index={1}
                         title={t('dashboard.simulators.singleEnvelope.title')}
                         description={t('dashboard.simulators.singleEnvelope.description')}
                         state={canAccessSingleEnvelopeSimulator ? 'active' : 'locked'}
@@ -50,6 +51,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         }
                     />
                     <SimulatorCard
+                        index={2}
                         title={t('dashboard.simulators.multiEnvelope.title')}
                         description={t('dashboard.simulators.multiEnvelope.description')}
                         state="comingSoon"
