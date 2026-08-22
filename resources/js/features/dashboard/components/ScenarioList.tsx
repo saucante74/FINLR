@@ -28,7 +28,7 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
 
     return (
         <Card className="gap-0 overflow-hidden rounded-2xl py-0">
-            <CardHeader className="flex-row items-baseline gap-3 border-b border-border py-5">
+            <CardHeader className="flex items-baseline gap-3 border-b border-border py-5">
                 <CardTitle className="text-base">{t('dashboard.scenarioList.title')}</CardTitle>
                 {scenarios.length > 0 && (
                     <span className="font-mono text-xs text-muted-foreground">
@@ -48,8 +48,8 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                             )}
                         >
                             <span>{t('dashboard.scenarioList.columns.name')}</span>
-                            <span>{t('dashboard.scenarioList.columns.wrapper')}</span>
-                            <span>{t('dashboard.scenarioList.columns.horizon')}</span>
+                            <span className="text-center">{t('dashboard.scenarioList.columns.wrapper')}</span>
+                            <span className="text-center">{t('dashboard.scenarioList.columns.horizon')}</span>
                             <span>{t('dashboard.scenarioList.columns.date')}</span>
                             <span className="text-right">{t('dashboard.scenarioList.columns.amount')}</span>
                             {/* No label: icon-only "open" column, described per-row via the link's aria-label. */}
@@ -83,10 +83,10 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                                             <span className="text-xs text-muted-foreground sm:hidden">
                                                 {wrapperLabel} · {horizonLabel} · {dateLabel}
                                             </span>
-                                            <span className="hidden text-muted-foreground sm:order-2 sm:block">
+                                            <span className="hidden text-center text-muted-foreground sm:order-2 sm:block">
                                                 {wrapperLabel}
                                             </span>
-                                            <span className="hidden text-muted-foreground sm:order-3 sm:block">
+                                            <span className="hidden text-center text-muted-foreground sm:order-3 sm:block">
                                                 {horizonLabel}
                                             </span>
                                             <span className="hidden text-muted-foreground sm:order-4 sm:block">

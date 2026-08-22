@@ -156,7 +156,7 @@
         "newSimulation": "Nuova simulazione",
         "simulators": {
             "singleEnvelope": {
-                "title": "Simulatore mono-involucro",
+                "title": "Simulatore classico",
                 "description": "Proietta l'evoluzione di un investimento su un unico involucro fiscale.",
                 "lockedNote": "Passa all'offerta premium per accedervi."
             },

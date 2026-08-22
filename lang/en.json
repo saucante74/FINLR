@@ -156,7 +156,7 @@
         "newSimulation": "New simulation",
         "simulators": {
             "singleEnvelope": {
-                "title": "Single-envelope simulator",
+                "title": "Classic simulator",
                 "description": "Project how an investment grows within a single tax wrapper.",
                 "lockedNote": "Upgrade to premium to access it."
             },
