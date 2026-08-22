@@ -72,17 +72,6 @@ function isCurrentPath(url: string | undefined, routeName: string): boolean {
     return currentPath === routePath;
 }
 
-function getInitials(name: string): string {
-    return (
-        name
-            .trim()
-            .split(/\s+/)
-            .slice(0, 2)
-            .map((part) => part.charAt(0).toUpperCase())
-            .join('') || '?'
-    );
-}
-
 const TAB_CLASSES = 'rounded-full px-3 py-1.5 text-sm font-medium transition-colors';
 
 export default function Navbar({ canLogin, canRegister }: NavbarProps) {
@@ -131,29 +120,21 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                 <div className="flex items-center gap-2">
                     {user ? (
                         <div className="flex items-center gap-2">
-                            <span className="hidden items-center gap-2 sm:flex">
-                                <span
-                                    aria-hidden
-                                    className="grid size-7 shrink-0 place-items-center rounded-full bg-brand text-[11px] font-semibold text-brand-foreground"
-                                >
-                                    {getInitials(user.name || user.email)}
-                                </span>
-                                <span className="text-sm text-muted-foreground">
-                                    {user.name || user.email}
-                                </span>
-                            </span>
                             <ThemeToggle />
                             <LanguageSelector />
-                            <Button
-                                asChild
-                                variant="ghost"
-                                size="icon"
+                            <span aria-hidden className="text-muted-foreground/30">
+                                |
+                            </span>
+                            <Link
+                                href={route('profile.edit')}
                                 aria-label={t('nav.profile')}
+                                className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border border-muted-foreground/35 px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
                             >
-                                <Link href={route('profile.edit')}>
-                                    <UserRound className="size-4" />
-                                </Link>
-                            </Button>
+                                <span className="hidden sm:inline">
+                                    {user.name || user.email}
+                                </span>
+                                <UserRound aria-hidden className="size-4" />
+                            </Link>
                         </div>
                     ) : (
                         <>

@@ -105,6 +105,18 @@ describe('Navbar', () => {
         ).not.toBeInTheDocument();
     });
 
+    it('groups the user name and the profile icon inside a single pill link', () => {
+        mockAuthenticatedPage('/profile');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        const profileLink = screen.getByRole('link', { name: i18n.t('nav.profile') });
+
+        expect(profileLink).toHaveAttribute('href', '/profile.edit');
+        expect(profileLink).toHaveTextContent('Jane Doe');
+        expect(screen.getByText('|')).toBeInTheDocument();
+    });
+
     it('marks the dashboard tab as the current page when already on the dashboard page', () => {
         mockAuthenticatedPage('/dashboard');
 

@@ -76,7 +76,7 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                                                 <span className="font-medium group-hover:text-brand sm:order-1">
                                                     {displayName}
                                                 </span>
-                                                <span className="font-mono font-medium tabular-nums sm:order-5 sm:text-right">
+                                                <span className="font-mono font-medium tabular-nums sm:order-5 sm:text-right [text-shadow:0_0_24px_var(--brand)]">
                                                     {formatCurrency(scenario.headlineFigure, locale)}
                                                 </span>
                                             </div>
