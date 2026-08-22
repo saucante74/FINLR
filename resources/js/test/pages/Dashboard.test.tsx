@@ -51,7 +51,7 @@ describe('Dashboard page', () => {
         render(<Dashboard scenarios={[]} />);
 
         const button = screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') });
-        expect(button).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        expect(button).toHaveAttribute('href', route('simulators.single-envelope.choose'));
         expect(button).toHaveAttribute('data-size', 'lg');
         expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
     });
@@ -63,7 +63,7 @@ describe('Dashboard page', () => {
 
         expect(
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.singleEnvelope.title')) }),
-        ).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        ).toHaveAttribute('href', route('simulators.single-envelope.choose'));
     });
 
     it('shows a locked single-envelope card with no link when the user lacks the permission', () => {

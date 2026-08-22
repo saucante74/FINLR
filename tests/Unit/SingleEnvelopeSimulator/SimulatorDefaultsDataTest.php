@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\SingleEnvelopeSimulator;
 
-use App\Modules\SimulationEngine\Enums\TaxWrapper;
 use App\Modules\SingleEnvelopeSimulator\DTOs\SimulatorDefaultsData;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +20,6 @@ class SimulatorDefaultsDataTest extends TestCase
         $this->assertSame(30.0, $defaults->taxRate);
         $this->assertSame(2.0, $defaults->inflationRate);
         $this->assertFalse($defaults->inflationEnabled);
-        $this->assertSame(TaxWrapper::Pea, $defaults->wrapper);
     }
 
     public function test_to_array_produces_the_expected_keys_and_values(): void
@@ -38,7 +36,6 @@ class SimulatorDefaultsDataTest extends TestCase
             'taxRate' => 30.0,
             'inflationRate' => 2.0,
             'inflationEnabled' => false,
-            'wrapper' => 'pea',
         ], $defaults->toArray());
     }
 }

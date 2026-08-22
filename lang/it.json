@@ -248,6 +248,12 @@
         }
     },
     "simulator": {
+        "chooseWrapper": {
+            "eyebrow": "Simulatore classico",
+            "title": "Scegli il tuo involucro fiscale",
+            "description": "Ogni involucro ha la propria fiscalità. Seleziona quello che vuoi simulare.",
+            "cta": "Simula"
+        },
         "singleEnvelope": {
             "eyebrow": "Simulatore mono-involucro",
             "title": "Simulazione mono-involucro",
