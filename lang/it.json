@@ -151,6 +151,7 @@
         "title": "Bacheca",
         "greeting": "Ciao {{name}}.",
         "description": "Ecco una panoramica della tua attività.",
+        "newSimulation": "Nuova simulazione",
         "simulators": {
             "singleEnvelope": {
                 "title": "Simulatore mono-involucro",
@@ -172,14 +173,26 @@
             "empty": "Non hai ancora nessuno scenario salvato.",
             "count_one": "{{count}} scenario",
             "count_other": "{{count}} scenari",
+            "genericLabel": "Scenario senza nome",
             "columns": {
                 "name": "Scenario",
+                "wrapper": "Involucro",
+                "horizon": "Orizzonte",
                 "date": "Data",
                 "amount": "Importo"
             },
             "calculatorTypes": {
                 "single_envelope": "Mono-involucro"
             }
+        },
+        "promo": {
+            "title": "Passa a Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Scenari illimitati",
+                "multiEnvelopePreview": "Accesso anticipato al confronto multi-involucro",
+                "pdfExport": "Esportazione PDF per il tuo consulente"
+            },
+            "cta": "Prova 14 giorni"
         }
     },
     "scenario": {

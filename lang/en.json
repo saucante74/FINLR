@@ -151,6 +151,7 @@
         "title": "Dashboard",
         "greeting": "Hello {{name}}.",
         "description": "Here's an overview of your activity.",
+        "newSimulation": "New simulation",
         "simulators": {
             "singleEnvelope": {
                 "title": "Single-envelope simulator",
@@ -172,14 +173,26 @@
             "empty": "You don't have any saved scenario yet.",
             "count_one": "{{count}} scenario",
             "count_other": "{{count}} scenarios",
+            "genericLabel": "Unnamed scenario",
             "columns": {
                 "name": "Scenario",
+                "wrapper": "Wrapper",
+                "horizon": "Horizon",
                 "date": "Date",
                 "amount": "Amount"
             },
             "calculatorTypes": {
                 "single_envelope": "Single-envelope"
             }
+        },
+        "promo": {
+            "title": "Upgrade to Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Unlimited scenarios",
+                "multiEnvelopePreview": "Early access to multi-envelope comparison",
+                "pdfExport": "PDF export for your advisor"
+            },
+            "cta": "Try 14 days"
         }
     },
     "scenario": {

@@ -151,6 +151,7 @@
         "title": "Tableau de bord",
         "greeting": "Bonjour {{name}}.",
         "description": "Retrouvez ici un aperçu de votre activité.",
+        "newSimulation": "Nouvelle simulation",
         "simulators": {
             "singleEnvelope": {
                 "title": "Simulateur mono-enveloppe",
@@ -172,14 +173,26 @@
             "empty": "Vous n'avez pas encore de scénario sauvegardé.",
             "count_one": "{{count}} scénario",
             "count_other": "{{count}} scénarios",
+            "genericLabel": "Scénario sans nom",
             "columns": {
                 "name": "Scénario",
+                "wrapper": "Enveloppe",
+                "horizon": "Horizon",
                 "date": "Date",
                 "amount": "Montant"
             },
             "calculatorTypes": {
                 "single_envelope": "Mono-enveloppe"
             }
+        },
+        "promo": {
+            "title": "Passez à Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Scénarios illimités",
+                "multiEnvelopePreview": "Comparaison multi-enveloppe en avant-première",
+                "pdfExport": "Export PDF pour votre conseiller"
+            },
+            "cta": "Essayer 14 jours"
         }
     },
     "scenario": {

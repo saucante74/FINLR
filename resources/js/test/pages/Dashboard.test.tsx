@@ -45,6 +45,17 @@ describe('Dashboard page', () => {
         expect(screen.getByText(i18n.t('dashboard.description'))).toBeInTheDocument();
     });
 
+    it('shows a single, always-active "new simulation" action button', () => {
+        mockAuth([]);
+
+        render(<Dashboard scenarios={[]} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') }),
+        ).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
+    });
+
     it('shows an active link to the single-envelope simulator when the user has the permission', () => {
         mockAuth(['advanced_calculator']);
 
@@ -73,19 +84,38 @@ describe('Dashboard page', () => {
         render(<Dashboard scenarios={[]} />);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).toBeInTheDocument();
+        // Same "coming soon" label also appears on the promo block's badge.
+        expect(
+            screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge')).length,
+        ).toBeGreaterThan(0);
     });
 
-    it('renders the scenarios received in props', () => {
+    it('renders the scenarios received in props, falling back to the generic label when unnamed', () => {
         mockAuth(['advanced_calculator']);
         const scenarios: ScenarioSummary[] = [
-            { id: 1, calculatorType: 'single_envelope', headlineFigure: 31234.56, createdAt: '2026-01-15T10:00:00.000000Z' },
+            {
+                id: 1,
+                calculatorType: 'single_envelope',
+                headlineFigure: 31234.56,
+                createdAt: '2026-01-15T10:00:00.000000Z',
+                wrapper: 'pea',
+                years: 15,
+                name: null,
+            },
         ];
 
         render(<Dashboard scenarios={scenarios} />);
 
-        expect(
-            screen.getByText(i18n.t('dashboard.scenarioList.calculatorTypes.single_envelope')),
-        ).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('dashboard.scenarioList.genericLabel'))).toBeInTheDocument();
+    });
+
+    it('never renders a euro amount in the promo block', () => {
+        mockAuth(['advanced_calculator']);
+
+        render(<Dashboard scenarios={[]} />);
+
+        expect(screen.getByText(i18n.t('dashboard.promo.title'))).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeDisabled();
+        expect(screen.queryByText(/€/)).not.toBeInTheDocument();
     });
 });
