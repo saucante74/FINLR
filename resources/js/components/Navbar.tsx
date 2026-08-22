@@ -76,7 +76,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                     href={route('calculator.freemium')}
                     className="flex items-center gap-2 font-semibold tracking-tight text-foreground"
                 >
-                    <ApplicationLogo className="size-6 fill-current text-primary" />
+                    <ApplicationLogo className="size-6" />
                     <span>{t('nav.brand')}</span>
                 </Link>
 
