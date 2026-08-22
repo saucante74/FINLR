@@ -40,6 +40,29 @@ describe('ScenarioList', () => {
         expect(screen.queryByText(i18n.t('dashboard.scenarioList.empty'))).not.toBeInTheDocument();
     });
 
+    it('describes the open action via an aria-label instead of a text column', () => {
+        const scenarios: ScenarioSummary[] = [
+            {
+                id: 42,
+                calculatorType: 'single_envelope',
+                headlineFigure: 31234.56,
+                createdAt: '2026-01-15T10:00:00.000000Z',
+                wrapper: 'pea',
+                years: 15,
+                name: 'Retraite à 62 ans',
+            },
+        ];
+
+        render(<ScenarioList scenarios={scenarios} />);
+
+        expect(
+            screen.getByRole('link', {
+                name: i18n.t('dashboard.scenarioList.openAriaLabel', { name: 'Retraite à 62 ans' }),
+            }),
+        ).toBeInTheDocument();
+        expect(screen.queryByText('Ouvrir')).not.toBeInTheDocument();
+    });
+
     it('falls back to the generic label when the scenario has no name', () => {
         const scenarios: ScenarioSummary[] = [
             {

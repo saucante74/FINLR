@@ -56,4 +56,20 @@ describe('SimulatorCard', () => {
         expect(screen.getByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).toBeInTheDocument();
         expect(screen.queryByRole('link')).not.toBeInTheDocument();
     });
+
+    it('renders the coming-soon badge as plain informational text, not a button', () => {
+        render(
+            <SimulatorCard
+                index={1}
+                title="Simulateur multi-enveloppe"
+                description="Une description"
+                state="comingSoon"
+            />,
+        );
+
+        const badge = screen.getByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'));
+
+        expect(badge.tagName).toBe('SPAN');
+        expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    });
 });

@@ -50,9 +50,9 @@ describe('Dashboard page', () => {
 
         render(<Dashboard scenarios={[]} />);
 
-        expect(
-            screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') }),
-        ).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        const button = screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') });
+        expect(button).toHaveAttribute('href', route('simulators.single-envelope.show'));
+        expect(button).toHaveAttribute('data-size', 'lg');
         expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
     });
 
@@ -117,5 +117,17 @@ describe('Dashboard page', () => {
         expect(screen.getByText(i18n.t('dashboard.promo.title'))).toBeInTheDocument();
         expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeDisabled();
         expect(screen.queryByText(/€/)).not.toBeInTheDocument();
+    });
+
+    it('renders the promo "coming soon" badge as plain text, not a second button', () => {
+        mockAuth(['advanced_calculator']);
+
+        render(<Dashboard scenarios={[]} />);
+
+        const badges = screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'));
+        expect(badges.some((badge) => badge.tagName === 'SPAN')).toBe(true);
+        expect(
+            screen.queryByRole('button', { name: i18n.t('dashboard.simulatorCard.comingSoonBadge') }),
+        ).not.toBeInTheDocument();
     });
 });

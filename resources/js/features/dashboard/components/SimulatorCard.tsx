@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +15,18 @@ interface SimulatorCardProps {
     state: SimulatorCardState;
     href?: string;
     note?: string;
+}
+
+// Plain informational badge — never a button (no interactive role, no
+// pointer cursor, no disabled state). Shared so the dashboard's promo
+// block reuses the exact same "coming soon" styling instead of a second,
+// slightly-divergent copy.
+export function DashboardBadge({ children }: { children: ReactNode }) {
+    return (
+        <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+            {children}
+        </span>
+    );
 }
 
 export default function SimulatorCard({ index, title, description, state, href, note }: SimulatorCardProps) {
@@ -54,11 +67,7 @@ export default function SimulatorCard({ index, title, description, state, href, 
                         )}
                     >
                         <span>{title}</span>
-                        {badgeLabel && (
-                            <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                                {badgeLabel}
-                            </span>
-                        )}
+                        {badgeLabel && <DashboardBadge>{badgeLabel}</DashboardBadge>}
                     </CardTitle>
                 </div>
             </CardHeader>
@@ -66,9 +75,9 @@ export default function SimulatorCard({ index, title, description, state, href, 
                 <p className="max-w-[40ch] text-sm text-muted-foreground">{description}</p>
                 {note && <p className="text-xs text-muted-foreground">{note}</p>}
                 {state === 'active' && (
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand">
+                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand">
                         {t('dashboard.simulatorCard.cta')}
-                        <ArrowRight aria-hidden className="size-4" />
+                        <ArrowRight aria-hidden className="size-5" />
                     </span>
                 )}
             </CardContent>

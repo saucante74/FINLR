@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ScenarioList from '@/features/dashboard/components/ScenarioList';
-import SimulatorCard from '@/features/dashboard/components/SimulatorCard';
+import SimulatorCard, { DashboardBadge } from '@/features/dashboard/components/SimulatorCard';
 import type { DashboardPageProps } from '@/features/dashboard/types';
 import type { AuthenticatedPageProps } from '@/types';
 
@@ -38,7 +38,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                             {t('dashboard.description')}
                         </p>
                     </div>
-                    <Button asChild variant="brand" className="w-fit shrink-0">
+                    <Button asChild variant="brand" size="lg" className="w-fit shrink-0">
                         <Link href={route('simulators.single-envelope.show')}>
                             {t('dashboard.newSimulation')}
                         </Link>
@@ -85,9 +85,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         </ul>
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
-                        <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                            {t('dashboard.simulatorCard.comingSoonBadge')}
-                        </span>
+                        <DashboardBadge>{t('dashboard.simulatorCard.comingSoonBadge')}</DashboardBadge>
                         <Button type="button" variant="brand" disabled>
                             {t('dashboard.promo.cta')}
                         </Button>
