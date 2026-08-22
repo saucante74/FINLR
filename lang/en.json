@@ -8,6 +8,8 @@
         "logout": "Log out",
         "profile": "Profile",
         "dashboard": "Dashboard",
+        "simulators": "Simulators",
+        "resources": "Resources",
         "languages": {
             "fr": "Français",
             "en": "English",

@@ -8,6 +8,8 @@
         "logout": "Esci",
         "profile": "Profilo",
         "dashboard": "Bacheca",
+        "simulators": "Simulatori",
+        "resources": "Risorse",
         "languages": {
             "fr": "Français",
             "en": "English",

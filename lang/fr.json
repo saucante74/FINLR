@@ -8,6 +8,8 @@
         "logout": "Déconnexion",
         "profile": "Profil",
         "dashboard": "Tableau de bord",
+        "simulators": "Simulateurs",
+        "resources": "Ressources",
         "languages": {
             "fr": "Français",
             "en": "English",
