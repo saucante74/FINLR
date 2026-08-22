@@ -6,17 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type {
+    Jurisdiction,
     SingleEnvelopeFormDefaults,
     SingleEnvelopeFormValues,
     TaxWrapper,
 } from '@/features/single-envelope-simulator/types';
 
-const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto'];
-
 interface NumberFieldProps {
-    id: keyof Omit<SingleEnvelopeFormValues, 'inflationEnabled' | 'wrapper'>;
+    id: keyof Omit<SingleEnvelopeFormValues, 'inflationEnabled' | 'name'>;
     label: string;
     value: number;
     step?: number;
@@ -47,9 +45,11 @@ function NumberField({ id, label, value, step = 1, min = 0, error, onChange }: N
 
 interface SingleEnvelopeFormProps {
     defaults: SingleEnvelopeFormDefaults;
+    jurisdiction: Jurisdiction;
+    wrapper: TaxWrapper;
 }
 
-export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps) {
+export default function SingleEnvelopeForm({ defaults, jurisdiction, wrapper }: SingleEnvelopeFormProps) {
     const { t } = useTranslation();
     const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>({
         ...defaults,
@@ -62,7 +62,7 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
 
     const submit = (e: FormEvent) => {
         e.preventDefault();
-        post(route('simulators.single-envelope.run'));
+        post(route('simulators.single-envelope.run', { jurisdiction, wrapper }));
     };
 
     return (
@@ -166,21 +166,12 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
                 </Label>
             </div>
 
+            {/* Read-only: the wrapper is fixed by the URL, not a form field. */}
             <div className="flex flex-col gap-2">
-                <Label htmlFor="wrapper">{t('simulator.singleEnvelope.form.wrapper')}</Label>
-                <Select value={data.wrapper} onValueChange={(value) => setData('wrapper', value as TaxWrapper)}>
-                    <SelectTrigger id="wrapper" aria-invalid={Boolean(errors.wrapper)} className="w-full">
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {WRAPPER_OPTIONS.map((option) => (
-                            <SelectItem key={option} value={option}>
-                                {t(`simulator.singleEnvelope.form.wrapperOptions.${option}`)}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-                {errors.wrapper && <p className="text-xs text-destructive">{errors.wrapper}</p>}
+                <span className="text-sm font-medium">{t('simulator.singleEnvelope.form.wrapper')}</span>
+                <span className="inline-flex w-fit items-center rounded-full border border-brand/25 bg-brand/8 px-3 py-1.5 text-sm font-medium text-brand">
+                    {t(`simulator.singleEnvelope.form.wrapperOptions.${wrapper}`)}
+                </span>
             </div>
 
             <Button type="submit" variant="brand" disabled={processing}>
