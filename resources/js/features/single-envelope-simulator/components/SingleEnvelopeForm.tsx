@@ -7,7 +7,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { SingleEnvelopeFormValues, TaxWrapper } from '@/features/single-envelope-simulator/types';
+import type {
+    SingleEnvelopeFormDefaults,
+    SingleEnvelopeFormValues,
+    TaxWrapper,
+} from '@/features/single-envelope-simulator/types';
 
 const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto'];
 
@@ -42,12 +46,15 @@ function NumberField({ id, label, value, step = 1, min = 0, error, onChange }: N
 }
 
 interface SingleEnvelopeFormProps {
-    defaults: SingleEnvelopeFormValues;
+    defaults: SingleEnvelopeFormDefaults;
 }
 
 export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps) {
     const { t } = useTranslation();
-    const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>(defaults);
+    const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>({
+        ...defaults,
+        name: '',
+    });
 
     // Not a field of SingleEnvelopeFormValues: flashed by the controller
     // when the calculation itself fails, so it isn't tied to any one input.
@@ -65,6 +72,20 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
                     {simulationError}
                 </p>
             )}
+
+            <div className="flex flex-col gap-2">
+                <Label htmlFor="name">{t('simulator.singleEnvelope.form.name')}</Label>
+                <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    maxLength={255}
+                    value={data.name}
+                    aria-invalid={Boolean(errors.name)}
+                    onChange={(e) => setData('name', e.target.value)}
+                />
+                {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+            </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
                 <NumberField

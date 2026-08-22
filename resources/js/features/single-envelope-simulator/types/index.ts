@@ -1,6 +1,7 @@
 export type TaxWrapper = 'pea' | 'cto';
 
 export interface SingleEnvelopeFormValues {
+    name: string;
     initialCapital: number;
     monthlyContribution: number;
     annualRate: number;
@@ -13,6 +14,8 @@ export interface SingleEnvelopeFormValues {
     wrapper: TaxWrapper;
 }
 
+export type SingleEnvelopeFormDefaults = Omit<SingleEnvelopeFormValues, 'name'>;
+
 export interface SingleEnvelopeSimulatorPageProps {
-    defaults: SingleEnvelopeFormValues;
+    defaults: SingleEnvelopeFormDefaults;
 }

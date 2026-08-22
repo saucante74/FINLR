@@ -11,11 +11,12 @@ use App\Modules\User\Models\User;
 
 class SaveSingleEnvelopeScenarioAction
 {
-    public function handle(User $user, CalculationInputData $input, CalculationResultData $result): Scenario
+    public function handle(User $user, CalculationInputData $input, CalculationResultData $result, ?string $name = null): Scenario
     {
         return Scenario::create([
             'user_id' => $user->id,
             'calculator_type' => CalculatorType::SingleEnvelope,
+            'name' => $name,
             'input_payload' => $input->toArray(),
             'result_payload' => $result->toArray(),
             'engine_version' => EngineVersion::current(),

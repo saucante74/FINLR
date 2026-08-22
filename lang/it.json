@@ -230,6 +230,7 @@
             "eyebrow": "Simulatore mono-involucro",
             "title": "Simulazione mono-involucro",
             "form": {
+                "name": "Nome dello scenario (facoltativo)",
                 "initialCapital": "Capitale iniziale",
                 "monthlyContribution": "Versamenti mensili",
                 "annualRate": "Tasso lordo annuo",

@@ -31,6 +31,7 @@ class RunSingleEnvelopeSimulationRequest extends FormRequest
             'inflationRate' => ['required', 'numeric', 'min:0', 'max:100'],
             'inflationEnabled' => ['required', 'boolean'],
             'wrapper' => ['required', Rule::enum(TaxWrapper::class)],
+            'name' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -48,5 +49,13 @@ class RunSingleEnvelopeSimulationRequest extends FormRequest
             inflationEnabled: $this->boolean('inflationEnabled'),
             wrapper: TaxWrapper::from($this->string('wrapper')->toString()),
         );
+    }
+
+    // Not part of CalculationInputData: the scenario name is storage
+    // metadata, not a financial-engine input, so it travels to
+    // SaveSingleEnvelopeScenarioAction separately from toData().
+    public function name(): ?string
+    {
+        return $this->string('name')->toString() ?: null;
     }
 }

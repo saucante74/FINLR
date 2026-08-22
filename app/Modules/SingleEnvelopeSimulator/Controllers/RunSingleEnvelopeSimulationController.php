@@ -17,7 +17,7 @@ class RunSingleEnvelopeSimulationController extends Controller
     ): RedirectResponse {
         $input = $request->toData();
         $result = $run->handle($input);
-        $scenario = $save->handle($request->user(), $input, $result);
+        $scenario = $save->handle($request->user(), $input, $result, $request->name());
 
         return redirect()->route('scenarios.show', $scenario);
     }

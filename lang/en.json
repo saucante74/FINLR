@@ -230,6 +230,7 @@
             "eyebrow": "Single-envelope simulator",
             "title": "Single-envelope simulation",
             "form": {
+                "name": "Scenario name (optional)",
                 "initialCapital": "Initial capital",
                 "monthlyContribution": "Monthly contributions",
                 "annualRate": "Annual gross rate",
