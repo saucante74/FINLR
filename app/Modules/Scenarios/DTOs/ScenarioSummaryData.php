@@ -20,6 +20,7 @@ readonly class ScenarioSummaryData
         public ?Carbon $createdAt,
         public string $wrapper,
         public int $years,
+        public ?string $name,
     ) {}
 
     public static function fromModel(Scenario $scenario): self
@@ -31,11 +32,12 @@ readonly class ScenarioSummaryData
             createdAt: $scenario->created_at,
             wrapper: (string) ($scenario->input_payload['wrapper'] ?? ''),
             years: (int) ($scenario->input_payload['years'] ?? 0),
+            name: $scenario->name,
         );
     }
 
     /**
-     * @return array{id: int, calculatorType: string, headlineFigure: float, createdAt: string|null, wrapper: string, years: int}
+     * @return array{id: int, calculatorType: string, headlineFigure: float, createdAt: string|null, wrapper: string, years: int, name: string|null}
      */
     public function toArray(): array
     {
@@ -46,6 +48,7 @@ readonly class ScenarioSummaryData
             'createdAt' => $this->createdAt?->toISOString(),
             'wrapper' => $this->wrapper,
             'years' => $this->years,
+            'name' => $this->name,
         ];
     }
 }

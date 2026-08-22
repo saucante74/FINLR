@@ -12,10 +12,11 @@ class ScenarioSummaryDataTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_from_model_extracts_the_six_expected_fields(): void
+    public function test_from_model_extracts_the_seven_expected_fields(): void
     {
         $scenario = Scenario::factory()->create([
             'calculator_type' => CalculatorType::SingleEnvelope,
+            'name' => 'Retraite à 62 ans',
             'input_payload' => $this->realisticInputPayload(),
             'result_payload' => $this->realisticResultPayload(),
         ]);
@@ -28,12 +29,14 @@ class ScenarioSummaryDataTest extends TestCase
         $this->assertTrue($scenario->created_at->equalTo($summary->createdAt));
         $this->assertSame('pea', $summary->wrapper);
         $this->assertSame(15, $summary->years);
+        $this->assertSame('Retraite à 62 ans', $summary->name);
     }
 
     public function test_to_array_produces_the_expected_shape(): void
     {
         $scenario = Scenario::factory()->create([
             'calculator_type' => CalculatorType::SingleEnvelope,
+            'name' => 'Retraite à 62 ans',
             'input_payload' => $this->realisticInputPayload(),
             'result_payload' => $this->realisticResultPayload(),
         ]);
@@ -47,6 +50,7 @@ class ScenarioSummaryDataTest extends TestCase
             'createdAt' => $scenario->created_at->toISOString(),
             'wrapper' => 'pea',
             'years' => 15,
+            'name' => 'Retraite à 62 ans',
         ], $array);
     }
 
@@ -62,6 +66,23 @@ class ScenarioSummaryDataTest extends TestCase
 
         $this->assertSame('', $summary->wrapper);
         $this->assertSame(0, $summary->years);
+    }
+
+    public function test_a_scenario_without_a_name_serializes_with_name_null(): void
+    {
+        $scenario = Scenario::factory()->create([
+            'calculator_type' => CalculatorType::SingleEnvelope,
+            'input_payload' => $this->realisticInputPayload(),
+            'result_payload' => $this->realisticResultPayload(),
+        ]);
+
+        $this->assertNull($scenario->name);
+
+        $summary = ScenarioSummaryData::fromModel($scenario);
+
+        $this->assertNull($summary->name);
+        $this->assertArrayHasKey('name', $summary->toArray());
+        $this->assertNull($summary->toArray()['name']);
     }
 
     /**

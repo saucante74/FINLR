@@ -21,6 +21,7 @@ class ShowScenarioTest extends TestCase
         $result = $this->scenarioResultPayload();
         $scenario = Scenario::factory()->create([
             'user_id' => $user->id,
+            'name' => 'Retraite à 62 ans',
             'input_payload' => $input,
             'result_payload' => $result,
         ]);
@@ -38,6 +39,25 @@ class ShowScenarioTest extends TestCase
             ->where('result', $this->normalizeForJsonComparison($result))
             ->where('calculatorType', CalculatorType::SingleEnvelope->value)
             ->where('createdAt', $scenario->created_at->toISOString())
+            ->where('name', 'Retraite à 62 ans')
+        );
+    }
+
+    public function test_a_scenario_without_a_name_exposes_name_null(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $scenario = Scenario::factory()->create([
+            'user_id' => $user->id,
+            'input_payload' => $this->scenarioInputPayload(),
+            'result_payload' => $this->scenarioResultPayload(),
+        ]);
+
+        $response = $this->actingAs($user)->get(route('scenarios.show', $scenario));
+
+        $response->assertOk();
+        $response->assertInertia(fn (Assert $page) => $page
+            ->component('scenario/ScenarioShow')
+            ->where('name', null)
         );
     }
 

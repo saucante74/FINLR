@@ -22,6 +22,7 @@ class ShowScenarioController extends Controller
             'result' => $scenario->result_payload,
             'calculatorType' => $scenario->calculator_type->value,
             'createdAt' => $scenario->created_at?->toISOString(),
+            'name' => $scenario->name,
         ]);
     }
 }

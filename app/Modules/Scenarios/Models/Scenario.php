@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['user_id', 'calculator_type', 'input_payload', 'result_payload', 'engine_version'])]
+#[Fillable(['user_id', 'calculator_type', 'name', 'input_payload', 'result_payload', 'engine_version'])]
 class Scenario extends Model
 {
     /** @use HasFactory<ScenarioFactory> */
