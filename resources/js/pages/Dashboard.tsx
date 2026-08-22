@@ -51,6 +51,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         title={t('dashboard.simulators.singleEnvelope.title')}
                         description={t('dashboard.simulators.singleEnvelope.description')}
                         state={canAccessSingleEnvelopeSimulator ? 'active' : 'locked'}
+                        showDecorativeChart
                         href={
                             canAccessSingleEnvelopeSimulator
                                 ? route('simulators.single-envelope.show')

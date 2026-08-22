@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Moon, Sun, UserRound } from 'lucide-react';
+import { Moon, Settings, Sun } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import ApplicationLogo from '@/components/ApplicationLogo';
@@ -133,7 +133,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                                 <span className="hidden sm:inline">
                                     {user.name || user.email}
                                 </span>
-                                <UserRound aria-hidden className="size-4" />
+                                <Settings aria-hidden className="size-4" />
                             </Link>
                         </div>
                     ) : (

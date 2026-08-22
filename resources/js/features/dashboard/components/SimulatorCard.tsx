@@ -15,6 +15,45 @@ interface SimulatorCardProps {
     state: SimulatorCardState;
     href?: string;
     note?: string;
+    // Purely decorative — see DecorativeGrowthGlyph below. Opt-in per card
+    // instance so it isn't duplicated on every SimulatorCard.
+    showDecorativeChart?: boolean;
+}
+
+// Ornamental glyph, not a data visualization: fixed, hardcoded bar
+// heights (no computed/real figures) forming a smooth ascending
+// silhouette, purely for visual flavor next to the card's description —
+// same spirit as a logo mark. Never interactive, no axes/labels/values.
+const DECORATIVE_BAR_HEIGHTS = [8, 12, 15, 19, 24, 28, 34, 40] as const;
+
+function DecorativeGrowthGlyph() {
+    const barWidth = 6;
+    const gap = 3;
+    const maxHeight = 40;
+    const width = DECORATIVE_BAR_HEIGHTS.length * (barWidth + gap) - gap;
+
+    return (
+        <svg
+            aria-hidden
+            width={width}
+            height={maxHeight}
+            viewBox={`0 0 ${width} ${maxHeight}`}
+            className="shrink-0"
+        >
+            {DECORATIVE_BAR_HEIGHTS.map((barHeight, i) => (
+                <rect
+                    key={i}
+                    x={i * (barWidth + gap)}
+                    y={maxHeight - barHeight}
+                    width={barWidth}
+                    height={barHeight}
+                    rx={1.5}
+                    fill="var(--brand)"
+                    opacity={0.35 + (i / (DECORATIVE_BAR_HEIGHTS.length - 1)) * 0.65}
+                />
+            ))}
+        </svg>
+    );
 }
 
 // Plain informational badge — never a button (no interactive role, no
@@ -29,7 +68,15 @@ export function DashboardBadge({ children }: { children: ReactNode }) {
     );
 }
 
-export default function SimulatorCard({ index, title, description, state, href, note }: SimulatorCardProps) {
+export default function SimulatorCard({
+    index,
+    title,
+    description,
+    state,
+    href,
+    note,
+    showDecorativeChart,
+}: SimulatorCardProps) {
     const { t } = useTranslation();
 
     const badgeLabel =
@@ -72,8 +119,13 @@ export default function SimulatorCard({ index, title, description, state, href, 
                 </div>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-                <p className="max-w-[40ch] text-sm text-muted-foreground">{description}</p>
-                {note && <p className="text-xs text-muted-foreground">{note}</p>}
+                <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-col gap-2">
+                        <p className="max-w-[40ch] text-sm text-muted-foreground">{description}</p>
+                        {note && <p className="text-xs text-muted-foreground">{note}</p>}
+                    </div>
+                    {showDecorativeChart && <DecorativeGrowthGlyph />}
+                </div>
                 {state === 'active' && (
                     <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
                         {t('dashboard.simulatorCard.cta')}
