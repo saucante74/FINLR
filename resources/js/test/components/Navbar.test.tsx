@@ -68,8 +68,9 @@ describe('Navbar', () => {
         ).toHaveAttribute('aria-pressed', 'true');
     });
 
-    it('shows the profile link when authenticated and no logout button', () => {
+    function mockAuthenticatedPage(url: string) {
         vi.spyOn(inertia, 'usePage').mockReturnValue({
+            url,
             props: {
                 auth: {
                     user: {
@@ -83,6 +84,10 @@ describe('Navbar', () => {
                 },
             },
         } as unknown as ReturnType<typeof inertia.usePage>);
+    }
+
+    it('shows the profile link when authenticated and no logout button', () => {
+        mockAuthenticatedPage('/profile');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 
@@ -98,6 +103,19 @@ describe('Navbar', () => {
         expect(
             screen.queryByRole('link', { name: i18n.t('nav.login') }),
         ).not.toBeInTheDocument();
+    });
+
+    it('hides the dashboard link when already on the dashboard page', () => {
+        mockAuthenticatedPage('/dashboard');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(
+            screen.queryByRole('link', { name: i18n.t('nav.dashboard') }),
+        ).not.toBeInTheDocument();
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.profile') }),
+        ).toHaveAttribute('href', '/profile.edit');
     });
 
     it('toggles the dark class on the html element', async () => {

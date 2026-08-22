@@ -64,10 +64,20 @@ interface NavbarProps {
     canRegister?: boolean;
 }
 
+function isCurrentPath(url: string | undefined, routeName: string): boolean {
+    const origin = window.location.origin;
+    const currentPath = new URL(url ?? '', origin).pathname;
+    const routePath = new URL(route(routeName), origin).pathname;
+
+    return currentPath === routePath;
+}
+
 export default function Navbar({ canLogin, canRegister }: NavbarProps) {
     const { t } = useTranslation();
-    const { auth } = usePage<PageProps>().props;
+    const page = usePage<PageProps>();
+    const { auth } = page.props;
     const user = auth?.user ?? null;
+    const isDashboardPage = isCurrentPath(page.url, 'dashboard');
 
     return (
         <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
@@ -88,11 +98,13 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             </span>
                             <ThemeToggle />
                             <LanguageSelector />
-                            <Button asChild variant="ghost">
-                                <Link href={route('dashboard')}>
-                                    {t('nav.dashboard')}
-                                </Link>
-                            </Button>
+                            {!isDashboardPage && (
+                                <Button asChild variant="ghost">
+                                    <Link href={route('dashboard')}>
+                                        {t('nav.dashboard')}
+                                    </Link>
+                                </Button>
+                            )}
                             <Button
                                 asChild
                                 variant="ghost"

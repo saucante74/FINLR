@@ -10,6 +10,7 @@ import type { ScenarioSummary } from '@/features/dashboard/types';
 
 function mockAuth(permissions: string[]) {
     vi.spyOn(inertia, 'usePage').mockReturnValue({
+        url: '/dashboard',
         props: {
             auth: {
                 user: {
