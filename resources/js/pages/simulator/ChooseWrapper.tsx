@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import { Card, CardContent } from '@/components/ui/card';
 import type { ChooseWrapperPageProps } from '@/features/single-envelope-simulator/types';
 
-export default function ChooseWrapper({ jurisdiction, wrappers }: ChooseWrapperPageProps) {
+export default function ChooseWrapper({ sections }: ChooseWrapperPageProps) {
     const { t } = useTranslation();
 
     return (
@@ -30,27 +30,35 @@ export default function ChooseWrapper({ jurisdiction, wrappers }: ChooseWrapperP
                     </p>
                 </header>
 
-                <div className="grid gap-4 md:grid-cols-2">
-                    {wrappers.map((wrapper) => (
-                        <Link
-                            key={wrapper}
-                            href={route('simulators.single-envelope.show', { jurisdiction, wrapper })}
-                            className="block"
-                        >
-                            <Card className="h-full justify-between gap-6 rounded-2xl py-7 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-brand/50">
-                                <CardContent className="flex flex-col gap-4">
-                                    <span className="text-lg font-semibold tracking-tight">
-                                        {t(`simulator.singleEnvelope.form.wrapperOptions.${wrapper}`)}
-                                    </span>
-                                    <span className="inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
-                                        {t('simulator.chooseWrapper.cta')}
-                                        <ArrowRight aria-hidden className="size-5" />
-                                    </span>
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    ))}
-                </div>
+                {sections.map((section) => (
+                    <section key={section.jurisdiction} className="flex flex-col gap-4">
+                        <h2 className="text-lg font-semibold tracking-tight">
+                            {t(`simulator.chooseWrapper.jurisdictions.${section.jurisdiction}`)}
+                        </h2>
+
+                        <div className="grid gap-4 md:grid-cols-2">
+                            {section.wrappers.map((wrapper) => (
+                                <Link
+                                    key={wrapper}
+                                    href={route('simulators.single-envelope.show', { jurisdiction: section.jurisdiction, wrapper })}
+                                    className="block"
+                                >
+                                    <Card className="h-full justify-between gap-6 rounded-2xl py-7 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-brand/50">
+                                        <CardContent className="flex flex-col gap-4">
+                                            <span className="text-lg font-semibold tracking-tight">
+                                                {t(`simulator.singleEnvelope.form.wrapperOptions.${wrapper}`)}
+                                            </span>
+                                            <span className="inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
+                                                {t('simulator.chooseWrapper.cta')}
+                                                <ArrowRight aria-hidden className="size-5" />
+                                            </span>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            ))}
+                        </div>
+                    </section>
+                ))}
             </main>
 
             <Footer />

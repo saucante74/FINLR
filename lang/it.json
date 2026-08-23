@@ -252,7 +252,10 @@
             "eyebrow": "Simulatore classico",
             "title": "Scegli il tuo involucro fiscale",
             "description": "Ogni involucro ha la propria fiscalità. Seleziona quello che vuoi simulare.",
-            "cta": "Simula"
+            "cta": "Simula",
+            "jurisdictions": {
+                "france": "Francia"
+            }
         },
         "singleEnvelope": {
             "eyebrow": "Simulatore mono-involucro",

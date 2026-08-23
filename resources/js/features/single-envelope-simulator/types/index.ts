@@ -28,7 +28,11 @@ export interface SingleEnvelopeSimulatorPageProps {
     wrapper: TaxWrapper;
 }
 
-export interface ChooseWrapperPageProps {
+export interface JurisdictionWrapperSection {
     jurisdiction: Jurisdiction;
     wrappers: TaxWrapper[];
+}
+
+export interface ChooseWrapperPageProps {
+    sections: JurisdictionWrapperSection[];
 }

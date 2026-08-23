@@ -252,7 +252,10 @@
             "eyebrow": "Simulateur classique",
             "title": "Choisissez votre enveloppe fiscale",
             "description": "Chaque enveloppe a sa propre fiscalité. Sélectionnez celle que vous souhaitez simuler.",
-            "cta": "Simuler"
+            "cta": "Simuler",
+            "jurisdictions": {
+                "france": "France"
+            }
         },
         "singleEnvelope": {
             "eyebrow": "Simulateur mono-enveloppe",
