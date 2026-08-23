@@ -39,7 +39,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         </p>
                     </div>
                     <Button asChild variant="brand" size="lg" className="w-fit shrink-0">
-                        <Link href={route('simulators.single-envelope.show')}>
+                        <Link href={route('simulators.single-envelope.choose')}>
                             {t('dashboard.newSimulation')}
                         </Link>
                     </Button>
@@ -54,7 +54,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         showDecorativeChart
                         href={
                             canAccessSingleEnvelopeSimulator
-                                ? route('simulators.single-envelope.show')
+                                ? route('simulators.single-envelope.choose')
                                 : undefined
                         }
                         note={

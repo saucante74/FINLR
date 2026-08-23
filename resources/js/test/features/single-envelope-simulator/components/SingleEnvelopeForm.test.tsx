@@ -28,7 +28,6 @@ const defaults: SingleEnvelopeFormDefaults = {
     taxRate: 30,
     inflationRate: 2,
     inflationEnabled: false,
-    wrapper: 'pea',
 };
 
 describe('SingleEnvelopeForm', () => {
@@ -37,8 +36,8 @@ describe('SingleEnvelopeForm', () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the eleven fields, prefilled with the default values from props', () => {
-        render(<SingleEnvelopeForm defaults={defaults} />);
+    it('renders the ten fields, prefilled with the default values from props', () => {
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
 
         expect(
             screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.name')),
@@ -70,16 +69,21 @@ describe('SingleEnvelopeForm', () => {
         expect(
             screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.inflationEnabled')),
         ).not.toBeChecked();
-        // Radix Select doesn't render a native <select>, so there is no
-        // form value to assert on the trigger — it displays the selected
-        // item's translated label instead.
+    });
+
+    it('shows the URL-provided wrapper as read-only text, not as a form control', () => {
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
+
         expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.wrapper')),
-        ).toHaveTextContent(i18n.t('simulator.singleEnvelope.form.wrapperOptions.pea'));
+            screen.getByText(i18n.t('simulator.singleEnvelope.form.wrapperOptions.pea')),
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByLabelText(i18n.t('simulator.singleEnvelope.form.wrapper')),
+        ).not.toBeInTheDocument();
     });
 
     it('disables the submit button while the form is processing', () => {
-        render(<SingleEnvelopeForm defaults={defaults} />);
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
 
         expect(
             screen.getByRole('button', { name: i18n.t('simulator.singleEnvelope.form.submit') }),
@@ -88,13 +92,13 @@ describe('SingleEnvelopeForm', () => {
 
     it('posts to the single-envelope run route on submit', async () => {
         const user = userEvent.setup();
-        render(<SingleEnvelopeForm defaults={defaults} />);
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
 
         await user.click(
             screen.getByRole('button', { name: i18n.t('simulator.singleEnvelope.form.submit') }),
         );
 
         expect(postMock).toHaveBeenCalledTimes(1);
-        expect(postMock).toHaveBeenCalledWith(route('simulators.single-envelope.run'));
+        expect(postMock).toHaveBeenCalledWith(route('simulators.single-envelope.run', { jurisdiction: 'france', wrapper: 'pea' }));
     });
 });

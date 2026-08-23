@@ -29,7 +29,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
     {
         $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
 
-        $response = $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+        $response = $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
         $response->assertForbidden();
         $this->assertDatabaseCount('scenarios', 0);
@@ -39,7 +39,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
-        $response = $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+        $response = $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
         $this->assertDatabaseCount('scenarios', 1);
 
@@ -54,7 +54,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
-        $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+        $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
         $scenario = Scenario::sole();
 
@@ -66,7 +66,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
         $this->actingAs($user)->post(
-            '/simulators/single-envelope',
+            '/simulators/single-envelope/france/pea',
             array_merge($this->validPayload(), ['name' => 'Retraite à 62 ans']),
         );
 
@@ -80,7 +80,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
         $response = $this->actingAs($user)->post(
-            '/simulators/single-envelope',
+            '/simulators/single-envelope/france/pea',
             array_merge($this->validPayload(), ['years' => -1]),
         );
 
@@ -88,26 +88,33 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $this->assertDatabaseCount('scenarios', 0);
     }
 
-    public function test_a_post_with_the_av_wrapper_is_rejected_by_the_plain_enum_rule(): void
+    public function test_a_post_to_a_wrapper_outside_the_enum_receives_a_404(): void
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
-        // TaxWrapper no longer has an Av case, so Rule::enum(TaxWrapper::class)
-        // rejects 'av' on its own — no dedicated validation code for this case.
-        //
-        // Not a 422: bootstrap/app.php's shouldRenderJsonWhen() renders JSON
-        // exceptions only for `api/*` routes, so this web route's
-        // ValidationException always redirects (302) with flashed session
-        // errors, Accept header notwithstanding — verified directly against
-        // the running app rather than assumed.
-        $response = $this->actingAs($user)->postJson(
-            '/simulators/single-envelope',
-            array_merge($this->validPayload(), ['wrapper' => 'av']),
+        // The wrapper now lives in the URL, so an unknown one is a wrong URL
+        // (404 via implicit enum binding), not a validation error on a field.
+        $response = $this->actingAs($user)->post(
+            '/simulators/single-envelope/france/av',
+            $this->validPayload(),
         );
 
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('wrapper');
+        $response->assertNotFound();
         $this->assertDatabaseCount('scenarios', 0);
+    }
+
+    public function test_a_wrapper_forged_in_the_body_cannot_override_the_one_from_the_url(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        $this->actingAs($user)->post(
+            '/simulators/single-envelope/france/pea',
+            array_merge($this->validPayload(), ['wrapper' => 'cto']),
+        );
+
+        $scenario = Scenario::sole();
+
+        $this->assertSame('pea', $scenario->input_payload['wrapper']);
     }
 
     public function test_a_container_resolution_failure_redirects_with_a_flashed_error_instead_of_a_500(): void
@@ -121,7 +128,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
             throw new RuntimeException('The private saucante74/finlr-engine package is not installed.');
         });
 
-        $response = $this->actingAs($user)->post('/simulators/single-envelope', $this->validPayload());
+        $response = $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
         $response->assertRedirect();
         $response->assertSessionHasErrors('simulation');
@@ -134,11 +141,11 @@ class RunSingleEnvelopeSimulationTest extends TestCase
         $this->actingAs($user);
 
         for ($i = 0; $i < 10; $i++) {
-            $response = $this->post('/simulators/single-envelope', $this->validPayload());
+            $response = $this->post('/simulators/single-envelope/france/pea', $this->validPayload());
             $response->assertRedirect();
         }
 
-        $eleventh = $this->post('/simulators/single-envelope', $this->validPayload());
+        $eleventh = $this->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
         $eleventh->assertStatus(429);
     }
@@ -158,7 +165,6 @@ class RunSingleEnvelopeSimulationTest extends TestCase
             'taxRate' => 12.8,
             'inflationRate' => 2.0,
             'inflationEnabled' => true,
-            'wrapper' => 'pea',
         ];
     }
 }

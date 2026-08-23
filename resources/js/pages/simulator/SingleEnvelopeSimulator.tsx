@@ -7,7 +7,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import SingleEnvelopeForm from '@/features/single-envelope-simulator/components/SingleEnvelopeForm';
 import type { SingleEnvelopeSimulatorPageProps } from '@/features/single-envelope-simulator/types';
 
-export default function SingleEnvelopeSimulator({ defaults }: SingleEnvelopeSimulatorPageProps) {
+export default function SingleEnvelopeSimulator({
+    defaults,
+    jurisdiction,
+    wrapper,
+}: SingleEnvelopeSimulatorPageProps) {
     const { t } = useTranslation();
 
     return (
@@ -29,7 +33,11 @@ export default function SingleEnvelopeSimulator({ defaults }: SingleEnvelopeSimu
 
                 <Card>
                     <CardContent>
-                        <SingleEnvelopeForm defaults={defaults} />
+                        <SingleEnvelopeForm
+                            defaults={defaults}
+                            jurisdiction={jurisdiction}
+                            wrapper={wrapper}
+                        />
                     </CardContent>
                 </Card>
             </main>

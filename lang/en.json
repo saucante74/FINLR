@@ -248,6 +248,15 @@
         }
     },
     "simulator": {
+        "chooseWrapper": {
+            "eyebrow": "Classic simulator",
+            "title": "Choose your tax wrapper",
+            "description": "Each wrapper has its own tax treatment. Pick the one you want to simulate.",
+            "cta": "Simulate",
+            "jurisdictions": {
+                "france": "France"
+            }
+        },
         "singleEnvelope": {
             "eyebrow": "Single-envelope simulator",
             "title": "Single-envelope simulation",

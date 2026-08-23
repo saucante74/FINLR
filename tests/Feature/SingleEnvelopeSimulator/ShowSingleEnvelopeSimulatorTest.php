@@ -17,7 +17,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
     {
         $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
 
-        $response = $this->actingAs($user)->get('/simulators/single-envelope');
+        $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
         $response->assertForbidden();
     }
@@ -26,17 +26,17 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
-        $response = $this->actingAs($user)->get('/simulators/single-envelope');
+        $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page->component('simulator/SingleEnvelopeSimulator'));
     }
 
-    public function test_it_passes_the_ten_default_values_as_the_defaults_prop(): void
+    public function test_it_passes_the_nine_default_values_as_the_defaults_prop(): void
     {
         $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
 
-        $response = $this->actingAs($user)->get('/simulators/single-envelope');
+        $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
         // Inertia props travel to the browser as JSON: whole-number floats
         // (e.g. 6.0) lose their float type on the wire, same as any other
@@ -48,6 +48,28 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
         $response->assertInertia(fn (Assert $page) => $page
             ->component('simulator/SingleEnvelopeSimulator')
             ->where('defaults', $expectedDefaults)
+            ->where('jurisdiction', 'france')
+            ->where('wrapper', 'pea')
         );
+    }
+
+    public function test_a_wrapper_that_is_not_an_enum_case_at_all_receives_a_404(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        // 'av' is no longer a TaxWrapper case, so implicit enum binding
+        // rejects the URL before the controller ever runs.
+        $response = $this->actingAs($user)->get('/simulators/single-envelope/france/av');
+
+        $response->assertNotFound();
+    }
+
+    public function test_an_unknown_jurisdiction_receives_a_404(): void
+    {
+        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+
+        $response = $this->actingAs($user)->get('/simulators/single-envelope/belgium/pea');
+
+        $response->assertNotFound();
     }
 }
