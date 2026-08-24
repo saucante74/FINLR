@@ -278,26 +278,103 @@
             }
         },
         "singleEnvelope": {
-            "eyebrow": "Simulatore mono-involucro",
-            "title": "Simulazione mono-involucro",
+            "eyebrow": "Simulatore classico",
+            "title": "Simulazione: {{wrapper}}",
+            "description": {
+                "pea": "Proietta l'evoluzione di un investimento in un unico contenitore fiscale. Massimale di versamento 150.000 €, prelievi sociali del 17,2 % dopo 5 anni di detenzione.",
+                "cto": "Proietta l'evoluzione di un investimento in un unico contenitore fiscale. Nessun massimale di versamento, imposta forfettaria unica del 30 % indipendentemente dalla durata di detenzione."
+            },
             "form": {
                 "name": "Nome dello scenario (facoltativo)",
-                "initialCapital": "Capitale iniziale",
-                "monthlyContribution": "Versamenti mensili",
-                "annualRate": "Tasso lordo annuo",
-                "years": "Durata (anni)",
-                "wrapperFee": "Costi dell'involucro",
-                "fundFee": "Costi di gestione",
-                "taxRate": "Aliquota fiscale",
-                "inflationRate": "Inflazione annua",
-                "inflationEnabled": "Tieni conto dell'inflazione nel calcolo",
-                "wrapper": "Involucro fiscale",
+                "namePlaceholder": "{{wrapper}} — piano a lungo termine",
+                "sections": {
+                    "capital": "Capitale & versamenti",
+                    "performance": "Rendimento & costi",
+                    "taxation": "Fiscalità & inflazione"
+                },
+                "fields": {
+                    "initialCapital": {
+                        "label": "Capitale iniziale",
+                        "helpText": {
+                            "pea": "Massimale PEA: 150.000 € di versamenti.",
+                            "cto": "Nessun massimale di versamento."
+                        }
+                    },
+                    "monthlyContribution": {
+                        "label": "Versamenti mensili",
+                        "helpText": {
+                            "pea": "Importo prelevato ogni mese.",
+                            "cto": "Importo prelevato ogni mese."
+                        }
+                    },
+                    "years": {
+                        "label": "Durata dell'investimento",
+                        "helpText": {
+                            "pea": "Orizzonte della proiezione — i primi 5 anni determinano la fiscalità del PEA.",
+                            "cto": "Orizzonte della proiezione — la fiscalità del CTO non dipende dalla durata di detenzione."
+                        }
+                    },
+                    "annualRate": {
+                        "label": "Tasso lordo annuo",
+                        "helpText": {
+                            "pea": "Rendimento medio atteso al lordo di costi e fiscalità.",
+                            "cto": "Rendimento medio atteso al lordo di costi e fiscalità."
+                        }
+                    },
+                    "wrapperFee": {
+                        "label": "Costi del contenitore",
+                        "helpText": {
+                            "pea": "Costi di tenuta conto prelevati annualmente.",
+                            "cto": "Costi di tenuta conto prelevati annualmente."
+                        }
+                    },
+                    "fundFee": {
+                        "label": "Costi di gestione",
+                        "helpText": {
+                            "pea": "Costi dei fondi (ETF, fondi) inclusi nella performance.",
+                            "cto": "Costi dei fondi (ETF, fondi) inclusi nella performance."
+                        }
+                    },
+                    "taxRate": {
+                        "label": "Aliquota d'uscita",
+                        "helpText": {
+                            "pea": "PEA: 17,2 % di prelievi sociali dopo 5 anni, 30 % prima.",
+                            "cto": "CTO: imposta forfettaria unica del 30 % (PFU), indipendentemente dalla durata di detenzione."
+                        }
+                    },
+                    "inflationRate": {
+                        "label": "Inflazione annua",
+                        "helpText": {
+                            "pea": "Utilizzata solo se il calcolo in euro costanti è attivato.",
+                            "cto": "Utilizzata solo se il calcolo in euro costanti è attivato."
+                        }
+                    },
+                    "inflationEnabled": {
+                        "label": "Considera l'inflazione nel calcolo",
+                        "helpText": {
+                            "pea": "Mostra il capitale in euro di oggi (potere d'acquisto reale).",
+                            "cto": "Mostra il capitale in euro di oggi (potere d'acquisto reale)."
+                        }
+                    }
+                },
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "Conto titoli"
+                    "cto": "CTO"
                 },
                 "submit": "Avvia la simulazione",
-                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante."
+                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
+                "summary": {
+                    "eyebrow": "Parametri inseriti",
+                    "description": "Verifica le tue ipotesi prima di avviare il calcolo. La proiezione è prodotta da Finlr dopo la convalida.",
+                    "scenarioLabel": "Scenario",
+                    "scenarioPlaceholder": "–",
+                    "inflationDisabled": "Non considerata",
+                    "retentionNote": "I tuoi scenari sono conservati per 24 mesi."
+                },
+                "comparisonPromo": {
+                    "badge": "Presto",
+                    "description": "Confronta più contenitori fiscali in un'unica simulazione e decidi a colpo d'occhio."
+                }
             }
         }
     },
