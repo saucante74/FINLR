@@ -255,6 +255,26 @@
             "cta": "Simuler",
             "jurisdictions": {
                 "france": "France"
+            },
+            "wrappers": {
+                "pea": {
+                    "code": "PEA",
+                    "name": "PEA",
+                    "description": "Plan d’Épargne en Actions — actions européennes, exonération après 5 ans.",
+                    "highlights": {
+                        "primary": "Plafond 150 000 €",
+                        "secondary": "17,2 % après 5 ans"
+                    }
+                },
+                "cto": {
+                    "code": "CTO",
+                    "name": "CTO",
+                    "description": "Compte-Titres Ordinaire — aucun plafond, tous les marchés.",
+                    "highlights": {
+                        "primary": "Sans plafond",
+                        "secondary": "PFU 30 %"
+                    }
+                }
             }
         },
         "singleEnvelope": {

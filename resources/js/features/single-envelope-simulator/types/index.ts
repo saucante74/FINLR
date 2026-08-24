@@ -28,6 +28,7 @@ export interface SingleEnvelopeSimulatorPageProps {
     wrapper: TaxWrapper;
 }
 
+/** One jurisdiction and the wrappers it offers, as read from the PHP enums. */
 export interface JurisdictionWrapperSection {
     jurisdiction: Jurisdiction;
     wrappers: TaxWrapper[];

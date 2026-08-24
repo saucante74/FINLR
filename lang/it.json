@@ -255,6 +255,26 @@
             "cta": "Simula",
             "jurisdictions": {
                 "france": "Francia"
+            },
+            "wrappers": {
+                "pea": {
+                    "code": "PEA",
+                    "name": "PEA",
+                    "description": "Plan d’Épargne en Actions — azioni europee, esenzione dopo 5 anni.",
+                    "highlights": {
+                        "primary": "Massimale 150 000 €",
+                        "secondary": "17,2 % dopo 5 anni"
+                    }
+                },
+                "cto": {
+                    "code": "CTO",
+                    "name": "CTO",
+                    "description": "Conto titoli ordinario — nessun massimale, tutti i mercati.",
+                    "highlights": {
+                        "primary": "Senza massimale",
+                        "secondary": "Imposta forfettaria 30 %"
+                    }
+                }
             }
         },
         "singleEnvelope": {
