@@ -255,6 +255,26 @@
             "cta": "Simulate",
             "jurisdictions": {
                 "france": "France"
+            },
+            "wrappers": {
+                "pea": {
+                    "code": "PEA",
+                    "name": "PEA",
+                    "description": "Plan d’Épargne en Actions — European equities, tax-exempt after 5 years.",
+                    "highlights": {
+                        "primary": "Cap €150,000",
+                        "secondary": "17.2% after 5 years"
+                    }
+                },
+                "cto": {
+                    "code": "CTO",
+                    "name": "CTO",
+                    "description": "Ordinary securities account — no cap, every market.",
+                    "highlights": {
+                        "primary": "No cap",
+                        "secondary": "Flat tax 30%"
+                    }
+                }
             }
         },
         "singleEnvelope": {

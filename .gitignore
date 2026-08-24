@@ -32,6 +32,7 @@ CODE_EXAMPLE_v0.txt
 PROMPT.txt
 /v0app-screenshots
 .claudeignore
+/blueprints
 
 /database/*.sqlite
 /database/*.sqlite-journal

@@ -7,10 +7,11 @@ use App\Modules\SingleEnvelopeSimulator\Enums\Jurisdiction;
 
 /**
  * One jurisdiction section on the wrapper-choice page: which country, and
- * which wrappers it offers. Labels are deliberately absent — the frontend
- * resolves them from the jurisdiction/wrapper value through react-i18next,
- * the same way it already does for wrapper labels, so translations stay the
- * single source of truth instead of being duplicated server-side.
+ * which wrappers it offers. Both are read from the enums, never hand-listed.
+ *
+ * Labels are deliberately absent — the frontend resolves them from the
+ * jurisdiction/wrapper value through react-i18next, so translations stay the
+ * single source of truth for copy instead of being duplicated server-side.
  */
 readonly class JurisdictionWrapperSectionData
 {
