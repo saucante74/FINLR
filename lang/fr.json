@@ -278,26 +278,103 @@
             }
         },
         "singleEnvelope": {
-            "eyebrow": "Simulateur mono-enveloppe",
-            "title": "Simulation mono-enveloppe",
+            "eyebrow": "Simulateur classique",
+            "title": "Simulation : {{wrapper}}",
+            "description": {
+                "pea": "Projetez l’évolution d’un placement sur une enveloppe fiscale unique. Plafond de versement 150 000 €, prélèvements sociaux de 17,2 % après 5 ans de détention.",
+                "cto": "Projetez l’évolution d’un placement sur une enveloppe fiscale unique. Aucun plafond de versement, prélèvement forfaitaire unique de 30 % quelle que soit la durée de détention."
+            },
             "form": {
                 "name": "Nom du scénario (facultatif)",
-                "initialCapital": "Capital initial",
-                "monthlyContribution": "Versements mensuels",
-                "annualRate": "Taux brut annuel",
-                "years": "Durée (années)",
-                "wrapperFee": "Frais d'enveloppe",
-                "fundFee": "Frais de gestion",
-                "taxRate": "Taux d'imposition",
-                "inflationRate": "Inflation annuelle",
-                "inflationEnabled": "Prendre en compte l'inflation dans le calcul",
-                "wrapper": "Enveloppe fiscale",
+                "namePlaceholder": "{{wrapper}} — plan long terme",
+                "sections": {
+                    "capital": "Capital & versements",
+                    "performance": "Rendement & frais",
+                    "taxation": "Fiscalité & inflation"
+                },
+                "fields": {
+                    "initialCapital": {
+                        "label": "Capital initial",
+                        "helpText": {
+                            "pea": "Plafond PEA : 150 000 € de versements.",
+                            "cto": "Aucun plafond de versement."
+                        }
+                    },
+                    "monthlyContribution": {
+                        "label": "Versements mensuels",
+                        "helpText": {
+                            "pea": "Montant prélevé chaque mois.",
+                            "cto": "Montant prélevé chaque mois."
+                        }
+                    },
+                    "years": {
+                        "label": "Durée de placement",
+                        "helpText": {
+                            "pea": "Horizon de la projection — les 5 premières années conditionnent la fiscalité du PEA.",
+                            "cto": "Horizon de la projection — la fiscalité du CTO ne dépend pas de la durée de détention."
+                        }
+                    },
+                    "annualRate": {
+                        "label": "Taux brut annuel",
+                        "helpText": {
+                            "pea": "Rendement moyen espéré avant frais et fiscalité.",
+                            "cto": "Rendement moyen espéré avant frais et fiscalité."
+                        }
+                    },
+                    "wrapperFee": {
+                        "label": "Frais d'enveloppe",
+                        "helpText": {
+                            "pea": "Frais de tenue de compte prélevés annuellement.",
+                            "cto": "Frais de tenue de compte prélevés annuellement."
+                        }
+                    },
+                    "fundFee": {
+                        "label": "Frais de gestion",
+                        "helpText": {
+                            "pea": "Frais des supports (ETF, fonds) inclus dans la performance.",
+                            "cto": "Frais des supports (ETF, fonds) inclus dans la performance."
+                        }
+                    },
+                    "taxRate": {
+                        "label": "Taux d'imposition à la sortie",
+                        "helpText": {
+                            "pea": "PEA : 17,2 % de prélèvements sociaux après 5 ans, 30 % avant.",
+                            "cto": "CTO : 30 % de prélèvement forfaitaire unique (PFU), quelle que soit la durée de détention."
+                        }
+                    },
+                    "inflationRate": {
+                        "label": "Inflation annuelle",
+                        "helpText": {
+                            "pea": "Utilisée uniquement si le calcul en euros constants est activé.",
+                            "cto": "Utilisée uniquement si le calcul en euros constants est activé."
+                        }
+                    },
+                    "inflationEnabled": {
+                        "label": "Prendre en compte l'inflation dans le calcul",
+                        "helpText": {
+                            "pea": "Affiche le capital en euros d'aujourd'hui (pouvoir d'achat réel).",
+                            "cto": "Affiche le capital en euros d'aujourd'hui (pouvoir d'achat réel)."
+                        }
+                    }
+                },
                 "wrapperOptions": {
                     "pea": "PEA",
                     "cto": "CTO"
                 },
                 "submit": "Lancer la simulation",
-                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants."
+                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
+                "summary": {
+                    "eyebrow": "Paramètres saisis",
+                    "description": "Vérifiez vos hypothèses avant de lancer le calcul. La projection est établie par Finlr après validation.",
+                    "scenarioLabel": "Scénario",
+                    "scenarioPlaceholder": "–",
+                    "inflationDisabled": "Non prise en compte",
+                    "retentionNote": "Vos scénarios sont conservés 24 mois."
+                },
+                "comparisonPromo": {
+                    "badge": "Bientôt",
+                    "description": "Comparez plusieurs enveloppes fiscales dans une même simulation et arbitrez en un coup d'œil."
+                }
             }
         }
     },

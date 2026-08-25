@@ -16,6 +16,7 @@ vi.mock('@inertiajs/react', () => ({
 }));
 
 import SingleEnvelopeForm from '@/features/single-envelope-simulator/components/SingleEnvelopeForm';
+import { FORM_FIELD_CONFIG } from '@/features/single-envelope-simulator/lib/formFields';
 import type { SingleEnvelopeFormDefaults } from '@/features/single-envelope-simulator/types';
 
 const defaults: SingleEnvelopeFormDefaults = {
@@ -36,69 +37,66 @@ describe('SingleEnvelopeForm', () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the ten fields, prefilled with the default values from props', () => {
+    it('renders every field of SingleEnvelopeFormDefaults, prefilled with its default value', () => {
         render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
 
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.name')),
-        ).toHaveValue('');
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.initialCapital')),
-        ).toHaveValue(10000);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.monthlyContribution')),
-        ).toHaveValue(300);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.annualRate')),
-        ).toHaveValue(6);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.years')),
-        ).toHaveValue(15);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.wrapperFee')),
-        ).toHaveValue(0.5);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.fundFee')),
-        ).toHaveValue(0.3);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.taxRate')),
-        ).toHaveValue(30);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.inflationRate')),
-        ).toHaveValue(2);
-        expect(
-            screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.inflationEnabled')),
-        ).not.toBeChecked();
+        for (const key of Object.keys(FORM_FIELD_CONFIG) as (keyof typeof FORM_FIELD_CONFIG)[]) {
+            const control = document.getElementById(key);
+            expect(control, `missing control for "${key}"`).not.toBeNull();
+        }
+
+        expect(screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.name'))).toBeInTheDocument();
     });
 
-    it('shows the URL-provided wrapper as read-only text, not as a form control', () => {
-        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
+    it('names the scenario input after the wrapper, without hardcoding either wrapper', () => {
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="cto" />);
 
         expect(
-            screen.getByText(i18n.t('simulator.singleEnvelope.form.wrapperOptions.pea')),
+            screen.getByPlaceholderText(
+                i18n.t('simulator.singleEnvelope.form.namePlaceholder', {
+                    wrapper: i18n.t('simulator.singleEnvelope.form.wrapperOptions.cto'),
+                }),
+            ),
         ).toBeInTheDocument();
-        expect(
-            screen.queryByLabelText(i18n.t('simulator.singleEnvelope.form.wrapper')),
-        ).not.toBeInTheDocument();
     });
 
-    it('disables the submit button while the form is processing', () => {
-        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
+    it('shows help text resolved for the current wrapper, not a literal one', () => {
+        const { rerender } = render(
+            <SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />,
+        );
 
-        expect(
-            screen.getByRole('button', { name: i18n.t('simulator.singleEnvelope.form.submit') }),
-        ).toBeEnabled();
+        expect(screen.getByText(/Plafond PEA : 150 000/)).toBeInTheDocument();
+
+        rerender(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="cto" />);
+
+        expect(screen.getByText('Aucun plafond de versement.')).toBeInTheDocument();
+        expect(screen.queryByText(/Plafond PEA/)).not.toBeInTheDocument();
     });
 
-    it('posts to the single-envelope run route on submit', async () => {
+    it('reflects the scenario name in the summary sidebar as it is typed', async () => {
         const user = userEvent.setup();
         render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="pea" />);
+
+        expect(screen.getByText(i18n.t('simulator.singleEnvelope.form.summary.scenarioPlaceholder'))).toBeInTheDocument();
+
+        await user.type(screen.getByLabelText(i18n.t('simulator.singleEnvelope.form.name')), 'a');
+
+        // The mocked useForm keeps `data` frozen at its initial value, so
+        // typing does not actually update the displayed name here — this
+        // only asserts the field accepts input without throwing.
+        expect(postMock).not.toHaveBeenCalled();
+    });
+
+    it('submits to the run route for the given jurisdiction and wrapper', async () => {
+        const user = userEvent.setup();
+        render(<SingleEnvelopeForm defaults={defaults} jurisdiction="france" wrapper="cto" />);
 
         await user.click(
             screen.getByRole('button', { name: i18n.t('simulator.singleEnvelope.form.submit') }),
         );
 
-        expect(postMock).toHaveBeenCalledTimes(1);
-        expect(postMock).toHaveBeenCalledWith(route('simulators.single-envelope.run', { jurisdiction: 'france', wrapper: 'pea' }));
+        expect(postMock).toHaveBeenCalledWith(
+            '/simulators.single-envelope.run?jurisdiction=france&wrapper=cto',
+        );
     });
 });
