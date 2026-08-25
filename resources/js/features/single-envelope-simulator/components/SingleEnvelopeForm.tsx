@@ -128,7 +128,6 @@ function CheckboxField({ fieldKey, label, helpText, checked, onChange }: Checkbo
             <Checkbox
                 id={fieldKey}
                 checked={checked}
-                className="mt-0.5"
                 onCheckedChange={(value) => onChange(value === true)}
             />
             <div className="flex flex-col gap-1">
