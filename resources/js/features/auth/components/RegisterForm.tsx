@@ -32,7 +32,20 @@ export default function RegisterForm() {
 
     return (
         <Card className="w-full max-w-md gap-0 py-0">
-            <CardContent className="flex flex-col gap-5 py-6">
+            <CardContent className="flex flex-col gap-6 py-6">
+                <header className="flex flex-col gap-2">
+                    <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                        {t('auth.register.eyebrow')}
+                    </span>
+                    <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">
+                        {t('auth.register.title')}
+                    </h1>
+                    <p className="text-sm text-pretty text-muted-foreground">
+                        {t('auth.register.description')}
+                    </p>
+                </header>
+
                 <form onSubmit={submit} className="flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="name">
@@ -184,6 +197,7 @@ export default function RegisterForm() {
                     <Button
                         type="submit"
                         variant="brand"
+                        size="lg"
                         className="w-full"
                         disabled={processing}
                     >

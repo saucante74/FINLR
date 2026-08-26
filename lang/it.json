@@ -91,11 +91,30 @@
             "password": "Password",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",
-            "rememberMe": "Ricordami",
+            "rememberMe": "Resta connesso per 30 giorni",
             "forgotPassword": "Password dimenticata?",
             "submit": "Accedi",
+            "or": "OPPURE",
+            "google": "Google",
+            "franceConnect": "FranceConnect",
             "noAccount": "Non hai ancora un account?",
-            "registerLink": "Registrati"
+            "registerLink": "Crea un account",
+            "benefits": {
+                "eyebrow": "Il tuo spazio",
+                "description": "Le tue simulazioni, ipotesi e confronti tra involucri fiscali, riuniti in un unico posto.",
+                "savedScenarios": {
+                    "description": "Riprendi una simulazione da dove l'avevi lasciata, per 24 mesi."
+                },
+                "envelopeComparison": {
+                    "title": "Confronto tra involucri",
+                    "description": "PEA, assicurazione vita, CTO: confronta sulle stesse ipotesi."
+                },
+                "exportSharing": {
+                    "title": "Esportazione e condivisione",
+                    "description": "Condividi una proiezione chiara con il tuo consulente."
+                },
+                "securityNote": "Connessione cifrata. Finlr non conserva alcun dato bancario — solo le tue ipotesi di simulazione."
+            }
         },
         "register": {
             "eyebrow": "Area riservata",
