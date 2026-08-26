@@ -91,11 +91,30 @@
             "password": "Password",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
-            "rememberMe": "Remember me",
+            "rememberMe": "Stay signed in for 30 days",
             "forgotPassword": "Forgot your password?",
             "submit": "Log in",
+            "or": "OR",
+            "google": "Google",
+            "franceConnect": "FranceConnect",
             "noAccount": "Don't have an account yet?",
-            "registerLink": "Sign up"
+            "registerLink": "Create an account",
+            "benefits": {
+                "eyebrow": "Your space",
+                "description": "Your simulations, assumptions and tax wrapper comparisons, all in one place.",
+                "savedScenarios": {
+                    "description": "Pick up a simulation right where you left it, for 24 months."
+                },
+                "envelopeComparison": {
+                    "title": "Wrapper comparison",
+                    "description": "PEA, life insurance, CTO: compare against the same assumptions."
+                },
+                "exportSharing": {
+                    "title": "Export and sharing",
+                    "description": "Share a clear projection with your advisor."
+                },
+                "securityNote": "Encrypted connection. Finlr never stores any banking data — only your simulation assumptions."
+            }
         },
         "register": {
             "eyebrow": "Member area",

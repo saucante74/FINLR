@@ -34,7 +34,20 @@ export default function LoginForm({ canResetPassword }: LoginFormProps) {
 
     return (
         <Card className="w-full max-w-md gap-0 py-0">
-            <CardContent className="flex flex-col gap-5 py-6">
+            <CardContent className="flex flex-col gap-6 py-6">
+                <header className="flex flex-col gap-2">
+                    <span className="flex items-center gap-2 text-xs font-medium tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+                        {t('auth.login.eyebrow')}
+                    </span>
+                    <h1 className="text-2xl font-semibold tracking-tight lg:text-3xl">
+                        {t('auth.login.title')}
+                    </h1>
+                    <p className="text-sm text-pretty text-muted-foreground">
+                        {t('auth.login.description')}
+                    </p>
+                </header>
+
                 <form onSubmit={submit} className="flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="email">
@@ -138,6 +151,23 @@ export default function LoginForm({ canResetPassword }: LoginFormProps) {
                         {t('auth.login.submit')}
                     </Button>
                 </form>
+
+                <div className="flex items-center gap-3">
+                    <span aria-hidden className="h-px flex-1 bg-border" />
+                    <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                        {t('auth.login.or')}
+                    </span>
+                    <span aria-hidden className="h-px flex-1 bg-border" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                    <Button type="button" variant="outline" disabled>
+                        {t('auth.login.google')}
+                    </Button>
+                    <Button type="button" variant="outline" disabled>
+                        {t('auth.login.franceConnect')}
+                    </Button>
+                </div>
 
                 <p className="text-center text-sm text-muted-foreground">
                     {t('auth.login.noAccount')}{' '}
