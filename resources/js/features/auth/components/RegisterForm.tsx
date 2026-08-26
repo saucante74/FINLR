@@ -184,6 +184,7 @@ export default function RegisterForm() {
                     <Button
                         type="submit"
                         variant="brand"
+                        size="lg"
                         className="w-full"
                         disabled={processing}
                     >
