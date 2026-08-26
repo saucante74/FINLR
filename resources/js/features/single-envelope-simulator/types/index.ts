@@ -1,6 +1,14 @@
 export type TaxWrapper = 'pea' | 'cto';
 
+export type Jurisdiction = 'france';
+
+/**
+ * Values actually submitted by the form. The wrapper is deliberately absent:
+ * it travels in the URL and is resolved server-side from the route segment,
+ * so a forged body field could never override it.
+ */
 export interface SingleEnvelopeFormValues {
+    name: string;
     initialCapital: number;
     monthlyContribution: number;
     annualRate: number;
@@ -10,9 +18,22 @@ export interface SingleEnvelopeFormValues {
     taxRate: number;
     inflationRate: number;
     inflationEnabled: boolean;
+}
+
+export type SingleEnvelopeFormDefaults = Omit<SingleEnvelopeFormValues, 'name'>;
+
+export interface SingleEnvelopeSimulatorPageProps {
+    defaults: SingleEnvelopeFormDefaults;
+    jurisdiction: Jurisdiction;
     wrapper: TaxWrapper;
 }
 
-export interface SingleEnvelopeSimulatorPageProps {
-    defaults: SingleEnvelopeFormValues;
+/** One jurisdiction and the wrappers it offers, as read from the PHP enums. */
+export interface JurisdictionWrapperSection {
+    jurisdiction: Jurisdiction;
+    wrappers: TaxWrapper[];
+}
+
+export interface ChooseWrapperPageProps {
+    sections: JurisdictionWrapperSection[];
 }

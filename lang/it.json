@@ -7,6 +7,9 @@
         "register": "Registrati",
         "logout": "Esci",
         "profile": "Profilo",
+        "dashboard": "Bacheca",
+        "simulators": "Simulatori",
+        "resources": "Risorse",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -88,11 +91,30 @@
             "password": "Password",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",
-            "rememberMe": "Ricordami",
+            "rememberMe": "Resta connesso per 30 giorni",
             "forgotPassword": "Password dimenticata?",
             "submit": "Accedi",
+            "or": "OPPURE",
+            "google": "Google",
+            "franceConnect": "FranceConnect",
             "noAccount": "Non hai ancora un account?",
-            "registerLink": "Registrati"
+            "registerLink": "Crea un account",
+            "benefits": {
+                "eyebrow": "Il tuo spazio",
+                "description": "Le tue simulazioni, ipotesi e confronti tra involucri fiscali, riuniti in un unico posto.",
+                "savedScenarios": {
+                    "description": "Riprendi una simulazione da dove l'avevi lasciata, per 24 mesi."
+                },
+                "envelopeComparison": {
+                    "title": "Confronto tra involucri",
+                    "description": "PEA, assicurazione vita, CTO: confronta sulle stesse ipotesi."
+                },
+                "exportSharing": {
+                    "title": "Esportazione e condivisione",
+                    "description": "Condividi una proiezione chiara con il tuo consulente."
+                },
+                "securityNote": "Connessione cifrata. Finlr non conserva alcun dato bancario — solo le tue ipotesi di simulazione."
+            }
         },
         "register": {
             "eyebrow": "Area riservata",
@@ -148,13 +170,63 @@
     "dashboard": {
         "eyebrow": "Area membri",
         "title": "Bacheca",
+        "greeting": "Ciao {{name}}.",
         "description": "Ecco una panoramica della tua attività.",
-        "welcomeMessage": "Hai effettuato l'accesso."
+        "newSimulation": "Nuova simulazione",
+        "simulators": {
+            "singleEnvelope": {
+                "title": "Simulatore classico",
+                "description": "Proietta l'evoluzione di un investimento su un unico involucro fiscale.",
+                "lockedNote": "Passa all'offerta premium per accedervi."
+            },
+            "multiEnvelope": {
+                "title": "Simulatore multi-involucro",
+                "description": "Confronta più involucri fiscali nella stessa simulazione."
+            }
+        },
+        "simulatorCard": {
+            "lockedBadge": "Premium",
+            "comingSoonBadge": "Prossimamente",
+            "cta": "Avvia una proiezione"
+        },
+        "scenarioList": {
+            "title": "Scenari salvati",
+            "empty": "Non hai ancora nessuno scenario salvato.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenari",
+            "genericLabel": "Scenario senza nome",
+            "openAriaLabel": "Apri {{name}}",
+            "columns": {
+                "name": "Scenario",
+                "wrapper": "Involucro",
+                "horizon": "Orizzonte",
+                "date": "Data",
+                "amount": "Importo"
+            },
+            "calculatorTypes": {
+                "single_envelope": "Mono-involucro"
+            }
+        },
+        "promo": {
+            "title": "Passa a Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Scenari illimitati",
+                "multiEnvelopePreview": "Accesso anticipato al confronto multi-involucro",
+                "pdfExport": "Esportazione PDF per il tuo consulente"
+            },
+            "cta": "Prova 14 giorni"
+        }
     },
     "scenario": {
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "rename": {
+            "button": "Rinomina",
+            "label": "Nome dello scenario",
+            "save": "Salva",
+            "cancel": "Annulla"
+        },
         "chart": {
             "title": "Evoluzione del capitale",
             "contributions": "Versamenti cumulati",
@@ -195,26 +267,133 @@
         }
     },
     "simulator": {
+        "chooseWrapper": {
+            "eyebrow": "Simulatore classico",
+            "title": "Scegli il tuo involucro fiscale",
+            "description": "Ogni involucro ha la propria fiscalità. Seleziona quello che vuoi simulare.",
+            "cta": "Simula",
+            "jurisdictions": {
+                "france": "Francia"
+            },
+            "wrappers": {
+                "pea": {
+                    "code": "PEA",
+                    "name": "PEA",
+                    "description": "Plan d’Épargne en Actions — azioni europee, esenzione dopo 5 anni.",
+                    "highlights": {
+                        "primary": "Massimale 150 000 €",
+                        "secondary": "17,2 % dopo 5 anni"
+                    }
+                },
+                "cto": {
+                    "code": "CTO",
+                    "name": "CTO",
+                    "description": "Conto titoli ordinario — nessun massimale, tutti i mercati.",
+                    "highlights": {
+                        "primary": "Senza massimale",
+                        "secondary": "Imposta forfettaria 30 %"
+                    }
+                }
+            }
+        },
         "singleEnvelope": {
-            "eyebrow": "Simulatore mono-involucro",
-            "title": "Simulazione mono-involucro",
+            "eyebrow": "Simulatore classico",
+            "title": "Simulazione: {{wrapper}}",
+            "description": {
+                "pea": "Proietta l'evoluzione di un investimento in un unico contenitore fiscale. Massimale di versamento 150.000 €, prelievi sociali del 17,2 % dopo 5 anni di detenzione.",
+                "cto": "Proietta l'evoluzione di un investimento in un unico contenitore fiscale. Nessun massimale di versamento, imposta forfettaria unica del 30 % indipendentemente dalla durata di detenzione."
+            },
             "form": {
-                "initialCapital": "Capitale iniziale",
-                "monthlyContribution": "Versamenti mensili",
-                "annualRate": "Tasso lordo annuo",
-                "years": "Durata (anni)",
-                "wrapperFee": "Costi dell'involucro",
-                "fundFee": "Costi di gestione",
-                "taxRate": "Aliquota fiscale",
-                "inflationRate": "Inflazione annua",
-                "inflationEnabled": "Tieni conto dell'inflazione nel calcolo",
-                "wrapper": "Involucro fiscale",
+                "name": "Nome dello scenario (facoltativo)",
+                "namePlaceholder": "{{wrapper}} — piano a lungo termine",
+                "sections": {
+                    "capital": "Capitale & versamenti",
+                    "performance": "Rendimento & costi",
+                    "taxation": "Fiscalità & inflazione"
+                },
+                "fields": {
+                    "initialCapital": {
+                        "label": "Capitale iniziale",
+                        "helpText": {
+                            "pea": "Massimale PEA: 150.000 € di versamenti.",
+                            "cto": "Nessun massimale di versamento."
+                        }
+                    },
+                    "monthlyContribution": {
+                        "label": "Versamenti mensili",
+                        "helpText": {
+                            "pea": "Importo prelevato ogni mese.",
+                            "cto": "Importo prelevato ogni mese."
+                        }
+                    },
+                    "years": {
+                        "label": "Durata dell'investimento",
+                        "helpText": {
+                            "pea": "Orizzonte della proiezione — i primi 5 anni determinano la fiscalità del PEA.",
+                            "cto": "Orizzonte della proiezione — la fiscalità del CTO non dipende dalla durata di detenzione."
+                        }
+                    },
+                    "annualRate": {
+                        "label": "Tasso lordo annuo",
+                        "helpText": {
+                            "pea": "Rendimento medio atteso al lordo di costi e fiscalità.",
+                            "cto": "Rendimento medio atteso al lordo di costi e fiscalità."
+                        }
+                    },
+                    "wrapperFee": {
+                        "label": "Costi del contenitore",
+                        "helpText": {
+                            "pea": "Costi di tenuta conto prelevati annualmente.",
+                            "cto": "Costi di tenuta conto prelevati annualmente."
+                        }
+                    },
+                    "fundFee": {
+                        "label": "Costi di gestione",
+                        "helpText": {
+                            "pea": "Costi dei fondi (ETF, fondi) inclusi nella performance.",
+                            "cto": "Costi dei fondi (ETF, fondi) inclusi nella performance."
+                        }
+                    },
+                    "taxRate": {
+                        "label": "Aliquota d'uscita",
+                        "helpText": {
+                            "pea": "PEA: 17,2 % di prelievi sociali dopo 5 anni, 30 % prima.",
+                            "cto": "CTO: imposta forfettaria unica del 30 % (PFU), indipendentemente dalla durata di detenzione."
+                        }
+                    },
+                    "inflationRate": {
+                        "label": "Inflazione annua",
+                        "helpText": {
+                            "pea": "Utilizzata solo se il calcolo in euro costanti è attivato.",
+                            "cto": "Utilizzata solo se il calcolo in euro costanti è attivato."
+                        }
+                    },
+                    "inflationEnabled": {
+                        "label": "Considera l'inflazione nel calcolo",
+                        "helpText": {
+                            "pea": "Mostra il capitale in euro di oggi (potere d'acquisto reale).",
+                            "cto": "Mostra il capitale in euro di oggi (potere d'acquisto reale)."
+                        }
+                    }
+                },
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "Conto titoli"
+                    "cto": "CTO"
                 },
                 "submit": "Avvia la simulazione",
-                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante."
+                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
+                "summary": {
+                    "eyebrow": "Parametri inseriti",
+                    "description": "Verifica le tue ipotesi prima di avviare il calcolo. La proiezione è prodotta da Finlr dopo la convalida.",
+                    "scenarioLabel": "Scenario",
+                    "scenarioPlaceholder": "–",
+                    "inflationDisabled": "Non considerata",
+                    "retentionNote": "I tuoi scenari sono conservati per 24 mesi."
+                },
+                "comparisonPromo": {
+                    "badge": "Presto",
+                    "description": "Confronta più contenitori fiscali in un'unica simulazione e decidi a colpo d'occhio."
+                }
             }
         }
     },

@@ -3,16 +3,20 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import { Card, CardContent } from '@/components/ui/card';
 import SingleEnvelopeForm from '@/features/single-envelope-simulator/components/SingleEnvelopeForm';
 import type { SingleEnvelopeSimulatorPageProps } from '@/features/single-envelope-simulator/types';
 
-export default function SingleEnvelopeSimulator({ defaults }: SingleEnvelopeSimulatorPageProps) {
+export default function SingleEnvelopeSimulator({
+    defaults,
+    jurisdiction,
+    wrapper,
+}: SingleEnvelopeSimulatorPageProps) {
     const { t } = useTranslation();
+    const wrapperLabel = t(`simulator.singleEnvelope.form.wrapperOptions.${wrapper}`);
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
-            <Head title={t('simulator.singleEnvelope.title')} />
+            <Head title={t('simulator.singleEnvelope.title', { wrapper: wrapperLabel })} />
 
             <Navbar />
 
@@ -23,15 +27,14 @@ export default function SingleEnvelopeSimulator({ defaults }: SingleEnvelopeSimu
                         {t('simulator.singleEnvelope.eyebrow')}
                     </span>
                     <h1 className="text-2xl font-semibold tracking-tight text-balance lg:text-3xl">
-                        {t('simulator.singleEnvelope.title')}
+                        {t('simulator.singleEnvelope.title', { wrapper: wrapperLabel })}
                     </h1>
+                    <p className="max-w-2xl text-sm text-pretty text-muted-foreground">
+                        {t(`simulator.singleEnvelope.description.${wrapper}`)}
+                    </p>
                 </header>
 
-                <Card>
-                    <CardContent>
-                        <SingleEnvelopeForm defaults={defaults} />
-                    </CardContent>
-                </Card>
+                <SingleEnvelopeForm defaults={defaults} jurisdiction={jurisdiction} wrapper={wrapper} />
             </main>
 
             <Footer />

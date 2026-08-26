@@ -19,6 +19,7 @@ describe('Profile Edit page', () => {
     beforeEach(async () => {
         await i18n.changeLanguage('fr');
         vi.spyOn(inertia, 'usePage').mockReturnValue({
+            url: '/profile',
             props: { auth: { user, plan: 'free', permissions: [] } },
         } as unknown as ReturnType<typeof inertia.usePage>);
     });
@@ -37,6 +38,14 @@ describe('Profile Edit page', () => {
                 name: i18n.t('profile.deleteAccount.button'),
             }),
         ).toBeInTheDocument();
+    });
+
+    it('renders a logout link', () => {
+        render(<Edit mustVerifyEmail={true} status={null} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.logout') }),
+        ).toHaveAttribute('href', '/logout');
     });
 
     it('prefills the name and email fields from the current user', () => {

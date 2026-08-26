@@ -3,51 +3,157 @@ import type { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { SingleEnvelopeFormValues, TaxWrapper } from '@/features/single-envelope-simulator/types';
+import { Slider } from '@/components/ui/slider';
+import {
+    FORM_FIELD_CONFIG,
+    FORM_SECTIONS,
+    groupFieldsForLayout,
+    type FormFieldKey,
+} from '@/features/single-envelope-simulator/lib/formFields';
+import type {
+    Jurisdiction,
+    SingleEnvelopeFormDefaults,
+    SingleEnvelopeFormValues,
+    TaxWrapper,
+} from '@/features/single-envelope-simulator/types';
+import { cn } from '@/lib/utils';
 
-const WRAPPER_OPTIONS: TaxWrapper[] = ['pea', 'cto'];
-
-interface NumberFieldProps {
-    id: keyof Omit<SingleEnvelopeFormValues, 'inflationEnabled' | 'wrapper'>;
+interface AmountFieldProps {
+    fieldKey: FormFieldKey;
     label: string;
+    helpText: string;
     value: number;
-    step?: number;
-    min?: number;
+    step: number;
     error?: string;
     onChange: (value: number) => void;
 }
 
-function NumberField({ id, label, value, step = 1, min = 0, error, onChange }: NumberFieldProps) {
+function AmountField({ fieldKey, label, helpText, value, step, error, onChange }: AmountFieldProps) {
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col gap-2">
-            <Label htmlFor={id}>{label}</Label>
-            <Input
-                id={id}
-                name={id}
-                type="number"
-                inputMode="decimal"
-                step={step}
+            <Label htmlFor={fieldKey}>{label}</Label>
+            <div className="relative">
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-muted-foreground">
+                    {t('form.currencyUnit')}
+                </span>
+                <Input
+                    id={fieldKey}
+                    name={fieldKey}
+                    type="number"
+                    inputMode="decimal"
+                    step={step}
+                    min={0}
+                    value={value}
+                    aria-invalid={Boolean(error)}
+                    className="pl-7 tabular-nums"
+                    onChange={(e) => onChange(Number(e.target.value))}
+                />
+            </div>
+            <p className={cn('text-xs', error ? 'text-destructive' : 'text-muted-foreground')}>
+                {error ?? helpText}
+            </p>
+        </div>
+    );
+}
+
+interface SliderFieldProps {
+    fieldKey: FormFieldKey;
+    label: string;
+    helpText: string;
+    value: number;
+    unit: 'percent' | 'years';
+    step: number;
+    min: number;
+    max: number;
+    error?: string;
+    onChange: (value: number) => void;
+}
+
+function SliderField({ fieldKey, label, helpText, value, unit, step, min, max, error, onChange }: SliderFieldProps) {
+    const { t } = useTranslation();
+    const unitLabel = unit === 'percent' ? t('form.percentUnit') : t('form.yearsUnit', { count: value });
+
+    return (
+        <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-4">
+                <Label htmlFor={fieldKey}>{label}</Label>
+                <div className="flex items-center gap-1.5">
+                    <Input
+                        id={fieldKey}
+                        name={fieldKey}
+                        type="number"
+                        inputMode="decimal"
+                        step={step}
+                        min={min}
+                        max={max}
+                        value={value}
+                        aria-invalid={Boolean(error)}
+                        className="w-20 text-right tabular-nums"
+                        onChange={(e) => onChange(Number(e.target.value))}
+                    />
+                    <span className="text-sm text-muted-foreground">{unitLabel}</span>
+                </div>
+            </div>
+            <Slider
+                value={[value]}
                 min={min}
-                value={value}
-                aria-invalid={Boolean(error)}
-                onChange={(e) => onChange(Number(e.target.value))}
+                max={max}
+                step={step}
+                onValueChange={([next]) => onChange(next)}
             />
-            {error && <p className="text-xs text-destructive">{error}</p>}
+            <p className={cn('text-xs', error ? 'text-destructive' : 'text-muted-foreground')}>
+                {error ?? helpText}
+            </p>
+        </div>
+    );
+}
+
+interface CheckboxFieldProps {
+    fieldKey: FormFieldKey;
+    label: string;
+    helpText: string;
+    checked: boolean;
+    onChange: (checked: boolean) => void;
+}
+
+function CheckboxField({ fieldKey, label, helpText, checked, onChange }: CheckboxFieldProps) {
+    return (
+        <div className="flex items-start gap-3">
+            <Checkbox
+                id={fieldKey}
+                checked={checked}
+                onCheckedChange={(value) => onChange(value === true)}
+            />
+            <div className="flex flex-col gap-1">
+                <Label htmlFor={fieldKey} className="font-medium">
+                    {label}
+                </Label>
+                <p className="text-xs text-muted-foreground">{helpText}</p>
+            </div>
         </div>
     );
 }
 
 interface SingleEnvelopeFormProps {
-    defaults: SingleEnvelopeFormValues;
+    defaults: SingleEnvelopeFormDefaults;
+    jurisdiction: Jurisdiction;
+    wrapper: TaxWrapper;
 }
 
-export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps) {
+export default function SingleEnvelopeForm({ defaults, jurisdiction, wrapper }: SingleEnvelopeFormProps) {
     const { t } = useTranslation();
-    const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>(defaults);
+    const { data, setData, post, processing, errors } = useForm<SingleEnvelopeFormValues>({
+        ...defaults,
+        name: '',
+    });
+
+    const wrapperLabel = t(`simulator.singleEnvelope.form.wrapperOptions.${wrapper}`);
 
     // Not a field of SingleEnvelopeFormValues: flashed by the controller
     // when the calculation itself fails, so it isn't tied to any one input.
@@ -55,116 +161,226 @@ export default function SingleEnvelopeForm({ defaults }: SingleEnvelopeFormProps
 
     const submit = (e: FormEvent) => {
         e.preventDefault();
-        post(route('simulators.single-envelope.run'));
+        post(route('simulators.single-envelope.run', { jurisdiction, wrapper }));
+    };
+
+    const renderField = (fieldKey: FormFieldKey) => {
+        const config = FORM_FIELD_CONFIG[fieldKey];
+        const label = t(`simulator.singleEnvelope.form.fields.${fieldKey}.label`);
+        const helpText = t(`simulator.singleEnvelope.form.fields.${fieldKey}.helpText.${wrapper}`);
+        const error = errors[fieldKey];
+
+        if (config.control === 'amount') {
+            return (
+                <AmountField
+                    key={fieldKey}
+                    fieldKey={fieldKey}
+                    label={label}
+                    helpText={helpText}
+                    value={data[fieldKey] as number}
+                    step={config.step}
+                    error={error}
+                    onChange={(value) => setData(fieldKey, value)}
+                />
+            );
+        }
+
+        if (config.control === 'slider') {
+            return (
+                <SliderField
+                    key={fieldKey}
+                    fieldKey={fieldKey}
+                    label={label}
+                    helpText={helpText}
+                    value={data[fieldKey] as number}
+                    unit={config.unit}
+                    step={config.step}
+                    min={config.min}
+                    max={config.max}
+                    error={error}
+                    onChange={(value) => setData(fieldKey, value)}
+                />
+            );
+        }
+
+        return (
+            <CheckboxField
+                key={fieldKey}
+                fieldKey={fieldKey}
+                label={label}
+                helpText={helpText}
+                checked={data[fieldKey] as boolean}
+                onChange={(checked) => setData(fieldKey, checked)}
+            />
+        );
     };
 
     return (
-        <form onSubmit={submit} className="flex flex-col gap-6">
-            {simulationError && (
-                <p role="alert" className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                    {simulationError}
-                </p>
-            )}
+        <form onSubmit={submit} className="grid gap-6 lg:grid-cols-3 lg:items-start">
+            <div className="flex flex-col gap-6 lg:col-span-2">
+                {simulationError && (
+                    <p role="alert" className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+                        {simulationError}
+                    </p>
+                )}
 
-            <div className="grid gap-4 sm:grid-cols-2">
-                <NumberField
-                    id="initialCapital"
-                    label={t('simulator.singleEnvelope.form.initialCapital')}
-                    value={data.initialCapital}
-                    step={100}
-                    error={errors.initialCapital}
-                    onChange={(value) => setData('initialCapital', value)}
-                />
-                <NumberField
-                    id="monthlyContribution"
-                    label={t('simulator.singleEnvelope.form.monthlyContribution')}
-                    value={data.monthlyContribution}
-                    step={50}
-                    error={errors.monthlyContribution}
-                    onChange={(value) => setData('monthlyContribution', value)}
-                />
-                <NumberField
-                    id="annualRate"
-                    label={t('simulator.singleEnvelope.form.annualRate')}
-                    value={data.annualRate}
-                    step={0.1}
-                    error={errors.annualRate}
-                    onChange={(value) => setData('annualRate', value)}
-                />
-                <NumberField
-                    id="years"
-                    label={t('simulator.singleEnvelope.form.years')}
-                    value={data.years}
-                    step={1}
-                    min={1}
-                    error={errors.years}
-                    onChange={(value) => setData('years', value)}
-                />
-                <NumberField
-                    id="wrapperFee"
-                    label={t('simulator.singleEnvelope.form.wrapperFee')}
-                    value={data.wrapperFee}
-                    step={0.1}
-                    error={errors.wrapperFee}
-                    onChange={(value) => setData('wrapperFee', value)}
-                />
-                <NumberField
-                    id="fundFee"
-                    label={t('simulator.singleEnvelope.form.fundFee')}
-                    value={data.fundFee}
-                    step={0.1}
-                    error={errors.fundFee}
-                    onChange={(value) => setData('fundFee', value)}
-                />
-                <NumberField
-                    id="taxRate"
-                    label={t('simulator.singleEnvelope.form.taxRate')}
-                    value={data.taxRate}
-                    step={0.1}
-                    error={errors.taxRate}
-                    onChange={(value) => setData('taxRate', value)}
-                />
-                <NumberField
-                    id="inflationRate"
-                    label={t('simulator.singleEnvelope.form.inflationRate')}
-                    value={data.inflationRate}
-                    step={0.1}
-                    error={errors.inflationRate}
-                    onChange={(value) => setData('inflationRate', value)}
-                />
+                {FORM_SECTIONS.map((section, index) => (
+                    <Card key={section.titleKey}>
+                        <CardHeader className="flex flex-row items-center gap-2">
+                            <span className="font-mono text-xs text-brand">
+                                {String(index + 1).padStart(2, '0')}
+                            </span>
+                            <h2 className="text-base font-semibold tracking-tight">
+                                {t(`simulator.singleEnvelope.form.sections.${section.titleKey}`)}
+                            </h2>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-6">
+                            {index === 0 && (
+                                <div className="flex flex-col gap-2">
+                                    <Label htmlFor="name">
+                                        {t('simulator.singleEnvelope.form.name')}
+                                    </Label>
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        type="text"
+                                        maxLength={255}
+                                        placeholder={t('simulator.singleEnvelope.form.namePlaceholder', {
+                                            wrapper: wrapperLabel,
+                                        })}
+                                        value={data.name}
+                                        aria-invalid={Boolean(errors.name)}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                    />
+                                    {errors.name && (
+                                        <p className="text-xs text-destructive">{errors.name}</p>
+                                    )}
+                                </div>
+                            )}
+
+                            {groupFieldsForLayout(section.fields).map((group) =>
+                                group.length > 1 ? (
+                                    <div key={group.join('-')} className="grid gap-4 sm:grid-cols-2">
+                                        {group.map(renderField)}
+                                    </div>
+                                ) : (
+                                    renderField(group[0])
+                                ),
+                            )}
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
 
-            <div className="flex items-center gap-2">
-                <Checkbox
-                    id="inflationEnabled"
-                    checked={data.inflationEnabled}
-                    onCheckedChange={(checked) => setData('inflationEnabled', checked === true)}
-                />
-                <Label htmlFor="inflationEnabled" className="font-normal">
-                    {t('simulator.singleEnvelope.form.inflationEnabled')}
-                </Label>
-            </div>
+            <div className="flex flex-col gap-6">
+                <Card>
+                    <CardHeader className="gap-2">
+                        <span className="font-mono text-xs tracking-wide text-muted-foreground uppercase">
+                            {t('simulator.singleEnvelope.form.summary.eyebrow')}
+                        </span>
+                        <p className="text-sm text-muted-foreground">
+                            {t('simulator.singleEnvelope.form.summary.description')}
+                        </p>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-4">
+                        <dl className="flex flex-col gap-2.5 border-t border-border pt-4 text-sm">
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.summary.scenarioLabel')}
+                                </dt>
+                                <dd className="truncate font-medium">
+                                    {data.name || t('simulator.singleEnvelope.form.summary.scenarioPlaceholder')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.initialCapital.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.initialCapital} {t('form.currencyUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.monthlyContribution.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.monthlyContribution} {t('form.currencyUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.years.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.years} {t('form.yearsUnit', { count: data.years })}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.annualRate.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.annualRate} {t('form.percentUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.wrapperFee.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.wrapperFee} {t('form.percentUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.fundFee.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.fundFee} {t('form.percentUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.taxRate.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.taxRate} {t('form.percentUnit')}
+                                </dd>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                                <dt className="text-muted-foreground">
+                                    {t('simulator.singleEnvelope.form.fields.inflationRate.label')}
+                                </dt>
+                                <dd className="font-mono tabular-nums">
+                                    {data.inflationEnabled
+                                        ? `${data.inflationRate} ${t('form.percentUnit')}`
+                                        : t('simulator.singleEnvelope.form.summary.inflationDisabled')}
+                                </dd>
+                            </div>
+                        </dl>
 
-            <div className="flex flex-col gap-2">
-                <Label htmlFor="wrapper">{t('simulator.singleEnvelope.form.wrapper')}</Label>
-                <Select value={data.wrapper} onValueChange={(value) => setData('wrapper', value as TaxWrapper)}>
-                    <SelectTrigger id="wrapper" aria-invalid={Boolean(errors.wrapper)} className="w-full">
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {WRAPPER_OPTIONS.map((option) => (
-                            <SelectItem key={option} value={option}>
-                                {t(`simulator.singleEnvelope.form.wrapperOptions.${option}`)}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-                {errors.wrapper && <p className="text-xs text-destructive">{errors.wrapper}</p>}
-            </div>
+                        <Button type="submit" variant="brand" size="lg" disabled={processing}>
+                            {t('simulator.singleEnvelope.form.submit')}
+                        </Button>
 
-            <Button type="submit" variant="brand" disabled={processing}>
-                {t('simulator.singleEnvelope.form.submit')}
-            </Button>
+                        <p className="text-center text-xs text-muted-foreground">
+                            {t('simulator.singleEnvelope.form.summary.retentionNote')}
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card className="border-dashed">
+                    <CardContent className="flex flex-col gap-3">
+                        <span className="inline-flex w-fit items-center rounded-full border border-muted-foreground/35 px-2.5 py-1 font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
+                            {t('simulator.singleEnvelope.form.comparisonPromo.badge')}
+                        </span>
+                        <p className="text-sm text-muted-foreground">
+                            {t('simulator.singleEnvelope.form.comparisonPromo.description')}
+                        </p>
+                    </CardContent>
+                </Card>
+            </div>
         </form>
     );
 }

@@ -53,6 +53,26 @@ class SaveSingleEnvelopeScenarioActionTest extends TestCase
         $this->assertSame(EngineVersion::current(), $stored->engine_version);
     }
 
+    public function test_it_persists_a_null_name_when_none_is_given(): void
+    {
+        $user = User::factory()->create();
+
+        $action = new SaveSingleEnvelopeScenarioAction;
+        $scenario = $action->handle($user, $this->makeInput(), $this->makeResult());
+
+        $this->assertNull($scenario->name);
+    }
+
+    public function test_it_persists_the_given_name_as_is(): void
+    {
+        $user = User::factory()->create();
+
+        $action = new SaveSingleEnvelopeScenarioAction;
+        $scenario = $action->handle($user, $this->makeInput(), $this->makeResult(), 'Retraite à 62 ans');
+
+        $this->assertSame('Retraite à 62 ans', $scenario->name);
+    }
+
     public function test_it_returns_the_created_scenario_instance(): void
     {
         $user = User::factory()->create();

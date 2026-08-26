@@ -2,8 +2,12 @@
 
 namespace App\Modules\SingleEnvelopeSimulator\DTOs;
 
-use App\Modules\SimulationEngine\Enums\TaxWrapper;
-
+/**
+ * Prefilled values for the simulator form. Deliberately carries no wrapper:
+ * since the wrapper became a URL segment it is no longer a default the user
+ * may change, and duplicating it here would let the prefill disagree with
+ * the wrapper actually validated and computed server-side.
+ */
 readonly class SimulatorDefaultsData
 {
     public function __construct(
@@ -16,7 +20,6 @@ readonly class SimulatorDefaultsData
         public float $taxRate,
         public float $inflationRate,
         public bool $inflationEnabled,
-        public TaxWrapper $wrapper,
     ) {}
 
     public static function default(): self
@@ -31,7 +34,6 @@ readonly class SimulatorDefaultsData
             taxRate: 30.0,
             inflationRate: 2.0,
             inflationEnabled: false,
-            wrapper: TaxWrapper::Pea,
         );
     }
 
@@ -46,7 +48,6 @@ readonly class SimulatorDefaultsData
      *     taxRate: float,
      *     inflationRate: float,
      *     inflationEnabled: bool,
-     *     wrapper: string,
      * }
      */
     public function toArray(): array
@@ -61,7 +62,6 @@ readonly class SimulatorDefaultsData
             'taxRate' => $this->taxRate,
             'inflationRate' => $this->inflationRate,
             'inflationEnabled' => $this->inflationEnabled,
-            'wrapper' => $this->wrapper->value,
         ];
     }
 }

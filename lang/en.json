@@ -7,6 +7,9 @@
         "register": "Sign up",
         "logout": "Log out",
         "profile": "Profile",
+        "dashboard": "Dashboard",
+        "simulators": "Simulators",
+        "resources": "Resources",
         "languages": {
             "fr": "Français",
             "en": "English",
@@ -88,11 +91,30 @@
             "password": "Password",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
-            "rememberMe": "Remember me",
+            "rememberMe": "Stay signed in for 30 days",
             "forgotPassword": "Forgot your password?",
             "submit": "Log in",
+            "or": "OR",
+            "google": "Google",
+            "franceConnect": "FranceConnect",
             "noAccount": "Don't have an account yet?",
-            "registerLink": "Sign up"
+            "registerLink": "Create an account",
+            "benefits": {
+                "eyebrow": "Your space",
+                "description": "Your simulations, assumptions and tax wrapper comparisons, all in one place.",
+                "savedScenarios": {
+                    "description": "Pick up a simulation right where you left it, for 24 months."
+                },
+                "envelopeComparison": {
+                    "title": "Wrapper comparison",
+                    "description": "PEA, life insurance, CTO: compare against the same assumptions."
+                },
+                "exportSharing": {
+                    "title": "Export and sharing",
+                    "description": "Share a clear projection with your advisor."
+                },
+                "securityNote": "Encrypted connection. Finlr never stores any banking data — only your simulation assumptions."
+            }
         },
         "register": {
             "eyebrow": "Member area",
@@ -148,13 +170,63 @@
     "dashboard": {
         "eyebrow": "Member area",
         "title": "Dashboard",
+        "greeting": "Hello {{name}}.",
         "description": "Here's an overview of your activity.",
-        "welcomeMessage": "You're logged in."
+        "newSimulation": "New simulation",
+        "simulators": {
+            "singleEnvelope": {
+                "title": "Classic simulator",
+                "description": "Project how an investment grows within a single tax wrapper.",
+                "lockedNote": "Upgrade to premium to access it."
+            },
+            "multiEnvelope": {
+                "title": "Multi-envelope simulator",
+                "description": "Compare several tax wrappers within the same simulation."
+            }
+        },
+        "simulatorCard": {
+            "lockedBadge": "Premium",
+            "comingSoonBadge": "Coming soon",
+            "cta": "Start a projection"
+        },
+        "scenarioList": {
+            "title": "Saved scenarios",
+            "empty": "You don't have any saved scenario yet.",
+            "count_one": "{{count}} scenario",
+            "count_other": "{{count}} scenarios",
+            "genericLabel": "Unnamed scenario",
+            "openAriaLabel": "Open {{name}}",
+            "columns": {
+                "name": "Scenario",
+                "wrapper": "Wrapper",
+                "horizon": "Horizon",
+                "date": "Date",
+                "amount": "Amount"
+            },
+            "calculatorTypes": {
+                "single_envelope": "Single-envelope"
+            }
+        },
+        "promo": {
+            "title": "Upgrade to Finlr Pro",
+            "benefits": {
+                "unlimitedScenarios": "Unlimited scenarios",
+                "multiEnvelopePreview": "Early access to multi-envelope comparison",
+                "pdfExport": "PDF export for your advisor"
+            },
+            "cta": "Try 14 days"
+        }
     },
     "scenario": {
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
         "createdAtLabel": "Simulated on {{date}}",
+        "rename": {
+            "button": "Rename",
+            "label": "Scenario name",
+            "save": "Save",
+            "cancel": "Cancel"
+        },
         "chart": {
             "title": "Capital growth",
             "contributions": "Total contributions",
@@ -195,26 +267,133 @@
         }
     },
     "simulator": {
+        "chooseWrapper": {
+            "eyebrow": "Classic simulator",
+            "title": "Choose your tax wrapper",
+            "description": "Each wrapper has its own tax treatment. Pick the one you want to simulate.",
+            "cta": "Simulate",
+            "jurisdictions": {
+                "france": "France"
+            },
+            "wrappers": {
+                "pea": {
+                    "code": "PEA",
+                    "name": "PEA",
+                    "description": "Plan d’Épargne en Actions — European equities, tax-exempt after 5 years.",
+                    "highlights": {
+                        "primary": "Cap €150,000",
+                        "secondary": "17.2% after 5 years"
+                    }
+                },
+                "cto": {
+                    "code": "CTO",
+                    "name": "CTO",
+                    "description": "Ordinary securities account — no cap, every market.",
+                    "highlights": {
+                        "primary": "No cap",
+                        "secondary": "Flat tax 30%"
+                    }
+                }
+            }
+        },
         "singleEnvelope": {
-            "eyebrow": "Single-envelope simulator",
-            "title": "Single-envelope simulation",
+            "eyebrow": "Classic simulator",
+            "title": "Simulation: {{wrapper}}",
+            "description": {
+                "pea": "Project how an investment grows in a single tax wrapper. €150,000 contribution cap, 17.2% social levies after 5 years of holding.",
+                "cto": "Project how an investment grows in a single tax wrapper. No contribution cap, flat 30% tax regardless of holding period."
+            },
             "form": {
-                "initialCapital": "Initial capital",
-                "monthlyContribution": "Monthly contributions",
-                "annualRate": "Annual gross rate",
-                "years": "Duration (years)",
-                "wrapperFee": "Wrapper fee",
-                "fundFee": "Fund fee",
-                "taxRate": "Tax rate",
-                "inflationRate": "Annual inflation",
-                "inflationEnabled": "Account for inflation in the calculation",
-                "wrapper": "Tax wrapper",
+                "name": "Scenario name (optional)",
+                "namePlaceholder": "{{wrapper}} — long-term plan",
+                "sections": {
+                    "capital": "Capital & contributions",
+                    "performance": "Returns & fees",
+                    "taxation": "Taxation & inflation"
+                },
+                "fields": {
+                    "initialCapital": {
+                        "label": "Initial capital",
+                        "helpText": {
+                            "pea": "PEA cap: €150,000 in contributions.",
+                            "cto": "No contribution cap."
+                        }
+                    },
+                    "monthlyContribution": {
+                        "label": "Monthly contribution",
+                        "helpText": {
+                            "pea": "Amount withdrawn every month.",
+                            "cto": "Amount withdrawn every month."
+                        }
+                    },
+                    "years": {
+                        "label": "Investment horizon",
+                        "helpText": {
+                            "pea": "Projection horizon — the first 5 years determine the PEA's tax treatment.",
+                            "cto": "Projection horizon — the CTO's tax treatment does not depend on the holding period."
+                        }
+                    },
+                    "annualRate": {
+                        "label": "Gross annual rate",
+                        "helpText": {
+                            "pea": "Average expected return before fees and tax.",
+                            "cto": "Average expected return before fees and tax."
+                        }
+                    },
+                    "wrapperFee": {
+                        "label": "Wrapper fee",
+                        "helpText": {
+                            "pea": "Account-keeping fee charged annually.",
+                            "cto": "Account-keeping fee charged annually."
+                        }
+                    },
+                    "fundFee": {
+                        "label": "Management fee",
+                        "helpText": {
+                            "pea": "Fund fees (ETFs, funds) included in performance.",
+                            "cto": "Fund fees (ETFs, funds) included in performance."
+                        }
+                    },
+                    "taxRate": {
+                        "label": "Exit tax rate",
+                        "helpText": {
+                            "pea": "PEA: 17.2% social levies after 5 years, 30% before.",
+                            "cto": "CTO: 30% flat tax (PFU), regardless of holding period."
+                        }
+                    },
+                    "inflationRate": {
+                        "label": "Annual inflation",
+                        "helpText": {
+                            "pea": "Only used if the constant-euro calculation is enabled.",
+                            "cto": "Only used if the constant-euro calculation is enabled."
+                        }
+                    },
+                    "inflationEnabled": {
+                        "label": "Account for inflation in the calculation",
+                        "helpText": {
+                            "pea": "Shows capital in today's euros (real purchasing power).",
+                            "cto": "Shows capital in today's euros (real purchasing power)."
+                        }
+                    }
+                },
                 "wrapperOptions": {
                     "pea": "PEA",
-                    "cto": "Brokerage account"
+                    "cto": "CTO"
                 },
                 "submit": "Run the simulation",
-                "calculationFailed": "The calculation could not be completed. Please try again shortly."
+                "calculationFailed": "The calculation could not complete. Please try again shortly.",
+                "summary": {
+                    "eyebrow": "Entered parameters",
+                    "description": "Review your assumptions before running the calculation. The projection is produced by Finlr after validation.",
+                    "scenarioLabel": "Scenario",
+                    "scenarioPlaceholder": "–",
+                    "inflationDisabled": "Not accounted for",
+                    "retentionNote": "Your scenarios are kept for 24 months."
+                },
+                "comparisonPromo": {
+                    "badge": "Soon",
+                    "description": "Compare several tax wrappers in a single simulation and decide at a glance."
+                }
             }
         }
     },

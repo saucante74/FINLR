@@ -6,7 +6,6 @@ use App\Modules\SimulationEngine\DTOs\CalculationInputData;
 use App\Modules\SimulationEngine\Enums\TaxWrapper;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RunSingleEnvelopeSimulationRequest extends FormRequest
 {
@@ -30,11 +29,16 @@ class RunSingleEnvelopeSimulationRequest extends FormRequest
             'taxRate' => ['required', 'numeric', 'min:0', 'max:100'],
             'inflationRate' => ['required', 'numeric', 'min:0', 'max:100'],
             'inflationEnabled' => ['required', 'boolean'],
-            'wrapper' => ['required', Rule::enum(TaxWrapper::class)],
+            'name' => ['nullable', 'string', 'max:255'],
         ];
     }
 
-    public function toData(): CalculationInputData
+    /**
+     * The wrapper comes from the resolved route segment, never from the
+     * request body: a forged POST carrying its own `wrapper` field cannot
+     * desynchronise the URL from the value actually computed and stored.
+     */
+    public function toData(TaxWrapper $wrapper): CalculationInputData
     {
         return new CalculationInputData(
             initialCapital: $this->float('initialCapital'),
@@ -46,7 +50,15 @@ class RunSingleEnvelopeSimulationRequest extends FormRequest
             taxRate: $this->float('taxRate'),
             inflationRate: $this->float('inflationRate'),
             inflationEnabled: $this->boolean('inflationEnabled'),
-            wrapper: TaxWrapper::from($this->string('wrapper')->toString()),
+            wrapper: $wrapper,
         );
+    }
+
+    // Not part of CalculationInputData: the scenario name is storage
+    // metadata, not a financial-engine input, so it travels to
+    // SaveSingleEnvelopeScenarioAction separately from toData().
+    public function name(): ?string
+    {
+        return $this->string('name')->toString() ?: null;
     }
 }
