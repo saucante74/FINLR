@@ -74,6 +74,9 @@ function isCurrentPath(url: string | undefined, routeName: string): boolean {
 
 const TAB_CLASSES = 'rounded-full px-3 py-1.5 text-sm font-medium transition-colors';
 
+const NAV_PILL_CLASSES =
+    'inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border border-muted-foreground/35 px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground';
+
 export default function Navbar({ canLogin, canRegister }: NavbarProps) {
     const { t } = useTranslation();
     const page = usePage<PageProps>();
@@ -128,7 +131,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             <Link
                                 href={route('profile.edit')}
                                 aria-label={t('nav.profile')}
-                                className="inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border border-muted-foreground/35 px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                                className={NAV_PILL_CLASSES}
                             >
                                 <span className="hidden sm:inline">
                                     {user.name || user.email}
@@ -142,19 +145,15 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             <ThemeToggle />
 
                             {canLogin && (
-                                <Button asChild variant="ghost">
-                                    <Link href={route('login')}>
-                                        {t('nav.login')}
-                                    </Link>
-                                </Button>
+                                <Link href={route('login')} className={NAV_PILL_CLASSES}>
+                                    {t('nav.login')}
+                                </Link>
                             )}
 
                             {canRegister && (
-                                <Button asChild variant="default">
-                                    <Link href={route('register')}>
-                                        {t('nav.register')}
-                                    </Link>
-                                </Button>
+                                <Link href={route('register')} className={NAV_PILL_CLASSES}>
+                                    {t('nav.register')}
+                                </Link>
                             )}
                         </>
                     )}
