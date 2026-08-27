@@ -397,6 +397,16 @@
             }
         }
     },
+    "passwordPolicy": {
+        "title": "Password requirements",
+        "criteria": {
+            "length": "At least 8 characters",
+            "uppercase": "At least one uppercase letter",
+            "lowercase": "At least one lowercase letter",
+            "number": "At least one digit",
+            "symbol": "At least one special character"
+        }
+    },
     "settings": {
         "eyebrow": "Account",
         "title": "Settings",
@@ -417,10 +427,9 @@
         },
         "security": {
             "title": "Security",
-            "description": "Use a long, unique password. 12 characters minimum.",
+            "description": "Use a long, unique password.",
             "currentPassword": "Current password",
             "newPassword": "New password",
-            "newPasswordHint": "12 characters minimum, including a digit and a special character.",
             "passwordConfirmation": "Confirmation",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
@@ -437,7 +446,7 @@
                 "comingSoon": "Coming soon"
             },
             "save": "Update",
-            "saved": "Saved."
+            "passwordUpdated": "Your password has been updated."
         },
         "simulationPreferences": {
             "title": "Simulation preferences",

@@ -397,6 +397,16 @@
             }
         }
     },
+    "passwordPolicy": {
+        "title": "Exigences du mot de passe",
+        "criteria": {
+            "length": "Au moins 8 caractères",
+            "uppercase": "Au moins une majuscule",
+            "lowercase": "Au moins une minuscule",
+            "number": "Au moins un chiffre",
+            "symbol": "Au moins un caractère spécial"
+        }
+    },
     "settings": {
         "eyebrow": "Compte",
         "title": "Réglages",
@@ -417,10 +427,9 @@
         },
         "security": {
             "title": "Sécurité",
-            "description": "Utilisez un mot de passe long et unique. 12 caractères minimum.",
+            "description": "Utilisez un mot de passe long et unique.",
             "currentPassword": "Mot de passe actuel",
             "newPassword": "Nouveau mot de passe",
-            "newPasswordHint": "12 caractères minimum, dont un chiffre et un caractère spécial.",
             "passwordConfirmation": "Confirmation",
             "showPassword": "Afficher le mot de passe",
             "hidePassword": "Masquer le mot de passe",
@@ -437,7 +446,7 @@
                 "comingSoon": "Bientôt disponible"
             },
             "save": "Mettre à jour",
-            "saved": "Enregistré."
+            "passwordUpdated": "Votre mot de passe a été mis à jour."
         },
         "simulationPreferences": {
             "title": "Préférences de simulation",

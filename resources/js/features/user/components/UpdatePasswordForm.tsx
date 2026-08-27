@@ -1,9 +1,9 @@
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useMemo, useRef, useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PasswordRequirementsChecklist from '@/components/PasswordRequirementsChecklist';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
     Card,
@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { meetsPasswordPolicy } from '@/lib/passwordPolicy';
 
 type PasswordStrength = 'empty' | 'weak' | 'medium' | 'strong';
 
@@ -24,19 +25,18 @@ function computeStrength(password: string): PasswordStrength {
         return 'empty';
     }
 
-    let score = 0;
-    if (password.length >= 12) score += 1;
-    if (password.length >= 16) score += 1;
-    if (/[0-9]/.test(password)) score += 1;
-    if (/[^A-Za-z0-9]/.test(password)) score += 1;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 1;
+    if (!meetsPasswordPolicy(password)) {
+        return 'weak';
+    }
 
-    if (score <= 1) return 'weak';
-    if (score <= 3) return 'medium';
-    return 'strong';
+    return password.length >= 12 ? 'strong' : 'medium';
 }
 
-export default function UpdatePasswordForm() {
+interface UpdatePasswordFormProps {
+    status?: string | null;
+}
+
+export default function UpdatePasswordForm({ status }: UpdatePasswordFormProps) {
     const { t } = useTranslation();
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
@@ -45,15 +45,7 @@ export default function UpdatePasswordForm() {
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false);
 
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
+    const { data, setData, errors, put, reset, processing } = useForm({
         current_password: '',
         password: '',
         password_confirmation: '',
@@ -97,7 +89,13 @@ export default function UpdatePasswordForm() {
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className="py-6">
+            <CardContent className="flex flex-col gap-5 py-6">
+                {status === 'password-updated' && (
+                    <div className="w-full rounded-lg border border-brand/30 bg-brand/5 px-4 py-3 text-center text-sm font-medium text-brand">
+                        {t('settings.security.passwordUpdated')}
+                    </div>
+                )}
+
                 <form
                     onSubmit={updatePassword}
                     className="flex flex-col gap-5"
@@ -192,15 +190,14 @@ export default function UpdatePasswordForm() {
                                 )}
                             </button>
                         </div>
-                        {errors.password ? (
+                        {errors.password && (
                             <p className="text-xs text-destructive">
                                 {errors.password}
                             </p>
-                        ) : (
-                            <p className="text-xs text-muted-foreground">
-                                {t('settings.security.newPasswordHint')}
-                            </p>
                         )}
+                        <PasswordRequirementsChecklist
+                            password={data.password}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2">
@@ -307,18 +304,6 @@ export default function UpdatePasswordForm() {
                         >
                             {t('settings.security.save')}
                         </Button>
-
-                        <Transition
-                            show={recentlySuccessful}
-                            enter="transition ease-in-out"
-                            enterFrom="opacity-0"
-                            leave="transition ease-in-out"
-                            leaveTo="opacity-0"
-                        >
-                            <p className="text-sm text-muted-foreground">
-                                {t('settings.security.saved')}
-                            </p>
-                        </Transition>
                     </div>
                 </form>
             </CardContent>
