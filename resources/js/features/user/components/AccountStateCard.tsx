@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { FALLBACK_LOCALE } from '@/lib/currency';
+import { cn } from '@/lib/utils';
 import type { Plan, User } from '@/types';
 
 interface AccountStateCardProps {
@@ -11,6 +12,7 @@ interface AccountStateCardProps {
     plan: Plan | null;
     memberSince: string;
     scenariosCount: number;
+    className?: string;
 }
 
 function initials(name: string): string {
@@ -32,6 +34,7 @@ export default function AccountStateCard({
     plan,
     memberSince,
     scenariosCount,
+    className,
 }: AccountStateCardProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage ?? FALLBACK_LOCALE;
@@ -42,7 +45,7 @@ export default function AccountStateCard({
     }).format(new Date(memberSince));
 
     return (
-        <Card>
+        <Card className={cn(className)}>
             <CardContent className="flex flex-col gap-5">
                 <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
                     {t('settings.account.title')}
@@ -96,7 +99,7 @@ export default function AccountStateCard({
                     </div>
                 </dl>
 
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" className="w-1/4">
                     <Link href={route('logout')} method="post" as="button">
                         {t('settings.account.logout')}
                     </Link>
