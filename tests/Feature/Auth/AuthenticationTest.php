@@ -62,6 +62,45 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_remember_me_cookie_is_set_for_thirty_days_when_checked(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            'remember' => 'on',
+        ]);
+
+        $this->assertAuthenticated();
+
+        $cookie = collect($response->headers->getCookies())
+            ->first(fn ($cookie) => str_starts_with($cookie->getName(), 'remember_web_'));
+
+        $this->assertNotNull($cookie, 'Expected a remember_web_* cookie to be set.');
+        $this->assertTrue($cookie->isHttpOnly());
+
+        $expiresInDays = ($cookie->getExpiresTime() - time()) / 86400;
+        $this->assertEqualsWithDelta(30, $expiresInDays, 0.01);
+    }
+
+    public function test_no_remember_me_cookie_is_set_when_not_checked(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+
+        $cookie = collect($response->headers->getCookies())
+            ->first(fn ($cookie) => str_starts_with($cookie->getName(), 'remember_web_'));
+
+        $this->assertNull($cookie);
+    }
+
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();

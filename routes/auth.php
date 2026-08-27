@@ -1,6 +1,8 @@
 <?php
 
 use App\Modules\Auth\Controllers\DestroySessionController;
+use App\Modules\Auth\Controllers\HandleOAuthCallbackController;
+use App\Modules\Auth\Controllers\RedirectToOAuthProviderController;
 use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Auth\Controllers\SendEmailVerificationNotificationController;
 use App\Modules\Auth\Controllers\SendPasswordResetLinkController;
@@ -42,6 +44,16 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', ResetPasswordController::class)
         ->middleware('throttle:reset-password')
         ->name('password.store');
+});
+
+// Not gated behind `guest`: an already-authenticated user must be able to
+// link an additional provider to their account (see AuthenticateViaOAuthAction).
+Route::middleware('throttle:oauth')->group(function () {
+    Route::get('auth/{provider}/redirect', RedirectToOAuthProviderController::class)
+        ->name('oauth.redirect');
+
+    Route::get('auth/{provider}/callback', HandleOAuthCallbackController::class)
+        ->name('oauth.callback');
 });
 
 Route::middleware('auth')->group(function () {

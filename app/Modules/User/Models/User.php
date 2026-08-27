@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Models;
 
+use App\Modules\Auth\Models\OAuthAccount;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\Subscriptions\Enums\Permission;
 use App\Modules\Subscriptions\Enums\Plan;
@@ -57,5 +58,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scenarios(): HasMany
     {
         return $this->hasMany(Scenario::class);
+    }
+
+    /**
+     * @return HasMany<OAuthAccount, $this>
+     */
+    public function oauthAccounts(): HasMany
+    {
+        return $this->hasMany(OAuthAccount::class);
     }
 }

@@ -22,9 +22,14 @@ class RateLimitServiceProvider extends ServiceProvider
 
     private const FORGOT_PASSWORD_ATTEMPTS_PER_HOUR_PER_EMAIL = 3;
 
+    private const OAUTH_ATTEMPTS_PER_MINUTE = 10;
+
     public function boot(): void
     {
         RateLimiter::for('register', fn (Request $request): Limit => Limit::perMinute(self::REGISTER_ATTEMPTS_PER_MINUTE)
+            ->by($this->ipKey($request)));
+
+        RateLimiter::for('oauth', fn (Request $request): Limit => Limit::perMinute(self::OAUTH_ATTEMPTS_PER_MINUTE)
             ->by($this->ipKey($request)));
 
         RateLimiter::for('reset-password', fn (Request $request): Limit => Limit::perMinute(self::PASSWORD_RESET_ATTEMPTS_PER_MINUTE)

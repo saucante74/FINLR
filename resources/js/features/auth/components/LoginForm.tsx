@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import OAuthProviderButtons from '@/features/auth/components/OAuthProviderButtons';
 import { cn } from '@/lib/utils';
 
 interface LoginFormProps {
@@ -153,22 +154,7 @@ export default function LoginForm({ canResetPassword }: LoginFormProps) {
                     </Button>
                 </form>
 
-                <div className="flex items-center gap-3">
-                    <span aria-hidden className="h-px flex-1 bg-border" />
-                    <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                        {t('auth.login.or')}
-                    </span>
-                    <span aria-hidden className="h-px flex-1 bg-border" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                    <Button type="button" variant="outline" disabled>
-                        {t('auth.login.google')}
-                    </Button>
-                    <Button type="button" variant="outline" disabled>
-                        {t('auth.login.franceConnect')}
-                    </Button>
-                </div>
+                <OAuthProviderButtons />
 
                 <p className="text-center text-sm text-muted-foreground">
                     {t('auth.login.noAccount')}{' '}
