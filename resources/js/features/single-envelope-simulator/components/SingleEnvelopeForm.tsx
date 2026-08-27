@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -159,7 +159,7 @@ export default function SingleEnvelopeForm({ defaults, jurisdiction, wrapper }: 
     // when the calculation itself fails, so it isn't tied to any one input.
     const simulationError = (errors as Record<string, string | undefined>).simulation;
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
         post(route('simulators.single-envelope.run', { jurisdiction, wrapper }));
     };

@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ export default function ConfirmPasswordForm() {
         password: '',
     });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
 
         post(route('password.confirm'), {

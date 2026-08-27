@@ -42,7 +42,7 @@ export default function AccountStateCard({
     }).format(new Date(memberSince));
 
     return (
-        <Card className="lg:sticky lg:top-24">
+        <Card>
             <CardContent className="flex flex-col gap-5">
                 <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
                     {t('settings.account.title')}

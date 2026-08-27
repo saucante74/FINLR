@@ -1,5 +1,5 @@
 import { Link, useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ export default function ForgotPasswordForm() {
         email: '',
     });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
 
         post(route('password.email'));

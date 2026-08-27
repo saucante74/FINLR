@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useMemo, useRef, useState, type FormEvent } from 'react';
+import { useMemo, useRef, useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Checkbox } from '@/components/ui/checkbox';
@@ -61,7 +61,7 @@ export default function UpdatePasswordForm() {
 
     const strength = useMemo(() => computeStrength(data.password), [data.password]);
 
-    const updatePassword = (e: FormEvent) => {
+    const updatePassword = (e: SubmitEvent) => {
         e.preventDefault();
 
         put(route('password.update'), {

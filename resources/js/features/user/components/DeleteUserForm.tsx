@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Modal from '@/components/ui/modal';
@@ -35,7 +35,7 @@ export default function DeleteUserForm() {
         setConfirmingUserDeletion(true);
     };
 
-    const deleteUser = (e: FormEvent) => {
+    const deleteUser = (e: SubmitEvent) => {
         e.preventDefault();
 
         destroy(route('settings.destroy'), {

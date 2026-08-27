@@ -7,16 +7,8 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { CURRENCY } from '@/lib/currency';
+import { CURRENCIES, CURRENCY } from '@/lib/currency';
 import { cn } from '@/lib/utils';
-
-const CURRENCIES = ['EUR', 'CHF', 'USD'] as const;
-
-const CURRENCY_SYMBOLS: Record<(typeof CURRENCIES)[number], string> = {
-    EUR: '€',
-    CHF: 'CHF',
-    USD: '$',
-};
 
 export default function SimulationPreferencesCard() {
     const { t } = useTranslation();
@@ -47,7 +39,7 @@ export default function SimulationPreferencesCard() {
                     aria-label={t('settings.simulationPreferences.currency.label')}
                     className="flex w-fit items-center gap-1 rounded-full border border-border p-1"
                 >
-                    {CURRENCIES.map((code) => {
+                    {CURRENCIES.map(({ code, symbol }) => {
                         const active = code === CURRENCY;
 
                         return (
@@ -68,7 +60,7 @@ export default function SimulationPreferencesCard() {
                                         : 'text-muted-foreground/50',
                                 )}
                             >
-                                {CURRENCY_SYMBOLS[code]} {code}
+                                {symbol} {code}
                             </span>
                         );
                     })}

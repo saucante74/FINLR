@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -38,7 +38,7 @@ export default function UpdateProfileInformation({
             email: user.email,
         });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
 
         patch(route('settings.update'));

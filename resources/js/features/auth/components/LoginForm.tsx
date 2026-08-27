@@ -1,6 +1,6 @@
 import { Link, useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ export default function LoginForm({ canResetPassword }: LoginFormProps) {
         remember: false,
     });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
 
         post(route('login'), {

@@ -48,30 +48,38 @@ export default function Edit({
                     </p>
                 </header>
 
-                <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2 lg:gap-8">
-                    <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-6 lg:gap-8">
+                    {/* Row 1: same grid row, so both cards stretch to an equal height. */}
+                    <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
                             profileUpdatedAt={profileUpdatedAt}
                         />
 
-                        <UpdatePasswordForm />
-
-                        <SimulationPreferencesCard />
-
-                        <DeleteUserForm />
-                    </div>
-
-                    <div className="flex flex-col gap-4">
                         <AccountStateCard
                             user={auth.user}
                             plan={auth.plan}
                             memberSince={memberSince}
                             scenariosCount={scenariosCount}
                         />
+                    </div>
 
-                        <div className="rounded-lg border border-dashed border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+                    {/*
+                        Row 2+: the note starts as the first item on this row, so its
+                        static top naturally lines up with Sécurité's top — then it
+                        sticks there once scrolled.
+                    */}
+                    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2 lg:gap-8">
+                        <div className="flex flex-col gap-6">
+                            <UpdatePasswordForm />
+
+                            <SimulationPreferencesCard />
+
+                            <DeleteUserForm />
+                        </div>
+
+                        <div className="rounded-lg border border-dashed border-border bg-muted/30 p-4 text-xs text-muted-foreground lg:sticky lg:top-20">
                             {t('settings.account.dataNotice')}
                         </div>
                     </div>
