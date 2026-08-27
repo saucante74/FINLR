@@ -39,9 +39,7 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         </p>
                     </div>
                     <Button asChild variant="brand" size="lg" className="w-fit shrink-0">
-                        <Link href={route('simulators.single-envelope.choose')}>
-                            {t('dashboard.newSimulation')}
-                        </Link>
+                        <Link href={route('simulators.index')}>{t('dashboard.newSimulation')}</Link>
                     </Button>
                 </header>
 

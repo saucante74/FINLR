@@ -298,6 +298,11 @@
                 }
             }
         },
+        "index": {
+            "eyebrow": "Simulators",
+            "title": "Choose your simulator",
+            "description": "Select the type of simulation to run."
+        },
         "singleEnvelope": {
             "eyebrow": "Classic simulator",
             "title": "Simulation: {{wrapper}}",

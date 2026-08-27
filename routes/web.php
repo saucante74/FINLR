@@ -4,6 +4,7 @@ use App\Modules\FreemiumCalculator\Controllers\ShowFreemiumCalculatorController;
 use App\Modules\Scenarios\Controllers\RenameScenarioController;
 use App\Modules\Scenarios\Controllers\ShowScenarioController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
+use App\Modules\Shared\Controllers\ShowSimulatorsController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\RunSingleEnvelopeSimulationController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\ShowSingleEnvelopeSimulatorController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\ShowWrapperChoiceController;
@@ -26,6 +27,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/scenarios/{scenario}', ShowScenarioController::class)->name('scenarios.show');
     Route::patch('/scenarios/{scenario}', RenameScenarioController::class)->name('scenarios.rename');
 });
+
+// Entry point: pick a simulator type before reaching a specific choice flow.
+Route::get('/simulators', ShowSimulatorsController::class)
+    ->middleware(['auth', 'verified'])
+    ->name('simulators.index');
 
 // Entry point: pick a wrapper before reaching the parameterised form.
 Route::get('/simulators/single-envelope', ShowWrapperChoiceController::class)
