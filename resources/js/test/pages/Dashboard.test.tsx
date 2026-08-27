@@ -51,7 +51,7 @@ describe('Dashboard page', () => {
         render(<Dashboard scenarios={[]} />);
 
         const button = screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') });
-        expect(button).toHaveAttribute('href', route('simulators.single-envelope.choose'));
+        expect(button).toHaveAttribute('href', route('simulators.index'));
         expect(button).toHaveAttribute('data-size', 'lg');
         expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
     });
