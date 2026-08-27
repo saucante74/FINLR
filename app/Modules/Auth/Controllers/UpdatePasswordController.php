@@ -13,6 +13,6 @@ class UpdatePasswordController extends Controller
     {
         $action->handle($request->user(), $request->validated('password'));
 
-        return back();
+        return back()->with('status', 'password-updated');
     }
 }

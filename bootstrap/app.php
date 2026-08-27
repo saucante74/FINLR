@@ -2,12 +2,15 @@
 
 use App\Modules\Shared\Middleware\HandleInertiaRequests;
 use App\Modules\SimulationEngine\Exceptions\SimulationEngineUnavailableException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,6 +30,26 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),
         );
+
+        // `shouldRenderJsonWhen` above (scoped to `api/*`) means Laravel's
+        // default unauthenticated() handling no longer recognises an
+        // Inertia PUT/PATCH/DELETE request as "expecting JSON": it falls
+        // through to a plain `redirect()->guest(route('login'))`, i.e. a
+        // 302 with no X-Inertia header. Axios/XHR preserves the original
+        // HTTP method across that redirect (unlike `fetch`, which downgrades
+        // to GET), so the browser retries e.g. PUT against /login — a route
+        // that only accepts GET/POST — surfacing as a confusing
+        // MethodNotAllowedHttpException instead of "please log in again".
+        // Inertia::location() sends the redirect the way Inertia's client
+        // expects (409 + X-Inertia-Location), which it turns into a full
+        // page visit to the login page instead of replaying the request.
+        $exceptions->render(function (AuthenticationException $exception, Request $request): ?Response {
+            if ($request->header('X-Inertia')) {
+                return Inertia::location(route('login'));
+            }
+
+            return null;
+        });
 
         // Any simulator using RunProjectionCalculationAction gets this
         // handling for free: the actual failure is already logged (with its

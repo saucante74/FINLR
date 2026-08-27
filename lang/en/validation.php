@@ -11,6 +11,17 @@ return [
     | the validator class. Some of these rules have multiple versions such
     | as the size rules. Feel free to tweak each of these messages here.
     |
+    | `required`, `confirmed`, `current_password`, `email`, `string`,
+    | `min.string`, `password.*` and `attributes` below are this project's
+    | own wording (kept in step with lang/fr/validation.php and
+    | lang/it/validation.php) rather than the untouched Laravel defaults —
+    | every other line here is still the framework's stock English message,
+    | since English is also this app's fallback_locale: fr/it fall back to
+    | *this* file for any rule they don't override themselves (e.g. numeric,
+    | integer, boolean, used elsewhere in the app), so trimming it down to
+    | only the password-related keys would leave those other rules with no
+    | translated message at all, in any of the three locales.
+    |
     */
 
     'accepted' => 'The :attribute field must be accepted.',
@@ -125,8 +136,8 @@ return [
     'password' => [
         'letters' => 'The :attribute field must contain at least one letter.',
         'mixed' => 'The :attribute field must contain at least one uppercase and one lowercase letter.',
-        'numbers' => 'The :attribute field must contain at least one number.',
-        'symbols' => 'The :attribute field must contain at least one symbol.',
+        'numbers' => 'The :attribute field must contain at least one digit.',
+        'symbols' => 'The :attribute field must contain at least one special character.',
         'uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
     ],
     'present' => 'The :attribute field must be present.',
@@ -196,6 +207,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'full name',
+        'email' => 'email address',
+        'password' => 'password',
+        'password_confirmation' => 'password confirmation',
+        'current_password' => 'current password',
+    ],
 
 ];

@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PasswordRequirementsChecklist from '@/components/PasswordRequirementsChecklist';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -136,6 +137,9 @@ export default function RegisterForm() {
                                 {errors.password}
                             </p>
                         )}
+                        <PasswordRequirementsChecklist
+                            password={data.password}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2">
