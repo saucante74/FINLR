@@ -83,6 +83,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
     const { auth } = page.props;
     const user = auth?.user ?? null;
     const isDashboardPage = isCurrentPath(page.url, 'dashboard');
+    const isSimulatorsPage = isCurrentPath(page.url, 'simulators.index');
 
     return (
         <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur">
@@ -110,9 +111,18 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                             >
                                 {t('nav.dashboard')}
                             </Link>
-                            <span className={cn(TAB_CLASSES, 'text-muted-foreground')}>
+                            <Link
+                                href={route('simulators.index')}
+                                aria-current={isSimulatorsPage ? 'page' : undefined}
+                                className={cn(
+                                    TAB_CLASSES,
+                                    isSimulatorsPage
+                                        ? 'bg-muted text-foreground'
+                                        : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground',
+                                )}
+                            >
                                 {t('nav.simulators')}
-                            </span>
+                            </Link>
                             <span className={cn(TAB_CLASSES, 'text-muted-foreground')}>
                                 {t('nav.resources')}
                             </span>
