@@ -6,7 +6,7 @@
         "login": "Log in",
         "register": "Sign up",
         "logout": "Log out",
-        "profile": "Profile",
+        "settings": "Settings",
         "dashboard": "Dashboard",
         "simulators": "Simulators",
         "resources": "Resources",
@@ -397,41 +397,82 @@
             }
         }
     },
-    "profile": {
+    "settings": {
         "eyebrow": "Account",
-        "title": "Profile",
-        "description": "Manage your personal information and account settings.",
+        "title": "Settings",
+        "description": "Your information, your security, and the display preferences for your simulations. Changes are saved section by section.",
         "information": {
-            "title": "Profile information",
-            "description": "Update your account's profile information and email address.",
+            "title": "Personal information",
+            "description": "Your name appears on your simulation exports; your email address is used to sign in.",
             "name": "Full name",
             "email": "Email address",
+            "emailVerified": "Email verified",
+            "emailVerifiedHint": "Changing your address requires a new email confirmation.",
             "unverified": "Your email address is unverified.",
             "resendLink": "Click here to resend the verification email.",
             "verificationSent": "A new verification link has been sent to your email address.",
             "save": "Save",
-            "saved": "Saved."
+            "saved": "Saved.",
+            "lastUpdated": "Last updated on {{date}}"
         },
-        "password": {
-            "title": "Password",
-            "description": "Ensure your account is using a long, random password to stay secure.",
+        "security": {
+            "title": "Security",
+            "description": "Use a long, unique password. 12 characters minimum.",
             "currentPassword": "Current password",
             "newPassword": "New password",
-            "passwordConfirmation": "Confirm password",
+            "newPasswordHint": "12 characters minimum, including a digit and a special character.",
+            "passwordConfirmation": "Confirmation",
             "showPassword": "Show password",
             "hidePassword": "Hide password",
-            "save": "Save",
+            "strength": {
+                "label": "Password strength",
+                "empty": "—",
+                "weak": "Weak",
+                "medium": "Medium",
+                "strong": "Strong"
+            },
+            "twoFactor": {
+                "title": "Two-step verification",
+                "description": "A six-digit code is required on every new sign-in.",
+                "comingSoon": "Coming soon"
+            },
+            "save": "Update",
             "saved": "Saved."
         },
-        "deleteAccount": {
-            "title": "Delete account",
-            "description": "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.",
+        "simulationPreferences": {
+            "title": "Simulation preferences",
+            "description": "Values applied by default to every new scenario.",
+            "currency": {
+                "label": "Display currency",
+                "hint": "Used in projections and exports.",
+                "comingSoon": "Coming soon"
+            }
+        },
+        "dangerZone": {
+            "title": "Danger zone",
+            "description": "Deleting your account permanently erases your scenarios, assumptions and exports — this action is irreversible.",
             "button": "Delete account",
             "confirmTitle": "Are you sure you want to delete your account?",
             "confirmDescription": "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
             "password": "Password",
             "cancel": "Cancel",
             "confirm": "Delete account"
+        },
+        "account": {
+            "title": "Account status",
+            "plan": "Plan",
+            "memberSince": "Member since",
+            "scenariosSaved": "Saved scenarios",
+            "twoFactor": "Two-factor authentication",
+            "twoFactorDisabled": "disabled",
+            "logout": "Log out",
+            "dataNotice": "Finlr never stores banking data — only your simulation assumptions, for 24 months.",
+            "plans": {
+                "free": "Free",
+                "pro_monthly": "Pro monthly",
+                "pro_yearly": "Pro yearly",
+                "enterprise": "Enterprise"
+            }
         }
     }
 }

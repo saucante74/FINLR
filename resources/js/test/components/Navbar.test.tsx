@@ -86,8 +86,8 @@ describe('Navbar', () => {
         } as unknown as ReturnType<typeof inertia.usePage>);
     }
 
-    it('shows the profile link when authenticated and no logout button', () => {
-        mockAuthenticatedPage('/profile');
+    it('shows the settings link when authenticated and no logout button', () => {
+        mockAuthenticatedPage('/settings');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 
@@ -95,8 +95,8 @@ describe('Navbar', () => {
             screen.getByRole('link', { name: i18n.t('nav.dashboard') }),
         ).toHaveAttribute('href', '/dashboard');
         expect(
-            screen.getByRole('link', { name: i18n.t('nav.profile') }),
-        ).toHaveAttribute('href', '/profile.edit');
+            screen.getByRole('link', { name: i18n.t('nav.settings') }),
+        ).toHaveAttribute('href', '/settings.edit');
         expect(
             screen.queryByRole('link', { name: i18n.t('nav.logout') }),
         ).not.toBeInTheDocument();
@@ -105,15 +105,15 @@ describe('Navbar', () => {
         ).not.toBeInTheDocument();
     });
 
-    it('groups the user name and the profile icon inside a single pill link', () => {
-        mockAuthenticatedPage('/profile');
+    it('groups the user name and the settings icon inside a single pill link', () => {
+        mockAuthenticatedPage('/settings');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 
-        const profileLink = screen.getByRole('link', { name: i18n.t('nav.profile') });
+        const settingsLink = screen.getByRole('link', { name: i18n.t('nav.settings') });
 
-        expect(profileLink).toHaveAttribute('href', '/profile.edit');
-        expect(profileLink).toHaveTextContent('Jane Doe');
+        expect(settingsLink).toHaveAttribute('href', '/settings.edit');
+        expect(settingsLink).toHaveTextContent('Jane Doe');
         expect(screen.getByText('|')).toBeInTheDocument();
     });
 
@@ -126,12 +126,12 @@ describe('Navbar', () => {
             screen.getByRole('link', { name: i18n.t('nav.dashboard') }),
         ).toHaveAttribute('aria-current', 'page');
         expect(
-            screen.getByRole('link', { name: i18n.t('nav.profile') }),
-        ).toHaveAttribute('href', '/profile.edit');
+            screen.getByRole('link', { name: i18n.t('nav.settings') }),
+        ).toHaveAttribute('href', '/settings.edit');
     });
 
     it('does not mark the dashboard tab as current on other pages', () => {
-        mockAuthenticatedPage('/profile');
+        mockAuthenticatedPage('/settings');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 

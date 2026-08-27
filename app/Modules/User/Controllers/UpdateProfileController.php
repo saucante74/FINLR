@@ -15,6 +15,6 @@ class UpdateProfileController extends Controller
     {
         $action->handle($request->user(), ProfileUpdateData::fromRequest($request));
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('settings.edit');
     }
 }
