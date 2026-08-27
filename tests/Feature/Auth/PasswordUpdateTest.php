@@ -20,15 +20,36 @@ class PasswordUpdateTest extends TestCase
             ->from('/settings')
             ->put('/password', [
                 'current_password' => 'password',
-                'password' => 'new-password',
-                'password_confirmation' => 'new-password',
+                'password' => 'NewPassword1!',
+                'password_confirmation' => 'NewPassword1!',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
+            ->assertSessionHas('status', 'password-updated')
             ->assertRedirect('/settings');
 
-        $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+        $this->assertTrue(Hash::check('NewPassword1!', $user->refresh()->password));
+    }
+
+    public function test_password_must_satisfy_the_strength_policy(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->from('/settings')
+            ->put('/password', [
+                'current_password' => 'password',
+                'password' => 'alllowercase1',
+                'password_confirmation' => 'alllowercase1',
+            ]);
+
+        $response
+            ->assertSessionHasErrors('password')
+            ->assertRedirect('/settings');
+
+        $this->assertTrue(Hash::check('password', $user->refresh()->password));
     }
 
     public function test_correct_password_must_be_provided_to_update_password(): void

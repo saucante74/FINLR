@@ -417,10 +417,10 @@
         },
         "security": {
             "title": "Sicurezza",
-            "description": "Usa una password lunga e unica. 12 caratteri minimo.",
+            "description": "Usa una password lunga e unica.",
             "currentPassword": "Password attuale",
             "newPassword": "Nuova password",
-            "newPasswordHint": "12 caratteri minimo, con una cifra e un carattere speciale.",
+            "newPasswordHint": "8 caratteri minimo, con una maiuscola, una minuscola, una cifra e un carattere speciale.",
             "passwordConfirmation": "Conferma",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",
@@ -437,7 +437,7 @@
                 "comingSoon": "Prossimamente"
             },
             "save": "Aggiorna",
-            "saved": "Salvato."
+            "passwordUpdated": "La tua password è stata aggiornata."
         },
         "simulationPreferences": {
             "title": "Preferenze di simulazione",

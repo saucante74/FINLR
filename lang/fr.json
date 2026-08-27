@@ -417,10 +417,10 @@
         },
         "security": {
             "title": "Sécurité",
-            "description": "Utilisez un mot de passe long et unique. 12 caractères minimum.",
+            "description": "Utilisez un mot de passe long et unique.",
             "currentPassword": "Mot de passe actuel",
             "newPassword": "Nouveau mot de passe",
-            "newPasswordHint": "12 caractères minimum, dont un chiffre et un caractère spécial.",
+            "newPasswordHint": "8 caractères minimum, avec majuscule, minuscule, chiffre et caractère spécial.",
             "passwordConfirmation": "Confirmation",
             "showPassword": "Afficher le mot de passe",
             "hidePassword": "Masquer le mot de passe",
@@ -437,7 +437,7 @@
                 "comingSoon": "Bientôt disponible"
             },
             "save": "Mettre à jour",
-            "saved": "Enregistré."
+            "passwordUpdated": "Votre mot de passe a été mis à jour."
         },
         "simulationPreferences": {
             "title": "Préférences de simulation",

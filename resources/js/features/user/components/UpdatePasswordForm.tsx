@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useMemo, useRef, useState, type SubmitEvent } from 'react';
@@ -19,24 +18,35 @@ import { cn } from '@/lib/utils';
 
 type PasswordStrength = 'empty' | 'weak' | 'medium' | 'strong';
 
+/**
+ * Mirrors the server-side policy (`PasswordPolicyServiceProvider`: min 8,
+ * mixed case, a number, a symbol) so "weak" here means the same thing as a
+ * rejection from the backend, rather than an unrelated heuristic score.
+ */
 function computeStrength(password: string): PasswordStrength {
     if (!password) {
         return 'empty';
     }
 
-    let score = 0;
-    if (password.length >= 12) score += 1;
-    if (password.length >= 16) score += 1;
-    if (/[0-9]/.test(password)) score += 1;
-    if (/[^A-Za-z0-9]/.test(password)) score += 1;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 1;
+    const meetsPolicy =
+        password.length >= 8 &&
+        /[a-z]/.test(password) &&
+        /[A-Z]/.test(password) &&
+        /[0-9]/.test(password) &&
+        /[^A-Za-z0-9]/.test(password);
 
-    if (score <= 1) return 'weak';
-    if (score <= 3) return 'medium';
-    return 'strong';
+    if (!meetsPolicy) {
+        return 'weak';
+    }
+
+    return password.length >= 12 ? 'strong' : 'medium';
 }
 
-export default function UpdatePasswordForm() {
+interface UpdatePasswordFormProps {
+    status?: string | null;
+}
+
+export default function UpdatePasswordForm({ status }: UpdatePasswordFormProps) {
     const { t } = useTranslation();
     const passwordInput = useRef<HTMLInputElement>(null);
     const currentPasswordInput = useRef<HTMLInputElement>(null);
@@ -45,15 +55,7 @@ export default function UpdatePasswordForm() {
     const [showPasswordConfirmation, setShowPasswordConfirmation] =
         useState(false);
 
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
+    const { data, setData, errors, put, reset, processing } = useForm({
         current_password: '',
         password: '',
         password_confirmation: '',
@@ -97,7 +99,13 @@ export default function UpdatePasswordForm() {
                 </CardDescription>
             </CardHeader>
 
-            <CardContent className="py-6">
+            <CardContent className="flex flex-col gap-5 py-6">
+                {status === 'password-updated' && (
+                    <div className="w-full rounded-lg border border-brand/30 bg-brand/5 px-4 py-3 text-center text-sm font-medium text-brand">
+                        {t('settings.security.passwordUpdated')}
+                    </div>
+                )}
+
                 <form
                     onSubmit={updatePassword}
                     className="flex flex-col gap-5"
@@ -307,18 +315,6 @@ export default function UpdatePasswordForm() {
                         >
                             {t('settings.security.save')}
                         </Button>
-
-                        <Transition
-                            show={recentlySuccessful}
-                            enter="transition ease-in-out"
-                            enterFrom="opacity-0"
-                            leave="transition ease-in-out"
-                            leaveTo="opacity-0"
-                        >
-                            <p className="text-sm text-muted-foreground">
-                                {t('settings.security.saved')}
-                            </p>
-                        </Transition>
                     </div>
                 </form>
             </CardContent>
