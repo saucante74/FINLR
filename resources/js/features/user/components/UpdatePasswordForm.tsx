@@ -1,9 +1,10 @@
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useRef, useState, type FormEvent } from 'react';
+import { useMemo, useRef, useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Card,
     CardContent,
@@ -15,6 +16,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+
+type PasswordStrength = 'empty' | 'weak' | 'medium' | 'strong';
+
+function computeStrength(password: string): PasswordStrength {
+    if (!password) {
+        return 'empty';
+    }
+
+    let score = 0;
+    if (password.length >= 12) score += 1;
+    if (password.length >= 16) score += 1;
+    if (/[0-9]/.test(password)) score += 1;
+    if (/[^A-Za-z0-9]/.test(password)) score += 1;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 1;
+
+    if (score <= 1) return 'weak';
+    if (score <= 3) return 'medium';
+    return 'strong';
+}
 
 export default function UpdatePasswordForm() {
     const { t } = useTranslation();
@@ -39,7 +59,9 @@ export default function UpdatePasswordForm() {
         password_confirmation: '',
     });
 
-    const updatePassword = (e: FormEvent) => {
+    const strength = useMemo(() => computeStrength(data.password), [data.password]);
+
+    const updatePassword = (e: SubmitEvent) => {
         e.preventDefault();
 
         put(route('password.update'), {
@@ -61,12 +83,17 @@ export default function UpdatePasswordForm() {
 
     return (
         <Card className="gap-0 py-0">
-            <CardHeader className="border-b border-border py-5">
-                <CardTitle className="text-base">
-                    {t('profile.password.title')}
-                </CardTitle>
+            <CardHeader className="gap-1.5 border-b border-border py-5">
+                <div className="flex items-baseline gap-2">
+                    <span aria-hidden className="font-mono text-xs text-brand">
+                        02
+                    </span>
+                    <CardTitle className="text-base">
+                        {t('settings.security.title')}
+                    </CardTitle>
+                </div>
                 <CardDescription>
-                    {t('profile.password.description')}
+                    {t('settings.security.description')}
                 </CardDescription>
             </CardHeader>
 
@@ -77,7 +104,7 @@ export default function UpdatePasswordForm() {
                 >
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="current_password">
-                            {t('profile.password.currentPassword')}
+                            {t('settings.security.currentPassword')}
                         </Label>
                         <div className="relative">
                             <Input
@@ -106,8 +133,8 @@ export default function UpdatePasswordForm() {
                                 }
                                 aria-label={
                                     showCurrentPassword
-                                        ? t('profile.password.hidePassword')
-                                        : t('profile.password.showPassword')
+                                        ? t('settings.security.hidePassword')
+                                        : t('settings.security.showPassword')
                                 }
                                 className={cn(
                                     'absolute inset-y-0 right-0 flex items-center px-3',
@@ -130,7 +157,7 @@ export default function UpdatePasswordForm() {
 
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="password">
-                            {t('profile.password.newPassword')}
+                            {t('settings.security.newPassword')}
                         </Label>
                         <div className="relative">
                             <Input
@@ -150,8 +177,8 @@ export default function UpdatePasswordForm() {
                                 onClick={() => setShowPassword((v) => !v)}
                                 aria-label={
                                     showPassword
-                                        ? t('profile.password.hidePassword')
-                                        : t('profile.password.showPassword')
+                                        ? t('settings.security.hidePassword')
+                                        : t('settings.security.showPassword')
                                 }
                                 className={cn(
                                     'absolute inset-y-0 right-0 flex items-center px-3',
@@ -165,16 +192,20 @@ export default function UpdatePasswordForm() {
                                 )}
                             </button>
                         </div>
-                        {errors.password && (
+                        {errors.password ? (
                             <p className="text-xs text-destructive">
                                 {errors.password}
+                            </p>
+                        ) : (
+                            <p className="text-xs text-muted-foreground">
+                                {t('settings.security.newPasswordHint')}
                             </p>
                         )}
                     </div>
 
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="password_confirmation">
-                            {t('profile.password.passwordConfirmation')}
+                            {t('settings.security.passwordConfirmation')}
                         </Label>
                         <div className="relative">
                             <Input
@@ -204,8 +235,8 @@ export default function UpdatePasswordForm() {
                                 }
                                 aria-label={
                                     showPasswordConfirmation
-                                        ? t('profile.password.hidePassword')
-                                        : t('profile.password.showPassword')
+                                        ? t('settings.security.hidePassword')
+                                        : t('settings.security.showPassword')
                                 }
                                 className={cn(
                                     'absolute inset-y-0 right-0 flex items-center px-3',
@@ -226,13 +257,55 @@ export default function UpdatePasswordForm() {
                         )}
                     </div>
 
+                    <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">
+                            {t('settings.security.strength.label')}
+                        </span>
+                        <span
+                            className={cn(
+                                'font-mono text-xs',
+                                strength === 'strong' && 'text-brand',
+                                strength === 'weak' && 'text-destructive',
+                                strength === 'empty' &&
+                                    'text-muted-foreground',
+                            )}
+                        >
+                            {t(`settings.security.strength.${strength}`)}
+                        </span>
+                    </div>
+
+                    <div className="flex items-start gap-3 rounded-lg border border-dashed border-border p-4">
+                        <Checkbox
+                            id="two_factor"
+                            checked={false}
+                            disabled
+                            aria-label={t('settings.security.twoFactor.title')}
+                        />
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                                <Label
+                                    htmlFor="two_factor"
+                                    className="font-medium text-foreground"
+                                >
+                                    {t('settings.security.twoFactor.title')}
+                                </Label>
+                                <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
+                                    {t('settings.security.twoFactor.comingSoon')}
+                                </span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                {t('settings.security.twoFactor.description')}
+                            </p>
+                        </div>
+                    </div>
+
                     <div className="flex items-center gap-4">
                         <Button
                             type="submit"
                             variant="brand"
                             disabled={processing}
                         >
-                            {t('profile.password.save')}
+                            {t('settings.security.save')}
                         </Button>
 
                         <Transition
@@ -243,7 +316,7 @@ export default function UpdatePasswordForm() {
                             leaveTo="opacity-0"
                         >
                             <p className="text-sm text-muted-foreground">
-                                {t('profile.password.saved')}
+                                {t('settings.security.saved')}
                             </p>
                         </Transition>
                     </div>

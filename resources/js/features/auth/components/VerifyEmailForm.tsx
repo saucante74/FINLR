@@ -1,5 +1,5 @@
 import { Link, useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ export default function VerifyEmailForm() {
     const { t } = useTranslation();
     const { post, processing } = useForm({});
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: SubmitEvent) => {
         e.preventDefault();
 
         post(route('verification.send'));

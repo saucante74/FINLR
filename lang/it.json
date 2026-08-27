@@ -6,7 +6,7 @@
         "login": "Accedi",
         "register": "Registrati",
         "logout": "Esci",
-        "profile": "Profilo",
+        "settings": "Impostazioni",
         "dashboard": "Bacheca",
         "simulators": "Simulatori",
         "resources": "Risorse",
@@ -397,41 +397,82 @@
             }
         }
     },
-    "profile": {
+    "settings": {
         "eyebrow": "Account",
-        "title": "Profilo",
-        "description": "Gestisci le tue informazioni personali e le impostazioni dell'account.",
+        "title": "Impostazioni",
+        "description": "Le tue informazioni, la tua sicurezza e le preferenze di visualizzazione delle tue simulazioni. Le modifiche vengono salvate sezione per sezione.",
         "information": {
-            "title": "Informazioni del profilo",
-            "description": "Aggiorna le informazioni del tuo profilo e il tuo indirizzo e-mail.",
+            "title": "Informazioni personali",
+            "description": "Il nome compare sui tuoi export di simulazione; l'indirizzo e-mail serve per accedere.",
             "name": "Nome completo",
             "email": "Indirizzo e-mail",
+            "emailVerified": "E-mail verificata",
+            "emailVerifiedHint": "Un cambio di indirizzo richiede una nuova conferma via e-mail.",
             "unverified": "Il tuo indirizzo e-mail non è verificato.",
             "resendLink": "Clicca qui per inviare di nuovo l'e-mail di verifica.",
             "verificationSent": "Un nuovo link di verifica è stato inviato al tuo indirizzo e-mail.",
             "save": "Salva",
-            "saved": "Salvato."
+            "saved": "Salvato.",
+            "lastUpdated": "Ultimo aggiornamento il {{date}}"
         },
-        "password": {
-            "title": "Password",
-            "description": "Assicurati che il tuo account utilizzi una password lunga e casuale per rimanere sicuro.",
+        "security": {
+            "title": "Sicurezza",
+            "description": "Usa una password lunga e unica. 12 caratteri minimo.",
             "currentPassword": "Password attuale",
             "newPassword": "Nuova password",
-            "passwordConfirmation": "Conferma password",
+            "newPasswordHint": "12 caratteri minimo, con una cifra e un carattere speciale.",
+            "passwordConfirmation": "Conferma",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",
-            "save": "Salva",
+            "strength": {
+                "label": "Robustezza della password",
+                "empty": "—",
+                "weak": "Debole",
+                "medium": "Media",
+                "strong": "Forte"
+            },
+            "twoFactor": {
+                "title": "Verifica in due passaggi",
+                "description": "Ad ogni nuovo accesso viene richiesto un codice a sei cifre.",
+                "comingSoon": "Prossimamente"
+            },
+            "save": "Aggiorna",
             "saved": "Salvato."
         },
-        "deleteAccount": {
-            "title": "Elimina account",
-            "description": "Una volta eliminato il tuo account, tutte le sue risorse e i suoi dati verranno eliminati definitivamente. Prima di eliminare il tuo account, scarica tutti i dati o le informazioni che desideri conservare.",
+        "simulationPreferences": {
+            "title": "Preferenze di simulazione",
+            "description": "Valori applicati per impostazione predefinita a ogni nuovo scenario.",
+            "currency": {
+                "label": "Valuta di visualizzazione",
+                "hint": "Utilizzata nelle proiezioni e negli export.",
+                "comingSoon": "Prossimamente"
+            }
+        },
+        "dangerZone": {
+            "title": "Zona sensibile",
+            "description": "L'eliminazione dell'account cancella definitivamente i tuoi scenari, ipotesi ed export — questa azione è irreversibile.",
             "button": "Elimina account",
             "confirmTitle": "Sei sicuro di voler eliminare il tuo account?",
             "confirmDescription": "Una volta eliminato il tuo account, tutte le sue risorse e i suoi dati verranno eliminati definitivamente. Inserisci la tua password per confermare che desideri eliminare definitivamente il tuo account.",
             "password": "Password",
             "cancel": "Annulla",
             "confirm": "Elimina account"
+        },
+        "account": {
+            "title": "Stato dell'account",
+            "plan": "Formula",
+            "memberSince": "Membro dal",
+            "scenariosSaved": "Scenari salvati",
+            "twoFactor": "Autenticazione a due fattori",
+            "twoFactorDisabled": "disattivata",
+            "logout": "Esci",
+            "dataNotice": "Finlr non conserva alcun dato bancario — solo le tue ipotesi di simulazione, per 24 mesi.",
+            "plans": {
+                "free": "Gratuita",
+                "pro_monthly": "Pro mensile",
+                "pro_yearly": "Pro annuale",
+                "enterprise": "Enterprise"
+            }
         }
     }
 }

@@ -4,8 +4,27 @@
  * application's single currency/locale convention.
  */
 
+export interface SupportedCurrency {
+    /** ISO 4217 code. */
+    code: string;
+    /** Symbol or code shown next to the currency in pickers. */
+    symbol: string;
+}
+
+/**
+ * Every currency the UI can present, e.g. in a display-currency picker.
+ * Only the first one is currently wired into formatting (see `CURRENCY`
+ * below) — the rest are listed so the picker can show them as options
+ * before the app actually supports switching between them.
+ */
+export const CURRENCIES: readonly SupportedCurrency[] = [
+    { code: 'EUR', symbol: '€' },
+    { code: 'CHF', symbol: 'CHF' },
+    { code: 'USD', symbol: '$' },
+];
+
 /** ISO 4217 code used to format every amount displayed across the app. */
-export const CURRENCY = 'EUR';
+export const CURRENCY: SupportedCurrency['code'] = CURRENCIES[0].code;
 
 /** Locale used when i18next has not resolved one yet. */
 export const FALLBACK_LOCALE = 'fr';
