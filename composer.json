@@ -12,8 +12,10 @@
         "php": "^8.3",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^13.8",
+        "laravel/socialite": "^5.30",
         "laravel/tinker": "^3.0",
         "saucante74/finlr-engine": "1.0.2",
+        "socialiteproviders/microsoft": "^4.10",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

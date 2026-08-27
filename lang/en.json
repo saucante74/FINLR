@@ -83,6 +83,11 @@
         "copyright": "© {{year}} Finlr. All rights reserved."
     },
     "auth": {
+        "oauth": {
+            "or": "OR",
+            "google": "Google",
+            "microsoft": "Microsoft"
+        },
         "login": {
             "eyebrow": "Member area",
             "title": "Log in",
@@ -94,9 +99,6 @@
             "rememberMe": "Stay signed in for 30 days",
             "forgotPassword": "Forgot your password?",
             "submit": "Log in",
-            "or": "OR",
-            "google": "Google",
-            "franceConnect": "FranceConnect",
             "noAccount": "Don't have an account yet?",
             "registerLink": "Create an account",
             "benefits": {
