@@ -48,38 +48,37 @@ export default function Edit({
                     </p>
                 </header>
 
-                <div className="flex flex-col gap-6 lg:gap-8">
-                    {/* Row 1: same grid row, so both cards stretch to an equal height. */}
-                    <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+                    <div className="flex flex-1 flex-col gap-6">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
                             profileUpdatedAt={profileUpdatedAt}
                         />
 
+                        <UpdatePasswordForm />
+
+                        <SimulationPreferencesCard />
+
+                        <DeleteUserForm />
+                    </div>
+
+                    {/*
+                        Both cards live inside a single sticky wrapper rather than
+                        each being sticky on its own: stacked as normal siblings,
+                        they can never overlap regardless of either card's height,
+                        and they scroll together as one unit all the way down the
+                        (much taller) left column.
+                    */}
+                    <div className="flex flex-1 flex-col gap-4 lg:sticky lg:top-20">
                         <AccountStateCard
                             user={auth.user}
                             plan={auth.plan}
                             memberSince={memberSince}
                             scenariosCount={scenariosCount}
                         />
-                    </div>
 
-                    {/*
-                        Row 2+: the note starts as the first item on this row, so its
-                        static top naturally lines up with Sécurité's top — then it
-                        sticks there once scrolled.
-                    */}
-                    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2 lg:gap-8">
-                        <div className="flex flex-col gap-6">
-                            <UpdatePasswordForm />
-
-                            <SimulationPreferencesCard />
-
-                            <DeleteUserForm />
-                        </div>
-
-                        <div className="rounded-lg border border-dashed border-border bg-muted/30 p-4 text-xs text-muted-foreground lg:sticky lg:top-20">
+                        <div className="rounded-lg border border-dashed border-border bg-muted/30 p-4 text-xs text-muted-foreground">
                             {t('settings.account.dataNotice')}
                         </div>
                     </div>
