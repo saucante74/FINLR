@@ -397,6 +397,16 @@
             }
         }
     },
+    "passwordPolicy": {
+        "title": "Exigences du mot de passe",
+        "criteria": {
+            "length": "Au moins 8 caractères",
+            "uppercase": "Au moins une majuscule",
+            "lowercase": "Au moins une minuscule",
+            "number": "Au moins un chiffre",
+            "symbol": "Au moins un caractère spécial"
+        }
+    },
     "settings": {
         "eyebrow": "Compte",
         "title": "Réglages",
@@ -420,7 +430,6 @@
             "description": "Utilisez un mot de passe long et unique.",
             "currentPassword": "Mot de passe actuel",
             "newPassword": "Nouveau mot de passe",
-            "newPasswordHint": "8 caractères minimum, avec majuscule, minuscule, chiffre et caractère spécial.",
             "passwordConfirmation": "Confirmation",
             "showPassword": "Afficher le mot de passe",
             "hidePassword": "Masquer le mot de passe",

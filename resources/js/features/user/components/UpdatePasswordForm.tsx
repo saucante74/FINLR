@@ -3,6 +3,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useMemo, useRef, useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PasswordRequirementsChecklist from '@/components/PasswordRequirementsChecklist';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
     Card,
@@ -15,27 +16,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { meetsPasswordPolicy } from '@/lib/passwordPolicy';
 
 type PasswordStrength = 'empty' | 'weak' | 'medium' | 'strong';
 
-/**
- * Mirrors the server-side policy (`PasswordPolicyServiceProvider`: min 8,
- * mixed case, a number, a symbol) so "weak" here means the same thing as a
- * rejection from the backend, rather than an unrelated heuristic score.
- */
 function computeStrength(password: string): PasswordStrength {
     if (!password) {
         return 'empty';
     }
 
-    const meetsPolicy =
-        password.length >= 8 &&
-        /[a-z]/.test(password) &&
-        /[A-Z]/.test(password) &&
-        /[0-9]/.test(password) &&
-        /[^A-Za-z0-9]/.test(password);
-
-    if (!meetsPolicy) {
+    if (!meetsPasswordPolicy(password)) {
         return 'weak';
     }
 
@@ -200,15 +190,14 @@ export default function UpdatePasswordForm({ status }: UpdatePasswordFormProps) 
                                 )}
                             </button>
                         </div>
-                        {errors.password ? (
+                        {errors.password && (
                             <p className="text-xs text-destructive">
                                 {errors.password}
                             </p>
-                        ) : (
-                            <p className="text-xs text-muted-foreground">
-                                {t('settings.security.newPasswordHint')}
-                            </p>
                         )}
+                        <PasswordRequirementsChecklist
+                            password={data.password}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2">

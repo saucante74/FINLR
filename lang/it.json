@@ -397,6 +397,16 @@
             }
         }
     },
+    "passwordPolicy": {
+        "title": "Requisiti della password",
+        "criteria": {
+            "length": "Almeno 8 caratteri",
+            "uppercase": "Almeno una lettera maiuscola",
+            "lowercase": "Almeno una lettera minuscola",
+            "number": "Almeno una cifra",
+            "symbol": "Almeno un carattere speciale"
+        }
+    },
     "settings": {
         "eyebrow": "Account",
         "title": "Impostazioni",
@@ -420,7 +430,6 @@
             "description": "Usa una password lunga e unica.",
             "currentPassword": "Password attuale",
             "newPassword": "Nuova password",
-            "newPasswordHint": "8 caratteri minimo, con una maiuscola, una minuscola, una cifra e un carattere speciale.",
             "passwordConfirmation": "Conferma",
             "showPassword": "Mostra password",
             "hidePassword": "Nascondi password",

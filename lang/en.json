@@ -397,6 +397,16 @@
             }
         }
     },
+    "passwordPolicy": {
+        "title": "Password requirements",
+        "criteria": {
+            "length": "At least 8 characters",
+            "uppercase": "At least one uppercase letter",
+            "lowercase": "At least one lowercase letter",
+            "number": "At least one digit",
+            "symbol": "At least one special character"
+        }
+    },
     "settings": {
         "eyebrow": "Account",
         "title": "Settings",
@@ -420,7 +430,6 @@
             "description": "Use a long, unique password.",
             "currentPassword": "Current password",
             "newPassword": "New password",
-            "newPasswordHint": "8 characters minimum, with an uppercase and lowercase letter, a digit and a special character.",
             "passwordConfirmation": "Confirmation",
             "showPassword": "Show password",
             "hidePassword": "Hide password",

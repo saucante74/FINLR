@@ -52,6 +52,26 @@ class PasswordUpdateTest extends TestCase
         $this->assertTrue(Hash::check('password', $user->refresh()->password));
     }
 
+    public function test_password_strength_errors_are_translated_in_english(): void
+    {
+        app()->setLocale('en');
+
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->from('/settings')
+            ->put('/password', [
+                'current_password' => 'password',
+                'password' => 'alllowercase1',
+                'password_confirmation' => 'alllowercase1',
+            ]);
+
+        $response->assertSessionHasErrors([
+            'password' => 'The password field must contain at least one uppercase and one lowercase letter.',
+        ]);
+    }
+
     public function test_correct_password_must_be_provided_to_update_password(): void
     {
         $user = User::factory()->create();
