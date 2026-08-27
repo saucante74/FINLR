@@ -129,8 +129,8 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
                                 |
                             </span>
                             <Link
-                                href={route('profile.edit')}
-                                aria-label={t('nav.profile')}
+                                href={route('settings.edit')}
+                                aria-label={t('nav.settings')}
                                 className={NAV_PILL_CLASSES}
                             >
                                 <span className="hidden sm:inline">

@@ -38,7 +38,7 @@ export default function DeleteUserForm() {
     const deleteUser = (e: FormEvent) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route('settings.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current?.focus(),
@@ -54,34 +54,39 @@ export default function DeleteUserForm() {
     };
 
     return (
-        <Card className="gap-0 py-0">
-            <CardHeader className="border-b border-border py-5">
-                <CardTitle className="text-base">
-                    {t('profile.deleteAccount.title')}
-                </CardTitle>
+        <Card className="gap-0 border-destructive/30 bg-destructive/5 py-0">
+            <CardHeader className="gap-1.5 border-b border-destructive/20 py-5">
+                <div className="flex items-baseline gap-2">
+                    <span aria-hidden className="font-mono text-xs text-destructive">
+                        04
+                    </span>
+                    <CardTitle className="text-base">
+                        {t('settings.dangerZone.title')}
+                    </CardTitle>
+                </div>
                 <CardDescription>
-                    {t('profile.deleteAccount.description')}
+                    {t('settings.dangerZone.description')}
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="py-6">
                 <Button variant="destructive" onClick={confirmUserDeletion}>
-                    {t('profile.deleteAccount.button')}
+                    {t('settings.dangerZone.button')}
                 </Button>
 
                 <Modal show={confirmingUserDeletion} onClose={closeModal}>
                     <form onSubmit={deleteUser} className="flex flex-col gap-4 p-6">
                         <h2 className="text-lg font-semibold text-foreground">
-                            {t('profile.deleteAccount.confirmTitle')}
+                            {t('settings.dangerZone.confirmTitle')}
                         </h2>
 
                         <p className="text-sm text-muted-foreground">
-                            {t('profile.deleteAccount.confirmDescription')}
+                            {t('settings.dangerZone.confirmDescription')}
                         </p>
 
                         <div className="flex flex-col gap-2">
                             <Label htmlFor="password" className="sr-only">
-                                {t('profile.deleteAccount.password')}
+                                {t('settings.dangerZone.password')}
                             </Label>
                             <Input
                                 id="password"
@@ -92,7 +97,7 @@ export default function DeleteUserForm() {
                                     setData('password', e.target.value)
                                 }
                                 placeholder={t(
-                                    'profile.deleteAccount.password',
+                                    'settings.dangerZone.password',
                                 )}
                                 autoFocus
                                 aria-invalid={Boolean(errors.password)}
@@ -110,7 +115,7 @@ export default function DeleteUserForm() {
                                 variant="outline"
                                 onClick={closeModal}
                             >
-                                {t('profile.deleteAccount.cancel')}
+                                {t('settings.dangerZone.cancel')}
                             </Button>
 
                             <Button
@@ -118,7 +123,7 @@ export default function DeleteUserForm() {
                                 variant="destructive"
                                 disabled={processing}
                             >
-                                {t('profile.deleteAccount.confirm')}
+                                {t('settings.dangerZone.confirm')}
                             </Button>
                         </div>
                     </form>

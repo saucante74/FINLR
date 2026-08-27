@@ -6,7 +6,7 @@
         "login": "Connexion",
         "register": "S'inscrire",
         "logout": "Déconnexion",
-        "profile": "Profil",
+        "settings": "Réglages",
         "dashboard": "Tableau de bord",
         "simulators": "Simulateurs",
         "resources": "Ressources",
@@ -397,41 +397,82 @@
             }
         }
     },
-    "profile": {
+    "settings": {
         "eyebrow": "Compte",
-        "title": "Profil",
-        "description": "Gérez vos informations personnelles et les paramètres de votre compte.",
+        "title": "Réglages",
+        "description": "Vos informations, votre sécurité et les préférences d'affichage de vos simulations. Les modifications sont enregistrées section par section.",
         "information": {
-            "title": "Informations du profil",
-            "description": "Mettez à jour les informations de votre profil et votre adresse e-mail.",
+            "title": "Informations personnelles",
+            "description": "Le nom apparaît sur vos exports de simulation ; l'adresse e-mail sert à la connexion.",
             "name": "Nom complet",
             "email": "Adresse e-mail",
+            "emailVerified": "E-mail vérifié",
+            "emailVerifiedHint": "Un changement d'adresse demande une nouvelle confirmation par e-mail.",
             "unverified": "Votre adresse e-mail n'est pas vérifiée.",
             "resendLink": "Cliquez ici pour renvoyer l'e-mail de vérification.",
             "verificationSent": "Un nouveau lien de vérification a été envoyé à votre adresse e-mail.",
             "save": "Enregistrer",
-            "saved": "Enregistré."
+            "saved": "Enregistré.",
+            "lastUpdated": "Dernière mise à jour le {{date}}"
         },
-        "password": {
-            "title": "Mot de passe",
-            "description": "Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé.",
+        "security": {
+            "title": "Sécurité",
+            "description": "Utilisez un mot de passe long et unique. 12 caractères minimum.",
             "currentPassword": "Mot de passe actuel",
             "newPassword": "Nouveau mot de passe",
-            "passwordConfirmation": "Confirmation du mot de passe",
+            "newPasswordHint": "12 caractères minimum, dont un chiffre et un caractère spécial.",
+            "passwordConfirmation": "Confirmation",
             "showPassword": "Afficher le mot de passe",
             "hidePassword": "Masquer le mot de passe",
-            "save": "Enregistrer",
+            "strength": {
+                "label": "Robustesse du mot de passe",
+                "empty": "—",
+                "weak": "Faible",
+                "medium": "Moyenne",
+                "strong": "Forte"
+            },
+            "twoFactor": {
+                "title": "Vérification en deux étapes",
+                "description": "Un code à six chiffres est demandé à chaque nouvelle connexion.",
+                "comingSoon": "Bientôt disponible"
+            },
+            "save": "Mettre à jour",
             "saved": "Enregistré."
         },
-        "deleteAccount": {
-            "title": "Supprimer le compte",
-            "description": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Avant de supprimer votre compte, téléchargez toutes les données ou informations que vous souhaitez conserver.",
+        "simulationPreferences": {
+            "title": "Préférences de simulation",
+            "description": "Valeurs appliquées par défaut à chaque nouveau scénario.",
+            "currency": {
+                "label": "Devise d'affichage",
+                "hint": "Utilisée dans les projections et les exports.",
+                "comingSoon": "Bientôt disponible"
+            }
+        },
+        "dangerZone": {
+            "title": "Zone sensible",
+            "description": "La suppression du compte efface définitivement vos scénarios, hypothèses et exports — cette action est irréversible.",
             "button": "Supprimer le compte",
             "confirmTitle": "Êtes-vous sûr de vouloir supprimer votre compte ?",
             "confirmDescription": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées. Merci de saisir votre mot de passe pour confirmer que vous souhaitez supprimer définitivement votre compte.",
             "password": "Mot de passe",
             "cancel": "Annuler",
             "confirm": "Supprimer le compte"
+        },
+        "account": {
+            "title": "État du compte",
+            "plan": "Formule",
+            "memberSince": "Membre depuis",
+            "scenariosSaved": "Scénarios enregistrés",
+            "twoFactor": "Double authentification",
+            "twoFactorDisabled": "désactivée",
+            "logout": "Déconnexion",
+            "dataNotice": "Finlr ne conserve aucune donnée bancaire — uniquement vos hypothèses de simulation, pendant 24 mois.",
+            "plans": {
+                "free": "Gratuite",
+                "pro_monthly": "Pro mensuel",
+                "pro_yearly": "Pro annuel",
+                "enterprise": "Entreprise"
+            }
         }
     }
 }

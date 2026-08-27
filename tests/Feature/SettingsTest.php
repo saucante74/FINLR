@@ -6,34 +6,34 @@ use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ProfileTest extends TestCase
+class SettingsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_profile_page_is_displayed(): void
+    public function test_settings_page_is_displayed(): void
     {
         $user = User::factory()->create();
 
         $response = $this
             ->actingAs($user)
-            ->get('/profile');
+            ->get('/settings');
 
         $response->assertOk();
     }
 
-    public function test_profile_routes_are_closed_to_users_with_an_unverified_email(): void
+    public function test_settings_routes_are_closed_to_users_with_an_unverified_email(): void
     {
         $user = User::factory()->unverified()->create();
 
-        $this->actingAs($user)->get('/profile')
+        $this->actingAs($user)->get('/settings')
             ->assertRedirect(route('verification.notice'));
 
-        $this->actingAs($user)->patch('/profile', [
+        $this->actingAs($user)->patch('/settings', [
             'name' => 'Test User',
             'email' => 'test@example.com',
         ])->assertRedirect(route('verification.notice'));
 
-        $this->actingAs($user)->delete('/profile', [
+        $this->actingAs($user)->delete('/settings', [
             'password' => 'password',
         ])->assertRedirect(route('verification.notice'));
 
@@ -46,14 +46,14 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->patch('/settings', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect('/settings');
 
         $user->refresh();
 
@@ -68,14 +68,14 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile', [
+            ->patch('/settings', [
                 'name' => 'Test User',
                 'email' => $user->email,
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect('/settings');
 
         $this->assertNotNull($user->refresh()->email_verified_at);
     }
@@ -86,7 +86,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->delete('/profile', [
+            ->delete('/settings', [
                 'password' => 'password',
             ]);
 
@@ -98,20 +98,29 @@ class ProfileTest extends TestCase
         $this->assertNull($user->fresh());
     }
 
+    public function test_old_profile_url_no_longer_exists(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->get('/profile')->assertNotFound();
+        $this->actingAs($user)->patch('/profile')->assertNotFound();
+        $this->actingAs($user)->delete('/profile')->assertNotFound();
+    }
+
     public function test_correct_password_must_be_provided_to_delete_account(): void
     {
         $user = User::factory()->create();
 
         $response = $this
             ->actingAs($user)
-            ->from('/profile')
-            ->delete('/profile', [
+            ->from('/settings')
+            ->delete('/settings', [
                 'password' => 'wrong-password',
             ]);
 
         $response
             ->assertSessionHasErrors('password')
-            ->assertRedirect('/profile');
+            ->assertRedirect('/settings');
 
         $this->assertNotNull($user->fresh());
     }
