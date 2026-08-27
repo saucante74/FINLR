@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import OAuthProviderButtons from '@/features/auth/components/OAuthProviderButtons';
 import { cn } from '@/lib/utils';
 
 export default function RegisterForm() {
@@ -208,6 +209,8 @@ export default function RegisterForm() {
                         {t('auth.register.submit')}
                     </Button>
                 </form>
+
+                <OAuthProviderButtons />
 
                 <p className="text-center text-sm text-muted-foreground">
                     {t('auth.register.alreadyRegistered')}{' '}
