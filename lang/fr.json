@@ -461,12 +461,7 @@
             "currency": {
                 "label": "Devise d'affichage",
                 "hint": "Utilisée dans les projections et les exports.",
-                "comingSoon": "Bientôt disponible",
-                "names": {
-                    "EUR": "Euro",
-                    "CHF": "Franc suisse",
-                    "USD": "Dollar américain"
-                }
+                "comingSoon": "Bientôt disponible"
             }
         },
         "dangerZone": {

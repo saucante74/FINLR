@@ -15,7 +15,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { CURRENCIES, CURRENCY, formatCurrencyOption } from '@/lib/currency';
+import { CURRENCIES, CURRENCY } from '@/lib/currency';
 
 export default function SimulationPreferencesCard() {
     const { t } = useTranslation();
@@ -48,9 +48,6 @@ export default function SimulationPreferencesCard() {
                     <SelectContent>
                         {CURRENCIES.map((currency) => {
                             const active = currency.code === CURRENCY;
-                            const name = t(
-                                `settings.simulationPreferences.currency.names.${currency.code}`,
-                            );
 
                             return (
                                 <SelectItem
@@ -65,7 +62,7 @@ export default function SimulationPreferencesCard() {
                                               )
                                     }
                                 >
-                                    {formatCurrencyOption(currency, name)}
+                                    {currency.symbol}
                                 </SelectItem>
                             );
                         })}
