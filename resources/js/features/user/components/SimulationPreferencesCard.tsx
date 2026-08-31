@@ -7,15 +7,8 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import { CURRENCIES, CURRENCY } from '@/lib/currency';
+import { cn } from '@/lib/utils';
 
 export default function SimulationPreferencesCard() {
     const { t } = useTranslation();
@@ -37,37 +30,44 @@ export default function SimulationPreferencesCard() {
             </CardHeader>
 
             <CardContent className="flex flex-col gap-2 py-6">
-                <Label htmlFor="simulation-currency">
+                <span className="text-sm text-foreground">
                     {t('settings.simulationPreferences.currency.label')}
-                </Label>
+                </span>
 
-                <Select value={CURRENCY}>
-                    <SelectTrigger id="simulation-currency" className="w-64">
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {CURRENCIES.map((currency) => {
-                            const active = currency.code === CURRENCY;
+                <div
+                    role="radiogroup"
+                    aria-label={t('settings.simulationPreferences.currency.label')}
+                    className="flex w-fit items-center gap-1 rounded-full border border-border p-1"
+                >
+                    {CURRENCIES.map((currency) => {
+                        const active = currency.code === CURRENCY;
 
-                            return (
-                                <SelectItem
-                                    key={currency.code}
-                                    value={currency.code}
-                                    disabled={!active}
-                                    title={
-                                        active
-                                            ? undefined
-                                            : t(
-                                                  'settings.simulationPreferences.currency.comingSoon',
-                                              )
-                                    }
-                                >
-                                    {currency.symbol}
-                                </SelectItem>
-                            );
-                        })}
-                    </SelectContent>
-                </Select>
+                        return (
+                            <button
+                                key={currency.code}
+                                type="button"
+                                role="radio"
+                                aria-checked={active}
+                                disabled={!active}
+                                title={
+                                    active
+                                        ? undefined
+                                        : t(
+                                              'settings.simulationPreferences.currency.comingSoon',
+                                          )
+                                }
+                                className={cn(
+                                    'rounded-full px-3 py-1 text-xs font-medium transition-colors disabled:cursor-not-allowed',
+                                    active
+                                        ? 'bg-brand text-brand-foreground'
+                                        : 'text-muted-foreground/50',
+                                )}
+                            >
+                                {currency.symbol}
+                            </button>
+                        );
+                    })}
+                </div>
 
                 <p className="text-xs text-muted-foreground">
                     {t('settings.simulationPreferences.currency.hint')}
