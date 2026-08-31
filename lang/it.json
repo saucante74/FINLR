@@ -461,7 +461,12 @@
             "currency": {
                 "label": "Valuta di visualizzazione",
                 "hint": "Utilizzata nelle proiezioni e negli export.",
-                "comingSoon": "Prossimamente"
+                "comingSoon": "Prossimamente",
+                "names": {
+                    "EUR": "Euro",
+                    "CHF": "Franco svizzero",
+                    "USD": "Dollaro statunitense"
+                }
             }
         },
         "dangerZone": {

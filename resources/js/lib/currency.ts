@@ -26,6 +26,18 @@ export const CURRENCIES: readonly SupportedCurrency[] = [
 /** ISO 4217 code used to format every amount displayed across the app. */
 export const CURRENCY: SupportedCurrency['code'] = CURRENCIES[0].code;
 
+/**
+ * Renders a currency picker option as "symbol — name (CODE)", or
+ * "CODE — name" when the symbol is just the ISO code repeated (e.g. CHF),
+ * to avoid duplicating it.
+ */
+export function formatCurrencyOption(
+    { code, symbol }: SupportedCurrency,
+    name: string,
+): string {
+    return code === symbol ? `${code} — ${name}` : `${symbol} — ${name} (${code})`;
+}
+
 /** Locale used when i18next has not resolved one yet. */
 export const FALLBACK_LOCALE = 'fr';
 
