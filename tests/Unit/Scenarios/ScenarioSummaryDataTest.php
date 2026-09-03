@@ -85,6 +85,50 @@ class ScenarioSummaryDataTest extends TestCase
         $this->assertNull($summary->toArray()['name']);
     }
 
+    public function test_from_model_extracts_a_multi_envelope_scenario_with_no_single_wrapper(): void
+    {
+        $scenario = Scenario::factory()->create([
+            'calculator_type' => CalculatorType::MultiEnvelope,
+            'name' => 'Cascade PEA + CTO',
+            'input_payload' => $this->realisticMultiEnvelopeInputPayload(),
+            'result_payload' => $this->realisticMultiEnvelopeResultPayload(),
+        ]);
+
+        $summary = ScenarioSummaryData::fromModel($scenario);
+
+        $this->assertSame(CalculatorType::MultiEnvelope, $summary->calculatorType);
+        $this->assertSame(26628.0, $summary->headlineFigure);
+        // No single envelope type applies to a cascade: left blank rather
+        // than picking one of the envelopes arbitrarily.
+        $this->assertSame('', $summary->wrapper);
+        $this->assertSame(10, $summary->years);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticMultiEnvelopeInputPayload(): array
+    {
+        return [
+            'envelopes' => [
+                ['accountType' => 'PEA', 'initialAmount' => 1000.0],
+                ['accountType' => 'CTO', 'initialAmount' => 0.0],
+            ],
+            'defaultOverflowAccountType' => 'COMPTE_COURANT',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticMultiEnvelopeResultPayload(): array
+    {
+        return [
+            'summary' => ['year' => 10, 'netBalance' => 26628.0],
+            'pockets' => [],
+        ];
+    }
+
     /**
      * A production input_payload, keyed like CalculationInputData::toArray().
      *

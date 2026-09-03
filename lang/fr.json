@@ -223,6 +223,13 @@
         "eyebrow": "Scénario sauvegardé",
         "title": "Résultat de simulation",
         "createdAtLabel": "Simulé le {{date}}",
+        "multiEnvelope": {
+            "summaryTitle": "Résultats",
+            "netBalance": "Capital net final",
+            "realNetBalance": "Capital net réel (ajusté de l'inflation)",
+            "totalDeposited": "Total versé",
+            "pocketsTitle": "Détail par enveloppe"
+        },
         "rename": {
             "button": "Renommer",
             "label": "Nom du scénario",
@@ -273,6 +280,7 @@
             "defaultLabelA": "Scénario A",
             "defaultLabelB": "Scénario B"
         },
+        "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
         "chooseWrapper": {
             "eyebrow": "Simulateur classique",
             "title": "Choisissez votre enveloppe fiscale",
@@ -306,6 +314,69 @@
             "eyebrow": "Simulateurs",
             "title": "Choisissez votre simulateur",
             "description": "Sélectionnez le type de simulation à lancer."
+        },
+        "multiEnvelope": {
+            "eyebrow": "Simulateur multi-enveloppe",
+            "title": "Simulation multi-enveloppe",
+            "description": "Combinez plusieurs enveloppes fiscales en cascade et projetez leur évolution ensemble.",
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "Cascade PEA + CTO — plan long terme",
+                "sections": {
+                    "name": "Scénario",
+                    "envelopes": "Enveloppes"
+                },
+                "addEnvelope": "Ajouter une enveloppe",
+                "removeEnvelope": "Retirer l'enveloppe {{index}}",
+                "envelopeLabel": "Enveloppe {{index}}",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Montant initial",
+                        "helpText": "Apport initial versé sur cette enveloppe."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois sur cette enveloppe."
+                    },
+                    "durationYears": {
+                        "label": "Durée",
+                        "helpText": "Horizon de simulation propre à cette enveloppe."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu pour cette enveloppe."
+                    },
+                    "managementFeeRate": {
+                        "label": "Frais de gestion",
+                        "helpText": "Frais de gestion annuels prélevés sur l'encours."
+                    },
+                    "inflationRate": {
+                        "label": "Inflation",
+                        "helpText": "Taux d'inflation annuel — seule celle de la première enveloppe compte pour l'ensemble de la cascade."
+                    }
+                },
+                "submit": "Lancer la simulation",
+                "summary": {
+                    "eyebrow": "Paramètres saisis",
+                    "description": "Vérifiez votre cascade avant de lancer le calcul. La projection est établie par Finlr après validation.",
+                    "scenarioLabel": "Scénario",
+                    "scenarioPlaceholder": "–",
+                    "envelopeCount": "Nombre d'enveloppes",
+                    "totalInitialAmount": "Total des apports initiaux",
+                    "totalMonthlyContribution": "Total des versements mensuels",
+                    "retentionNote": "Vos scénarios sont conservés 24 mois."
+                }
+            },
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assurance-vie",
+                "CAT": "Compte à terme",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Compte courant"
+            }
         },
         "singleEnvelope": {
             "eyebrow": "Simulateur classique",
@@ -392,7 +463,6 @@
                     "cto": "CTO"
                 },
                 "submit": "Lancer la simulation",
-                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
                 "summary": {
                     "eyebrow": "Paramètres saisis",
                     "description": "Vérifiez vos hypothèses avant de lancer le calcul. La projection est établie par Finlr après validation.",

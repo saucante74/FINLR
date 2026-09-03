@@ -3,14 +3,16 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import type { MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
+import MultiEnvelopeScenarioSummary from '@/features/scenarios/components/MultiEnvelopeScenarioSummary';
 import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
 import ScenarioNameEditor from '@/features/scenarios/components/ScenarioNameEditor';
 import ScenarioSummary from '@/features/scenarios/components/ScenarioSummary';
 import { formatDate } from '@/features/scenarios/lib/format';
-import type { ScenarioProps } from '@/features/scenarios/types';
+import type { ScenarioProps, ScenarioResult } from '@/features/scenarios/types';
 
-export default function ScenarioShow({ id, input, result, createdAt, name }: ScenarioProps) {
+export default function ScenarioShow({ id, input, result, calculatorType, createdAt, name }: ScenarioProps) {
     const { t, i18n } = useTranslation();
 
     return (
@@ -31,9 +33,15 @@ export default function ScenarioShow({ id, input, result, createdAt, name }: Sce
                     </p>
                 </header>
 
-                <ScenarioSummary result={result} />
-                <ScenarioChart result={result} />
-                <ScenarioDetails input={input} />
+                {calculatorType === 'multi_envelope' ? (
+                    <MultiEnvelopeScenarioSummary result={result as MultiEnvelopeScenarioResult} />
+                ) : (
+                    <>
+                        <ScenarioSummary result={result as ScenarioResult} />
+                        <ScenarioChart result={result as ScenarioResult} />
+                        <ScenarioDetails input={input} />
+                    </>
+                )}
             </main>
 
             <Footer />

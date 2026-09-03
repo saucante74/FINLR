@@ -27,13 +27,12 @@ describe('Simulators', () => {
         ).toHaveAttribute('href', route('simulators.single-envelope.choose'));
     });
 
-    it('shows the multi-envelope simulator as coming soon, with no link', () => {
+    it('links the multi-envelope simulator to its show page', () => {
         render(<Simulators />);
 
-        expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).toBeInTheDocument();
         expect(
-            screen.queryByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
-        ).not.toBeInTheDocument();
+            screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
+        ).toHaveAttribute('href', route('simulators.multi-envelope.show'));
+        expect(screen.queryByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).not.toBeInTheDocument();
     });
 });

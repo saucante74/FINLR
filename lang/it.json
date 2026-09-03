@@ -223,6 +223,13 @@
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "multiEnvelope": {
+            "summaryTitle": "Risultati",
+            "netBalance": "Capitale netto finale",
+            "realNetBalance": "Capitale netto reale (rettificato dall'inflazione)",
+            "totalDeposited": "Totale versato",
+            "pocketsTitle": "Dettaglio per involucro"
+        },
         "rename": {
             "button": "Rinomina",
             "label": "Nome dello scenario",
@@ -273,6 +280,7 @@
             "defaultLabelA": "Scenario A",
             "defaultLabelB": "Scenario B"
         },
+        "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
         "chooseWrapper": {
             "eyebrow": "Simulatore classico",
             "title": "Scegli il tuo involucro fiscale",
@@ -306,6 +314,69 @@
             "eyebrow": "Simulatori",
             "title": "Scegli il tuo simulatore",
             "description": "Seleziona il tipo di simulazione da avviare."
+        },
+        "multiEnvelope": {
+            "eyebrow": "Simulatore multi-involucro",
+            "title": "Simulazione multi-involucro",
+            "description": "Combina più involucri fiscali in cascata e proietta la loro evoluzione insieme.",
+            "form": {
+                "name": "Nome dello scenario (facoltativo)",
+                "namePlaceholder": "Cascata PEA + CTO — piano a lungo termine",
+                "sections": {
+                    "name": "Scenario",
+                    "envelopes": "Involucri"
+                },
+                "addEnvelope": "Aggiungi un involucro",
+                "removeEnvelope": "Rimuovi l'involucro {{index}}",
+                "envelopeLabel": "Involucro {{index}}",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Importo iniziale",
+                        "helpText": "Versamento iniziale su questo involucro."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versamento mensile",
+                        "helpText": "Versamento programmato ogni mese su questo involucro."
+                    },
+                    "durationYears": {
+                        "label": "Durata",
+                        "helpText": "Orizzonte di simulazione proprio di questo involucro."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendimento annuo",
+                        "helpText": "Rendimento lordo annuo atteso per questo involucro."
+                    },
+                    "managementFeeRate": {
+                        "label": "Commissioni di gestione",
+                        "helpText": "Commissioni di gestione annue prelevate sul saldo."
+                    },
+                    "inflationRate": {
+                        "label": "Inflazione",
+                        "helpText": "Tasso di inflazione annuo — conta solo quello del primo involucro per l'intera cascata."
+                    }
+                },
+                "submit": "Avvia la simulazione",
+                "summary": {
+                    "eyebrow": "Parametri inseriti",
+                    "description": "Verifica la tua cascata prima di avviare il calcolo. La proiezione è prodotta da Finlr dopo la convalida.",
+                    "scenarioLabel": "Scenario",
+                    "scenarioPlaceholder": "–",
+                    "envelopeCount": "Numero di involucri",
+                    "totalInitialAmount": "Totale versamenti iniziali",
+                    "totalMonthlyContribution": "Totale versamenti mensili",
+                    "retentionNote": "I tuoi scenari sono conservati per 24 mesi."
+                }
+            },
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assicurazione sulla vita",
+                "CAT": "Conto a termine",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Conto corrente"
+            }
         },
         "singleEnvelope": {
             "eyebrow": "Simulatore classico",
@@ -392,7 +463,6 @@
                     "cto": "CTO"
                 },
                 "submit": "Avvia la simulazione",
-                "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
                 "summary": {
                     "eyebrow": "Parametri inseriti",
                     "description": "Verifica le tue ipotesi prima di avviare il calcolo. La proiezione è prodotta da Finlr dopo la convalida.",

@@ -27,7 +27,8 @@ export default function Simulators() {
         },
         {
             key: 'multiEnvelope',
-            active: false,
+            active: true,
+            href: route('simulators.multi-envelope.show'),
         },
     ];
 
