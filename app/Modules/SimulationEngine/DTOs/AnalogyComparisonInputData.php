@@ -15,6 +15,14 @@ use App\Modules\SimulationEngine\Enums\AccountType;
  * manual_test_analogy.php enforces at the point of input (docs/API.md §3:
  * only the horizon is verified by the package itself, not the amount or
  * DCA — asking once, shared, makes divergence impossible by construction).
+ *
+ * $labelA/$labelB are deliberately required, with no hardcoded default: a
+ * DTO must never carry user-facing text, that belongs to the i18n system
+ * (lang/{fr,en,it}.json). The future controller/FormRequest that builds
+ * this DTO must resolve them via t('simulator.analogy.defaultLabelA') /
+ * t('simulator.analogy.defaultLabelB') — or the user's own scenario
+ * labels, if provided — *before* constructing this DTO, not the other way
+ * around.
  */
 readonly class AnalogyComparisonInputData
 {
@@ -33,8 +41,8 @@ readonly class AnalogyComparisonInputData
         public float $arbitrageFeeRate,
         public float $arbitrageFeeFixed,
         public float $inflationRate,
-        public string $labelA = 'Scénario A',
-        public string $labelB = 'Scénario B',
+        public string $labelA,
+        public string $labelB,
         public FiscalProfileData $fiscalProfile = new FiscalProfileData,
     ) {}
 }

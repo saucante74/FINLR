@@ -269,6 +269,10 @@
         }
     },
     "simulator": {
+        "analogy": {
+            "defaultLabelA": "Scenario A",
+            "defaultLabelB": "Scenario B"
+        },
         "chooseWrapper": {
             "eyebrow": "Simulatore classico",
             "title": "Scegli il tuo involucro fiscale",

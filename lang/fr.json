@@ -269,6 +269,10 @@
         }
     },
     "simulator": {
+        "analogy": {
+            "defaultLabelA": "Scénario A",
+            "defaultLabelB": "Scénario B"
+        },
         "chooseWrapper": {
             "eyebrow": "Simulateur classique",
             "title": "Choisissez votre enveloppe fiscale",

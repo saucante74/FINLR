@@ -269,6 +269,10 @@
         }
     },
     "simulator": {
+        "analogy": {
+            "defaultLabelA": "Scenario A",
+            "defaultLabelB": "Scenario B"
+        },
         "chooseWrapper": {
             "eyebrow": "Classic simulator",
             "title": "Choose your tax wrapper",

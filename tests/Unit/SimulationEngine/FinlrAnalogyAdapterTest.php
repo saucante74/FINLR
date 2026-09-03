@@ -96,6 +96,8 @@ class FinlrAnalogyAdapterTest extends TestCase
             arbitrageFeeRate: 0.0,
             arbitrageFeeFixed: 0.0,
             inflationRate: 0.0,
+            labelA: 'Scénario A',
+            labelB: 'Scénario B',
         ));
 
         // Scenario A (Livret A) invests strictly less than scenario B

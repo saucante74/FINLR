@@ -5,6 +5,7 @@ namespace Tests\Unit\SimulationEngine;
 use App\Modules\SimulationEngine\DTOs\AnalogyComparisonInputData;
 use App\Modules\SimulationEngine\DTOs\FiscalProfileData;
 use App\Modules\SimulationEngine\Enums\AccountType;
+use ArgumentCountError;
 use PHPUnit\Framework\TestCase;
 
 class AnalogyComparisonInputDataTest extends TestCase
@@ -44,7 +45,7 @@ class AnalogyComparisonInputDataTest extends TestCase
         $this->assertSame($fiscalProfile, $input->fiscalProfile);
     }
 
-    public function test_labels_and_fiscal_profile_default_to_the_packages_own_defaults(): void
+    public function test_fiscal_profile_defaults_to_common_law_when_omitted(): void
     {
         $input = new AnalogyComparisonInputData(
             accountTypeA: AccountType::Pea,
@@ -61,10 +62,37 @@ class AnalogyComparisonInputDataTest extends TestCase
             arbitrageFeeRate: 0.0,
             arbitrageFeeFixed: 0.0,
             inflationRate: 0.02,
+            labelA: 'Scénario A',
+            labelB: 'Scénario B',
         );
 
-        $this->assertSame('Scénario A', $input->labelA);
-        $this->assertSame('Scénario B', $input->labelB);
         $this->assertEquals(new FiscalProfileData, $input->fiscalProfile);
+    }
+
+    /**
+     * A DTO must never carry user-facing text: labelA/labelB have no
+     * hardcoded default (see the class docblock), so omitting them is a
+     * caller error, not a silent fallback to French copy.
+     */
+    public function test_omitting_labels_raises_an_error_instead_of_silently_defaulting(): void
+    {
+        $this->expectException(ArgumentCountError::class);
+
+        new AnalogyComparisonInputData(
+            accountTypeA: AccountType::Pea,
+            accountTypeB: AccountType::Cto,
+            initialAmount: 0.0,
+            monthlyContribution: 1000.0,
+            durationYears: 20,
+            annualReturnRate: 0.06,
+            terRate: 0.0,
+            brokerageFeeRate: 0.0,
+            managementFeeRate: 0.0,
+            custodyFeeRate: 0.0,
+            custodyFeeFixedMonthly: 0.0,
+            arbitrageFeeRate: 0.0,
+            arbitrageFeeFixed: 0.0,
+            inflationRate: 0.02,
+        );
     }
 }
