@@ -185,6 +185,11 @@
                 "title": "Simulateur multi-enveloppe",
                 "description": "Comparez plusieurs enveloppes fiscales dans une même simulation.",
                 "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "analogy": {
+                "title": "Comparateur d'enveloppes",
+                "description": "Comparez deux enveloppes fiscales à hypothèses identiques.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
             }
         },
         "simulatorCard": {
@@ -224,6 +229,25 @@
         "eyebrow": "Scénario sauvegardé",
         "title": "Résultat de simulation",
         "createdAtLabel": "Simulé le {{date}}",
+        "analogy": {
+            "vs": "vs",
+            "tie": "Égalité — écart inférieur à 0,01 €",
+            "leader": "{{label}} mène",
+            "crossoverYears": "Les trajectoires se croisent : années {{years}}",
+            "deltasTitle": "Écarts",
+            "metric": "Indicateur",
+            "delta": "Écart",
+            "metrics": {
+                "realNetBalanceWithInflation": "Capital net réel (ajusté de l'inflation)",
+                "totalDeposited": "Montant investi",
+                "totalGains": "Gains",
+                "taxesAmount": "Impôts",
+                "totalFees": "Frais"
+            },
+            "ceilingEventsTitle": "Plafonds atteints",
+            "yearLabel": "Année {{year}}",
+            "ceilingEvent": "{{scenario}} : {{accountType}} a atteint son plafond de {{ceiling}}"
+        },
         "multiEnvelope": {
             "summaryTitle": "Résultats",
             "netBalance": "Capital net final",
@@ -278,8 +302,62 @@
     },
     "simulator": {
         "analogy": {
+            "eyebrow": "Comparateur",
+            "title": "Comparer deux enveloppes",
+            "description": "Comparez deux enveloppes fiscales avec un apport, un versement mensuel et une durée identiques, pour ne comparer que ce qui change vraiment.",
             "defaultLabelA": "Scénario A",
-            "defaultLabelB": "Scénario B"
+            "defaultLabelB": "Scénario B",
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assurance-vie",
+                "CAT": "Compte à terme",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Compte courant"
+            },
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "PEA vs CTO — comparaison 20 ans",
+                "sections": {
+                    "shared": "Paramètres partagés",
+                    "scenarios": "Scénarios à comparer"
+                },
+                "scenarioA": "Scénario A",
+                "scenarioB": "Scénario B",
+                "accountType": "Enveloppe",
+                "label": "Nom du scénario (facultatif)",
+                "labelHelpText": "Affiché dans le résultat de la comparaison.",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Montant initial",
+                        "helpText": "Apport initial, identique pour les deux scénarios."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois, identique pour les deux scénarios."
+                    },
+                    "durationYears": {
+                        "label": "Durée",
+                        "helpText": "Horizon de simulation, identique pour les deux scénarios."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu, identique pour les deux scénarios."
+                    },
+                    "managementFeeRate": {
+                        "label": "Frais de gestion",
+                        "helpText": "Frais de gestion annuels prélevés sur l'encours."
+                    },
+                    "inflationRate": {
+                        "label": "Inflation",
+                        "helpText": "Taux d'inflation annuel, appliqué aux deux scénarios."
+                    }
+                },
+                "submit": "Lancer la comparaison",
+                "retentionNote": "Vos scénarios sont conservés 24 mois."
+            }
         },
         "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
         "chooseWrapper": {

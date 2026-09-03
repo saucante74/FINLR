@@ -1,8 +1,9 @@
+import type { AnalogyScenarioResult } from '@/features/analogy-simulator/types';
 import type { MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
 
 export type TaxWrapper = 'pea' | 'cto' | 'av';
 
-export type CalculatorType = 'single_envelope' | 'multi_envelope';
+export type CalculatorType = 'single_envelope' | 'multi_envelope' | 'analogy';
 
 export interface ScenarioInput {
     initialCapital: number;
@@ -39,7 +40,7 @@ export interface ScenarioResult {
 export interface ScenarioProps {
     id: number;
     input: ScenarioInput;
-    result: ScenarioResult | MultiEnvelopeScenarioResult;
+    result: ScenarioResult | MultiEnvelopeScenarioResult | AnalogyScenarioResult;
     calculatorType: CalculatorType;
     createdAt: string;
     name: string | null;

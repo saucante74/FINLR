@@ -185,6 +185,11 @@
                 "title": "Multi-envelope simulator",
                 "description": "Compare several tax wrappers within the same simulation.",
                 "lockedNote": "Upgrade to premium to access it."
+            },
+            "analogy": {
+                "title": "Envelope comparator",
+                "description": "Compare two tax wrappers under identical assumptions.",
+                "lockedNote": "Upgrade to premium to access it."
             }
         },
         "simulatorCard": {
@@ -224,6 +229,25 @@
         "eyebrow": "Saved scenario",
         "title": "Simulation result",
         "createdAtLabel": "Simulated on {{date}}",
+        "analogy": {
+            "vs": "vs",
+            "tie": "Tie — gap under €0.01",
+            "leader": "{{label}} leads",
+            "crossoverYears": "The trajectories cross: years {{years}}",
+            "deltasTitle": "Gaps",
+            "metric": "Metric",
+            "delta": "Gap",
+            "metrics": {
+                "realNetBalanceWithInflation": "Real net balance (inflation-adjusted)",
+                "totalDeposited": "Amount invested",
+                "totalGains": "Gains",
+                "taxesAmount": "Taxes",
+                "totalFees": "Fees"
+            },
+            "ceilingEventsTitle": "Ceilings reached",
+            "yearLabel": "Year {{year}}",
+            "ceilingEvent": "{{scenario}}: {{accountType}} reached its ceiling of {{ceiling}}"
+        },
         "multiEnvelope": {
             "summaryTitle": "Results",
             "netBalance": "Final net balance",
@@ -278,8 +302,62 @@
     },
     "simulator": {
         "analogy": {
+            "eyebrow": "Comparator",
+            "title": "Compare two envelopes",
+            "description": "Compare two tax wrappers with an identical initial amount, monthly contribution and duration, so only what actually differs is compared.",
             "defaultLabelA": "Scenario A",
-            "defaultLabelB": "Scenario B"
+            "defaultLabelB": "Scenario B",
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Life insurance",
+                "CAT": "Term deposit account",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Current account"
+            },
+            "form": {
+                "name": "Scenario name (optional)",
+                "namePlaceholder": "PEA vs CTO — 20-year comparison",
+                "sections": {
+                    "shared": "Shared parameters",
+                    "scenarios": "Scenarios to compare"
+                },
+                "scenarioA": "Scenario A",
+                "scenarioB": "Scenario B",
+                "accountType": "Envelope",
+                "label": "Scenario name (optional)",
+                "labelHelpText": "Shown in the comparison result.",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Initial amount",
+                        "helpText": "Initial lump sum, identical for both scenarios."
+                    },
+                    "monthlyContribution": {
+                        "label": "Monthly contribution",
+                        "helpText": "Amount paid in every month, identical for both scenarios."
+                    },
+                    "durationYears": {
+                        "label": "Duration",
+                        "helpText": "Simulation horizon, identical for both scenarios."
+                    },
+                    "annualReturnRate": {
+                        "label": "Annual return",
+                        "helpText": "Expected gross annual return, identical for both scenarios."
+                    },
+                    "managementFeeRate": {
+                        "label": "Management fee",
+                        "helpText": "Annual management fee charged on the balance."
+                    },
+                    "inflationRate": {
+                        "label": "Inflation",
+                        "helpText": "Annual inflation rate, applied to both scenarios."
+                    }
+                },
+                "submit": "Run the comparison",
+                "retentionNote": "Your scenarios are kept for 24 months."
+            }
         },
         "calculationFailed": "The calculation could not complete. Please try again shortly.",
         "chooseWrapper": {

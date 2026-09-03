@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import type { AnalogyScenarioResult } from '@/features/analogy-simulator/types';
 import type { MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
+import AnalogyScenarioSummary from '@/features/scenarios/components/AnalogyScenarioSummary';
 import MultiEnvelopeScenarioSummary from '@/features/scenarios/components/MultiEnvelopeScenarioSummary';
 import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
@@ -33,9 +35,13 @@ export default function ScenarioShow({ id, input, result, calculatorType, create
                     </p>
                 </header>
 
-                {calculatorType === 'multi_envelope' ? (
+                {calculatorType === 'multi_envelope' && (
                     <MultiEnvelopeScenarioSummary result={result as MultiEnvelopeScenarioResult} />
-                ) : (
+                )}
+                {calculatorType === 'analogy' && (
+                    <AnalogyScenarioSummary result={result as AnalogyScenarioResult} />
+                )}
+                {calculatorType === 'single_envelope' && (
                     <>
                         <ScenarioSummary result={result as ScenarioResult} />
                         <ScenarioChart result={result as ScenarioResult} />

@@ -1,4 +1,4 @@
-export type CalculatorType = 'single_envelope';
+export type CalculatorType = 'single_envelope' | 'multi_envelope' | 'analogy';
 
 export interface ScenarioSummary {
     id: number;

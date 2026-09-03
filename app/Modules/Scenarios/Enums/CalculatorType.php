@@ -14,6 +14,7 @@ enum CalculatorType: string
 {
     case SingleEnvelope = 'single_envelope';
     case MultiEnvelope = 'multi_envelope';
+    case Analogy = 'analogy';
 
     /**
      * Extraction minimale des 3 champs affichés par la liste de scénarios
@@ -23,13 +24,13 @@ enum CalculatorType: string
      * ScenarioSummaryData (CLAUDE.md : une règle qui dépend d'un cas
      * d'enum est une méthode de l'enum, jamais un match() dispersé).
      *
-     * Généralisation partielle : seuls SingleEnvelope et MultiEnvelope
-     * sont couverts. Analogy et Fire n'ont pas de $wrapper/$years évidents
-     * (Analogy compare deux enveloppes qui peuvent différer, Fire n'a pas
-     * d'enveloppe du tout) — une vraie généralisation de
-     * ScenarioSummaryData attendra que les 3 types restants existent tous,
-     * plutôt que de forcer un troisième cas dans ce contrat à 3 champs
-     * avant de savoir ce qu'il doit réellement montrer.
+     * Généralisation partielle : SingleEnvelope, MultiEnvelope et Analogy
+     * sont couverts, chacun avec sa propre lecture du contrat à 3 champs
+     * (voir le cas Analogy ci-dessous, qui n'a ni enveloppe ni horizon
+     * évidents). Fire n'a pas d'enveloppe du tout — une vraie
+     * généralisation de ScenarioSummaryData attendra qu'il existe aussi,
+     * plutôt que de forcer un quatrième cas dans ce contrat avant de
+     * savoir ce qu'il doit réellement montrer.
      *
      * @param  array<string, mixed>  $inputPayload
      * @param  array<string, mixed>  $resultPayload
@@ -51,6 +52,27 @@ enum CalculatorType: string
                 'headlineFigure' => (float) (($resultPayload['summary'] ?? [])['netBalance'] ?? 0.0),
                 'wrapper' => '',
                 'years' => (int) (($resultPayload['summary'] ?? [])['year'] ?? 0),
+            ],
+            // Analogy has no single envelope either — "wrapper" becomes
+            // "labelA vs labelB" (the two scenarios actually compared).
+            // Unlike MultiEnvelope's blank string above, this is meant to
+            // be shown as-is: ScenarioList.tsx's formatWrapper() was
+            // extended (see RAPPORT.md) to pass through any non-empty,
+            // non-code wrapper string instead of collapsing it to "—" —
+            // MultiEnvelope's own blank-string case is unaffected.
+            // headlineFigure is the magnitude of the gap on the reference
+            // metric (realNetBalanceWithInflation) — there is no single
+            // "final balance" for a comparison, only how far apart the two
+            // scenarios end up. years is the horizon actually compared
+            // (length of yearlyBreakdown, contiguous 1..N).
+            self::Analogy => [
+                'headlineFigure' => abs((float) (($resultPayload['realNetBalanceWithInflation'] ?? [])['absolute'] ?? 0.0)),
+                'wrapper' => sprintf(
+                    '%s vs %s',
+                    (string) ($resultPayload['labelA'] ?? ''),
+                    (string) ($resultPayload['labelB'] ?? ''),
+                ),
+                'years' => count($resultPayload['yearlyBreakdown'] ?? []),
             ],
         };
     }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Modules\AnalogySimulator\Controllers\RunAnalogyComparisonController;
+use App\Modules\AnalogySimulator\Controllers\ShowAnalogySimulatorController;
 use App\Modules\FreemiumCalculator\Controllers\ShowFreemiumCalculatorController;
 use App\Modules\MultiEnvelopeSimulator\Controllers\RunMultiEnvelopeSimulationController;
 use App\Modules\MultiEnvelopeSimulator\Controllers\ShowMultiEnvelopeSimulatorController;
@@ -58,5 +60,13 @@ Route::get('/simulators/multi-envelope', ShowMultiEnvelopeSimulatorController::c
 Route::post('/simulators/multi-envelope', RunMultiEnvelopeSimulationController::class)
     ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
     ->name('simulators.multi-envelope.run');
+
+Route::get('/simulators/analogy', ShowAnalogySimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.analogy.show');
+
+Route::post('/simulators/analogy', RunAnalogyComparisonController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
+    ->name('simulators.analogy.run');
 
 require __DIR__.'/auth.php';

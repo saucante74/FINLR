@@ -45,7 +45,10 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                     </Button>
                 </header>
 
-                <div className="grid gap-4 md:grid-cols-2">
+                {/* 3 cards today (Fire still to come): grid-cols-3 balances this
+                    exact count, not a general-purpose layout — revisit once
+                    Fire adds a 4th card. */}
+                <div className="grid gap-4 md:grid-cols-3">
                     <SimulatorCard
                         index={1}
                         title={t('dashboard.simulators.singleEnvelope.title')}
@@ -77,6 +80,18 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                             canAccessAdvancedCalculator
                                 ? undefined
                                 : t('dashboard.simulators.multiEnvelope.lockedNote')
+                        }
+                    />
+                    <SimulatorCard
+                        index={3}
+                        title={t('dashboard.simulators.analogy.title')}
+                        description={t('dashboard.simulators.analogy.description')}
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                        href={canAccessAdvancedCalculator ? route('simulators.analogy.show') : undefined}
+                        note={
+                            canAccessAdvancedCalculator
+                                ? undefined
+                                : t('dashboard.simulators.analogy.lockedNote')
                         }
                     />
                 </div>

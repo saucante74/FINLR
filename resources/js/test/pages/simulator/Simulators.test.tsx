@@ -35,4 +35,12 @@ describe('Simulators', () => {
         ).toHaveAttribute('href', route('simulators.multi-envelope.show'));
         expect(screen.queryByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).not.toBeInTheDocument();
     });
+
+    it('links the analogy simulator to its show page', () => {
+        render(<Simulators />);
+
+        expect(
+            screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.analogy.title')) }),
+        ).toHaveAttribute('href', route('simulators.analogy.show'));
+    });
 });

@@ -104,6 +104,53 @@ class ScenarioSummaryDataTest extends TestCase
         $this->assertSame(10, $summary->years);
     }
 
+    public function test_from_model_extracts_an_analogy_scenario_with_the_label_pair_as_wrapper(): void
+    {
+        $scenario = Scenario::factory()->create([
+            'calculator_type' => CalculatorType::Analogy,
+            'name' => 'PEA vs CTO à 20 ans',
+            'input_payload' => $this->realisticAnalogyInputPayload(),
+            'result_payload' => $this->realisticAnalogyResultPayload(),
+        ]);
+
+        $summary = ScenarioSummaryData::fromModel($scenario);
+
+        $this->assertSame(CalculatorType::Analogy, $summary->calculatorType);
+        // Magnitude of the gap on the reference metric, not a "final
+        // balance" — a comparison has none.
+        $this->assertSame(5000.11, $summary->headlineFigure);
+        $this->assertSame('PEA plafonné vs CTO sans plafond', $summary->wrapper);
+        $this->assertSame(20, $summary->years);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticAnalogyInputPayload(): array
+    {
+        return [
+            'accountTypeA' => 'PEA',
+            'accountTypeB' => 'CTO',
+            'labelA' => 'PEA plafonné',
+            'labelB' => 'CTO sans plafond',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticAnalogyResultPayload(): array
+    {
+        return [
+            'labelA' => 'PEA plafonné',
+            'labelB' => 'CTO sans plafond',
+            'realNetBalanceWithInflation' => ['valueA' => 100000.11, 'valueB' => 105000.22, 'absolute' => 5000.11, 'percent' => 0.05],
+            'yearlyBreakdown' => array_fill(0, 20, ['year' => 1]),
+            'finalLeader' => 'SCENARIO_A',
+            'crossoverYears' => [],
+        ];
+    }
+
     /**
      * @return array<string, mixed>
      */

@@ -185,6 +185,11 @@
                 "title": "Simulatore multi-involucro",
                 "description": "Confronta più involucri fiscali nella stessa simulazione.",
                 "lockedNote": "Passa all'offerta premium per accedervi."
+            },
+            "analogy": {
+                "title": "Comparatore di involucri",
+                "description": "Confronta due involucri fiscali con ipotesi identiche.",
+                "lockedNote": "Passa all'offerta premium per accedervi."
             }
         },
         "simulatorCard": {
@@ -224,6 +229,25 @@
         "eyebrow": "Scenario salvato",
         "title": "Risultato della simulazione",
         "createdAtLabel": "Simulato il {{date}}",
+        "analogy": {
+            "vs": "vs",
+            "tie": "Pareggio — scarto inferiore a 0,01 €",
+            "leader": "{{label}} è in vantaggio",
+            "crossoverYears": "Le traiettorie si incrociano: anni {{years}}",
+            "deltasTitle": "Scarti",
+            "metric": "Indicatore",
+            "delta": "Scarto",
+            "metrics": {
+                "realNetBalanceWithInflation": "Capitale netto reale (rettificato dall'inflazione)",
+                "totalDeposited": "Importo investito",
+                "totalGains": "Guadagni",
+                "taxesAmount": "Imposte",
+                "totalFees": "Commissioni"
+            },
+            "ceilingEventsTitle": "Plafond raggiunti",
+            "yearLabel": "Anno {{year}}",
+            "ceilingEvent": "{{scenario}}: {{accountType}} ha raggiunto il plafond di {{ceiling}}"
+        },
         "multiEnvelope": {
             "summaryTitle": "Risultati",
             "netBalance": "Capitale netto finale",
@@ -278,8 +302,62 @@
     },
     "simulator": {
         "analogy": {
+            "eyebrow": "Comparatore",
+            "title": "Confronta due involucri",
+            "description": "Confronta due involucri fiscali con lo stesso importo iniziale, versamento mensile e durata, per confrontare solo ciò che cambia davvero.",
             "defaultLabelA": "Scenario A",
-            "defaultLabelB": "Scenario B"
+            "defaultLabelB": "Scenario B",
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assicurazione vita",
+                "CAT": "Conto a termine",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Conto corrente"
+            },
+            "form": {
+                "name": "Nome dello scenario (facoltativo)",
+                "namePlaceholder": "PEA vs CTO — confronto a 20 anni",
+                "sections": {
+                    "shared": "Parametri condivisi",
+                    "scenarios": "Scenari da confrontare"
+                },
+                "scenarioA": "Scenario A",
+                "scenarioB": "Scenario B",
+                "accountType": "Involucro",
+                "label": "Nome dello scenario (facoltativo)",
+                "labelHelpText": "Mostrato nel risultato del confronto.",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Importo iniziale",
+                        "helpText": "Versamento iniziale, identico per entrambi gli scenari."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versamento mensile",
+                        "helpText": "Versamento programmato ogni mese, identico per entrambi gli scenari."
+                    },
+                    "durationYears": {
+                        "label": "Durata",
+                        "helpText": "Orizzonte di simulazione, identico per entrambi gli scenari."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendimento annuo",
+                        "helpText": "Rendimento lordo annuo atteso, identico per entrambi gli scenari."
+                    },
+                    "managementFeeRate": {
+                        "label": "Commissioni di gestione",
+                        "helpText": "Commissioni di gestione annue prelevate sul saldo."
+                    },
+                    "inflationRate": {
+                        "label": "Inflazione",
+                        "helpText": "Tasso di inflazione annuo, applicato a entrambi gli scenari."
+                    }
+                },
+                "submit": "Avvia il confronto",
+                "retentionNote": "I tuoi scenari sono conservati per 24 mesi."
+            }
         },
         "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
         "chooseWrapper": {
