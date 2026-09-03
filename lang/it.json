@@ -183,7 +183,8 @@
             },
             "multiEnvelope": {
                 "title": "Simulatore multi-involucro",
-                "description": "Confronta più involucri fiscali nella stessa simulazione."
+                "description": "Confronta più involucri fiscali nella stessa simulazione.",
+                "lockedNote": "Passa all'offerta premium per accedervi."
             }
         },
         "simulatorCard": {

@@ -72,22 +72,33 @@ describe('Dashboard page', () => {
         render(<Dashboard scenarios={[]} />);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.singleEnvelope.title'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('dashboard.simulatorCard.lockedBadge'))).toBeInTheDocument();
+        // Both cards are locked without the permission, so the badge appears twice.
+        expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
         expect(
             screen.queryByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.singleEnvelope.title')) }),
         ).not.toBeInTheDocument();
     });
 
-    it('shows the multi-envelope simulator as coming soon, regardless of permissions', () => {
+    it('shows an active link to the multi-envelope simulator when the user has the permission', () => {
         mockAuth(['advanced_calculator']);
 
         render(<Dashboard scenarios={[]} />);
 
-        expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
-        // Same "coming soon" label also appears on the promo block's badge.
         expect(
-            screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge')).length,
-        ).toBeGreaterThan(0);
+            screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
+        ).toHaveAttribute('href', route('simulators.multi-envelope.show'));
+    });
+
+    it('shows a locked multi-envelope card with no link when the user lacks the permission', () => {
+        mockAuth([]);
+
+        render(<Dashboard scenarios={[]} />);
+
+        expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
+        expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
+        expect(
+            screen.queryByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
+        ).not.toBeInTheDocument();
     });
 
     it('renders the scenarios received in props, falling back to the generic label when unnamed', () => {

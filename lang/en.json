@@ -183,7 +183,8 @@
             },
             "multiEnvelope": {
                 "title": "Multi-envelope simulator",
-                "description": "Compare several tax wrappers within the same simulation."
+                "description": "Compare several tax wrappers within the same simulation.",
+                "lockedNote": "Upgrade to premium to access it."
             }
         },
         "simulatorCard": {

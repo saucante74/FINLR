@@ -183,7 +183,8 @@
             },
             "multiEnvelope": {
                 "title": "Simulateur multi-enveloppe",
-                "description": "Comparez plusieurs enveloppes fiscales dans une même simulation."
+                "description": "Comparez plusieurs enveloppes fiscales dans une même simulation.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
             }
         },
         "simulatorCard": {

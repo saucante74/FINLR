@@ -16,7 +16,9 @@ const PROMO_BENEFIT_KEYS = ['unlimitedScenarios', 'multiEnvelopePreview', 'pdfEx
 export default function Dashboard({ scenarios }: DashboardPageProps) {
     const { t } = useTranslation();
     const { auth } = usePage<AuthenticatedPageProps>().props;
-    const canAccessSingleEnvelopeSimulator = auth.permissions.includes('advanced_calculator');
+    // Gates both the classic and multi-envelope simulator cards below —
+    // same permission, same routes' own `can:advanced_calculator` middleware.
+    const canAccessAdvancedCalculator = auth.permissions.includes('advanced_calculator');
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -48,15 +50,15 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         index={1}
                         title={t('dashboard.simulators.singleEnvelope.title')}
                         description={t('dashboard.simulators.singleEnvelope.description')}
-                        state={canAccessSingleEnvelopeSimulator ? 'active' : 'locked'}
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
                         showDecorativeChart
                         href={
-                            canAccessSingleEnvelopeSimulator
+                            canAccessAdvancedCalculator
                                 ? route('simulators.single-envelope.choose')
                                 : undefined
                         }
                         note={
-                            canAccessSingleEnvelopeSimulator
+                            canAccessAdvancedCalculator
                                 ? undefined
                                 : t('dashboard.simulators.singleEnvelope.lockedNote')
                         }
@@ -65,7 +67,17 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         index={2}
                         title={t('dashboard.simulators.multiEnvelope.title')}
                         description={t('dashboard.simulators.multiEnvelope.description')}
-                        state="comingSoon"
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                        href={
+                            canAccessAdvancedCalculator
+                                ? route('simulators.multi-envelope.show')
+                                : undefined
+                        }
+                        note={
+                            canAccessAdvancedCalculator
+                                ? undefined
+                                : t('dashboard.simulators.multiEnvelope.lockedNote')
+                        }
                     />
                 </div>
 
