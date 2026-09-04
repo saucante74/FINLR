@@ -33,8 +33,10 @@ describe('AnalogyScenarioSummary', () => {
     it('renders both scenario labels and the leader', () => {
         render(<AnalogyScenarioSummary result={makeResult()} />);
 
-        expect(screen.getByText('PEA plafonné')).toBeInTheDocument();
-        expect(screen.getByText('CTO sans plafond')).toBeInTheDocument();
+        // Each label now also appears in the deltas table header and the
+        // chart legend, in addition to the summary card title.
+        expect(screen.getAllByText('PEA plafonné').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('CTO sans plafond').length).toBeGreaterThan(0);
         expect(
             screen.getByText(i18n.t('scenario.analogy.leader', { label: 'CTO sans plafond' })),
         ).toBeInTheDocument();

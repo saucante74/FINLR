@@ -239,6 +239,8 @@
             "tie": "Pareggio — scarto inferiore a 0,01 €",
             "leader": "{{label}} è in vantaggio",
             "crossoverYears": "Le traiettorie si incrociano: anni {{years}}",
+            "chartTitle": "Andamento del capitale netto reale",
+            "chartCrossoverLegend": "Incrocio",
             "deltasTitle": "Scarti",
             "metric": "Indicatore",
             "delta": "Scarto",
@@ -256,14 +258,18 @@
         "fire": {
             "summaryTitle": "Risultato",
             "requiredCapital": "Capitale richiesto",
+            "yearsToRetirement": "Anni all'indipendenza",
+            "yearsValue": "{{years}} anni",
             "targetNotReached": "Obiettivo non raggiunto nell'orizzonte simulato.",
+            "targetNotReachedShort": "Non raggiunto",
             "retirementSummary": "Indipendenza raggiunta a {{age}} anni (tra {{years}} anni)",
             "scenariosTitle": "Scenari sul tasso di prelievo",
             "scenarios": {
                 "optimistic": "Ottimistico (+1 punto)",
                 "neutral": "Neutro (tasso inserito)",
                 "pessimistic": "Pessimistico (-1 punto)"
-            }
+            },
+            "chartTitle": "Confronto degli scenari"
         },
         "multiEnvelope": {
             "summaryTitle": "Risultati",

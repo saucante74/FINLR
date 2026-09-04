@@ -7,4 +7,8 @@ describe('FIELD_ORDER', () => {
         expect(FIELD_ORDER.slice().sort()).toEqual(Object.keys(FIELD_CONFIG).sort());
         expect(new Set(FIELD_ORDER).size).toBe(FIELD_ORDER.length);
     });
+
+    it('places currentCapital before currentAge', () => {
+        expect(FIELD_ORDER.indexOf('currentCapital')).toBeLessThan(FIELD_ORDER.indexOf('currentAge'));
+    });
 });

@@ -239,6 +239,8 @@
             "tie": "Tie — gap under €0.01",
             "leader": "{{label}} leads",
             "crossoverYears": "The trajectories cross: years {{years}}",
+            "chartTitle": "Real net balance over time",
+            "chartCrossoverLegend": "Crossover",
             "deltasTitle": "Gaps",
             "metric": "Metric",
             "delta": "Gap",
@@ -256,14 +258,18 @@
         "fire": {
             "summaryTitle": "Result",
             "requiredCapital": "Required capital",
+            "yearsToRetirement": "Years to independence",
+            "yearsValue": "{{years}} yrs",
             "targetNotReached": "Target not reached within the simulated horizon.",
+            "targetNotReachedShort": "Not reached",
             "retirementSummary": "Independence reached at age {{age}} (in {{years}} years)",
             "scenariosTitle": "Withdrawal rate scenarios",
             "scenarios": {
                 "optimistic": "Optimistic (+1 point)",
                 "neutral": "Neutral (entered rate)",
                 "pessimistic": "Pessimistic (-1 point)"
-            }
+            },
+            "chartTitle": "Scenario comparison"
         },
         "multiEnvelope": {
             "summaryTitle": "Results",

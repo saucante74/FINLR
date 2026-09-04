@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { AnalogyDelta, AnalogyScenarioResult, CeilingEvent } from '@/features/analogy-simulator/types';
+import AnalogyChart from '@/features/scenarios/components/AnalogyChart';
 import { formatCurrency } from '@/lib/currency';
 import { cn } from '@/lib/utils';
 
@@ -69,6 +70,8 @@ export default function AnalogyScenarioSummary({ result }: AnalogyScenarioSummar
                     )}
                 </CardContent>
             </Card>
+
+            <AnalogyChart result={result} />
 
             <Card className="gap-0 overflow-hidden py-0">
                 <CardHeader className="border-b border-border py-5">

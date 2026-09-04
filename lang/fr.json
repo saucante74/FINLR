@@ -239,6 +239,8 @@
             "tie": "Égalité — écart inférieur à 0,01 €",
             "leader": "{{label}} mène",
             "crossoverYears": "Les trajectoires se croisent : années {{years}}",
+            "chartTitle": "Évolution du capital net réel",
+            "chartCrossoverLegend": "Croisement",
             "deltasTitle": "Écarts",
             "metric": "Indicateur",
             "delta": "Écart",
@@ -256,14 +258,18 @@
         "fire": {
             "summaryTitle": "Résultat",
             "requiredCapital": "Capital requis",
+            "yearsToRetirement": "Années avant l'indépendance",
+            "yearsValue": "{{years}} ans",
             "targetNotReached": "Cible non atteinte sur l'horizon simulé.",
+            "targetNotReachedShort": "Non atteint",
             "retirementSummary": "Indépendance atteinte à {{age}} ans (dans {{years}} ans)",
             "scenariosTitle": "Scénarios de taux de retrait",
             "scenarios": {
                 "optimistic": "Optimiste (+1 point)",
                 "neutral": "Neutre (taux saisi)",
                 "pessimistic": "Pessimiste (-1 point)"
-            }
+            },
+            "chartTitle": "Comparaison des scénarios"
         },
         "multiEnvelope": {
             "summaryTitle": "Résultats",

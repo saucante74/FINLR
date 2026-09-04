@@ -47,8 +47,8 @@ class RunAnalogyComparisonActionTest extends TestCase
             arbitrageFeeRate: 0.0,
             arbitrageFeeFixed: 0.0,
             inflationRate: 0.02,
-            labelA: 'Scénario A',
-            labelB: 'Scénario B',
+            labelA: 'Scenario A',
+            labelB: 'Scenario B',
         );
     }
 }
