@@ -45,6 +45,17 @@ describe('FireForm', () => {
         ).toHaveValue(24_000);
     });
 
+    it('renders currentCapital before currentAge, per FIELD_ORDER', () => {
+        render(<FireForm defaults={defaults} />);
+
+        const capitalLabel = screen.getByText(i18n.t('simulator.fire.form.fields.currentCapital.label'));
+        const ageLabel = screen.getByText(i18n.t('simulator.fire.form.fields.currentAge.label'));
+
+        // compareDocumentPosition's DOCUMENT_POSITION_FOLLOWING bit (4) means
+        // ageLabel comes after capitalLabel in the DOM.
+        expect(capitalLabel.compareDocumentPosition(ageLabel) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
     it('does not render an envelope/account type selector', () => {
         render(<FireForm defaults={defaults} />);
 

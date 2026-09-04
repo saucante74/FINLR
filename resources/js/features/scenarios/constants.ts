@@ -8,6 +8,19 @@ export const SCENARIO_CHART_SERIES: ScenarioChartSeries[] = [
     { key: 'netRealAdjusted', labelKey: 'scenario.chart.netRealAdjusted', color: '#F97316', dashed: true },
 ];
 
+/**
+ * FIRE scenario comparison bars (FireScenarioSummary): optimistic/neutral/
+ * pessimistic read as a polarity (best case -> reference -> worst case), not
+ * an arbitrary category, so the same green/violet/orange already used for
+ * netReal/gross/netRealAdjusted above are reused here for the same "good ->
+ * neutral -> harsher" reading, rather than introducing a fourth ad hoc set.
+ */
+export const FIRE_SCENARIO_BAR_COLORS: Record<'optimistic' | 'neutral' | 'pessimistic', string> = {
+    optimistic: '#10B981',
+    neutral: '#8B5CF6',
+    pessimistic: '#F97316',
+};
+
 /** Headroom added above the highest plotted value before rounding up the chart's Y axis. */
 export const Y_AXIS_MARGIN_RATIO = 0.05;
 

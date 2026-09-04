@@ -37,8 +37,8 @@ export const FIELD_CONFIG: Record<FieldKey, FieldConfig> = {
 
 /** Display order of the form's 6 fields. */
 export const FIELD_ORDER: FieldKey[] = [
-    'currentAge',
     'currentCapital',
+    'currentAge',
     'monthlyContribution',
     'annualReturnRate',
     'desiredAnnualIncome',
