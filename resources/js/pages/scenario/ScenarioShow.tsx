@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import type { AnalogyScenarioResult } from '@/features/analogy-simulator/types';
+import type { FireScenarioResult } from '@/features/fire-simulator/types';
 import type { MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
 import AnalogyScenarioSummary from '@/features/scenarios/components/AnalogyScenarioSummary';
+import FireScenarioSummary from '@/features/scenarios/components/FireScenarioSummary';
 import MultiEnvelopeScenarioSummary from '@/features/scenarios/components/MultiEnvelopeScenarioSummary';
 import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import ScenarioDetails from '@/features/scenarios/components/ScenarioDetails';
@@ -40,6 +42,9 @@ export default function ScenarioShow({ id, input, result, calculatorType, create
                 )}
                 {calculatorType === 'analogy' && (
                     <AnalogyScenarioSummary result={result as AnalogyScenarioResult} />
+                )}
+                {calculatorType === 'fire' && (
+                    <FireScenarioSummary result={result as FireScenarioResult} />
                 )}
                 {calculatorType === 'single_envelope' && (
                     <>

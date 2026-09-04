@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import SimulatorChoiceRow from '@/features/simulator-choice/components/SimulatorChoiceRow';
 
 interface SimulatorChoice {
-    key: 'singleEnvelope' | 'multiEnvelope' | 'analogy';
+    key: 'singleEnvelope' | 'multiEnvelope' | 'analogy' | 'fire';
     active: boolean;
     href?: string;
     chips?: string[];
@@ -34,6 +34,11 @@ export default function Simulators() {
             key: 'analogy',
             active: true,
             href: route('simulators.analogy.show'),
+        },
+        {
+            key: 'fire',
+            active: true,
+            href: route('simulators.fire.show'),
         },
     ];
 

@@ -43,4 +43,12 @@ describe('Simulators', () => {
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.analogy.title')) }),
         ).toHaveAttribute('href', route('simulators.analogy.show'));
     });
+
+    it('links the fire simulator to its show page', () => {
+        render(<Simulators />);
+
+        expect(
+            screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.fire.title')) }),
+        ).toHaveAttribute('href', route('simulators.fire.show'));
+    });
 });

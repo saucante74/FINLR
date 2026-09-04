@@ -190,6 +190,11 @@
                 "title": "Comparatore di involucri",
                 "description": "Confronta due involucri fiscali con ipotesi identiche.",
                 "lockedNote": "Passa all'offerta premium per accedervi."
+            },
+            "fire": {
+                "title": "Simulatore FIRE",
+                "description": "Stima il capitale necessario per l'indipendenza finanziaria e l'età per raggiungerla.",
+                "lockedNote": "Passa all'offerta premium per accedervi."
             }
         },
         "simulatorCard": {
@@ -247,6 +252,18 @@
             "ceilingEventsTitle": "Plafond raggiunti",
             "yearLabel": "Anno {{year}}",
             "ceilingEvent": "{{scenario}}: {{accountType}} ha raggiunto il plafond di {{ceiling}}"
+        },
+        "fire": {
+            "summaryTitle": "Risultato",
+            "requiredCapital": "Capitale richiesto",
+            "targetNotReached": "Obiettivo non raggiunto nell'orizzonte simulato.",
+            "retirementSummary": "Indipendenza raggiunta a {{age}} anni (tra {{years}} anni)",
+            "scenariosTitle": "Scenari sul tasso di prelievo",
+            "scenarios": {
+                "optimistic": "Ottimistico (+1 punto)",
+                "neutral": "Neutro (tasso inserito)",
+                "pessimistic": "Pessimistico (-1 punto)"
+            }
         },
         "multiEnvelope": {
             "summaryTitle": "Risultati",
@@ -360,6 +377,47 @@
             }
         },
         "calculationFailed": "Il calcolo non è andato a buon fine. Riprova tra qualche istante.",
+        "fire": {
+            "eyebrow": "Indipendenza finanziaria",
+            "title": "Simulatore FIRE",
+            "description": "Stima il capitale necessario per vivere delle tue rendite e l'età in cui potresti raggiungerlo.",
+            "form": {
+                "name": "Nome dello scenario (facoltativo)",
+                "namePlaceholder": "Indipendenza finanziaria a 55 anni",
+                "sections": {
+                    "inputs": "I tuoi parametri"
+                },
+                "fields": {
+                    "currentAge": {
+                        "label": "Età attuale",
+                        "helpText": "La tua età oggi."
+                    },
+                    "currentCapital": {
+                        "label": "Capitale attuale",
+                        "helpText": "Importo già investito oggi."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versamento mensile",
+                        "helpText": "Versamento programmato ogni mese fino all'indipendenza."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendimento annuo",
+                        "helpText": "Rendimento lordo annuo atteso sul capitale investito."
+                    },
+                    "desiredAnnualIncome": {
+                        "label": "Reddito annuo desiderato",
+                        "helpText": "Reddito annuo desiderato una volta raggiunta l'indipendenza finanziaria."
+                    },
+                    "withdrawalRate": {
+                        "label": "Tasso di prelievo",
+                        "helpText": "Quota di capitale prelevata ogni anno una volta raggiunta l'indipendenza (regola del 4%)."
+                    }
+                },
+                "submit": "Avvia la proiezione",
+                "retentionNote": "I tuoi scenari sono conservati per 24 mesi.",
+                "invalidInput": "I valori inseriti non permettono di calcolare questa proiezione FIRE. Controlla i tuoi dati."
+            }
+        },
         "chooseWrapper": {
             "eyebrow": "Simulatore classico",
             "title": "Scegli il tuo involucro fiscale",

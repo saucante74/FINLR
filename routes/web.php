@@ -2,6 +2,8 @@
 
 use App\Modules\AnalogySimulator\Controllers\RunAnalogyComparisonController;
 use App\Modules\AnalogySimulator\Controllers\ShowAnalogySimulatorController;
+use App\Modules\FireSimulator\Controllers\RunFireProjectionController;
+use App\Modules\FireSimulator\Controllers\ShowFireSimulatorController;
 use App\Modules\FreemiumCalculator\Controllers\ShowFreemiumCalculatorController;
 use App\Modules\MultiEnvelopeSimulator\Controllers\RunMultiEnvelopeSimulationController;
 use App\Modules\MultiEnvelopeSimulator\Controllers\ShowMultiEnvelopeSimulatorController;
@@ -68,5 +70,13 @@ Route::get('/simulators/analogy', ShowAnalogySimulatorController::class)
 Route::post('/simulators/analogy', RunAnalogyComparisonController::class)
     ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
     ->name('simulators.analogy.run');
+
+Route::get('/simulators/fire', ShowFireSimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.fire.show');
+
+Route::post('/simulators/fire', RunFireProjectionController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
+    ->name('simulators.fire.run');
 
 require __DIR__.'/auth.php';

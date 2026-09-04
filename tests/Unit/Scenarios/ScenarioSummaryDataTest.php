@@ -123,6 +123,71 @@ class ScenarioSummaryDataTest extends TestCase
         $this->assertSame(20, $summary->years);
     }
 
+    public function test_from_model_extracts_a_fire_scenario_using_required_capital_as_headline(): void
+    {
+        $scenario = Scenario::factory()->create([
+            'calculator_type' => CalculatorType::Fire,
+            'name' => 'Indépendance à 55 ans',
+            'input_payload' => $this->realisticFireInputPayload(),
+            'result_payload' => $this->realisticFireResultPayload(),
+        ]);
+
+        $summary = ScenarioSummaryData::fromModel($scenario);
+
+        $this->assertSame(CalculatorType::Fire, $summary->calculatorType);
+        $this->assertSame(500_000.0, $summary->headlineFigure);
+        // No envelope applies to FIRE either: same blank-wrapper convention
+        // as MultiEnvelope.
+        $this->assertSame('', $summary->wrapper);
+        $this->assertSame(25, $summary->years);
+    }
+
+    public function test_from_model_extracts_a_fire_scenario_with_a_never_reached_target_as_zero_years(): void
+    {
+        $scenario = Scenario::factory()->create([
+            'calculator_type' => CalculatorType::Fire,
+            'input_payload' => $this->realisticFireInputPayload(),
+            'result_payload' => array_merge($this->realisticFireResultPayload(), [
+                'retirementAge' => null,
+                'yearsToRetirement' => null,
+            ]),
+        ]);
+
+        $summary = ScenarioSummaryData::fromModel($scenario);
+
+        $this->assertSame(0, $summary->years);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticFireInputPayload(): array
+    {
+        return [
+            'currentAge' => 30,
+            'currentCapital' => 10_000.0,
+            'monthlyContribution' => 500.0,
+            'annualReturnRate' => 0.06,
+            'desiredAnnualIncome' => 20_000.0,
+            'withdrawalRate' => 4.0,
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function realisticFireResultPayload(): array
+    {
+        return [
+            'requiredCapital' => 500_000.0,
+            'retirementAge' => 55.0,
+            'yearsToRetirement' => 25.0,
+            'optimistic' => ['requiredCapital' => 400_000.0, 'retirementAge' => 52.0, 'yearsToRetirement' => 22.0],
+            'neutral' => ['requiredCapital' => 500_000.0, 'retirementAge' => 55.0, 'yearsToRetirement' => 25.0],
+            'pessimistic' => ['requiredCapital' => 666_666.67, 'retirementAge' => 59.0, 'yearsToRetirement' => 29.0],
+        ];
+    }
+
     /**
      * @return array<string, mixed>
      */

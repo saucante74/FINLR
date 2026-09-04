@@ -190,6 +190,11 @@
                 "title": "Envelope comparator",
                 "description": "Compare two tax wrappers under identical assumptions.",
                 "lockedNote": "Upgrade to premium to access it."
+            },
+            "fire": {
+                "title": "FIRE simulator",
+                "description": "Estimate the capital needed for financial independence and the age at which to reach it.",
+                "lockedNote": "Upgrade to premium to access it."
             }
         },
         "simulatorCard": {
@@ -247,6 +252,18 @@
             "ceilingEventsTitle": "Ceilings reached",
             "yearLabel": "Year {{year}}",
             "ceilingEvent": "{{scenario}}: {{accountType}} reached its ceiling of {{ceiling}}"
+        },
+        "fire": {
+            "summaryTitle": "Result",
+            "requiredCapital": "Required capital",
+            "targetNotReached": "Target not reached within the simulated horizon.",
+            "retirementSummary": "Independence reached at age {{age}} (in {{years}} years)",
+            "scenariosTitle": "Withdrawal rate scenarios",
+            "scenarios": {
+                "optimistic": "Optimistic (+1 point)",
+                "neutral": "Neutral (entered rate)",
+                "pessimistic": "Pessimistic (-1 point)"
+            }
         },
         "multiEnvelope": {
             "summaryTitle": "Results",
@@ -360,6 +377,47 @@
             }
         },
         "calculationFailed": "The calculation could not complete. Please try again shortly.",
+        "fire": {
+            "eyebrow": "Financial independence",
+            "title": "FIRE simulator",
+            "description": "Estimate the capital you need to live off your investments and the age at which you could reach it.",
+            "form": {
+                "name": "Scenario name (optional)",
+                "namePlaceholder": "Financial independence at 55",
+                "sections": {
+                    "inputs": "Your parameters"
+                },
+                "fields": {
+                    "currentAge": {
+                        "label": "Current age",
+                        "helpText": "Your age today."
+                    },
+                    "currentCapital": {
+                        "label": "Current capital",
+                        "helpText": "Amount already invested today."
+                    },
+                    "monthlyContribution": {
+                        "label": "Monthly contribution",
+                        "helpText": "Scheduled monthly contribution until independence."
+                    },
+                    "annualReturnRate": {
+                        "label": "Annual return",
+                        "helpText": "Expected gross annual return on the invested capital."
+                    },
+                    "desiredAnnualIncome": {
+                        "label": "Desired annual income",
+                        "helpText": "Annual income targeted once financially independent."
+                    },
+                    "withdrawalRate": {
+                        "label": "Withdrawal rate",
+                        "helpText": "Share of capital withdrawn each year once independence is reached (the 4% rule)."
+                    }
+                },
+                "submit": "Run the projection",
+                "retentionNote": "Your scenarios are kept for 24 months.",
+                "invalidInput": "The values entered don't allow this FIRE projection to be calculated. Please check your inputs."
+            }
+        },
         "chooseWrapper": {
             "eyebrow": "Classic simulator",
             "title": "Choose your tax wrapper",

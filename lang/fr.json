@@ -190,6 +190,11 @@
                 "title": "Comparateur d'enveloppes",
                 "description": "Comparez deux enveloppes fiscales à hypothèses identiques.",
                 "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "fire": {
+                "title": "Simulateur FIRE",
+                "description": "Estimez le capital nécessaire pour votre indépendance financière et l'âge auquel l'atteindre.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
             }
         },
         "simulatorCard": {
@@ -247,6 +252,18 @@
             "ceilingEventsTitle": "Plafonds atteints",
             "yearLabel": "Année {{year}}",
             "ceilingEvent": "{{scenario}} : {{accountType}} a atteint son plafond de {{ceiling}}"
+        },
+        "fire": {
+            "summaryTitle": "Résultat",
+            "requiredCapital": "Capital requis",
+            "targetNotReached": "Cible non atteinte sur l'horizon simulé.",
+            "retirementSummary": "Indépendance atteinte à {{age}} ans (dans {{years}} ans)",
+            "scenariosTitle": "Scénarios de taux de retrait",
+            "scenarios": {
+                "optimistic": "Optimiste (+1 point)",
+                "neutral": "Neutre (taux saisi)",
+                "pessimistic": "Pessimiste (-1 point)"
+            }
         },
         "multiEnvelope": {
             "summaryTitle": "Résultats",
@@ -360,6 +377,47 @@
             }
         },
         "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
+        "fire": {
+            "eyebrow": "Indépendance financière",
+            "title": "Simulateur FIRE",
+            "description": "Estimez le capital nécessaire pour vivre de vos revenus et l'âge auquel vous pourriez l'atteindre.",
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "Indépendance à 55 ans",
+                "sections": {
+                    "inputs": "Vos paramètres"
+                },
+                "fields": {
+                    "currentAge": {
+                        "label": "Âge actuel",
+                        "helpText": "Votre âge aujourd'hui."
+                    },
+                    "currentCapital": {
+                        "label": "Capital actuel",
+                        "helpText": "Montant déjà investi aujourd'hui."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois jusqu'à l'indépendance."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu sur le capital investi."
+                    },
+                    "desiredAnnualIncome": {
+                        "label": "Revenu annuel souhaité",
+                        "helpText": "Revenu annuel visé une fois indépendant financièrement."
+                    },
+                    "withdrawalRate": {
+                        "label": "Taux de retrait",
+                        "helpText": "Part du capital retirée chaque année une fois l'indépendance atteinte (règle des 4 %)."
+                    }
+                },
+                "submit": "Lancer la projection",
+                "retentionNote": "Vos scénarios sont conservés 24 mois.",
+                "invalidInput": "Les paramètres saisis ne permettent pas de calculer cette projection FIRE. Vérifiez vos valeurs."
+            }
+        },
         "chooseWrapper": {
             "eyebrow": "Simulateur classique",
             "title": "Choisissez votre enveloppe fiscale",

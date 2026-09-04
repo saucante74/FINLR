@@ -15,6 +15,7 @@ enum CalculatorType: string
     case SingleEnvelope = 'single_envelope';
     case MultiEnvelope = 'multi_envelope';
     case Analogy = 'analogy';
+    case Fire = 'fire';
 
     /**
      * Extraction minimale des 3 champs affichés par la liste de scénarios
@@ -24,13 +25,10 @@ enum CalculatorType: string
      * ScenarioSummaryData (CLAUDE.md : une règle qui dépend d'un cas
      * d'enum est une méthode de l'enum, jamais un match() dispersé).
      *
-     * Généralisation partielle : SingleEnvelope, MultiEnvelope et Analogy
-     * sont couverts, chacun avec sa propre lecture du contrat à 3 champs
-     * (voir le cas Analogy ci-dessous, qui n'a ni enveloppe ni horizon
-     * évidents). Fire n'a pas d'enveloppe du tout — une vraie
-     * généralisation de ScenarioSummaryData attendra qu'il existe aussi,
-     * plutôt que de forcer un quatrième cas dans ce contrat avant de
-     * savoir ce qu'il doit réellement montrer.
+     * Généralisation complète : les 4 cas existants sont couverts, chacun
+     * avec sa propre lecture du contrat à 3 champs (voir le cas Analogy
+     * ci-dessous, qui n'a ni enveloppe ni horizon évidents, et le cas Fire,
+     * qui n'a ni l'un ni l'autre non plus).
      *
      * @param  array<string, mixed>  $inputPayload
      * @param  array<string, mixed>  $resultPayload
@@ -73,6 +71,23 @@ enum CalculatorType: string
                     (string) ($resultPayload['labelB'] ?? ''),
                 ),
                 'years' => count($resultPayload['yearlyBreakdown'] ?? []),
+            ],
+            // FIRE has no envelope either — blank wrapper, same convention
+            // as MultiEnvelope. requiredCapital is always present (never
+            // null, per FireProjectionResultData's own docblock), so it is
+            // always a safe headlineFigure. yearsToRetirement is nullable
+            // (target never reached on the package's internal horizon): 0
+            // signals that case rather than a fabricated duration — chosen
+            // deliberately because ScenarioList's formatHorizon() already
+            // renders a non-positive years value as "—", exactly the
+            // "not applicable" reading this case needs, with no frontend
+            // change required.
+            self::Fire => [
+                'headlineFigure' => (float) ($resultPayload['requiredCapital'] ?? 0.0),
+                'wrapper' => '',
+                'years' => $resultPayload['yearsToRetirement'] === null
+                    ? 0
+                    : (int) round((float) $resultPayload['yearsToRetirement']),
             ],
         };
     }
