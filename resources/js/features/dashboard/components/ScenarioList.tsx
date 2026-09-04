@@ -20,8 +20,17 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage;
 
-    const formatWrapper = (wrapper: string): string =>
-        (KNOWN_WRAPPERS as readonly string[]).includes(wrapper) ? t(`form.wrappers.${wrapper}`) : '—';
+    // A known code (pea/cto/av) is translated; an empty wrapper (e.g. a
+    // multi-envelope cascade, which has no single envelope type) falls
+    // back to "—"; anything else non-empty (e.g. Analogy's "labelA vs
+    // labelB") is shown as-is rather than discarded.
+    const formatWrapper = (wrapper: string): string => {
+        if ((KNOWN_WRAPPERS as readonly string[]).includes(wrapper)) {
+            return t(`form.wrappers.${wrapper}`);
+        }
+
+        return wrapper !== '' ? wrapper : '—';
+    };
 
     const formatHorizon = (years: number): string =>
         years > 0 ? `${years} ${t('form.yearsUnit', { count: years })}` : '—';

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa23b72715f647b623c28421c63756fb",
+    "content-hash": "167095e798309544a8a3aa5c9e7a7006",
     "packages": [
         {
             "name": "brick/math",
@@ -3783,16 +3783,16 @@
         },
         {
             "name": "saucante74/finlr-engine",
-            "version": "v1.0.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:saucante74/finlr-engine.git",
-                "reference": "e364bf5fa0d2f3251559b1968fb3ea0f12980d9b"
+                "url": "git@github.com:saucante74/FINLR-ENGINE.git",
+                "reference": "4216151f1ea7218d0635e3ba081ed972f20475f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saucante74/finlr-engine/zipball/e364bf5fa0d2f3251559b1968fb3ea0f12980d9b",
-                "reference": "e364bf5fa0d2f3251559b1968fb3ea0f12980d9b",
+                "url": "https://api.github.com/repos/saucante74/FINLR-ENGINE/zipball/4216151f1ea7218d0635e3ba081ed972f20475f5",
+                "reference": "4216151f1ea7218d0635e3ba081ed972f20475f5",
                 "shasum": ""
             },
             "require": {
@@ -3800,7 +3800,6 @@
             },
             "require-dev": {
                 "laravel/pint": "^1.0",
-                "pestphp/pest": "^4.7",
                 "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^12.5"
             },
@@ -3824,7 +3823,11 @@
                 "proprietary"
             ],
             "description": "Moteur de calcul financier autonome (intérêts composés, fiscalité PEA/CTO, inflation).",
-            "time": "2026-08-15T21:54:12+00:00"
+            "support": {
+                "source": "https://github.com/saucante74/FINLR-ENGINE/tree/v2.0.0",
+                "issues": "https://github.com/saucante74/FINLR-ENGINE/issues"
+            },
+            "time": "2026-09-01T15:16:26+00:00"
         },
         {
             "name": "socialiteproviders/manager",

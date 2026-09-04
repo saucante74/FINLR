@@ -140,16 +140,32 @@ describe('Navbar', () => {
         ).not.toHaveAttribute('aria-current');
     });
 
-    it('shows the simulators and resources tabs as plain non-clickable text', () => {
+    it('links the simulators tab to the simulators index page', () => {
         mockAuthenticatedPage('/dashboard');
 
         render(<Navbar canLogin={true} canRegister={true} />);
 
-        expect(screen.getByText(i18n.t('nav.simulators'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('nav.resources'))).toBeInTheDocument();
         expect(
-            screen.queryByRole('link', { name: i18n.t('nav.simulators') }),
-        ).not.toBeInTheDocument();
+            screen.getByRole('link', { name: i18n.t('nav.simulators') }),
+        ).toHaveAttribute('href', route('simulators.index'));
+    });
+
+    it('marks the simulators tab as the current page when already on it', () => {
+        mockAuthenticatedPage(route('simulators.index'));
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(
+            screen.getByRole('link', { name: i18n.t('nav.simulators') }),
+        ).toHaveAttribute('aria-current', 'page');
+    });
+
+    it('shows the resources tab as plain non-clickable text', () => {
+        mockAuthenticatedPage('/dashboard');
+
+        render(<Navbar canLogin={true} canRegister={true} />);
+
+        expect(screen.getByText(i18n.t('nav.resources'))).toBeInTheDocument();
         expect(
             screen.queryByRole('link', { name: i18n.t('nav.resources') }),
         ).not.toBeInTheDocument();

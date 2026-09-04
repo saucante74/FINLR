@@ -35,17 +35,20 @@ export default function SimulationPreferencesCard() {
                 </span>
 
                 <div
-                    role="group"
+                    role="radiogroup"
                     aria-label={t('settings.simulationPreferences.currency.label')}
                     className="flex w-fit items-center gap-1 rounded-full border border-border p-1"
                 >
-                    {CURRENCIES.map(({ code, symbol }) => {
-                        const active = code === CURRENCY;
+                    {CURRENCIES.map((currency) => {
+                        const active = currency.code === CURRENCY;
 
                         return (
-                            <span
-                                key={code}
-                                aria-current={active ? 'true' : undefined}
+                            <button
+                                key={currency.code}
+                                type="button"
+                                role="radio"
+                                aria-checked={active}
+                                disabled={!active}
                                 title={
                                     active
                                         ? undefined
@@ -54,14 +57,14 @@ export default function SimulationPreferencesCard() {
                                           )
                                 }
                                 className={cn(
-                                    'rounded-full px-3 py-1 text-xs font-medium',
+                                    'rounded-full px-3 py-1 text-xs font-medium transition-colors disabled:cursor-not-allowed',
                                     active
                                         ? 'bg-brand text-brand-foreground'
                                         : 'text-muted-foreground/50',
                                 )}
                             >
-                                {symbol} {code}
-                            </span>
+                                {currency.symbol}
+                            </button>
                         );
                     })}
                 </div>

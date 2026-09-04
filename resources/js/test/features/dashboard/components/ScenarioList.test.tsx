@@ -117,4 +117,22 @@ describe('ScenarioList', () => {
 
         expect(screen.getAllByText('—').length).toBeGreaterThan(0);
     });
+
+    it('shows a non-empty, non-code wrapper as-is (e.g. an Analogy comparison label pair)', () => {
+        const scenarios: ScenarioSummary[] = [
+            {
+                id: 43,
+                calculatorType: 'analogy',
+                headlineFigure: 12345.67,
+                createdAt: '2026-01-15T10:00:00.000000Z',
+                wrapper: 'PEA vs CTO',
+                years: 15,
+                name: null,
+            },
+        ];
+
+        render(<ScenarioList scenarios={scenarios} />);
+
+        expect(screen.getAllByText('PEA vs CTO').length).toBeGreaterThan(0);
+    });
 });

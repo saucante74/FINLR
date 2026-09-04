@@ -3,7 +3,7 @@
 ---
 
 ## 1. Prerequisites
-PHP, Composer, Node.js and NPM run **inside the Sail container** (PHP 8.5) and don't need to be installed locally. They're only useful on the host if you prefer working outside Docker:
+PHP, Composer, Node.js and NPM run **inside the Sail container** (PHP 8.3) and don't need to be installed locally. They're only useful on the host if you prefer working outside Docker:
 
 - PHP ≥ 8.3
 - Node.js ≥ 20 and NPM

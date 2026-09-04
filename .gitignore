@@ -29,7 +29,7 @@ Homestead.yaml
 Thumbs.db
 USE_CASES.md
 CODE_EXAMPLE_v0.txt
-PROMPT.txt
+PROMPT.md
 /v0app-screenshots
 .claudeignore
 /blueprints

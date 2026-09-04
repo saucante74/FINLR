@@ -51,11 +51,14 @@ return Application::configure(basePath: dirname(__DIR__))
             return null;
         });
 
-        // Any simulator using RunProjectionCalculationAction gets this
-        // handling for free: the actual failure is already logged (with its
-        // original cause preserved) by the time it reaches here, so this
-        // only turns it into a redirect with a generic, translated message.
+        // Any simulator that lets SimulationEngineUnavailableException
+        // bubble up gets this handling for free: the actual failure is
+        // already logged (with its original cause preserved) by the time it
+        // reaches here, so this only turns it into a redirect with a
+        // generic, translated message. The key lives at the top of the
+        // `simulator` namespace (not under one simulator's own `form`)
+        // precisely because it is shared across all of them.
         $exceptions->render(fn (SimulationEngineUnavailableException $exception): RedirectResponse => back()->withErrors([
-            'simulation' => __('simulator.singleEnvelope.form.calculationFailed'),
+            'simulation' => __('simulator.calculationFailed'),
         ]));
     })->create();
