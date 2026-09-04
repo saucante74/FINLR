@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Backend-only mirror of the `simulator.*` keys actually resolved via
+ * Laravel's __() helper (app/Modules/AnalogySimulator/Requests/
+ * RunAnalogyComparisonRequest.php, app/Modules/FireSimulator/Controllers/
+ * RunFireProjectionController.php, bootstrap/app.php) — not a duplication
+ * of the whole frontend catalog in lang/en.json.
+ *
+ * __() never reads lang/{locale}.json by dotted path: that nested file is
+ * i18next's own convention (consumed by resources/js/i18n.ts), unrelated to
+ * Laravel's translator. A dotted key passed to __() is parsed as
+ * "group.item" and resolved against lang/{locale}/{group}.php — this file
+ * is that "simulator" group. Before this file existed, every one of the
+ * three __() calls above silently returned its own raw key string instead
+ * of a translation (verified via tinker, identically in fr/en/it) — this
+ * was the actual root cause of the Analogy defaultLabelA/defaultLabelB bug,
+ * not a duplicated JSON key. Keep these values in sync with the
+ * corresponding simulator.* entries in lang/en.json.
+ */
+return [
+    'analogy' => [
+        'defaultLabelA' => 'Scenario A',
+        'defaultLabelB' => 'Scenario B',
+    ],
+    'calculationFailed' => 'The calculation could not complete. Please try again shortly.',
+    'fire' => [
+        'form' => [
+            'invalidInput' => "The values entered don't allow this FIRE projection to be calculated. Please check your inputs.",
+        ],
+    ],
+];

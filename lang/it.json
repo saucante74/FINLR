@@ -239,6 +239,8 @@
             "tie": "Pareggio — scarto inferiore a 0,01 €",
             "leader": "{{label}} è in vantaggio",
             "crossoverYears": "Le traiettorie si incrociano: anni {{years}}",
+            "chartTitle": "Andamento del capitale netto reale",
+            "chartCrossoverLegend": "Incrocio",
             "deltasTitle": "Scarti",
             "metric": "Indicatore",
             "delta": "Scarto",

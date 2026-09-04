@@ -239,6 +239,8 @@
             "tie": "Tie — gap under €0.01",
             "leader": "{{label}} leads",
             "crossoverYears": "The trajectories cross: years {{years}}",
+            "chartTitle": "Real net balance over time",
+            "chartCrossoverLegend": "Crossover",
             "deltasTitle": "Gaps",
             "metric": "Metric",
             "delta": "Gap",

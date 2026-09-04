@@ -239,6 +239,8 @@
             "tie": "Égalité — écart inférieur à 0,01 €",
             "leader": "{{label}} mène",
             "crossoverYears": "Les trajectoires se croisent : années {{years}}",
+            "chartTitle": "Évolution du capital net réel",
+            "chartCrossoverLegend": "Croisement",
             "deltasTitle": "Écarts",
             "metric": "Indicateur",
             "delta": "Écart",

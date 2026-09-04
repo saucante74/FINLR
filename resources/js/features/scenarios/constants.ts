@@ -21,6 +21,20 @@ export const FIRE_SCENARIO_BAR_COLORS: Record<'optimistic' | 'neutral' | 'pessim
     pessimistic: '#F97316',
 };
 
+/**
+ * Analogy comparison chart (AnalogyChart): scenario A / scenario B are two
+ * arbitrary user-named scenarios, not an ordered polarity like FIRE's
+ * optimistic/neutral/pessimistic above — but reusing the same established
+ * green/orange pair (already netReal/netRealAdjusted, and
+ * optimistic/pessimistic in FIRE_SCENARIO_BAR_COLORS) keeps one consistent
+ * "first vs. second thing being compared" visual language across the app,
+ * rather than introducing a third ad hoc 2-color set.
+ */
+export const ANALOGY_CHART_COLORS: Record<'A' | 'B', string> = {
+    A: '#10B981',
+    B: '#F97316',
+};
+
 /** Headroom added above the highest plotted value before rounding up the chart's Y axis. */
 export const Y_AXIS_MARGIN_RATIO = 0.05;
 
