@@ -183,7 +183,18 @@
             },
             "multiEnvelope": {
                 "title": "Simulateur multi-enveloppe",
-                "description": "Comparez plusieurs enveloppes fiscales dans une même simulation."
+                "description": "Comparez plusieurs enveloppes fiscales dans une même simulation.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "analogy": {
+                "title": "Comparateur d'enveloppes",
+                "description": "Comparez deux enveloppes fiscales à hypothèses identiques.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "fire": {
+                "title": "Simulateur FIRE",
+                "description": "Estimez le capital nécessaire pour votre indépendance financière et l'âge auquel l'atteindre.",
+                "lockedNote": "Passez à l'offre premium pour y accéder."
             }
         },
         "simulatorCard": {
@@ -223,6 +234,44 @@
         "eyebrow": "Scénario sauvegardé",
         "title": "Résultat de simulation",
         "createdAtLabel": "Simulé le {{date}}",
+        "analogy": {
+            "vs": "vs",
+            "tie": "Égalité — écart inférieur à 0,01 €",
+            "leader": "{{label}} mène",
+            "crossoverYears": "Les trajectoires se croisent : années {{years}}",
+            "deltasTitle": "Écarts",
+            "metric": "Indicateur",
+            "delta": "Écart",
+            "metrics": {
+                "realNetBalanceWithInflation": "Capital net réel (ajusté de l'inflation)",
+                "totalDeposited": "Montant investi",
+                "totalGains": "Gains",
+                "taxesAmount": "Impôts",
+                "totalFees": "Frais"
+            },
+            "ceilingEventsTitle": "Plafonds atteints",
+            "yearLabel": "Année {{year}}",
+            "ceilingEvent": "{{scenario}} : {{accountType}} a atteint son plafond de {{ceiling}}"
+        },
+        "fire": {
+            "summaryTitle": "Résultat",
+            "requiredCapital": "Capital requis",
+            "targetNotReached": "Cible non atteinte sur l'horizon simulé.",
+            "retirementSummary": "Indépendance atteinte à {{age}} ans (dans {{years}} ans)",
+            "scenariosTitle": "Scénarios de taux de retrait",
+            "scenarios": {
+                "optimistic": "Optimiste (+1 point)",
+                "neutral": "Neutre (taux saisi)",
+                "pessimistic": "Pessimiste (-1 point)"
+            }
+        },
+        "multiEnvelope": {
+            "summaryTitle": "Résultats",
+            "netBalance": "Capital net final",
+            "realNetBalance": "Capital net réel (ajusté de l'inflation)",
+            "totalDeposited": "Total versé",
+            "pocketsTitle": "Détail par enveloppe"
+        },
         "rename": {
             "button": "Renommer",
             "label": "Nom du scénario",
@@ -269,6 +318,106 @@
         }
     },
     "simulator": {
+        "analogy": {
+            "eyebrow": "Comparateur",
+            "title": "Comparer deux enveloppes",
+            "description": "Comparez deux enveloppes fiscales avec un apport, un versement mensuel et une durée identiques, pour ne comparer que ce qui change vraiment.",
+            "defaultLabelA": "Scénario A",
+            "defaultLabelB": "Scénario B",
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assurance-vie",
+                "CAT": "Compte à terme",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Compte courant"
+            },
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "PEA vs CTO — comparaison 20 ans",
+                "sections": {
+                    "shared": "Paramètres partagés",
+                    "scenarios": "Scénarios à comparer"
+                },
+                "scenarioA": "Scénario A",
+                "scenarioB": "Scénario B",
+                "accountType": "Enveloppe",
+                "label": "Nom du scénario (facultatif)",
+                "labelHelpText": "Affiché dans le résultat de la comparaison.",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Montant initial",
+                        "helpText": "Apport initial, identique pour les deux scénarios."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois, identique pour les deux scénarios."
+                    },
+                    "durationYears": {
+                        "label": "Durée",
+                        "helpText": "Horizon de simulation, identique pour les deux scénarios."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu, identique pour les deux scénarios."
+                    },
+                    "managementFeeRate": {
+                        "label": "Frais de gestion",
+                        "helpText": "Frais de gestion annuels prélevés sur l'encours."
+                    },
+                    "inflationRate": {
+                        "label": "Inflation",
+                        "helpText": "Taux d'inflation annuel, appliqué aux deux scénarios."
+                    }
+                },
+                "submit": "Lancer la comparaison",
+                "retentionNote": "Vos scénarios sont conservés 24 mois."
+            }
+        },
+        "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
+        "fire": {
+            "eyebrow": "Indépendance financière",
+            "title": "Simulateur FIRE",
+            "description": "Estimez le capital nécessaire pour vivre de vos revenus et l'âge auquel vous pourriez l'atteindre.",
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "Indépendance à 55 ans",
+                "sections": {
+                    "inputs": "Vos paramètres"
+                },
+                "fields": {
+                    "currentAge": {
+                        "label": "Âge actuel",
+                        "helpText": "Votre âge aujourd'hui."
+                    },
+                    "currentCapital": {
+                        "label": "Capital actuel",
+                        "helpText": "Montant déjà investi aujourd'hui."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois jusqu'à l'indépendance."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu sur le capital investi."
+                    },
+                    "desiredAnnualIncome": {
+                        "label": "Revenu annuel souhaité",
+                        "helpText": "Revenu annuel visé une fois indépendant financièrement."
+                    },
+                    "withdrawalRate": {
+                        "label": "Taux de retrait",
+                        "helpText": "Part du capital retirée chaque année une fois l'indépendance atteinte (règle des 4 %)."
+                    }
+                },
+                "submit": "Lancer la projection",
+                "retentionNote": "Vos scénarios sont conservés 24 mois.",
+                "invalidInput": "Les paramètres saisis ne permettent pas de calculer cette projection FIRE. Vérifiez vos valeurs."
+            }
+        },
         "chooseWrapper": {
             "eyebrow": "Simulateur classique",
             "title": "Choisissez votre enveloppe fiscale",
@@ -302,6 +451,69 @@
             "eyebrow": "Simulateurs",
             "title": "Choisissez votre simulateur",
             "description": "Sélectionnez le type de simulation à lancer."
+        },
+        "multiEnvelope": {
+            "eyebrow": "Simulateur multi-enveloppe",
+            "title": "Simulation multi-enveloppe",
+            "description": "Combinez plusieurs enveloppes fiscales en cascade et projetez leur évolution ensemble.",
+            "form": {
+                "name": "Nom du scénario (facultatif)",
+                "namePlaceholder": "Cascade PEA + CTO — plan long terme",
+                "sections": {
+                    "name": "Scénario",
+                    "envelopes": "Enveloppes"
+                },
+                "addEnvelope": "Ajouter une enveloppe",
+                "removeEnvelope": "Retirer l'enveloppe {{index}}",
+                "envelopeLabel": "Enveloppe {{index}}",
+                "fields": {
+                    "initialAmount": {
+                        "label": "Montant initial",
+                        "helpText": "Apport initial versé sur cette enveloppe."
+                    },
+                    "monthlyContribution": {
+                        "label": "Versement mensuel",
+                        "helpText": "Versement programmé chaque mois sur cette enveloppe."
+                    },
+                    "durationYears": {
+                        "label": "Durée",
+                        "helpText": "Horizon de simulation propre à cette enveloppe."
+                    },
+                    "annualReturnRate": {
+                        "label": "Rendement annuel",
+                        "helpText": "Rendement brut annuel attendu pour cette enveloppe."
+                    },
+                    "managementFeeRate": {
+                        "label": "Frais de gestion",
+                        "helpText": "Frais de gestion annuels prélevés sur l'encours."
+                    },
+                    "inflationRate": {
+                        "label": "Inflation",
+                        "helpText": "Taux d'inflation annuel — seule celle de la première enveloppe compte pour l'ensemble de la cascade."
+                    }
+                },
+                "submit": "Lancer la simulation",
+                "summary": {
+                    "eyebrow": "Paramètres saisis",
+                    "description": "Vérifiez votre cascade avant de lancer le calcul. La projection est établie par Finlr après validation.",
+                    "scenarioLabel": "Scénario",
+                    "scenarioPlaceholder": "–",
+                    "envelopeCount": "Nombre d'enveloppes",
+                    "totalInitialAmount": "Total des apports initiaux",
+                    "totalMonthlyContribution": "Total des versements mensuels",
+                    "retentionNote": "Vos scénarios sont conservés 24 mois."
+                }
+            },
+            "accountTypes": {
+                "PEA": "PEA",
+                "PEA_PME": "PEA-PME",
+                "CTO": "CTO",
+                "ASSURANCE_VIE": "Assurance-vie",
+                "CAT": "Compte à terme",
+                "LIVRET_A": "Livret A",
+                "LDDS": "LDDS",
+                "COMPTE_COURANT": "Compte courant"
+            }
         },
         "singleEnvelope": {
             "eyebrow": "Simulateur classique",
@@ -388,7 +600,6 @@
                     "cto": "CTO"
                 },
                 "submit": "Lancer la simulation",
-                "calculationFailed": "Le calcul n'a pas pu aboutir. Merci de réessayer dans quelques instants.",
                 "summary": {
                     "eyebrow": "Paramètres saisis",
                     "description": "Vérifiez vos hypothèses avant de lancer le calcul. La projection est établie par Finlr après validation.",

@@ -9,9 +9,9 @@ use App\Modules\SimulationEngine\DTOs\CompoundPointData;
 use App\Modules\SimulationEngine\Enums\TaxWrapper;
 use saucante74\CalculatorEngine\CalculatorEngine;
 use saucante74\CalculatorEngine\Enums\AccountType as PackageAccountType;
-use saucante74\CalculatorEngine\Premium\DTOs\CalculationInput as PackageCalculationInput;
-use saucante74\CalculatorEngine\Premium\DTOs\CalculationResult as PackageCalculationResult;
-use saucante74\CalculatorEngine\Premium\DTOs\YearlyResult as PackageYearlyResult;
+use saucante74\CalculatorEngine\Simulators\France\SimulatorMultiEnvelope\DTOs\CalculationInput as PackageCalculationInput;
+use saucante74\CalculatorEngine\Simulators\France\SimulatorMultiEnvelope\DTOs\CalculationResult as PackageCalculationResult;
+use saucante74\CalculatorEngine\Simulators\France\SimulatorMultiEnvelope\DTOs\YearlyResult as PackageYearlyResult;
 
 /**
  * Adapter around the private saucante74\CalculatorEngine package: translates

@@ -1,6 +1,12 @@
 <?php
 
+use App\Modules\AnalogySimulator\Controllers\RunAnalogyComparisonController;
+use App\Modules\AnalogySimulator\Controllers\ShowAnalogySimulatorController;
+use App\Modules\FireSimulator\Controllers\RunFireProjectionController;
+use App\Modules\FireSimulator\Controllers\ShowFireSimulatorController;
 use App\Modules\FreemiumCalculator\Controllers\ShowFreemiumCalculatorController;
+use App\Modules\MultiEnvelopeSimulator\Controllers\RunMultiEnvelopeSimulationController;
+use App\Modules\MultiEnvelopeSimulator\Controllers\ShowMultiEnvelopeSimulatorController;
 use App\Modules\Scenarios\Controllers\RenameScenarioController;
 use App\Modules\Scenarios\Controllers\ShowScenarioController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
@@ -48,5 +54,29 @@ Route::get('/simulators/single-envelope/{jurisdiction}/{wrapper}', ShowSingleEnv
 Route::post('/simulators/single-envelope/{jurisdiction}/{wrapper}', RunSingleEnvelopeSimulationController::class)
     ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
     ->name('simulators.single-envelope.run');
+
+Route::get('/simulators/multi-envelope', ShowMultiEnvelopeSimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.multi-envelope.show');
+
+Route::post('/simulators/multi-envelope', RunMultiEnvelopeSimulationController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
+    ->name('simulators.multi-envelope.run');
+
+Route::get('/simulators/analogy', ShowAnalogySimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.analogy.show');
+
+Route::post('/simulators/analogy', RunAnalogyComparisonController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
+    ->name('simulators.analogy.run');
+
+Route::get('/simulators/fire', ShowFireSimulatorController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
+    ->name('simulators.fire.show');
+
+Route::post('/simulators/fire', RunFireProjectionController::class)
+    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
+    ->name('simulators.fire.run');
 
 require __DIR__.'/auth.php';

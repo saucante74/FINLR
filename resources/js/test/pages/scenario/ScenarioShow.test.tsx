@@ -39,6 +39,20 @@ const props: ScenarioProps = {
     createdAt: '2026-01-15T10:00:00.000000Z',
 };
 
+const multiEnvelopeProps: ScenarioProps = {
+    id: 43,
+    name: null,
+    input: props.input,
+    result: {
+        summary: { year: 10, totalDeposited: 25000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
+        pockets: [
+            { accountType: 'PEA', totalDeposited: 25000, netBalance: 26627.78, taxRegime: 'SOCIAL_LEVIES_ONLY' },
+        ],
+    },
+    calculatorType: 'multi_envelope',
+    createdAt: '2026-01-15T10:00:00.000000Z',
+};
+
 describe('ScenarioShow page', () => {
     beforeEach(async () => {
         await i18n.changeLanguage('fr');
@@ -52,5 +66,14 @@ describe('ScenarioShow page', () => {
         expect(screen.getByText(i18n.t('scenario.chart.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.details.title'))).toBeInTheDocument();
         expect(screen.queryByText(/scenarioId/i)).not.toBeInTheDocument();
+    });
+
+    it('renders the multi-envelope summary instead of the single-envelope chart/details for a multi_envelope scenario', () => {
+        render(<ScenarioShow {...multiEnvelopeProps} />);
+
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.summaryTitle'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.pocketsTitle'))).toBeInTheDocument();
+        expect(screen.queryByText(i18n.t('scenario.chart.title'))).not.toBeInTheDocument();
+        expect(screen.queryByText(i18n.t('scenario.details.title'))).not.toBeInTheDocument();
     });
 });

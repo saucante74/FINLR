@@ -16,7 +16,9 @@ const PROMO_BENEFIT_KEYS = ['unlimitedScenarios', 'multiEnvelopePreview', 'pdfEx
 export default function Dashboard({ scenarios }: DashboardPageProps) {
     const { t } = useTranslation();
     const { auth } = usePage<AuthenticatedPageProps>().props;
-    const canAccessSingleEnvelopeSimulator = auth.permissions.includes('advanced_calculator');
+    // Gates both the classic and multi-envelope simulator cards below —
+    // same permission, same routes' own `can:advanced_calculator` middleware.
+    const canAccessAdvancedCalculator = auth.permissions.includes('advanced_calculator');
 
     return (
         <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -43,20 +45,24 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                     </Button>
                 </header>
 
-                <div className="grid gap-4 md:grid-cols-2">
+                {/* 4 cards now that Fire has joined single-envelope,
+                    multi-envelope and analogy: 2 columns on medium screens,
+                    4 on large, rather than a lone 4th card wrapping onto
+                    its own row under grid-cols-3. */}
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <SimulatorCard
                         index={1}
                         title={t('dashboard.simulators.singleEnvelope.title')}
                         description={t('dashboard.simulators.singleEnvelope.description')}
-                        state={canAccessSingleEnvelopeSimulator ? 'active' : 'locked'}
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
                         showDecorativeChart
                         href={
-                            canAccessSingleEnvelopeSimulator
+                            canAccessAdvancedCalculator
                                 ? route('simulators.single-envelope.choose')
                                 : undefined
                         }
                         note={
-                            canAccessSingleEnvelopeSimulator
+                            canAccessAdvancedCalculator
                                 ? undefined
                                 : t('dashboard.simulators.singleEnvelope.lockedNote')
                         }
@@ -65,7 +71,41 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         index={2}
                         title={t('dashboard.simulators.multiEnvelope.title')}
                         description={t('dashboard.simulators.multiEnvelope.description')}
-                        state="comingSoon"
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                        href={
+                            canAccessAdvancedCalculator
+                                ? route('simulators.multi-envelope.show')
+                                : undefined
+                        }
+                        note={
+                            canAccessAdvancedCalculator
+                                ? undefined
+                                : t('dashboard.simulators.multiEnvelope.lockedNote')
+                        }
+                    />
+                    <SimulatorCard
+                        index={3}
+                        title={t('dashboard.simulators.analogy.title')}
+                        description={t('dashboard.simulators.analogy.description')}
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                        href={canAccessAdvancedCalculator ? route('simulators.analogy.show') : undefined}
+                        note={
+                            canAccessAdvancedCalculator
+                                ? undefined
+                                : t('dashboard.simulators.analogy.lockedNote')
+                        }
+                    />
+                    <SimulatorCard
+                        index={4}
+                        title={t('dashboard.simulators.fire.title')}
+                        description={t('dashboard.simulators.fire.description')}
+                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                        href={canAccessAdvancedCalculator ? route('simulators.fire.show') : undefined}
+                        note={
+                            canAccessAdvancedCalculator
+                                ? undefined
+                                : t('dashboard.simulators.fire.lockedNote')
+                        }
                     />
                 </div>
 

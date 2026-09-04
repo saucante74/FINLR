@@ -25,13 +25,15 @@ readonly class ScenarioSummaryData
 
     public static function fromModel(Scenario $scenario): self
     {
+        $summary = $scenario->calculator_type->summarize($scenario->input_payload, $scenario->result_payload);
+
         return new self(
             id: $scenario->id,
             calculatorType: $scenario->calculator_type,
-            headlineFigure: (float) ($scenario->result_payload['finalNetReal'] ?? 0.0),
+            headlineFigure: $summary['headlineFigure'],
             createdAt: $scenario->created_at,
-            wrapper: (string) ($scenario->input_payload['wrapper'] ?? ''),
-            years: (int) ($scenario->input_payload['years'] ?? 0),
+            wrapper: $summary['wrapper'],
+            years: $summary['years'],
             name: $scenario->name,
         );
     }
