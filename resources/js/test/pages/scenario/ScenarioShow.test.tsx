@@ -42,12 +42,41 @@ const props: ScenarioProps = {
 const multiEnvelopeProps: ScenarioProps = {
     id: 43,
     name: null,
-    input: props.input,
+    input: {
+        envelopes: [{ accountType: 'PEA', monthlyContribution: 208.33, durationYears: 10, annualReturnRate: 0.06, inflationRate: 0.02 }],
+    },
     result: {
-        summary: { year: 10, totalDeposited: 25000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
-        pockets: [
-            { accountType: 'PEA', totalDeposited: 25000, netBalance: 26627.78, taxRegime: 'SOCIAL_LEVIES_ONLY' },
+        summary: { year: 10, totalDeposited: 25000, grossBalance: 30000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
+        yearlyBreakdown: [
+            { year: 1, totalDeposited: 2500, grossBalance: 2600, netBalance: 2560, realNetBalanceWithInflation: 2509.8 },
+            { year: 10, totalDeposited: 25000, grossBalance: 30000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
         ],
+        pockets: [
+            {
+                accountType: 'PEA',
+                initialDeposit: 0,
+                dcaDeposited: 25000,
+                totalDeposited: 25000,
+                dcaMonthsCount: 120,
+                lastDcaAmount: 208.33,
+                firstResidualDcaAmount: 0,
+                ceilingReachedMonth: null,
+                grossBalance: 30000,
+                totalGains: 5000,
+                taxesAmount: 3372.22,
+                incomeTaxAmount: 0,
+                socialLeviesAmount: 3372.22,
+                taxRegime: 'SOCIAL_LEVIES_ONLY',
+                netBalance: 26627.78,
+                brokerageFeesAmount: 0,
+                managementFeesAmount: 0,
+                terImpactAmount: 0,
+                custodyFeesAmount: 0,
+                arbitrageFeesAmount: 0,
+                totalFeesAmount: 0,
+            },
+        ],
+        totalFeesAmount: 0,
     },
     calculatorType: 'multi_envelope',
     createdAt: '2026-01-15T10:00:00.000000Z',
@@ -68,12 +97,15 @@ describe('ScenarioShow page', () => {
         expect(screen.queryByText(/scenarioId/i)).not.toBeInTheDocument();
     });
 
-    it('renders the multi-envelope summary instead of the single-envelope chart/details for a multi_envelope scenario', () => {
+    it('renders the multi-envelope "Verdict d\'abord" summary instead of the single-envelope details for a multi_envelope scenario', () => {
         render(<ScenarioShow {...multiEnvelopeProps} />);
 
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.summaryTitle'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.hypotheses.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.multiEnvelope.pocketsTitle'))).toBeInTheDocument();
-        expect(screen.queryByText(i18n.t('scenario.chart.title'))).not.toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.exportPdf'))).toBeDisabled();
+        // The aggregated portfolio chart is reused as-is for multi-envelope results (same component,
+        // same title) — only the single-envelope-specific ScenarioDetails is absent here.
+        expect(screen.getByText(i18n.t('scenario.chart.title'))).toBeInTheDocument();
         expect(screen.queryByText(i18n.t('scenario.details.title'))).not.toBeInTheDocument();
     });
 });

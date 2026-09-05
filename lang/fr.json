@@ -276,7 +276,63 @@
             "netBalance": "Capital net final",
             "realNetBalance": "Capital net réel (ajusté de l'inflation)",
             "totalDeposited": "Total versé",
-            "pocketsTitle": "Détail par enveloppe"
+            "pocketsTitle": "Détail par enveloppe",
+            "taxRegimes": {
+                "FLAT_TAX": "Prélèvement forfaitaire unique (PFU)",
+                "PROGRESSIVE_SCALE": "Barème progressif de l'IR",
+                "LIFE_INSURANCE_REDUCED": "Régime assurance-vie (abattement)",
+                "SOCIAL_LEVIES_ONLY": "Prélèvements sociaux seuls",
+                "EXEMPT": "Exonéré",
+                "CUSTOM_RATE": "Taux personnalisé"
+            },
+            "verdict": {
+                "exportPdf": "Exporter en PDF",
+                "heroLabel": "Capital net après impôts · {{duration}}",
+                "narrative": "Vous auriez versé {{deposited}} et récupéré {{netGains}} de gains nets. En pouvoir d'achat d'aujourd'hui, cela représente {{realNet}}.",
+                "stats": {
+                    "netGain": "Gain net",
+                    "netGainHelp": "après impôts et frais",
+                    "totalFees": "Frais cumulés",
+                    "totalFeesHelp": "prélevés sur la durée",
+                    "realNet": "Pouvoir d'achat réel",
+                    "realNetHelp": "inflation {{rate}}",
+                    "inflationCost": "Coût inflation",
+                    "inflationCostHelp": "sur {{duration}}"
+                },
+                "chartSubtitle": "L'écart entre les courbes est ce que coûtent l'impôt et l'inflation.",
+                "breakdown": {
+                    "title": "Où va l'argent",
+                    "subtitle": "Décomposition du capital brut de {{amount}}.",
+                    "deposits": "Vos versements",
+                    "share": "{{percent}} du capital brut",
+                    "gains": "Gains conservés",
+                    "tax": "Impôt à la sortie",
+                    "taxNoteNamed": "{{percent}} des gains du {{accountType}}",
+                    "taxNoteBlended": "{{percent}} de vos gains bruts",
+                    "feesNote": "Les frais cumulés de {{amount}} sont déjà déduits du capital brut. Ils représentent {{percent}} de vos gains bruts."
+                },
+                "hypotheses": {
+                    "title": "Hypothèses",
+                    "subtitle": "Paramètres de cette simulation."
+                },
+                "detail": {
+                    "subtitle": "Comparaison poste par poste.",
+                    "poste": "Poste",
+                    "total": "Total",
+                    "rows": {
+                        "deposits": "Versements",
+                        "grossGains": "Gains bruts",
+                        "grossBalance": "Capital brut",
+                        "fees": "Frais cumulés",
+                        "feesShort": "Frais",
+                        "taxRegime": "Régime fiscal",
+                        "taxRegimeShort": "Régime",
+                        "tax": "Impôt à la sortie",
+                        "taxShort": "Impôt",
+                        "netBalance": "Solde net"
+                    }
+                }
+            }
         },
         "rename": {
             "button": "Renommer",
