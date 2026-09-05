@@ -84,8 +84,8 @@ class RunAnalogyComparisonTest extends TestCase
         // other even while both silently returned the raw key string
         // (lang/{locale}/simulator.php missing). Pin the actual resolved
         // French string as well.
-        $this->assertSame('Scenario A', $scenario->input_payload['labelA']);
-        $this->assertSame('Scenario B', $scenario->input_payload['labelB']);
+        $this->assertSame('Scénario A', $scenario->input_payload['labelA']);
+        $this->assertSame('Scénario B', $scenario->input_payload['labelB']);
     }
 
     public function test_the_stored_input_payload_mirrors_the_submitted_scenarios(): void
