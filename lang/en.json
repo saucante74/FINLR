@@ -277,7 +277,6 @@
             "realNetBalance": "Real net balance (inflation-adjusted)",
             "totalDeposited": "Total deposited",
             "pocketsTitle": "Breakdown by envelope",
-            "finalBalanceChartTitle": "Net balance by envelope",
             "taxRegimes": {
                 "FLAT_TAX": "Flat tax (PFU)",
                 "PROGRESSIVE_SCALE": "Progressive income tax scale",
@@ -286,40 +285,49 @@
                 "EXEMPT": "Exempt",
                 "CUSTOM_RATE": "Custom rate"
             },
-            "pocket": {
-                "deposits": {
-                    "title": "Deposits",
-                    "initialDeposit": "Initial deposit",
-                    "dcaDeposited": "Cumulative DCA",
-                    "dcaMonths_one": "over {{count}} month",
-                    "dcaMonths_other": "over {{count}} months",
-                    "lastDcaAmount": "Last DCA payment",
-                    "ceilingReachedAtMonth": "Ceiling reached at month {{month}}",
-                    "ceilingReachedAtStart": "Ceiling reached from the initial deposit",
-                    "residualDca": "Residual received from the previous pocket",
-                    "totalDeposited": "Total deposited"
+            "verdict": {
+                "exportPdf": "Export to PDF",
+                "heroLabel": "Net capital after tax · {{duration}}",
+                "narrative": "You would have deposited {{deposited}} and kept {{netGains}} in net gains. In today's purchasing power, that represents {{realNet}}.",
+                "stats": {
+                    "netGain": "Net gain",
+                    "netGainHelp": "after tax and fees",
+                    "totalFees": "Total fees",
+                    "totalFeesHelp": "charged over the duration",
+                    "realNet": "Real purchasing power",
+                    "realNetHelp": "inflation {{rate}}",
+                    "inflationCost": "Inflation cost",
+                    "inflationCostHelp": "over {{duration}}"
                 },
-                "fees": {
-                    "title": "Fees",
-                    "brokerage": "Brokerage",
-                    "management": "Management",
-                    "ter": "TER impact",
-                    "custody": "Custody",
-                    "arbitrage": "Arbitrage",
-                    "total": "Total fees"
+                "chartSubtitle": "The gap between the curves is what tax and inflation cost you.",
+                "breakdown": {
+                    "title": "Where the money goes",
+                    "subtitle": "Breakdown of the {{amount}} gross balance.",
+                    "deposits": "Your deposits",
+                    "share": "{{percent}} of gross balance",
+                    "gains": "Gains kept",
+                    "tax": "Tax on exit",
+                    "taxNoteNamed": "{{percent}} of the {{accountType}} gains",
+                    "taxNoteBlended": "{{percent}} of your gross gains",
+                    "feesNote": "The {{amount}} in cumulative fees are already deducted from the gross balance. They represent {{percent}} of your gross gains."
                 },
-                "taxation": {
-                    "title": "Taxation",
-                    "regime": "Regime retained",
-                    "incomeTax": "Income tax",
-                    "socialLevies": "Social levies",
-                    "total": "Total tax"
+                "hypotheses": {
+                    "title": "Assumptions",
+                    "subtitle": "Parameters of this simulation."
                 },
-                "result": {
-                    "title": "Result",
-                    "grossBalance": "Gross balance",
-                    "totalGains": "Gross gains",
-                    "netBalance": "Net balance"
+                "detail": {
+                    "subtitle": "Line-by-line comparison.",
+                    "poste": "Line item",
+                    "total": "Total",
+                    "rows": {
+                        "deposits": "Deposits",
+                        "grossGains": "Gross gains",
+                        "grossBalance": "Gross balance",
+                        "fees": "Cumulative fees",
+                        "taxRegime": "Tax regime",
+                        "tax": "Tax on exit",
+                        "netBalance": "Net balance"
+                    }
                 }
             }
         },

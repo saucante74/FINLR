@@ -29,9 +29,11 @@ interface ScenarioChartProps {
      * single-envelope-specific summary fields.
      */
     result: { points: ScenarioResultPoint[] };
+    /** Optional subtitle rendered under the card title (e.g. MultiEnvelopeScenarioSummary's "Verdict d'abord" copy). */
+    description?: string;
 }
 
-export default function ScenarioChart({ result }: ScenarioChartProps) {
+export default function ScenarioChart({ result, description }: ScenarioChartProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage;
     const containerRef = useRef<HTMLDivElement>(null);
@@ -98,6 +100,7 @@ export default function ScenarioChart({ result }: ScenarioChartProps) {
         <Card>
             <CardHeader>
                 <CardTitle>{t('scenario.chart.title')}</CardTitle>
+                {description && <p className="text-sm text-muted-foreground">{description}</p>}
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">

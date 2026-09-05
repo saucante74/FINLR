@@ -277,7 +277,6 @@
             "realNetBalance": "Capitale netto reale (rettificato dall'inflazione)",
             "totalDeposited": "Totale versato",
             "pocketsTitle": "Dettaglio per involucro",
-            "finalBalanceChartTitle": "Saldo netto per involucro",
             "taxRegimes": {
                 "FLAT_TAX": "Imposta forfettaria unica (PFU)",
                 "PROGRESSIVE_SCALE": "Scaglioni progressivi IRPEF",
@@ -286,40 +285,49 @@
                 "EXEMPT": "Esente",
                 "CUSTOM_RATE": "Aliquota personalizzata"
             },
-            "pocket": {
-                "deposits": {
-                    "title": "Versamenti",
-                    "initialDeposit": "Apporto iniziale",
-                    "dcaDeposited": "DCA cumulato",
-                    "dcaMonths_one": "su {{count}} mese",
-                    "dcaMonths_other": "su {{count}} mesi",
-                    "lastDcaAmount": "Ultimo DCA versato",
-                    "ceilingReachedAtMonth": "Massimale raggiunto al mese {{month}}",
-                    "ceilingReachedAtStart": "Massimale raggiunto fin dall'apporto iniziale",
-                    "residualDca": "Residuo ricevuto dal conto precedente",
-                    "totalDeposited": "Totale depositato"
+            "verdict": {
+                "exportPdf": "Esporta in PDF",
+                "heroLabel": "Capitale netto dopo le imposte · {{duration}}",
+                "narrative": "Avresti versato {{deposited}} e recuperato {{netGains}} di guadagni netti. In potere d'acquisto odierno, questo rappresenta {{realNet}}.",
+                "stats": {
+                    "netGain": "Guadagno netto",
+                    "netGainHelp": "dopo imposte e commissioni",
+                    "totalFees": "Commissioni cumulate",
+                    "totalFeesHelp": "prelevate sulla durata",
+                    "realNet": "Potere d'acquisto reale",
+                    "realNetHelp": "inflazione {{rate}}",
+                    "inflationCost": "Costo dell'inflazione",
+                    "inflationCostHelp": "su {{duration}}"
                 },
-                "fees": {
-                    "title": "Commissioni",
-                    "brokerage": "Intermediazione",
-                    "management": "Gestione",
-                    "ter": "Impatto TER",
-                    "custody": "Custodia",
-                    "arbitrage": "Arbitraggio",
-                    "total": "Totale commissioni"
+                "chartSubtitle": "Lo scarto tra le curve è ciò che costano le imposte e l'inflazione.",
+                "breakdown": {
+                    "title": "Dove va il denaro",
+                    "subtitle": "Scomposizione del capitale lordo di {{amount}}.",
+                    "deposits": "I tuoi versamenti",
+                    "share": "{{percent}} del capitale lordo",
+                    "gains": "Guadagni conservati",
+                    "tax": "Imposta in uscita",
+                    "taxNoteNamed": "{{percent}} dei guadagni di {{accountType}}",
+                    "taxNoteBlended": "{{percent}} dei tuoi guadagni lordi",
+                    "feesNote": "Le commissioni cumulate di {{amount}} sono già dedotte dal capitale lordo. Rappresentano il {{percent}} dei tuoi guadagni lordi."
                 },
-                "taxation": {
-                    "title": "Fiscalità",
-                    "regime": "Regime applicato",
-                    "incomeTax": "Imposta sul reddito",
-                    "socialLevies": "Prelievi sociali",
-                    "total": "Imposta totale"
+                "hypotheses": {
+                    "title": "Ipotesi",
+                    "subtitle": "Parametri di questa simulazione."
                 },
-                "result": {
-                    "title": "Risultato",
-                    "grossBalance": "Saldo lordo",
-                    "totalGains": "Guadagni lordi",
-                    "netBalance": "Saldo netto"
+                "detail": {
+                    "subtitle": "Confronto voce per voce.",
+                    "poste": "Voce",
+                    "total": "Totale",
+                    "rows": {
+                        "deposits": "Versamenti",
+                        "grossGains": "Guadagni lordi",
+                        "grossBalance": "Capitale lordo",
+                        "fees": "Commissioni cumulate",
+                        "taxRegime": "Regime fiscale",
+                        "tax": "Imposta in uscita",
+                        "netBalance": "Saldo netto"
+                    }
                 }
             }
         },

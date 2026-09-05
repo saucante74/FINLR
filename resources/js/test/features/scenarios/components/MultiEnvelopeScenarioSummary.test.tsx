@@ -3,113 +3,154 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import i18n from '@/i18n';
 
 import MultiEnvelopeScenarioSummary from '@/features/scenarios/components/MultiEnvelopeScenarioSummary';
-import type { MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
+import type { MultiEnvelopeScenarioInput, MultiEnvelopeScenarioResult } from '@/features/multi-envelope-simulator/types';
 
+// Mirrors the reference scenario from blueprints/simulators_multi-envelope-scenario.pdf
+// ("Verdict d'abord"): Livret A (exempt) + CTO (PFU), 15 years.
 const result: MultiEnvelopeScenarioResult = {
-    summary: { year: 10, totalDeposited: 25000, grossBalance: 30000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
+    summary: { year: 15, totalDeposited: 101970, grossBalance: 184395, netBalance: 167747, realNetBalanceWithInflation: 124639 },
     yearlyBreakdown: [
-        { year: 1, totalDeposited: 2500, grossBalance: 2600, netBalance: 2560, realNetBalanceWithInflation: 2509.8 },
-        { year: 10, totalDeposited: 25000, grossBalance: 30000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
+        { year: 1, totalDeposited: 8000, grossBalance: 8200, netBalance: 8180, realNetBalanceWithInflation: 8020 },
+        { year: 15, totalDeposited: 101970, grossBalance: 184395, netBalance: 167747, realNetBalanceWithInflation: 124639 },
     ],
     pockets: [
         {
-            accountType: 'PEA',
-            initialDeposit: 5000,
-            dcaDeposited: 10000,
-            totalDeposited: 15000,
-            dcaMonthsCount: 48,
-            lastDcaAmount: 150,
+            accountType: 'LIVRET_A',
+            initialDeposit: 0,
+            dcaDeposited: 22950,
+            totalDeposited: 22950,
+            dcaMonthsCount: 12,
+            lastDcaAmount: 950,
             firstResidualDcaAmount: 0,
-            ceilingReachedMonth: 36,
-            grossBalance: 17200,
-            totalGains: 2200,
-            taxesAmount: 1200,
+            ceilingReachedMonth: 12,
+            grossBalance: 49882,
+            totalGains: 26932,
+            taxesAmount: 0,
             incomeTaxAmount: 0,
-            socialLeviesAmount: 1200,
-            taxRegime: 'SOCIAL_LEVIES_ONLY',
-            netBalance: 16000,
-            brokerageFeesAmount: 10,
-            managementFeesAmount: 40,
-            terImpactAmount: 5,
+            socialLeviesAmount: 0,
+            taxRegime: 'EXEMPT',
+            netBalance: 49882,
+            brokerageFeesAmount: 0,
+            managementFeesAmount: 2200,
+            terImpactAmount: 0,
             custodyFeesAmount: 0,
             arbitrageFeesAmount: 0,
-            totalFeesAmount: 55,
+            totalFeesAmount: 2200,
         },
         {
             accountType: 'CTO',
             initialDeposit: 0,
-            dcaDeposited: 10000,
-            totalDeposited: 10000,
-            dcaMonthsCount: 40,
-            lastDcaAmount: 250,
-            firstResidualDcaAmount: 300,
+            dcaDeposited: 79020,
+            totalDeposited: 79020,
+            dcaMonthsCount: 180,
+            lastDcaAmount: 439,
+            firstResidualDcaAmount: 1050,
             ceilingReachedMonth: null,
-            grossBalance: 11200,
-            totalGains: 1200,
-            taxesAmount: 572.22,
-            incomeTaxAmount: 200,
-            socialLeviesAmount: 372.22,
+            grossBalance: 134513,
+            totalGains: 55493,
+            taxesAmount: 16648,
+            incomeTaxAmount: 7099,
+            socialLeviesAmount: 9549,
             taxRegime: 'FLAT_TAX',
-            netBalance: 10627.78,
-            brokerageFeesAmount: 20,
-            managementFeesAmount: 0,
-            terImpactAmount: 15,
-            custodyFeesAmount: 5,
+            netBalance: 117865,
+            brokerageFeesAmount: 0,
+            managementFeesAmount: 5933,
+            terImpactAmount: 0,
+            custodyFeesAmount: 0,
             arbitrageFeesAmount: 0,
-            totalFeesAmount: 40,
+            totalFeesAmount: 5933,
         },
+    ],
+    totalFeesAmount: 8133,
+};
+
+const input: MultiEnvelopeScenarioInput = {
+    envelopes: [
+        { accountType: 'LIVRET_A', monthlyContribution: 0, durationYears: 15, annualReturnRate: 0.03, inflationRate: 0.02 },
+        { accountType: 'CTO', monthlyContribution: 439, durationYears: 15, annualReturnRate: 0.063, inflationRate: 0.02 },
     ],
 };
 
-describe('MultiEnvelopeScenarioSummary', () => {
+describe('MultiEnvelopeScenarioSummary ("Verdict d\'abord")', () => {
     beforeEach(async () => {
         await i18n.changeLanguage('fr');
     });
 
-    it('renders the headline figures', () => {
-        render(<MultiEnvelopeScenarioSummary result={result} />);
+    it('renders the hero: net balance, multiplier and the narrative sentence', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.summaryTitle'))).toBeInTheDocument();
-        expect(screen.getByText('26 628 €')).toBeInTheDocument();
-        expect(screen.getByText('24 001 €')).toBeInTheDocument();
-        expect(screen.getAllByText('25 000 €').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('167 747 €').length).toBeGreaterThan(0);
+        expect(screen.getByText('×1,65')).toBeInTheDocument();
+        expect(
+            screen.getByText(
+                i18n.t('scenario.multiEnvelope.verdict.narrative', {
+                    deposited: '101 970 €',
+                    netGains: '65 777 €',
+                    realNet: '124 639 €',
+                }),
+            ),
+        ).toBeInTheDocument();
     });
 
-    it('renders the aggregated portfolio chart from yearlyBreakdown', () => {
-        render(<MultiEnvelopeScenarioSummary result={result} />);
+    it('renders the 4 stat tiles, replacing the unavailable "TRI net" with the real total-fees figure', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
+
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.stats.netGain'))).toBeInTheDocument();
+        expect(screen.getAllByText(i18n.t('scenario.multiEnvelope.verdict.stats.totalFees')).length).toBeGreaterThan(0);
+        expect(screen.getAllByText('8 133 €').length).toBeGreaterThan(0);
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.stats.realNet'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.stats.inflationCost'))).toBeInTheDocument();
+        expect(screen.queryByText(/TRI/i)).not.toBeInTheDocument();
+    });
+
+    it('reuses ScenarioChart for the aggregated portfolio curve', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
         expect(screen.getByText(i18n.t('scenario.chart.title'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.chartSubtitle'))).toBeInTheDocument();
     });
 
-    it('renders the final-balance-by-envelope chart with a legend entry per pocket', () => {
-        render(<MultiEnvelopeScenarioSummary result={result} />);
+    it('renders "Où va l\'argent" with the deposits/gains/tax breakdown and a fees note', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.finalBalanceChartTitle'))).toBeInTheDocument();
-        expect(screen.getAllByText(i18n.t('simulator.multiEnvelope.accountTypes.PEA')).length).toBeGreaterThan(0);
-        expect(screen.getAllByText(i18n.t('simulator.multiEnvelope.accountTypes.CTO')).length).toBeGreaterThan(0);
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.breakdown.title'))).toBeInTheDocument();
+        expect(screen.getAllByText('101 970 €').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('65 777 €').length).toBeGreaterThan(0);
+        expect(screen.getAllByText('16 648 €').length).toBeGreaterThan(0);
     });
 
-    it('renders the enriched per-pocket detail: deposits, fees, taxation and result', () => {
-        render(<MultiEnvelopeScenarioSummary result={result} />);
+    it('names the taxed envelope in the tax note when exactly one pocket pays tax', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
-        // Deposits: DCA cumulé, months count, and the ceiling-reached mention for the PEA pocket.
-        expect(screen.getAllByText('10 000 €', { exact: false }).length).toBeGreaterThan(0);
+        // Only the CTO pocket has taxesAmount > 0 here (Livret A is exempt) — 16648/55493 ≈ 30%.
         expect(
-            screen.getByText(i18n.t('scenario.multiEnvelope.pocket.deposits.ceilingReachedAtMonth', { month: 36 })),
+            screen.getByText(
+                i18n.t('scenario.multiEnvelope.verdict.breakdown.taxNoteNamed', {
+                    percent: '30,0 %',
+                    accountType: i18n.t('simulator.multiEnvelope.accountTypes.CTO'),
+                }),
+            ),
         ).toBeInTheDocument();
+    });
 
-        // Residual DCA is only shown for the CTO pocket (300 €), not the PEA one (0 €).
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.pocket.deposits.residualDca'))).toBeInTheDocument();
+    it('renders the read-only "Hypothèses" panel with real per-envelope input values, no recompute copy', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
-        // Fees: all 5 categories plus the total, for at least one pocket.
-        expect(screen.getAllByText(i18n.t('scenario.multiEnvelope.pocket.fees.brokerage')).length).toBe(2);
-        expect(screen.getAllByText(i18n.t('scenario.multiEnvelope.pocket.fees.total')).length).toBe(2);
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.hypotheses.title'))).toBeInTheDocument();
+        expect(screen.getByText('6,3 %')).toBeInTheDocument();
+        expect(screen.getByText('439 €')).toBeInTheDocument();
+        expect(screen.queryByText(/se recalcule/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(i18n.t('scenario.multiEnvelope.verdict.hypotheses.subtitle'))).toBeInTheDocument();
+    });
 
-        // Taxation: the resolved regime label and the IR/social levies split.
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.SOCIAL_LEVIES_ONLY'))).toBeInTheDocument();
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.FLAT_TAX'))).toBeInTheDocument();
+    it('renders the comparison table with one column per envelope and a total column', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
 
-        // Result: gross gains and net balance.
-        expect(screen.getAllByText(i18n.t('scenario.multiEnvelope.pocket.result.totalGains')).length).toBe(2);
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.pocketsTitle'))).toBeInTheDocument();
+        expect(screen.getAllByText(i18n.t('simulator.multiEnvelope.accountTypes.LIVRET_A')).length).toBeGreaterThan(0);
+        expect(screen.getAllByText(i18n.t('simulator.multiEnvelope.accountTypes.CTO')).length).toBeGreaterThan(0);
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.EXEMPT'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.FLAT_TAX'), { exact: false })).toBeInTheDocument();
+        expect(screen.getAllByText('167 747 €').length).toBeGreaterThan(0);
     });
 });

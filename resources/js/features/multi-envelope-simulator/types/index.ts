@@ -98,4 +98,24 @@ export interface MultiEnvelopeScenarioResult {
     summary: MultiEnvelopeYearlyResult;
     yearlyBreakdown: MultiEnvelopeYearlyResult[];
     pockets: MultiEnvelopePocketResult[];
+    totalFeesAmount: number;
+}
+
+/**
+ * Minimal mirror of MultiEnvelopeScenarioPayload::input()'s per-envelope
+ * shape — only the fields the read-only "Hypothèses" panel of the
+ * "Verdict d'abord" layout displays (rendement, versement mensuel, durée,
+ * inflation), not every field the payload carries (fees, isUncapped,
+ * customTaxRate, ... are stored but not shown there).
+ */
+export interface MultiEnvelopeInputEnvelope {
+    accountType: AccountType;
+    monthlyContribution: number;
+    durationYears: number;
+    annualReturnRate: number;
+    inflationRate: number;
+}
+
+export interface MultiEnvelopeScenarioInput {
+    envelopes: MultiEnvelopeInputEnvelope[];
 }

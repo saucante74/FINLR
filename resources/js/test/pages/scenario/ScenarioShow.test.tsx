@@ -42,7 +42,9 @@ const props: ScenarioProps = {
 const multiEnvelopeProps: ScenarioProps = {
     id: 43,
     name: null,
-    input: props.input,
+    input: {
+        envelopes: [{ accountType: 'PEA', monthlyContribution: 208.33, durationYears: 10, annualReturnRate: 0.06, inflationRate: 0.02 }],
+    },
     result: {
         summary: { year: 10, totalDeposited: 25000, grossBalance: 30000, netBalance: 26627.78, realNetBalanceWithInflation: 24000.55 },
         yearlyBreakdown: [
@@ -74,6 +76,7 @@ const multiEnvelopeProps: ScenarioProps = {
                 totalFeesAmount: 0,
             },
         ],
+        totalFeesAmount: 0,
     },
     calculatorType: 'multi_envelope',
     createdAt: '2026-01-15T10:00:00.000000Z',
@@ -94,11 +97,12 @@ describe('ScenarioShow page', () => {
         expect(screen.queryByText(/scenarioId/i)).not.toBeInTheDocument();
     });
 
-    it('renders the multi-envelope summary instead of the single-envelope details for a multi_envelope scenario', () => {
+    it('renders the multi-envelope "Verdict d\'abord" summary instead of the single-envelope details for a multi_envelope scenario', () => {
         render(<ScenarioShow {...multiEnvelopeProps} />);
 
-        expect(screen.getByText(i18n.t('scenario.multiEnvelope.summaryTitle'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.hypotheses.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.multiEnvelope.pocketsTitle'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('scenario.multiEnvelope.verdict.exportPdf'))).toBeDisabled();
         // The aggregated portfolio chart is reused as-is for multi-envelope results (same component,
         // same title) — only the single-envelope-specific ScenarioDetails is absent here.
         expect(screen.getByText(i18n.t('scenario.chart.title'))).toBeInTheDocument();

@@ -277,7 +277,6 @@
             "realNetBalance": "Capital net réel (ajusté de l'inflation)",
             "totalDeposited": "Total versé",
             "pocketsTitle": "Détail par enveloppe",
-            "finalBalanceChartTitle": "Solde net par enveloppe",
             "taxRegimes": {
                 "FLAT_TAX": "Prélèvement forfaitaire unique (PFU)",
                 "PROGRESSIVE_SCALE": "Barème progressif de l'IR",
@@ -286,40 +285,49 @@
                 "EXEMPT": "Exonéré",
                 "CUSTOM_RATE": "Taux personnalisé"
             },
-            "pocket": {
-                "deposits": {
-                    "title": "Versements",
-                    "initialDeposit": "Apport initial",
-                    "dcaDeposited": "DCA cumulé",
-                    "dcaMonths_one": "sur {{count}} mois",
-                    "dcaMonths_other": "sur {{count}} mois",
-                    "lastDcaAmount": "Dernier DCA versé",
-                    "ceilingReachedAtMonth": "Plafond atteint au mois {{month}}",
-                    "ceilingReachedAtStart": "Plafond atteint dès l'apport initial",
-                    "residualDca": "Reliquat reçu de la poche précédente",
-                    "totalDeposited": "Total déposé"
+            "verdict": {
+                "exportPdf": "Exporter en PDF",
+                "heroLabel": "Capital net après impôts · {{duration}}",
+                "narrative": "Vous auriez versé {{deposited}} et récupéré {{netGains}} de gains nets. En pouvoir d'achat d'aujourd'hui, cela représente {{realNet}}.",
+                "stats": {
+                    "netGain": "Gain net",
+                    "netGainHelp": "après impôts et frais",
+                    "totalFees": "Frais cumulés",
+                    "totalFeesHelp": "prélevés sur la durée",
+                    "realNet": "Pouvoir d'achat réel",
+                    "realNetHelp": "inflation {{rate}}",
+                    "inflationCost": "Coût inflation",
+                    "inflationCostHelp": "sur {{duration}}"
                 },
-                "fees": {
-                    "title": "Frais",
-                    "brokerage": "Courtage",
-                    "management": "Gestion",
-                    "ter": "Impact TER",
-                    "custody": "Garde",
-                    "arbitrage": "Arbitrage",
-                    "total": "Total des frais"
+                "chartSubtitle": "L'écart entre les courbes est ce que coûtent l'impôt et l'inflation.",
+                "breakdown": {
+                    "title": "Où va l'argent",
+                    "subtitle": "Décomposition du capital brut de {{amount}}.",
+                    "deposits": "Vos versements",
+                    "share": "{{percent}} du capital brut",
+                    "gains": "Gains conservés",
+                    "tax": "Impôt à la sortie",
+                    "taxNoteNamed": "{{percent}} des gains du {{accountType}}",
+                    "taxNoteBlended": "{{percent}} de vos gains bruts",
+                    "feesNote": "Les frais cumulés de {{amount}} sont déjà déduits du capital brut. Ils représentent {{percent}} de vos gains bruts."
                 },
-                "taxation": {
-                    "title": "Fiscalité",
-                    "regime": "Régime retenu",
-                    "incomeTax": "Impôt sur le revenu",
-                    "socialLevies": "Prélèvements sociaux",
-                    "total": "Impôt total"
+                "hypotheses": {
+                    "title": "Hypothèses",
+                    "subtitle": "Paramètres de cette simulation."
                 },
-                "result": {
-                    "title": "Résultat",
-                    "grossBalance": "Solde brut",
-                    "totalGains": "Gains bruts",
-                    "netBalance": "Solde net"
+                "detail": {
+                    "subtitle": "Comparaison poste par poste.",
+                    "poste": "Poste",
+                    "total": "Total",
+                    "rows": {
+                        "deposits": "Versements",
+                        "grossGains": "Gains bruts",
+                        "grossBalance": "Capital brut",
+                        "fees": "Frais cumulés",
+                        "taxRegime": "Régime fiscal",
+                        "tax": "Impôt à la sortie",
+                        "netBalance": "Solde net"
+                    }
                 }
             }
         },
