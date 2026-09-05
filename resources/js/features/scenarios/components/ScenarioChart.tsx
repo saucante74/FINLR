@@ -9,9 +9,8 @@ import {
     Y_AXIS_SMALL_STEP,
     Y_AXIS_STEP_THRESHOLD,
 } from '@/features/scenarios/constants';
-import type { ScenarioChartSeriesKey, ScenarioResult, ScenarioResultPoint } from '@/features/scenarios/types';
+import type { ScenarioChartSeriesKey, ScenarioResultPoint } from '@/features/scenarios/types';
 import { formatCompact, formatCurrency } from '@/lib/currency';
-import { cn } from '@/lib/utils';
 
 function niceCeil(value: number): number {
     if (value <= 0) return 1;
@@ -21,10 +20,19 @@ function niceCeil(value: number): number {
 }
 
 interface ScenarioChartProps {
-    result: ScenarioResult;
+    /**
+     * Only `points` is read below — typed as a subset of ScenarioResult
+     * rather than the full interface so callers with an equivalent
+     * points-only shape (e.g. MultiEnvelopeScenarioSummary's aggregated
+     * yearlyBreakdown) can reuse this chart without fabricating the other,
+     * single-envelope-specific summary fields.
+     */
+    result: { points: ScenarioResultPoint[] };
+    /** Optional subtitle rendered under the card title (e.g. MultiEnvelopeScenarioSummary's "Verdict d'abord" copy). */
+    description?: string;
 }
 
-export default function ScenarioChart({ result }: ScenarioChartProps) {
+export default function ScenarioChart({ result, description }: ScenarioChartProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage;
     const containerRef = useRef<HTMLDivElement>(null);
@@ -91,19 +99,16 @@ export default function ScenarioChart({ result }: ScenarioChartProps) {
         <Card>
             <CardHeader>
                 <CardTitle>{t('scenario.chart.title')}</CardTitle>
+                {description && <p className="text-sm text-muted-foreground">{description}</p>}
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     {SCENARIO_CHART_SERIES.map((s) => (
                         <span key={s.key} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span
-                                aria-hidden
-                                className={cn(
-                                    'h-2.5 w-4 rounded-full',
-                                    s.dashed && 'border-b-2 border-dashed bg-transparent',
-                                )}
-                                style={s.dashed ? { borderColor: s.color } : { backgroundColor: s.color }}
-                            />
+                            {/* Always a solid swatch here, even for a dashed series (s.dashed):
+                                a dashed swatch reads poorly at this size — the dash pattern itself
+                                stays on the chart's own line (strokeDasharray below), untouched. */}
+                            <span aria-hidden className="h-2.5 w-4 rounded-full" style={{ backgroundColor: s.color }} />
                             {t(s.labelKey)}
                         </span>
                     ))}

@@ -102,19 +102,21 @@ export default function MultiEnvelopeForm({ defaults, accountTypes }: MultiEnvel
                         </h2>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="name">{t('simulator.multiEnvelope.form.name')}</Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                type="text"
-                                maxLength={255}
-                                placeholder={t('simulator.multiEnvelope.form.namePlaceholder')}
-                                value={data.name}
-                                aria-invalid={Boolean(errors.name)}
-                                onChange={(e) => setData('name', e.target.value)}
-                            />
-                            {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="name">{t('simulator.multiEnvelope.form.name')}</Label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    maxLength={255}
+                                    placeholder={t('simulator.multiEnvelope.form.namePlaceholder')}
+                                    value={data.name}
+                                    aria-invalid={Boolean(errors.name)}
+                                    onChange={(e) => setData('name', e.target.value)}
+                                />
+                                {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+                            </div>
                         </div>
 
                         <SliderField
@@ -125,7 +127,7 @@ export default function MultiEnvelopeForm({ defaults, accountTypes }: MultiEnvel
                             unit="percent"
                             step={0.1}
                             min={0}
-                            max={10}
+                            max={50}
                             error={errors.inflationRate}
                             onChange={(value) => setData('inflationRate', value)}
                         />
@@ -133,23 +135,11 @@ export default function MultiEnvelopeForm({ defaults, accountTypes }: MultiEnvel
                 </Card>
 
                 <Card>
-                    <CardHeader className="flex flex-row items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs text-brand">02</span>
-                            <h2 className="text-base font-semibold tracking-tight">
-                                {t('simulator.multiEnvelope.form.sections.envelopes')}
-                            </h2>
-                        </div>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            disabled={data.envelopes.length >= MAX_ENVELOPES}
-                            onClick={addEnvelope}
-                        >
-                            <Plus aria-hidden className="size-4" />
-                            {t('simulator.multiEnvelope.form.addEnvelope')}
-                        </Button>
+                    <CardHeader className="flex flex-row items-center gap-2">
+                        <span className="font-mono text-xs text-brand">02</span>
+                        <h2 className="text-base font-semibold tracking-tight">
+                            {t('simulator.multiEnvelope.form.sections.envelopes')}
+                        </h2>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4">
                         {errors.envelopes && (
@@ -170,6 +160,18 @@ export default function MultiEnvelopeForm({ defaults, accountTypes }: MultiEnvel
                                 onRemove={() => removeEnvelope(index)}
                             />
                         ))}
+
+                        <Button
+                            type="button"
+                            variant="brand"
+                            size="sm"
+                            className="w-1/4 min-w-fit self-end"
+                            disabled={data.envelopes.length >= MAX_ENVELOPES}
+                            onClick={addEnvelope}
+                        >
+                            <Plus aria-hidden className="size-4" />
+                            {t('simulator.multiEnvelope.form.addEnvelope')}
+                        </Button>
                     </CardContent>
                 </Card>
             </div>

@@ -86,7 +86,7 @@ export default function EnvelopeRow({ index, accountTypes, values, errors, canRe
                 {canRemove && (
                     <Button
                         type="button"
-                        variant="ghost"
+                        variant="destructive"
                         size="icon"
                         aria-label={t('simulator.multiEnvelope.form.removeEnvelope', { index: index + 1 })}
                         onClick={onRemove}

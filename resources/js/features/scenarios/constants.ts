@@ -1,3 +1,4 @@
+import type { AccountType } from '@/features/multi-envelope-simulator/types';
 import type { ScenarioChartSeries } from '@/features/scenarios/types';
 
 /** Scenario chart series, in stacking order. */
@@ -33,6 +34,27 @@ export const FIRE_SCENARIO_BAR_COLORS: Record<'optimistic' | 'neutral' | 'pessim
 export const ANALOGY_CHART_COLORS: Record<'A' | 'B', string> = {
     A: '#10B981',
     B: '#F97316',
+};
+
+/**
+ * Multi-envelope final-balance-by-envelope chart (MultiEnvelopeScenarioSummary):
+ * one bar per pocket, colored by AccountType. 8 account types, 8 fixed slots
+ * — an exact match for the dataviz reference palette's 8-hue categorical
+ * order, validated for adjacent-pair colorblind safety on bar charts
+ * specifically (worst adjacent CVD Delta-E 9.1 light / 8.4 dark, both above
+ * the >=8 target). Assigned once, in AccountType's declared order, and never
+ * reassigned/recycled — an account type always renders in the same color
+ * across scenarios.
+ */
+export const ACCOUNT_TYPE_CHART_COLORS: Record<AccountType, string> = {
+    PEA: '#2a78d6',
+    PEA_PME: '#eb6834',
+    CTO: '#1baf7a',
+    ASSURANCE_VIE: '#eda100',
+    CAT: '#e87ba4',
+    LIVRET_A: '#008300',
+    LDDS: '#4a3aa7',
+    COMPTE_COURANT: '#e34948',
 };
 
 /** Headroom added above the highest plotted value before rounding up the chart's Y axis. */
