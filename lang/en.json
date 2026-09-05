@@ -276,7 +276,52 @@
             "netBalance": "Final net balance",
             "realNetBalance": "Real net balance (inflation-adjusted)",
             "totalDeposited": "Total deposited",
-            "pocketsTitle": "Breakdown by envelope"
+            "pocketsTitle": "Breakdown by envelope",
+            "finalBalanceChartTitle": "Net balance by envelope",
+            "taxRegimes": {
+                "FLAT_TAX": "Flat tax (PFU)",
+                "PROGRESSIVE_SCALE": "Progressive income tax scale",
+                "LIFE_INSURANCE_REDUCED": "Life insurance regime (allowance)",
+                "SOCIAL_LEVIES_ONLY": "Social levies only",
+                "EXEMPT": "Exempt",
+                "CUSTOM_RATE": "Custom rate"
+            },
+            "pocket": {
+                "deposits": {
+                    "title": "Deposits",
+                    "initialDeposit": "Initial deposit",
+                    "dcaDeposited": "Cumulative DCA",
+                    "dcaMonths_one": "over {{count}} month",
+                    "dcaMonths_other": "over {{count}} months",
+                    "lastDcaAmount": "Last DCA payment",
+                    "ceilingReachedAtMonth": "Ceiling reached at month {{month}}",
+                    "ceilingReachedAtStart": "Ceiling reached from the initial deposit",
+                    "residualDca": "Residual received from the previous pocket",
+                    "totalDeposited": "Total deposited"
+                },
+                "fees": {
+                    "title": "Fees",
+                    "brokerage": "Brokerage",
+                    "management": "Management",
+                    "ter": "TER impact",
+                    "custody": "Custody",
+                    "arbitrage": "Arbitrage",
+                    "total": "Total fees"
+                },
+                "taxation": {
+                    "title": "Taxation",
+                    "regime": "Regime retained",
+                    "incomeTax": "Income tax",
+                    "socialLevies": "Social levies",
+                    "total": "Total tax"
+                },
+                "result": {
+                    "title": "Result",
+                    "grossBalance": "Gross balance",
+                    "totalGains": "Gross gains",
+                    "netBalance": "Net balance"
+                }
+            }
         },
         "rename": {
             "button": "Rename",

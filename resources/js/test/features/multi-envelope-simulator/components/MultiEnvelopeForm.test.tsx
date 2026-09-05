@@ -52,9 +52,28 @@ describe('MultiEnvelopeForm', () => {
     it('renders the shared inflation field once, not per envelope', () => {
         render(<MultiEnvelopeForm defaults={defaults} accountTypes={accountTypes} />);
 
-        expect(
-            screen.getByLabelText(i18n.t('simulator.multiEnvelope.form.fields.inflationRate.label')),
-        ).toHaveValue(2);
+        const inflationField = screen.getByLabelText(i18n.t('simulator.multiEnvelope.form.fields.inflationRate.label'));
+        expect(inflationField).toHaveValue(2);
+        expect(inflationField).toHaveAttribute('max', '50');
+    });
+
+    it('renders the add-envelope button below the envelope list, in brand green', () => {
+        render(<MultiEnvelopeForm defaults={defaults} accountTypes={accountTypes} />);
+
+        const addButton = screen.getByRole('button', { name: i18n.t('simulator.multiEnvelope.form.addEnvelope') });
+        expect(addButton).toHaveAttribute('data-variant', 'brand');
+
+        const envelopeTwoLabel = screen.getByText(i18n.t('simulator.multiEnvelope.form.envelopeLabel', { index: 2 }));
+        expect(envelopeTwoLabel.compareDocumentPosition(addButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it('renders the remove-envelope icon in the destructive (red) variant', () => {
+        render(<MultiEnvelopeForm defaults={defaults} accountTypes={accountTypes} />);
+
+        const removeButton = screen.getByRole('button', {
+            name: i18n.t('simulator.multiEnvelope.form.removeEnvelope', { index: 1 }),
+        });
+        expect(removeButton).toHaveAttribute('data-variant', 'destructive');
     });
 
     it('reflects the scenario name placeholder in the summary sidebar', () => {

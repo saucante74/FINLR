@@ -276,7 +276,52 @@
             "netBalance": "Capitale netto finale",
             "realNetBalance": "Capitale netto reale (rettificato dall'inflazione)",
             "totalDeposited": "Totale versato",
-            "pocketsTitle": "Dettaglio per involucro"
+            "pocketsTitle": "Dettaglio per involucro",
+            "finalBalanceChartTitle": "Saldo netto per involucro",
+            "taxRegimes": {
+                "FLAT_TAX": "Imposta forfettaria unica (PFU)",
+                "PROGRESSIVE_SCALE": "Scaglioni progressivi IRPEF",
+                "LIFE_INSURANCE_REDUCED": "Regime assicurazione vita (abbattimento)",
+                "SOCIAL_LEVIES_ONLY": "Solo prelievi sociali",
+                "EXEMPT": "Esente",
+                "CUSTOM_RATE": "Aliquota personalizzata"
+            },
+            "pocket": {
+                "deposits": {
+                    "title": "Versamenti",
+                    "initialDeposit": "Apporto iniziale",
+                    "dcaDeposited": "DCA cumulato",
+                    "dcaMonths_one": "su {{count}} mese",
+                    "dcaMonths_other": "su {{count}} mesi",
+                    "lastDcaAmount": "Ultimo DCA versato",
+                    "ceilingReachedAtMonth": "Massimale raggiunto al mese {{month}}",
+                    "ceilingReachedAtStart": "Massimale raggiunto fin dall'apporto iniziale",
+                    "residualDca": "Residuo ricevuto dal conto precedente",
+                    "totalDeposited": "Totale depositato"
+                },
+                "fees": {
+                    "title": "Commissioni",
+                    "brokerage": "Intermediazione",
+                    "management": "Gestione",
+                    "ter": "Impatto TER",
+                    "custody": "Custodia",
+                    "arbitrage": "Arbitraggio",
+                    "total": "Totale commissioni"
+                },
+                "taxation": {
+                    "title": "Fiscalità",
+                    "regime": "Regime applicato",
+                    "incomeTax": "Imposta sul reddito",
+                    "socialLevies": "Prelievi sociali",
+                    "total": "Imposta totale"
+                },
+                "result": {
+                    "title": "Risultato",
+                    "grossBalance": "Saldo lordo",
+                    "totalGains": "Guadagni lordi",
+                    "netBalance": "Saldo netto"
+                }
+            }
         },
         "rename": {
             "button": "Rinomina",

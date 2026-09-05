@@ -276,7 +276,52 @@
             "netBalance": "Capital net final",
             "realNetBalance": "Capital net réel (ajusté de l'inflation)",
             "totalDeposited": "Total versé",
-            "pocketsTitle": "Détail par enveloppe"
+            "pocketsTitle": "Détail par enveloppe",
+            "finalBalanceChartTitle": "Solde net par enveloppe",
+            "taxRegimes": {
+                "FLAT_TAX": "Prélèvement forfaitaire unique (PFU)",
+                "PROGRESSIVE_SCALE": "Barème progressif de l'IR",
+                "LIFE_INSURANCE_REDUCED": "Régime assurance-vie (abattement)",
+                "SOCIAL_LEVIES_ONLY": "Prélèvements sociaux seuls",
+                "EXEMPT": "Exonéré",
+                "CUSTOM_RATE": "Taux personnalisé"
+            },
+            "pocket": {
+                "deposits": {
+                    "title": "Versements",
+                    "initialDeposit": "Apport initial",
+                    "dcaDeposited": "DCA cumulé",
+                    "dcaMonths_one": "sur {{count}} mois",
+                    "dcaMonths_other": "sur {{count}} mois",
+                    "lastDcaAmount": "Dernier DCA versé",
+                    "ceilingReachedAtMonth": "Plafond atteint au mois {{month}}",
+                    "ceilingReachedAtStart": "Plafond atteint dès l'apport initial",
+                    "residualDca": "Reliquat reçu de la poche précédente",
+                    "totalDeposited": "Total déposé"
+                },
+                "fees": {
+                    "title": "Frais",
+                    "brokerage": "Courtage",
+                    "management": "Gestion",
+                    "ter": "Impact TER",
+                    "custody": "Garde",
+                    "arbitrage": "Arbitrage",
+                    "total": "Total des frais"
+                },
+                "taxation": {
+                    "title": "Fiscalité",
+                    "regime": "Régime retenu",
+                    "incomeTax": "Impôt sur le revenu",
+                    "socialLevies": "Prélèvements sociaux",
+                    "total": "Impôt total"
+                },
+                "result": {
+                    "title": "Résultat",
+                    "grossBalance": "Solde brut",
+                    "totalGains": "Gains bruts",
+                    "netBalance": "Solde net"
+                }
+            }
         },
         "rename": {
             "button": "Renommer",

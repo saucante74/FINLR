@@ -9,7 +9,7 @@ import {
     Y_AXIS_SMALL_STEP,
     Y_AXIS_STEP_THRESHOLD,
 } from '@/features/scenarios/constants';
-import type { ScenarioChartSeriesKey, ScenarioResult, ScenarioResultPoint } from '@/features/scenarios/types';
+import type { ScenarioChartSeriesKey, ScenarioResultPoint } from '@/features/scenarios/types';
 import { formatCompact, formatCurrency } from '@/lib/currency';
 import { cn } from '@/lib/utils';
 
@@ -21,7 +21,14 @@ function niceCeil(value: number): number {
 }
 
 interface ScenarioChartProps {
-    result: ScenarioResult;
+    /**
+     * Only `points` is read below — typed as a subset of ScenarioResult
+     * rather than the full interface so callers with an equivalent
+     * points-only shape (e.g. MultiEnvelopeScenarioSummary's aggregated
+     * yearlyBreakdown) can reuse this chart without fabricating the other,
+     * single-envelope-specific summary fields.
+     */
+    result: { points: ScenarioResultPoint[] };
 }
 
 export default function ScenarioChart({ result }: ScenarioChartProps) {

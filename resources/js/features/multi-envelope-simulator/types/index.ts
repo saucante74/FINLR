@@ -46,28 +46,56 @@ export interface MultiEnvelopeSimulatorPageProps {
     accountTypes: AccountType[];
 }
 
+/** Mirrors App\Modules\SimulationEngine\Enums\TaxRegime (6 cases). */
+export type TaxRegime =
+    | 'FLAT_TAX'
+    | 'PROGRESSIVE_SCALE'
+    | 'LIFE_INSURANCE_REDUCED'
+    | 'SOCIAL_LEVIES_ONLY'
+    | 'EXEMPT'
+    | 'CUSTOM_RATE';
+
 /**
- * Minimal mirror of the fields MultiEnvelopeScenarioSummary actually
- * displays from MultiEnvelopeCalculationResultData's stored payload
- * (app/Modules/MultiEnvelopeSimulator/Support/MultiEnvelopeScenarioPayload.php)
- * — not every field the payload carries, only the ones this first,
- * minimal result view renders.
+ * Full mirror of PocketResultData
+ * (app/Modules/MultiEnvelopeSimulator/Support/MultiEnvelopeScenarioPayload.php),
+ * one per envelope of the cascade — every field the payload carries, so the
+ * result view can show the full detail per pocket (deposits, the 5 fee
+ * categories, taxation, result).
  */
 export interface MultiEnvelopePocketResult {
     accountType: AccountType;
+    initialDeposit: number;
+    dcaDeposited: number;
     totalDeposited: number;
+    dcaMonthsCount: number;
+    lastDcaAmount: number;
+    firstResidualDcaAmount: number;
+    ceilingReachedMonth: number | null;
+    grossBalance: number;
+    totalGains: number;
+    taxesAmount: number;
+    incomeTaxAmount: number;
+    socialLeviesAmount: number;
+    taxRegime: TaxRegime;
     netBalance: number;
-    taxRegime: string;
+    brokerageFeesAmount: number;
+    managementFeesAmount: number;
+    terImpactAmount: number;
+    custodyFeesAmount: number;
+    arbitrageFeesAmount: number;
+    totalFeesAmount: number;
 }
 
 export interface MultiEnvelopeYearlyResult {
     year: number;
     totalDeposited: number;
+    grossBalance: number;
     netBalance: number;
     realNetBalanceWithInflation: number;
 }
 
 export interface MultiEnvelopeScenarioResult {
     summary: MultiEnvelopeYearlyResult;
+    yearlyBreakdown: MultiEnvelopeYearlyResult[];
     pockets: MultiEnvelopePocketResult[];
 }
