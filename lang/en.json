@@ -324,8 +324,11 @@
                         "grossGains": "Gross gains",
                         "grossBalance": "Gross balance",
                         "fees": "Cumulative fees",
+                        "feesShort": "Fees",
                         "taxRegime": "Tax regime",
+                        "taxRegimeShort": "Regime",
                         "tax": "Tax on exit",
+                        "taxShort": "Tax",
                         "netBalance": "Net balance"
                     }
                 }

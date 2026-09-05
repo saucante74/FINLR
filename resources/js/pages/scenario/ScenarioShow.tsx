@@ -40,7 +40,7 @@ export default function ScenarioShow({ id, input, result, calculatorType, create
                     </div>
 
                     {calculatorType === 'multi_envelope' && (
-                        <Button type="button" variant="brand" size="sm" disabled>
+                        <Button type="button" variant="brand" size="lg" disabled>
                             {t('scenario.multiEnvelope.verdict.exportPdf')}
                         </Button>
                     )}

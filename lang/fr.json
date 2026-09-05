@@ -324,8 +324,11 @@
                         "grossGains": "Gains bruts",
                         "grossBalance": "Capital brut",
                         "fees": "Frais cumulés",
+                        "feesShort": "Frais",
                         "taxRegime": "Régime fiscal",
+                        "taxRegimeShort": "Régime",
                         "tax": "Impôt à la sortie",
+                        "taxShort": "Impôt",
                         "netBalance": "Solde net"
                     }
                 }

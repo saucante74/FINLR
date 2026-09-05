@@ -10,7 +10,7 @@ import type {
 import ScenarioChart from '@/features/scenarios/components/ScenarioChart';
 import { ACCOUNT_TYPE_CHART_COLORS, SCENARIO_CHART_SERIES } from '@/features/scenarios/constants';
 import type { ScenarioResultPoint } from '@/features/scenarios/types';
-import { formatCurrency } from '@/lib/currency';
+import { formatCompact, formatCurrency } from '@/lib/currency';
 
 /**
  * Cosmetic-only ranges used to position the decorative "Hypothèses" sliders
@@ -348,107 +348,122 @@ export default function MultiEnvelopeScenarioSummary({ result, input }: MultiEnv
                     </div>
 
                     <div className="overflow-x-auto">
+                        {/*
+                         * Compacted to push the horizontal-scroll threshold from 3 to ~4-5
+                         * envelopes: amounts use formatCompact (already established for
+                         * ScenarioChart's axis ticks and FireScenarioSummary's bar labels,
+                         * reused here rather than inventing a second compact formatter),
+                         * column padding is tighter (px-2 instead of px-4), and the header
+                         * row matches AnalogyScenarioSummary's existing dense-table type
+                         * scale (text-[11px] uppercase) instead of introducing a new one.
+                         * The 3 longest row labels (Frais cumulés, Régime fiscal, Impôt à la
+                         * sortie) are shortened for display, with the full label kept as a
+                         * native tooltip (title) so meaning isn't lost.
+                         */}
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b border-border text-left text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                                    <th className="py-2 pr-4">{t('scenario.multiEnvelope.verdict.detail.poste')}</th>
+                                <tr className="border-b border-border text-left text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+                                    <th className="py-2 pr-2">{t('scenario.multiEnvelope.verdict.detail.poste')}</th>
                                     {pockets.map((pocket, index) => (
-                                        <th key={index} className="px-4 py-2 text-right">
+                                        <th key={index} className="px-2 py-2 text-right">
                                             {accountTypeLabel(pocket.accountType)}
                                         </th>
                                     ))}
-                                    <th className="py-2 pl-4 text-right">{t('scenario.multiEnvelope.verdict.detail.total')}</th>
+                                    <th className="py-2 pl-2 text-right">{t('scenario.multiEnvelope.verdict.detail.total')}</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-border">
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
+                                    <td className="py-2.5 pr-2 text-muted-foreground">
                                         {t('scenario.multiEnvelope.verdict.detail.rows.deposits')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums">
-                                            {formatCurrency(pocket.totalDeposited, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums">
+                                            {formatCompact(pocket.totalDeposited, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono font-medium tabular-nums">
-                                        {formatCurrency(totalDeposited, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono font-medium tabular-nums">
+                                        {formatCompact(totalDeposited, locale)}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
+                                    <td className="py-2.5 pr-2 text-muted-foreground">
                                         {t('scenario.multiEnvelope.verdict.detail.rows.grossGains')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums">
-                                            {formatCurrency(pocket.totalGains, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums">
+                                            {formatCompact(pocket.totalGains, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono font-medium tabular-nums">
-                                        {formatCurrency(grossGains, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono font-medium tabular-nums">
+                                        {formatCompact(grossGains, locale)}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
+                                    <td className="py-2.5 pr-2 text-muted-foreground">
                                         {t('scenario.multiEnvelope.verdict.detail.rows.grossBalance')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums">
-                                            {formatCurrency(pocket.grossBalance, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums">
+                                            {formatCompact(pocket.grossBalance, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono font-medium tabular-nums">
-                                        {formatCurrency(grossBalance, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono font-medium tabular-nums">
+                                        {formatCompact(grossBalance, locale)}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
-                                        {t('scenario.multiEnvelope.verdict.detail.rows.fees')}
+                                    <td className="py-2.5 pr-2 text-muted-foreground" title={t('scenario.multiEnvelope.verdict.detail.rows.fees')}>
+                                        {t('scenario.multiEnvelope.verdict.detail.rows.feesShort')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums text-destructive">
-                                            − {formatCurrency(pocket.totalFeesAmount, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums text-destructive">
+                                            − {formatCompact(pocket.totalFeesAmount, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono font-medium tabular-nums text-destructive">
-                                        − {formatCurrency(result.totalFeesAmount, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono font-medium tabular-nums text-destructive">
+                                        − {formatCompact(result.totalFeesAmount, locale)}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
-                                        {t('scenario.multiEnvelope.verdict.detail.rows.taxRegime')}
+                                    <td
+                                        className="py-2.5 pr-2 text-muted-foreground"
+                                        title={t('scenario.multiEnvelope.verdict.detail.rows.taxRegime')}
+                                    >
+                                        {t('scenario.multiEnvelope.verdict.detail.rows.taxRegimeShort')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right">
+                                        <td key={index} className="px-2 py-2.5 text-right">
                                             {t(`scenario.multiEnvelope.taxRegimes.${pocket.taxRegime}`)}
                                             {pocket.taxesAmount > 0 &&
                                                 pocket.totalGains > 0 &&
                                                 ` ${formatPercent((pocket.taxesAmount / pocket.totalGains) * 100, locale, 0)}`}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right text-muted-foreground">—</td>
+                                    <td className="py-2.5 pl-2 text-right text-muted-foreground">—</td>
                                 </tr>
                                 <tr>
-                                    <td className="py-2.5 pr-4 text-muted-foreground">
-                                        {t('scenario.multiEnvelope.verdict.detail.rows.tax')}
+                                    <td className="py-2.5 pr-2 text-muted-foreground" title={t('scenario.multiEnvelope.verdict.detail.rows.tax')}>
+                                        {t('scenario.multiEnvelope.verdict.detail.rows.taxShort')}
                                     </td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums text-destructive">
-                                            − {formatCurrency(pocket.taxesAmount, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums text-destructive">
+                                            − {formatCompact(pocket.taxesAmount, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono font-medium tabular-nums text-destructive">
-                                        − {formatCurrency(totalTax, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono font-medium tabular-nums text-destructive">
+                                        − {formatCompact(totalTax, locale)}
                                     </td>
                                 </tr>
                                 <tr className="font-semibold">
-                                    <td className="py-2.5 pr-4">{t('scenario.multiEnvelope.verdict.detail.rows.netBalance')}</td>
+                                    <td className="py-2.5 pr-2">{t('scenario.multiEnvelope.verdict.detail.rows.netBalance')}</td>
                                     {pockets.map((pocket, index) => (
-                                        <td key={index} className="px-4 py-2.5 text-right font-mono tabular-nums text-brand">
-                                            {formatCurrency(pocket.netBalance, locale)}
+                                        <td key={index} className="px-2 py-2.5 text-right font-mono tabular-nums text-brand">
+                                            {formatCompact(pocket.netBalance, locale)}
                                         </td>
                                     ))}
-                                    <td className="py-2.5 pl-4 text-right font-mono tabular-nums text-brand">
-                                        {formatCurrency(netBalance, locale)}
+                                    <td className="py-2.5 pl-2 text-right font-mono tabular-nums text-brand">
+                                        {formatCompact(netBalance, locale)}
                                     </td>
                                 </tr>
                             </tbody>

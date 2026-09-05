@@ -11,7 +11,6 @@ import {
 } from '@/features/scenarios/constants';
 import type { ScenarioChartSeriesKey, ScenarioResultPoint } from '@/features/scenarios/types';
 import { formatCompact, formatCurrency } from '@/lib/currency';
-import { cn } from '@/lib/utils';
 
 function niceCeil(value: number): number {
     if (value <= 0) return 1;
@@ -106,14 +105,10 @@ export default function ScenarioChart({ result, description }: ScenarioChartProp
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                     {SCENARIO_CHART_SERIES.map((s) => (
                         <span key={s.key} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span
-                                aria-hidden
-                                className={cn(
-                                    'h-2.5 w-4 rounded-full',
-                                    s.dashed && 'border-b-2 border-dashed bg-transparent',
-                                )}
-                                style={s.dashed ? { borderColor: s.color } : { backgroundColor: s.color }}
-                            />
+                            {/* Always a solid swatch here, even for a dashed series (s.dashed):
+                                a dashed swatch reads poorly at this size — the dash pattern itself
+                                stays on the chart's own line (strokeDasharray below), untouched. */}
+                            <span aria-hidden className="h-2.5 w-4 rounded-full" style={{ backgroundColor: s.color }} />
                             {t(s.labelKey)}
                         </span>
                     ))}

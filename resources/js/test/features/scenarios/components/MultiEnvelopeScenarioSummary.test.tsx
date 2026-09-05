@@ -151,6 +151,27 @@ describe('MultiEnvelopeScenarioSummary ("Verdict d\'abord")', () => {
         expect(screen.getAllByText(i18n.t('simulator.multiEnvelope.accountTypes.CTO')).length).toBeGreaterThan(0);
         expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.EXEMPT'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('scenario.multiEnvelope.taxRegimes.FLAT_TAX'), { exact: false })).toBeInTheDocument();
-        expect(screen.getAllByText('167 747 €').length).toBeGreaterThan(0);
+        // The table uses the shared compact currency formatter (already used by ScenarioChart's
+        // axis and FireScenarioSummary's bars), not the precise one used in the hero above — matched
+        // loosely (regex) since Intl's exact whitespace between "k" and "€" is environment-dependent.
+        expect(screen.getAllByText(/167,7\s*k\s*€/).length).toBeGreaterThan(0);
+    });
+
+    it('shortens the 3 longest row labels and keeps the full label as a tooltip', () => {
+        render(<MultiEnvelopeScenarioSummary result={result} input={input} />);
+
+        const feesCell = screen.getByText(i18n.t('scenario.multiEnvelope.verdict.detail.rows.feesShort'));
+        expect(feesCell).toHaveAttribute('title', i18n.t('scenario.multiEnvelope.verdict.detail.rows.fees'));
+
+        const regimeCell = screen.getByText(i18n.t('scenario.multiEnvelope.verdict.detail.rows.taxRegimeShort'));
+        expect(regimeCell).toHaveAttribute('title', i18n.t('scenario.multiEnvelope.verdict.detail.rows.taxRegime'));
+
+        const taxCell = screen.getByText(i18n.t('scenario.multiEnvelope.verdict.detail.rows.taxShort'));
+        expect(taxCell).toHaveAttribute('title', i18n.t('scenario.multiEnvelope.verdict.detail.rows.tax'));
+
+        // "Régime fiscal" (the full label) isn't used as visible text anywhere in this row —
+        // unlike "Frais cumulés"/"Impôt à la sortie", which are unambiguous and legitimately
+        // reused verbatim elsewhere (the stat tile and the breakdown card above).
+        expect(screen.queryByText(i18n.t('scenario.multiEnvelope.verdict.detail.rows.taxRegime'))).not.toBeInTheDocument();
     });
 });

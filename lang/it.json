@@ -324,8 +324,11 @@
                         "grossGains": "Guadagni lordi",
                         "grossBalance": "Capitale lordo",
                         "fees": "Commissioni cumulate",
+                        "feesShort": "Commissioni",
                         "taxRegime": "Regime fiscale",
+                        "taxRegimeShort": "Regime",
                         "tax": "Imposta in uscita",
+                        "taxShort": "Imposta",
                         "netBalance": "Saldo netto"
                     }
                 }
