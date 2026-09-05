@@ -165,6 +165,7 @@ export default function MultiEnvelopeForm({ defaults, accountTypes }: MultiEnvel
                             type="button"
                             variant="brand"
                             size="sm"
+                            className="w-1/4 min-w-fit self-end"
                             disabled={data.envelopes.length >= MAX_ENVELOPES}
                             onClick={addEnvelope}
                         >
