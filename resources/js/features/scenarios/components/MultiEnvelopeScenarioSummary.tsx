@@ -132,15 +132,18 @@ export default function MultiEnvelopeScenarioSummary({ result, input }: MultiEnv
         netRealAdjusted: yearPoint.realNetBalanceWithInflation,
     }));
 
-    // Reuses the 3 colors already established for the aggregated chart above
-    // (SCENARIO_CHART_SERIES) instead of a new ad hoc palette: gray already
-    // means "amounts contributed", green already means "capital net réel",
-    // and orange already carries the "cost" reading (netRealAdjusted) in
-    // that same chart's legend.
+    // Reuses colors already established elsewhere instead of a new ad hoc
+    // palette: gray/green come from the aggregated chart above
+    // (SCENARIO_CHART_SERIES) — gray already means "amounts contributed",
+    // green already means "capital net réel". Tax uses the design system's
+    // own destructive token instead of that chart's orange: the "Détail par
+    // enveloppe" table below already renders "Impôt"/"Frais" in
+    // text-destructive for the same concept, so the tax segment here reads
+    // as a loss/cost the same way, in red rather than orange.
     const colorOf = (key: string) => SCENARIO_CHART_SERIES.find((series) => series.key === key)!.color;
     const depositsColor = colorOf('contributions');
     const gainsColor = colorOf('netReal');
-    const taxColor = colorOf('netRealAdjusted');
+    const taxColor = 'var(--destructive)';
 
     const depositsShare = grossBalance > 0 ? (totalDeposited / grossBalance) * 100 : 0;
     const gainsShare = grossBalance > 0 ? (netGains / grossBalance) * 100 : 0;
