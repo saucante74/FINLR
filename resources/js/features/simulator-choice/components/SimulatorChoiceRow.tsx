@@ -1,12 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { DashboardBadge } from '@/features/dashboard/components/SimulatorCard';
 import { cn } from '@/lib/utils';
 
 interface SimulatorChoiceRowProps {
-    index: number;
+    icon: LucideIcon;
     title: string;
     description: string;
     chips?: string[];
@@ -15,7 +15,7 @@ interface SimulatorChoiceRowProps {
 }
 
 export default function SimulatorChoiceRow({
-    index,
+    icon: Icon,
     title,
     description,
     chips,
@@ -24,38 +24,44 @@ export default function SimulatorChoiceRow({
 }: SimulatorChoiceRowProps) {
     const { t } = useTranslation();
 
-    const monogram = (
+    const iconBadge = (
         <span
             aria-hidden
             className={cn(
-                'relative inline-flex size-14 shrink-0 items-center justify-center rounded-xl font-mono text-xs tracking-wide',
+                'relative inline-flex size-14 shrink-0 items-center justify-center rounded-xl',
                 active ? 'bg-brand/12 text-brand' : 'bg-muted text-muted-foreground',
             )}
         >
-            {String(index).padStart(2, '0')}
+            <Icon className="size-6" />
         </span>
     );
 
     const body = (
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <span className={cn('text-lg font-semibold tracking-tight', !active && 'text-muted-foreground')}>
-                {title}
-            </span>
+            {/* flex-wrap (same pattern as the dashboard's scenario list
+                header) keeps the chips right next to the title on wide
+                screens, and wraps them below it on narrow ones instead of
+                forcing them onto one cramped line. */}
+            <div className="flex flex-wrap items-center gap-2">
+                <span className={cn('text-lg font-semibold tracking-tight', !active && 'text-muted-foreground')}>
+                    {title}
+                </span>
+
+                {chips && chips.length > 0 && (
+                    <ul className="flex flex-wrap items-center gap-2">
+                        {chips.map((chip) => (
+                            <li
+                                key={chip}
+                                className="rounded-md border border-border px-2 py-1 font-mono text-[11px] text-muted-foreground"
+                            >
+                                {chip}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
             <p className="text-sm text-pretty text-muted-foreground">{description}</p>
-
-            {chips && chips.length > 0 && (
-                <ul className="mt-1 flex flex-wrap items-center gap-2">
-                    {chips.map((chip) => (
-                        <li
-                            key={chip}
-                            className="rounded-md border border-border px-2 py-1 font-mono text-[11px] text-muted-foreground"
-                        >
-                            {chip}
-                        </li>
-                    ))}
-                </ul>
-            )}
         </div>
     );
 
@@ -66,7 +72,7 @@ export default function SimulatorChoiceRow({
                     href={href}
                     className="group flex w-full items-start gap-5 rounded-xl px-2 py-6 transition-colors duration-200 hover:bg-muted/40"
                 >
-                    {monogram}
+                    {iconBadge}
                     {body}
                     <span className="inline-flex shrink-0 items-center gap-2 self-center text-sm font-semibold text-brand [text-shadow:0_0_24px_var(--brand)]">
                         {t('simulator.chooseWrapper.cta')}
@@ -83,7 +89,7 @@ export default function SimulatorChoiceRow({
     return (
         <li className="border-b border-border/70">
             <div className="flex w-full items-start gap-5 px-2 py-6 opacity-75">
-                {monogram}
+                {iconBadge}
                 {body}
                 <span className="shrink-0 self-center">
                     <DashboardBadge>{t('dashboard.simulatorCard.comingSoonBadge')}</DashboardBadge>

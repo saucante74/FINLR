@@ -51,4 +51,20 @@ describe('Simulators', () => {
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.fire.title')) }),
         ).toHaveAttribute('href', route('simulators.fire.show'));
     });
+
+    it('shows an icon for every simulator instead of a number', () => {
+        render(<Simulators />);
+
+        expect(screen.queryByText('01')).not.toBeInTheDocument();
+        expect(screen.queryByText('02')).not.toBeInTheDocument();
+    });
+
+    it('renders the exact same icon per simulator as the dashboard cards (SIMULATOR_ICONS)', () => {
+        const { container } = render(<Simulators />);
+
+        expect(container.querySelector('svg.lucide-piggy-bank')).toBeInTheDocument();
+        expect(container.querySelector('svg.lucide-layers')).toBeInTheDocument();
+        expect(container.querySelector('svg.lucide-scale')).toBeInTheDocument();
+        expect(container.querySelector('svg.lucide-flame')).toBeInTheDocument();
+    });
 });
