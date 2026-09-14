@@ -5,7 +5,6 @@ namespace Tests\Feature\AnalogySimulator;
 use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\SimulationEngine\Contracts\AnalogyEngineInterface;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Composer\InstalledVersions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,7 +34,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/simulators/analogy', $this->validPayload());
 
@@ -45,7 +44,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_pro_plan_user_with_valid_data_gets_redirected_to_the_created_scenario(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post('/simulators/analogy', $this->validPayload());
 
@@ -60,7 +59,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_labels_given_by_the_user_are_used_as_is(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post('/simulators/analogy', array_merge($this->validPayload(), [
             'labelA' => 'Mon PEA',
@@ -77,7 +76,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_omitted_labels_resolve_to_the_translated_defaults(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $payload = $this->validPayload();
         unset($payload['labelA'], $payload['labelB']);
 
@@ -98,7 +97,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_the_stored_input_payload_mirrors_the_submitted_scenarios(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post('/simulators/analogy', $this->validPayload());
 
@@ -113,7 +112,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_the_stored_result_payload_carries_the_deltas_and_final_leader(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post('/simulators/analogy', $this->validPayload());
 
@@ -127,7 +126,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_scenario_submitted_without_a_name_is_rejected(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $payload = $this->validPayload();
         unset($payload['name']);
@@ -140,7 +139,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_scenario_created_with_a_name_stores_it_as_is(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post(
             '/simulators/analogy',
@@ -154,7 +153,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_pro_plan_user_with_invalid_data_gets_validation_errors_and_no_scenario_is_created(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post(
             '/simulators/analogy',
@@ -167,7 +166,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_an_unknown_account_type_is_rejected(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post(
             '/simulators/analogy',
@@ -180,7 +179,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_a_container_resolution_failure_redirects_with_a_flashed_error_instead_of_a_500(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->app->bind(AnalogyEngineInterface::class, function (): never {
             throw new RuntimeException('The private saucante74/finlr-engine package is not installed.');
@@ -195,7 +194,7 @@ class RunAnalogyComparisonTest extends TestCase
 
     public function test_the_eleventh_request_within_a_minute_receives_a_429(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $this->actingAs($user);
 
         for ($i = 0; $i < 10; $i++) {

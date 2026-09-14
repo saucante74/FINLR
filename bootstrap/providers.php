@@ -5,6 +5,7 @@ use App\Modules\Auth\Providers\RateLimitServiceProvider as AuthRateLimitServiceP
 use App\Modules\Auth\Providers\RememberMeServiceProvider;
 use App\Modules\SimulationEngine\Providers\SimulationEngineServiceProvider;
 use App\Modules\SingleEnvelopeSimulator\Providers\RateLimitServiceProvider as SingleEnvelopeSimulatorRateLimitServiceProvider;
+use App\Modules\Subscriptions\Providers\RateLimitServiceProvider as SubscriptionsRateLimitServiceProvider;
 use App\Providers\AppServiceProvider;
 
 return [
@@ -14,4 +15,5 @@ return [
     RememberMeServiceProvider::class,
     SimulationEngineServiceProvider::class,
     SingleEnvelopeSimulatorRateLimitServiceProvider::class,
+    SubscriptionsRateLimitServiceProvider::class,
 ];

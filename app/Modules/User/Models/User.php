@@ -15,25 +15,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Cashier\Billable;
 
-#[Fillable(['name', 'email', 'password', 'subscription_plan'])]
+#[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use Billable, HasFactory, Notifiable;
+
+    public const SUBSCRIPTION_TYPE = 'default';
 
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
     }
-
-    /**
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'subscription_plan' => Plan::FREE->value,
-    ];
 
     /**
      * @return array<string, string>
@@ -44,8 +40,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'two_factor_enabled_at' => 'datetime',
             'password' => 'hashed',
-            'subscription_plan' => Plan::class,
         ];
+    }
+
+    // Derived from Cashier on every read — never stored — so access rights
+    // can't drift out of sync with the actual Stripe subscription.
+    public function plan(): Plan
+    {
+        return $this->subscribed(self::SUBSCRIPTION_TYPE) ? Plan::PREMIUM : Plan::FREE;
     }
 
     public function hasPermission(Permission $permission): bool

@@ -7,6 +7,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
 
+        // Cashier defaults to App\Models\User; without this the webhook
+        // can't resolve the customer behind an incoming Stripe event.
+        Cashier::useCustomerModel(User::class);
+
         $this->registerSubscriptionGates();
     }
 
@@ -23,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         foreach (Permission::cases() as $permission) {
             Gate::define($permission->value, function (User $user) use ($permission): bool {
-                return $user->subscription_plan->grants($permission);
+                return $user->plan()->grants($permission);
             });
         }
     }

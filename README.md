@@ -87,7 +87,7 @@ sail artisan tinker --execute="Mail::raw('Test Mailpit', function(\$m) { \$m->to
 
 ### Stripe webhooks (Stripe CLI)
 
-`sail up -d` also starts a `stripe-cli` container that automatically forwards Stripe webhook events to `http://laravel.test:80/api/stripe/webhook`. Set `STRIPE_SECRET_KEY` in `.env` and the tunnel authenticates and starts on its own — no local Stripe CLI installation or `stripe login` needed.
+`sail up -d` also starts a `stripe-cli` container that automatically forwards Stripe webhook events to `http://laravel.test:80/stripe/webhook` (Laravel Cashier's native webhook route). Set `STRIPE_SECRET` in `.env` and the tunnel authenticates and starts on its own — no local Stripe CLI installation or `stripe login` needed.
 
 Check logs
 ```bash

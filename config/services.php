@@ -41,4 +41,14 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    // Stripe keys themselves are read by Cashier (config/cashier.php in the
+    // package). Only the Price IDs are app-specific: amounts are managed in
+    // the Stripe dashboard, keyed by App\Modules\Subscriptions\Enums\BillingPeriod.
+    'stripe' => [
+        'premium_prices' => [
+            'monthly' => env('STRIPE_PREMIUM_MONTHLY_PRICE_ID'),
+            'yearly' => env('STRIPE_PREMIUM_YEARLY_PRICE_ID'),
+        ],
+    ],
+
 ];

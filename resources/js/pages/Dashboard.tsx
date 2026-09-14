@@ -2,14 +2,14 @@ import { Head, usePage } from '@inertiajs/react';
 import { Check, LayoutGrid } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ScenarioList from '@/features/dashboard/components/ScenarioList';
-import SimulatorCard, { DashboardBadge } from '@/features/dashboard/components/SimulatorCard';
+import SimulatorCard from '@/features/dashboard/components/SimulatorCard';
 import { SIMULATOR_ICONS } from '@/features/dashboard/constants';
 import type { DashboardPageProps } from '@/features/dashboard/types';
+import PremiumCheckoutForm from '@/features/subscriptions/components/PremiumCheckoutForm';
 import type { AuthenticatedPageProps } from '@/types';
 
 const PROMO_BENEFIT_KEYS = ['unlimitedScenarios', 'multiEnvelopePreview', 'pdfExport'] as const;
@@ -30,7 +30,7 @@ const FIXED_SIMULATOR_CARDS: readonly FixedSimulatorCard[] = [
     { key: 'fire', routeName: 'simulators.fire.show' },
 ];
 
-export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPageProps) {
+export default function Dashboard({ scenarios, scenarioTypeFilter, status }: DashboardPageProps) {
     const { t } = useTranslation();
     const { auth } = usePage<AuthenticatedPageProps>().props;
     // Gates the 3 fixed simulator cards below — same permission, same
@@ -56,6 +56,12 @@ export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPa
                         {t('dashboard.description')}
                     </p>
                 </header>
+
+                {status === 'premium-checkout-completed' && (
+                    <p role="status" className="rounded-xl border border-brand/25 bg-brand/8 px-4 py-3 text-sm text-brand">
+                        {t('dashboard.promo.checkoutPending')}
+                    </p>
+                )}
 
                 {/* 3 fixed simulator cards + 1 generic "view all" card: always
                     4 cards regardless of the catalog's real simulator count
@@ -90,28 +96,27 @@ export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPa
 
                 <ScenarioList scenarios={scenarios} activeType={scenarioTypeFilter} />
 
-                <Card className="flex flex-col items-start justify-between gap-6 rounded-2xl border-brand/20 bg-brand/5 p-7 sm:flex-row sm:items-center">
-                    <div className="flex flex-col gap-3">
-                        <h2 className="text-lg font-semibold tracking-tight">{t('dashboard.promo.title')}</h2>
-                        <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">
-                            {PROMO_BENEFIT_KEYS.map((key) => (
-                                <li key={key} className="flex items-center gap-2">
-                                    <Check
-                                        aria-hidden
-                                        className="size-4 shrink-0 text-brand drop-shadow-[0_0_6px_var(--brand)]"
-                                    />
-                                    {t(`dashboard.promo.benefits.${key}`)}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-3">
-                        <DashboardBadge>{t('dashboard.simulatorCard.comingSoonBadge')}</DashboardBadge>
-                        <Button type="button" variant="brand" size="lg" className="w-fit shrink-0" disabled>
-                            {t('dashboard.promo.cta')}
-                        </Button>
-                    </div>
-                </Card>
+                {/* Display only: premium access itself is enforced server-side
+                    (Gates + StartCheckoutAction's double-subscription guard). */}
+                {auth.plan !== 'premium' && (
+                    <Card className="flex flex-col items-start justify-between gap-6 rounded-2xl border-brand/20 bg-brand/5 p-7 sm:flex-row sm:items-center">
+                        <div className="flex flex-col gap-3">
+                            <h2 className="text-lg font-semibold tracking-tight">{t('dashboard.promo.title')}</h2>
+                            <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">
+                                {PROMO_BENEFIT_KEYS.map((key) => (
+                                    <li key={key} className="flex items-center gap-2">
+                                        <Check
+                                            aria-hidden
+                                            className="size-4 shrink-0 text-brand drop-shadow-[0_0_6px_var(--brand)]"
+                                        />
+                                        {t(`dashboard.promo.benefits.${key}`)}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <PremiumCheckoutForm />
+                    </Card>
+                )}
             </main>
 
             <Footer />

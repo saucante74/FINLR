@@ -110,6 +110,14 @@ export default function AccountStateCard({
                     </div>
                 </dl>
 
+                {plan === 'premium' && (
+                    // Plain anchor, not an Inertia <Link>: the route redirects to
+                    // Stripe's hosted billing portal, which needs a full page visit.
+                    <Button asChild variant="outline" size="lg" className="self-center">
+                        <a href={route('billing.portal')}>{t('settings.account.manageSubscription')}</a>
+                    </Button>
+                )}
+
                 <Button asChild variant="outline" size="lg" className="self-center">
                     <Link href={route('logout')} method="post" as="button">
                         {t('settings.account.logout')}

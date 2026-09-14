@@ -25,7 +25,10 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        //
+        // Defensive: Cashier 16 registers its webhook route outside the `web`
+        // group, so CSRF doesn't apply today. Kept so a future Cashier version
+        // moving it into `web` can't silently reject Stripe's events.
+        $middleware->validateCsrfTokens(except: ['stripe/*']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

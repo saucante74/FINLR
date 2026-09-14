@@ -1,4 +1,5 @@
-export type Plan = 'free' | 'pro_monthly' | 'pro_yearly' | 'enterprise';
+/** Mirrors App\Modules\Subscriptions\Enums\Plan — derived server-side from the Stripe subscription. */
+export type Plan = 'free' | 'premium';
 
 export type Permission = 'export_reports' | 'create_project' | 'advanced_calculator';
 

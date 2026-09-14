@@ -19,6 +19,9 @@ use App\Modules\Shared\Controllers\ShowSimulatorsController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\RunSingleEnvelopeSimulationController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\ShowSingleEnvelopeSimulatorController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\ShowWrapperChoiceController;
+use App\Modules\Subscriptions\Controllers\ShowBillingPortalController;
+use App\Modules\Subscriptions\Controllers\ShowCheckoutSuccessController;
+use App\Modules\Subscriptions\Controllers\StartCheckoutController;
 use App\Modules\User\Controllers\DeleteAccountController;
 use App\Modules\User\Controllers\EditSettingsController;
 use App\Modules\User\Controllers\UpdateProfileController;
@@ -54,6 +57,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/scenarios/{scenario}', ShowScenarioController::class)->name('scenarios.show');
     Route::patch('/scenarios/{scenario}', RenameScenarioController::class)->name('scenarios.rename');
+
+    // Stripe's webhook is not declared here: Cashier registers its native
+    // route itself (POST /stripe/webhook, name "cashier.webhook").
+    Route::post('/billing/checkout', StartCheckoutController::class)
+        ->middleware('throttle:billing-checkout')
+        ->name('billing.checkout');
+
+    Route::get('/billing/checkout/success', ShowCheckoutSuccessController::class)->name('billing.checkout.success');
+
+    Route::get('/billing/portal', ShowBillingPortalController::class)->name('billing.portal');
 });
 
 // Entry point: pick a simulator type before reaching a specific choice flow.
