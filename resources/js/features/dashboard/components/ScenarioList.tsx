@@ -82,10 +82,7 @@ export default function ScenarioList({ scenarios }: ScenarioListProps) {
                                                 {typeLabel} · {horizonLabel} · {dateLabel}
                                             </span>
                                             <span className="hidden text-center text-muted-foreground sm:order-2 sm:block">
-                                                <span className="inline-flex items-center gap-1.5">
-                                                    <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-brand" />
-                                                    {typeLabel}
-                                                </span>
+                                                {typeLabel}
                                             </span>
                                             <span className="hidden text-center text-muted-foreground sm:order-3 sm:block">
                                                 {horizonLabel}

@@ -1,5 +1,5 @@
-import { Head, Link, usePage } from '@inertiajs/react';
-import { Check, Flame, Layers, PiggyBank, Scale } from 'lucide-react';
+import { Head, usePage } from '@inertiajs/react';
+import { Check, Flame, LayoutGrid, PiggyBank, Scale, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -13,11 +13,26 @@ import type { AuthenticatedPageProps } from '@/types';
 
 const PROMO_BENEFIT_KEYS = ['unlimitedScenarios', 'multiEnvelopePreview', 'pdfExport'] as const;
 
+// The dashboard always shows exactly these 3 simulators + the generic
+// "view all" card below, regardless of how many simulators the catalog
+// actually has (see simulators.index for the full, dynamic list).
+interface FixedSimulatorCard {
+    key: 'singleEnvelope' | 'analogy' | 'fire';
+    icon: LucideIcon;
+    routeName: string;
+}
+
+const FIXED_SIMULATOR_CARDS: readonly FixedSimulatorCard[] = [
+    { key: 'singleEnvelope', icon: PiggyBank, routeName: 'simulators.single-envelope.choose' },
+    { key: 'analogy', icon: Scale, routeName: 'simulators.analogy.show' },
+    { key: 'fire', icon: Flame, routeName: 'simulators.fire.show' },
+];
+
 export default function Dashboard({ scenarios }: DashboardPageProps) {
     const { t } = useTranslation();
     const { auth } = usePage<AuthenticatedPageProps>().props;
-    // Gates both the classic and multi-envelope simulator cards below —
-    // same permission, same routes' own `can:advanced_calculator` middleware.
+    // Gates the 3 fixed simulator cards below — same permission, same
+    // routes' own `can:advanced_calculator` middleware.
     const canAccessAdvancedCalculator = auth.permissions.includes('advanced_calculator');
 
     return (
@@ -27,84 +42,46 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
             <Navbar />
 
             <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 lg:px-8 lg:py-12">
-                <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                    <div className="flex flex-col gap-3">
-                        <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand/25 bg-brand/8 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-brand uppercase">
-                            <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-brand" />
-                            {t('dashboard.eyebrow')}
-                        </span>
-                        <h1 className="text-3xl font-semibold tracking-tight text-balance lg:text-4xl">
-                            {t('dashboard.greeting', { name: auth.user.name })}
-                        </h1>
-                        <p className="max-w-2xl text-sm text-pretty text-muted-foreground">
-                            {t('dashboard.description')}
-                        </p>
-                    </div>
-                    <Button asChild variant="brand" size="lg" className="w-fit shrink-0">
-                        <Link href={route('simulators.index')}>{t('dashboard.newSimulation')}</Link>
-                    </Button>
+                <header className="flex flex-col gap-3">
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand/25 bg-brand/8 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-brand uppercase">
+                        <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-brand" />
+                        {t('dashboard.eyebrow')}
+                    </span>
+                    <h1 className="text-3xl font-semibold tracking-tight text-balance lg:text-4xl">
+                        {t('dashboard.greeting', { name: auth.user.name })}
+                    </h1>
+                    <p className="max-w-2xl text-sm text-pretty text-muted-foreground">
+                        {t('dashboard.description')}
+                    </p>
                 </header>
 
-                {/* 4 cards now that Fire has joined single-envelope,
-                    multi-envelope and analogy: 2 columns on medium screens,
-                    4 on large, rather than a lone 4th card wrapping onto
-                    its own row under grid-cols-3. */}
+                {/* 3 fixed simulator cards + 1 generic "view all" card: always
+                    4 cards regardless of the catalog's real simulator count
+                    (see simulators.index for the full, dynamic list). 2
+                    columns on medium screens, 4 on large. */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    {FIXED_SIMULATOR_CARDS.map(({ key, icon, routeName }) => (
+                        <SimulatorCard
+                            key={key}
+                            icon={icon}
+                            title={t(`dashboard.simulators.${key}.title`)}
+                            description={t(`dashboard.simulators.${key}.description`)}
+                            state={canAccessAdvancedCalculator ? 'active' : 'locked'}
+                            href={canAccessAdvancedCalculator ? route(routeName) : undefined}
+                            note={
+                                canAccessAdvancedCalculator
+                                    ? undefined
+                                    : t(`dashboard.simulators.${key}.lockedNote`)
+                            }
+                        />
+                    ))}
                     <SimulatorCard
-                        icon={PiggyBank}
-                        title={t('dashboard.simulators.singleEnvelope.title')}
-                        description={t('dashboard.simulators.singleEnvelope.description')}
-                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
-                        href={
-                            canAccessAdvancedCalculator
-                                ? route('simulators.single-envelope.choose')
-                                : undefined
-                        }
-                        note={
-                            canAccessAdvancedCalculator
-                                ? undefined
-                                : t('dashboard.simulators.singleEnvelope.lockedNote')
-                        }
-                    />
-                    <SimulatorCard
-                        icon={Layers}
-                        title={t('dashboard.simulators.multiEnvelope.title')}
-                        description={t('dashboard.simulators.multiEnvelope.description')}
-                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
-                        href={
-                            canAccessAdvancedCalculator
-                                ? route('simulators.multi-envelope.show')
-                                : undefined
-                        }
-                        note={
-                            canAccessAdvancedCalculator
-                                ? undefined
-                                : t('dashboard.simulators.multiEnvelope.lockedNote')
-                        }
-                    />
-                    <SimulatorCard
-                        icon={Scale}
-                        title={t('dashboard.simulators.analogy.title')}
-                        description={t('dashboard.simulators.analogy.description')}
-                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
-                        href={canAccessAdvancedCalculator ? route('simulators.analogy.show') : undefined}
-                        note={
-                            canAccessAdvancedCalculator
-                                ? undefined
-                                : t('dashboard.simulators.analogy.lockedNote')
-                        }
-                    />
-                    <SimulatorCard
-                        icon={Flame}
-                        title={t('dashboard.simulators.fire.title')}
-                        description={t('dashboard.simulators.fire.description')}
-                        state={canAccessAdvancedCalculator ? 'active' : 'locked'}
-                        href={canAccessAdvancedCalculator ? route('simulators.fire.show') : undefined}
-                        note={
-                            canAccessAdvancedCalculator
-                                ? undefined
-                                : t('dashboard.simulators.fire.lockedNote')
-                        }
+                        icon={LayoutGrid}
+                        title={t('dashboard.simulators.viewAll.title')}
+                        description={t('dashboard.simulators.viewAll.description')}
+                        state="active"
+                        href={route('simulators.index')}
+                        ctaLabel={t('dashboard.simulators.viewAll.title')}
                     />
                 </div>
 

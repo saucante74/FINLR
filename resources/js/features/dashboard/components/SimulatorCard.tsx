@@ -15,6 +15,9 @@ interface SimulatorCardProps {
     state: SimulatorCardState;
     href?: string;
     note?: string;
+    // Overrides the "Start a projection" CTA — used by the generic
+    // "view all simulators" card, which doesn't launch a specific projection.
+    ctaLabel?: string;
 }
 
 // Plain informational badge — never a button (no interactive role, no
@@ -36,6 +39,7 @@ export default function SimulatorCard({
     state,
     href,
     note,
+    ctaLabel,
 }: SimulatorCardProps) {
     const { t } = useTranslation();
 
@@ -83,7 +87,7 @@ export default function SimulatorCard({
                 {note && <p className="text-xs text-muted-foreground">{note}</p>}
                 {state === 'active' && (
                     <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_40px_var(--brand)]">
-                        {t('dashboard.simulatorCard.cta')}
+                        {ctaLabel ?? t('dashboard.simulatorCard.cta')}
                         <ArrowRight aria-hidden className="size-5" />
                     </span>
                 )}

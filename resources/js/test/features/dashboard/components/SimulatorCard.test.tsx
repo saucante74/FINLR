@@ -58,6 +58,22 @@ describe('SimulatorCard', () => {
         expect(screen.queryByRole('link')).not.toBeInTheDocument();
     });
 
+    it('uses the given ctaLabel instead of the default CTA text when provided', () => {
+        render(
+            <SimulatorCard
+                icon={PiggyBank}
+                title="Voir tous les simulateurs"
+                description="Une description"
+                state="active"
+                href="/simulators"
+                ctaLabel="Voir tous les simulateurs"
+            />,
+        );
+
+        expect(screen.getAllByText('Voir tous les simulateurs')).toHaveLength(2);
+        expect(screen.queryByText(i18n.t('dashboard.simulatorCard.cta'))).not.toBeInTheDocument();
+    });
+
     it('shows a coming-soon badge, with no link, when comingSoon', () => {
         render(
             <SimulatorCard

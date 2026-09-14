@@ -52,15 +52,29 @@ describe('Dashboard page', () => {
         expect(screen.getByText(i18n.t('dashboard.description'))).toBeInTheDocument();
     });
 
-    it('shows a single, always-active "new simulation" action button', () => {
+    it('shows a generic "view all simulators" card, always active, pointing to the simulators list', () => {
         mockAuth([]);
 
         render(<Dashboard scenarios={emptyScenarios} />);
 
-        const button = screen.getByRole('link', { name: i18n.t('dashboard.newSimulation') });
-        expect(button).toHaveAttribute('href', route('simulators.index'));
-        expect(button).toHaveAttribute('data-size', 'lg');
-        expect(screen.queryByText(/importer un portefeuille/i)).not.toBeInTheDocument();
+        const link = screen.getByRole('link', {
+            name: new RegExp(i18n.t('dashboard.simulators.viewAll.title')),
+        });
+        expect(link).toHaveAttribute('href', route('simulators.index'));
+    });
+
+    it('shows exactly 4 simulator cards on the dashboard', () => {
+        mockAuth(['advanced_calculator']);
+
+        render(<Dashboard scenarios={emptyScenarios} />);
+
+        expect(screen.getByText(i18n.t('dashboard.simulators.singleEnvelope.title'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('dashboard.simulators.analogy.title'))).toBeInTheDocument();
+        expect(screen.getByText(i18n.t('dashboard.simulators.fire.title'))).toBeInTheDocument();
+        expect(
+            screen.getAllByText(i18n.t('dashboard.simulators.viewAll.title')).length,
+        ).toBeGreaterThan(0);
+        expect(screen.queryByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).not.toBeInTheDocument();
     });
 
     it('shows an active link to the single-envelope simulator when the user has the permission', () => {
@@ -83,28 +97,6 @@ describe('Dashboard page', () => {
         expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
         expect(
             screen.queryByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.singleEnvelope.title')) }),
-        ).not.toBeInTheDocument();
-    });
-
-    it('shows an active link to the multi-envelope simulator when the user has the permission', () => {
-        mockAuth(['advanced_calculator']);
-
-        render(<Dashboard scenarios={emptyScenarios} />);
-
-        expect(
-            screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
-        ).toHaveAttribute('href', route('simulators.multi-envelope.show'));
-    });
-
-    it('shows a locked multi-envelope card with no link when the user lacks the permission', () => {
-        mockAuth([]);
-
-        render(<Dashboard scenarios={emptyScenarios} />);
-
-        expect(screen.getByText(i18n.t('dashboard.simulators.multiEnvelope.title'))).toBeInTheDocument();
-        expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
-        expect(
-            screen.queryByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.multiEnvelope.title')) }),
         ).not.toBeInTheDocument();
     });
 

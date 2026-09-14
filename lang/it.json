@@ -188,7 +188,6 @@
         "title": "Bacheca",
         "greeting": "Ciao {{name}}.",
         "description": "Ecco una panoramica della tua attività.",
-        "newSimulation": "Nuova simulazione",
         "simulators": {
             "singleEnvelope": {
                 "title": "Simulatore classico",
@@ -209,6 +208,10 @@
                 "title": "Simulatore FIRE",
                 "description": "Stima il capitale necessario per l'indipendenza finanziaria e l'età per raggiungerla.",
                 "lockedNote": "Passa all'offerta premium per accedervi."
+            },
+            "viewAll": {
+                "title": "Vedi tutti i simulatori",
+                "description": "Scopri tutti i simulatori disponibili su Finlr."
             }
         },
         "simulatorCard": {
