@@ -188,7 +188,6 @@
         "title": "Tableau de bord",
         "greeting": "Bonjour {{name}}.",
         "description": "Retrouvez ici un aperçu de votre activité.",
-        "newSimulation": "Nouvelle simulation",
         "simulators": {
             "singleEnvelope": {
                 "title": "Simulateur classique",
@@ -209,6 +208,10 @@
                 "title": "Simulateur FIRE",
                 "description": "Estimez le capital nécessaire pour votre indépendance financière et l'âge auquel l'atteindre.",
                 "lockedNote": "Passez à l'offre premium pour y accéder."
+            },
+            "viewAll": {
+                "title": "Voir tous les simulateurs",
+                "description": "Découvrez l'ensemble des simulateurs disponibles sur Finlr."
             }
         },
         "simulatorCard": {
@@ -234,6 +237,10 @@
                 "multi_envelope": "Multi-enveloppe",
                 "analogy": "Comparateur",
                 "fire": "FIRE"
+            },
+            "filter": {
+                "ariaLabel": "Filtrer par type de simulateur",
+                "placeholder": "Type de scénarios"
             },
             "pagination": {
                 "previous": "Page précédente",

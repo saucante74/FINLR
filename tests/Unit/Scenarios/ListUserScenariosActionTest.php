@@ -3,6 +3,7 @@
 namespace Tests\Unit\Scenarios;
 
 use App\Modules\Scenarios\Actions\ListUserScenariosAction;
+use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,6 +84,41 @@ class ListUserScenariosActionTest extends TestCase
         $this->assertSame(2, $page->currentPage());
     }
 
+    public function test_it_only_returns_scenarios_of_the_given_type_when_filtered(): void
+    {
+        $user = User::factory()->create();
+
+        Scenario::factory()->count(2)->create([
+            'user_id' => $user->id,
+            'calculator_type' => CalculatorType::Fire,
+            'result_payload' => ['requiredCapital' => 500_000.0, 'yearsToRetirement' => 25.0],
+        ]);
+        Scenario::factory()->count(3)->create(['user_id' => $user->id, 'calculator_type' => CalculatorType::SingleEnvelope]);
+
+        $action = new ListUserScenariosAction;
+        $page = $action->handle($user, CalculatorType::Fire);
+
+        $this->assertCount(2, $page);
+        $this->assertSame(2, $page->total());
+    }
+
+    public function test_it_returns_every_type_when_no_filter_is_given(): void
+    {
+        $user = User::factory()->create();
+
+        Scenario::factory()->count(2)->create([
+            'user_id' => $user->id,
+            'calculator_type' => CalculatorType::Fire,
+            'result_payload' => ['requiredCapital' => 500_000.0, 'yearsToRetirement' => 25.0],
+        ]);
+        Scenario::factory()->count(3)->create(['user_id' => $user->id, 'calculator_type' => CalculatorType::SingleEnvelope]);
+
+        $action = new ListUserScenariosAction;
+        $page = $action->handle($user);
+
+        $this->assertSame(5, $page->total());
+    }
+
     public function test_each_item_is_serialised_like_scenario_summary_data(): void
     {
         $user = User::factory()->create();
@@ -91,7 +127,6 @@ class ListUserScenariosActionTest extends TestCase
         $action = new ListUserScenariosAction;
         $page = $action->handle($user);
 
-        $this->assertIsArray($page->items()[0]);
         $this->assertSame('Retraite à 62 ans', $page->items()[0]['name']);
         $this->assertArrayHasKey('typeLabel', $page->items()[0]);
     }

@@ -8,7 +8,7 @@ vi.mock('@inertiajs/react');
 import { router } from '@inertiajs/react';
 
 import ScenarioList from '@/features/dashboard/components/ScenarioList';
-import type { ScenarioSummary } from '@/features/dashboard/types';
+import type { CalculatorType, ScenarioSummary } from '@/features/dashboard/types';
 import type { Paginated } from '@/types';
 
 function paginate(
@@ -25,6 +25,13 @@ function paginate(
     };
 }
 
+function renderScenarioList(
+    scenarios: Paginated<ScenarioSummary>,
+    activeType: CalculatorType | null = null,
+) {
+    return render(<ScenarioList scenarios={scenarios} activeType={activeType} />);
+}
+
 describe('ScenarioList', () => {
     beforeEach(async () => {
         vi.mocked(router.get).mockClear();
@@ -32,7 +39,7 @@ describe('ScenarioList', () => {
     });
 
     it('shows an explicit empty state when there are no scenarios', () => {
-        render(<ScenarioList scenarios={paginate([], { total: 0 })} />);
+        renderScenarioList(paginate([], { total: 0 }));
 
         expect(screen.getByText(i18n.t('dashboard.scenarioList.empty'))).toBeInTheDocument();
         expect(screen.queryByRole('list')).not.toBeInTheDocument();
@@ -53,7 +60,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.getByText('Retraite à 62 ans')).toBeInTheDocument();
         expect(screen.getByRole('link')).toHaveAttribute('href', route('scenarios.show', 42));
@@ -74,7 +81,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(
             screen.getByRole('link', {
@@ -98,7 +105,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.getByText(i18n.t('dashboard.scenarioList.genericLabel'))).toBeInTheDocument();
     });
@@ -117,7 +124,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.getAllByText(i18n.t('dashboard.scenarioList.calculatorTypes.fire')).length).toBeGreaterThan(0);
         expect(screen.getAllByText('8 ans').length).toBeGreaterThan(0);
@@ -137,7 +144,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.getAllByText('—').length).toBeGreaterThan(0);
     });
@@ -156,7 +163,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.queryByText(i18n.t('dashboard.scenarioList.columns.wrapper'))).not.toBeInTheDocument();
         expect(screen.queryByText(i18n.t('dashboard.scenarioList.columns.amount'))).not.toBeInTheDocument();
@@ -178,7 +185,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 })} />);
+        renderScenarioList(paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 }));
 
         expect(screen.getByText(i18n.t('dashboard.scenarioList.count', { count: 25 }))).toBeInTheDocument();
     });
@@ -197,7 +204,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios)} />);
+        renderScenarioList(paginate(scenarios));
 
         expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
     });
@@ -216,7 +223,7 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 })} />);
+        renderScenarioList(paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 }));
 
         expect(screen.getByText(i18n.t('dashboard.scenarioList.pagination.pageIndicator', { currentPage: 1, lastPage: 3 }))).toBeInTheDocument();
         expect(screen.getByRole('button', { name: i18n.t('dashboard.scenarioList.pagination.previous') })).toBeDisabled();
@@ -238,14 +245,67 @@ describe('ScenarioList', () => {
             },
         ];
 
-        render(<ScenarioList scenarios={paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 })} />);
+        renderScenarioList(paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 }));
 
         await user.click(screen.getByRole('button', { name: i18n.t('dashboard.scenarioList.pagination.next') }));
 
         expect(router.get).toHaveBeenCalledWith(
             route('dashboard'),
             { page: 2 },
-            expect.objectContaining({ preserveState: true, preserveScroll: true, only: ['scenarios'] }),
+            expect.objectContaining({
+                preserveState: true,
+                preserveScroll: true,
+                only: ['scenarios', 'scenarioTypeFilter'],
+            }),
         );
+    });
+
+    it('carries the active type filter along when requesting another page', async () => {
+        const user = userEvent.setup();
+        const scenarios: ScenarioSummary[] = [
+            {
+                id: 1,
+                calculatorType: 'fire',
+                typeLabel: 'dashboard.scenarioList.calculatorTypes.fire',
+                headlineFigure: 1,
+                createdAt: '2026-01-15T10:00:00.000000Z',
+                wrapper: '',
+                years: 1,
+                name: 'A',
+            },
+        ];
+
+        render(
+            <ScenarioList
+                scenarios={paginate(scenarios, { currentPage: 1, lastPage: 3, total: 25 })}
+                activeType="fire"
+            />,
+        );
+
+        await user.click(screen.getByRole('button', { name: i18n.t('dashboard.scenarioList.pagination.next') }));
+
+        expect(router.get).toHaveBeenCalledWith(
+            route('dashboard'),
+            { page: 2, type: 'fire' },
+            expect.objectContaining({
+                preserveState: true,
+                preserveScroll: true,
+                only: ['scenarios', 'scenarioTypeFilter'],
+            }),
+        );
+    });
+
+    it('shows a type filter dropdown defaulting to "Type de scénarios" with every calculator type as an option', () => {
+        renderScenarioList(paginate([], { total: 0 }));
+
+        const trigger = screen.getByRole('combobox', { name: i18n.t('dashboard.scenarioList.filter.ariaLabel') });
+        expect(trigger).toHaveTextContent(i18n.t('dashboard.scenarioList.filter.placeholder'));
+    });
+
+    it('shows the active type filter as the dropdown\'s current value', () => {
+        renderScenarioList(paginate([], { total: 0 }), 'fire');
+
+        const trigger = screen.getByRole('combobox', { name: i18n.t('dashboard.scenarioList.filter.ariaLabel') });
+        expect(trigger).toHaveTextContent(i18n.t('dashboard.scenarioList.calculatorTypes.fire'));
     });
 });

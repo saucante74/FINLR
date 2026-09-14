@@ -188,7 +188,6 @@
         "title": "Dashboard",
         "greeting": "Hello {{name}}.",
         "description": "Here's an overview of your activity.",
-        "newSimulation": "New simulation",
         "simulators": {
             "singleEnvelope": {
                 "title": "Classic simulator",
@@ -209,6 +208,10 @@
                 "title": "FIRE simulator",
                 "description": "Estimate the capital needed for financial independence and the age at which to reach it.",
                 "lockedNote": "Upgrade to premium to access it."
+            },
+            "viewAll": {
+                "title": "View all simulators",
+                "description": "Discover every simulator available on Finlr."
             }
         },
         "simulatorCard": {
@@ -234,6 +237,10 @@
                 "multi_envelope": "Multi-envelope",
                 "analogy": "Comparator",
                 "fire": "FIRE"
+            },
+            "filter": {
+                "ariaLabel": "Filter by simulator type",
+                "placeholder": "Scenario type"
             },
             "pagination": {
                 "previous": "Previous page",
