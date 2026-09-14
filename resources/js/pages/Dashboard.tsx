@@ -1,5 +1,5 @@
 import { Head, usePage } from '@inertiajs/react';
-import { Check, Flame, LayoutGrid, PiggyBank, Scale, type LucideIcon } from 'lucide-react';
+import { Check, LayoutGrid } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ScenarioList from '@/features/dashboard/components/ScenarioList';
 import SimulatorCard, { DashboardBadge } from '@/features/dashboard/components/SimulatorCard';
+import { SIMULATOR_ICONS } from '@/features/dashboard/constants';
 import type { DashboardPageProps } from '@/features/dashboard/types';
 import type { AuthenticatedPageProps } from '@/types';
 
@@ -15,17 +16,18 @@ const PROMO_BENEFIT_KEYS = ['unlimitedScenarios', 'multiEnvelopePreview', 'pdfEx
 
 // The dashboard always shows exactly these 3 simulators + the generic
 // "view all" card below, regardless of how many simulators the catalog
-// actually has (see simulators.index for the full, dynamic list).
+// actually has (see simulators.index for the full, dynamic list). Icons
+// come from SIMULATOR_ICONS (features/dashboard/constants.ts), the single
+// source of truth shared with the /simulators full list.
 interface FixedSimulatorCard {
     key: 'singleEnvelope' | 'analogy' | 'fire';
-    icon: LucideIcon;
     routeName: string;
 }
 
 const FIXED_SIMULATOR_CARDS: readonly FixedSimulatorCard[] = [
-    { key: 'singleEnvelope', icon: PiggyBank, routeName: 'simulators.single-envelope.choose' },
-    { key: 'analogy', icon: Scale, routeName: 'simulators.analogy.show' },
-    { key: 'fire', icon: Flame, routeName: 'simulators.fire.show' },
+    { key: 'singleEnvelope', routeName: 'simulators.single-envelope.choose' },
+    { key: 'analogy', routeName: 'simulators.analogy.show' },
+    { key: 'fire', routeName: 'simulators.fire.show' },
 ];
 
 export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPageProps) {
@@ -60,10 +62,10 @@ export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPa
                     (see simulators.index for the full, dynamic list). 2
                     columns on medium screens, 4 on large. */}
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {FIXED_SIMULATOR_CARDS.map(({ key, icon, routeName }) => (
+                    {FIXED_SIMULATOR_CARDS.map(({ key, routeName }) => (
                         <SimulatorCard
                             key={key}
-                            icon={icon}
+                            icon={SIMULATOR_ICONS[key]}
                             title={t(`dashboard.simulators.${key}.title`)}
                             description={t(`dashboard.simulators.${key}.description`)}
                             state={canAccessAdvancedCalculator ? 'active' : 'locked'}

@@ -2,6 +2,13 @@ import type { Paginated } from '@/types';
 
 export type CalculatorType = 'single_envelope' | 'multi_envelope' | 'analogy' | 'fire';
 
+// Identifies one of the app's 4 simulators via the same camelCase key as
+// its i18n namespace (dashboard.simulators.<key>.*) — the naming/casing
+// convention used by UI-facing simulator identity (dashboard cards, the
+// /simulators list), as opposed to CalculatorType above, which is the
+// snake_case, persisted-scenario version of the same 4 concepts.
+export type SimulatorKey = 'singleEnvelope' | 'multiEnvelope' | 'analogy' | 'fire';
+
 export interface ScenarioSummary {
     id: number;
     calculatorType: CalculatorType;

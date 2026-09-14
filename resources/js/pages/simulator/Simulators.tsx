@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { SIMULATOR_ICONS } from '@/features/dashboard/constants';
+import type { SimulatorKey } from '@/features/dashboard/types';
 import SimulatorChoiceRow from '@/features/simulator-choice/components/SimulatorChoiceRow';
 
 interface SimulatorChoice {
-    key: 'singleEnvelope' | 'multiEnvelope' | 'analogy' | 'fire';
+    key: SimulatorKey;
     active: boolean;
     href?: string;
     chips?: string[];
@@ -64,10 +66,10 @@ export default function Simulators() {
 
                 <section className="flex flex-col">
                     <ul className="flex flex-col">
-                        {choices.map((choice, index) => (
+                        {choices.map((choice) => (
                             <SimulatorChoiceRow
                                 key={choice.key}
-                                index={index + 1}
+                                icon={SIMULATOR_ICONS[choice.key]}
                                 title={t(`dashboard.simulators.${choice.key}.title`)}
                                 description={t(`dashboard.simulators.${choice.key}.description`)}
                                 chips={choice.chips}
