@@ -238,6 +238,10 @@
                 "analogy": "Comparateur",
                 "fire": "FIRE"
             },
+            "filter": {
+                "ariaLabel": "Filtrer par type de simulateur",
+                "placeholder": "Type de scénarios"
+            },
             "pagination": {
                 "previous": "Page précédente",
                 "next": "Page suivante",

@@ -6,7 +6,7 @@ vi.mock('@inertiajs/react');
 
 import * as inertia from '@inertiajs/react';
 import Dashboard from '@/pages/Dashboard';
-import type { ScenarioSummary } from '@/features/dashboard/types';
+import type { CalculatorType, ScenarioSummary } from '@/features/dashboard/types';
 import type { Paginated } from '@/types';
 
 function paginate(data: ScenarioSummary[]): Paginated<ScenarioSummary> {
@@ -14,6 +14,13 @@ function paginate(data: ScenarioSummary[]): Paginated<ScenarioSummary> {
 }
 
 const emptyScenarios = paginate([]);
+
+function renderDashboard(
+    scenarios: Paginated<ScenarioSummary>,
+    scenarioTypeFilter: CalculatorType | null = null,
+) {
+    return render(<Dashboard scenarios={scenarios} scenarioTypeFilter={scenarioTypeFilter} />);
+}
 
 function mockAuth(permissions: string[]) {
     vi.spyOn(inertia, 'usePage').mockReturnValue({
@@ -42,7 +49,7 @@ describe('Dashboard page', () => {
     it('renders a personalized greeting and description', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(
             screen.getByRole('heading', {
@@ -55,7 +62,7 @@ describe('Dashboard page', () => {
     it('shows a generic "view all simulators" card, always active, pointing to the simulators list', () => {
         mockAuth([]);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         const link = screen.getByRole('link', {
             name: new RegExp(i18n.t('dashboard.simulators.viewAll.title')),
@@ -63,10 +70,25 @@ describe('Dashboard page', () => {
         expect(link).toHaveAttribute('href', route('simulators.index'));
     });
 
+    it('renders the generic "view all" card with a subtler, non-brand CTA than the 3 fixed simulator cards', () => {
+        mockAuth(['advanced_calculator']);
+
+        renderDashboard(emptyScenarios);
+
+        const viewAllCta = screen.getAllByText(i18n.t('dashboard.simulators.viewAll.title')).find(
+            (el) => el.tagName === 'SPAN' && el.className.includes('inline-flex'),
+        );
+        const fixedCtas = screen.getAllByText(i18n.t('dashboard.simulatorCard.cta'));
+
+        expect(viewAllCta?.className).not.toContain('text-brand');
+        expect(fixedCtas.length).toBeGreaterThan(0);
+        fixedCtas.forEach((cta) => expect(cta.className).toContain('text-brand'));
+    });
+
     it('shows exactly 4 simulator cards on the dashboard', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.singleEnvelope.title'))).toBeInTheDocument();
         expect(screen.getByText(i18n.t('dashboard.simulators.analogy.title'))).toBeInTheDocument();
@@ -80,7 +102,7 @@ describe('Dashboard page', () => {
     it('shows an active link to the single-envelope simulator when the user has the permission', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.singleEnvelope.title')) }),
@@ -90,7 +112,7 @@ describe('Dashboard page', () => {
     it('shows a locked single-envelope card with no link when the user lacks the permission', () => {
         mockAuth([]);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.singleEnvelope.title'))).toBeInTheDocument();
         // Both cards are locked without the permission, so the badge appears twice.
@@ -103,7 +125,7 @@ describe('Dashboard page', () => {
     it('shows an active link to the analogy simulator when the user has the permission', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.analogy.title')) }),
@@ -113,7 +135,7 @@ describe('Dashboard page', () => {
     it('shows a locked analogy card with no link when the user lacks the permission', () => {
         mockAuth([]);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.analogy.title'))).toBeInTheDocument();
         expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
@@ -125,7 +147,7 @@ describe('Dashboard page', () => {
     it('shows an active link to the fire simulator when the user has the permission', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(
             screen.getByRole('link', { name: new RegExp(i18n.t('dashboard.simulators.fire.title')) }),
@@ -135,7 +157,7 @@ describe('Dashboard page', () => {
     it('shows a locked fire card with no link when the user lacks the permission', () => {
         mockAuth([]);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.simulators.fire.title'))).toBeInTheDocument();
         expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge')).length).toBeGreaterThan(0);
@@ -159,7 +181,7 @@ describe('Dashboard page', () => {
             },
         ];
 
-        render(<Dashboard scenarios={paginate(scenarios)} />);
+        renderDashboard(paginate(scenarios));
 
         expect(screen.getByText(i18n.t('dashboard.scenarioList.genericLabel'))).toBeInTheDocument();
     });
@@ -167,7 +189,7 @@ describe('Dashboard page', () => {
     it('never renders a euro amount in the promo block', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.promo.title'))).toBeInTheDocument();
         expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeDisabled();
@@ -177,7 +199,7 @@ describe('Dashboard page', () => {
     it('renders the promo "coming soon" badge as plain text, not a second button', () => {
         mockAuth(['advanced_calculator']);
 
-        render(<Dashboard scenarios={emptyScenarios} />);
+        renderDashboard(emptyScenarios);
 
         const badges = screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'));
         expect(badges.some((badge) => badge.tagName === 'SPAN')).toBe(true);

@@ -28,7 +28,7 @@ const FIXED_SIMULATOR_CARDS: readonly FixedSimulatorCard[] = [
     { key: 'fire', icon: Flame, routeName: 'simulators.fire.show' },
 ];
 
-export default function Dashboard({ scenarios }: DashboardPageProps) {
+export default function Dashboard({ scenarios, scenarioTypeFilter }: DashboardPageProps) {
     const { t } = useTranslation();
     const { auth } = usePage<AuthenticatedPageProps>().props;
     // Gates the 3 fixed simulator cards below — same permission, same
@@ -80,12 +80,13 @@ export default function Dashboard({ scenarios }: DashboardPageProps) {
                         title={t('dashboard.simulators.viewAll.title')}
                         description={t('dashboard.simulators.viewAll.description')}
                         state="active"
+                        emphasis="secondary"
                         href={route('simulators.index')}
                         ctaLabel={t('dashboard.simulators.viewAll.title')}
                     />
                 </div>
 
-                <ScenarioList scenarios={scenarios} />
+                <ScenarioList scenarios={scenarios} activeType={scenarioTypeFilter} />
 
                 <Card className="flex flex-col items-start justify-between gap-6 rounded-2xl border-brand/20 bg-brand/5 p-7 sm:flex-row sm:items-center">
                     <div className="flex flex-col gap-3">

@@ -20,4 +20,8 @@ export interface ScenarioSummary {
 
 export interface DashboardPageProps {
     scenarios: Paginated<ScenarioSummary>;
+    // The `type` query param actually applied server-side (null when absent
+    // or invalid) — mirrors the value back so the scenario list's filter
+    // dropdown stays in sync across pagination/filter round-trips.
+    scenarioTypeFilter: CalculatorType | null;
 }

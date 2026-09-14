@@ -4,41 +4,79 @@ import { useTranslation } from 'react-i18next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Pagination } from '@/components/ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CALCULATOR_TYPES } from '@/features/dashboard/constants';
 import { formatDate } from '@/features/dashboard/lib/format';
-import type { ScenarioSummary } from '@/features/dashboard/types';
+import type { CalculatorType, ScenarioSummary } from '@/features/dashboard/types';
 import { cn } from '@/lib/utils';
 import type { Paginated } from '@/types';
 
 const GRID_COLUMNS = 'sm:grid-cols-[1.6fr_1fr_0.8fr_1fr_1.25rem]';
+const ALL_TYPES_VALUE = 'all';
 
 interface ScenarioListProps {
     scenarios: Paginated<ScenarioSummary>;
+    // The `type` filter currently applied server-side — null means
+    // unfiltered (the default "Type de scénarios" option). Comes from the
+    // same Inertia round-trip as `scenarios` so the dropdown never shows a
+    // filter that doesn't match what's actually displayed.
+    activeType: CalculatorType | null;
 }
 
-export default function ScenarioList({ scenarios }: ScenarioListProps) {
+export default function ScenarioList({ scenarios, activeType }: ScenarioListProps) {
     const { t, i18n } = useTranslation();
     const locale = i18n.resolvedLanguage;
 
     const formatHorizon = (years: number): string =>
         years > 0 ? `${years} ${t('form.yearsUnit', { count: years })}` : '—';
 
+    // Scenarios are already loaded one server-paginated page at a time
+    // (see goToPage below), so filtering client-side would only ever
+    // filter the 10 rows currently in memory — wrong totals/page count for
+    // every other page. Filtering goes through the same Inertia round-trip
+    // as pagination instead, and both requests refresh `scenarioTypeFilter`
+    // together with `scenarios` so the dropdown and the rows never drift
+    // out of sync with each other.
     const goToPage = (page: number) => {
         router.get(
             route('dashboard'),
-            { page },
-            { preserveState: true, preserveScroll: true, only: ['scenarios'] },
+            { page, ...(activeType ? { type: activeType } : {}) },
+            { preserveState: true, preserveScroll: true, only: ['scenarios', 'scenarioTypeFilter'] },
+        );
+    };
+
+    const handleTypeFilterChange = (value: string) => {
+        router.get(
+            route('dashboard'),
+            value === ALL_TYPES_VALUE ? {} : { type: value },
+            { preserveState: true, preserveScroll: true, only: ['scenarios', 'scenarioTypeFilter'] },
         );
     };
 
     return (
         <Card className="gap-0 overflow-hidden rounded-2xl py-0">
-            <CardHeader className="flex items-baseline gap-3 border-b border-border py-5">
-                <CardTitle className="text-base">{t('dashboard.scenarioList.title')}</CardTitle>
-                {scenarios.total > 0 && (
-                    <span className="font-mono text-xs text-muted-foreground">
-                        {t('dashboard.scenarioList.count', { count: scenarios.total })}
-                    </span>
-                )}
+            <CardHeader className="flex flex-wrap items-center justify-between gap-3 border-b border-border py-5">
+                <div className="flex items-baseline gap-3">
+                    <CardTitle className="text-base">{t('dashboard.scenarioList.title')}</CardTitle>
+                    {scenarios.total > 0 && (
+                        <span className="font-mono text-xs text-muted-foreground">
+                            {t('dashboard.scenarioList.count', { count: scenarios.total })}
+                        </span>
+                    )}
+                </div>
+                <Select value={activeType ?? ALL_TYPES_VALUE} onValueChange={handleTypeFilterChange}>
+                    <SelectTrigger aria-label={t('dashboard.scenarioList.filter.ariaLabel')} className="w-auto">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent align="end">
+                        <SelectItem value={ALL_TYPES_VALUE}>{t('dashboard.scenarioList.filter.placeholder')}</SelectItem>
+                        {CALCULATOR_TYPES.map((type) => (
+                            <SelectItem key={type} value={type}>
+                                {t(`dashboard.scenarioList.calculatorTypes.${type}`)}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </CardHeader>
             <CardContent className="p-0">
                 {scenarios.data.length === 0 ? (

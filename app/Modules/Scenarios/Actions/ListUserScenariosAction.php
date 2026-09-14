@@ -3,6 +3,7 @@
 namespace App\Modules\Scenarios\Actions;
 
 use App\Modules\Scenarios\DTOs\ScenarioSummaryData;
+use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\User\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -31,10 +32,15 @@ class ListUserScenariosAction
      *
      * @return LengthAwarePaginator<int, array<string, mixed>>
      */
-    public function handle(User $user): LengthAwarePaginator
+    public function handle(User $user, ?CalculatorType $type = null): LengthAwarePaginator
     {
-        return Scenario::query()
-            ->where('user_id', $user->id)
+        $query = Scenario::query()->where('user_id', $user->id);
+
+        if ($type !== null) {
+            $query->where('calculator_type', $type);
+        }
+
+        return $query
             ->latest()
             ->paginate(self::PER_PAGE)
             ->through($this->toSummaryArray(...));

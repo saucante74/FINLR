@@ -8,6 +8,13 @@ import { cn } from '@/lib/utils';
 
 export type SimulatorCardState = 'active' | 'locked' | 'comingSoon';
 
+// Visual weight, independent from `state`: 'secondary' renders the same
+// interactive, always-clickable card with a subtler treatment (muted icon,
+// no brand glow) — for cards that don't represent a specific paid simulator,
+// e.g. the generic "view all" card. `state` still governs locked/comingSoon
+// behavior; 'secondary' only mutes an otherwise-active card.
+export type SimulatorCardEmphasis = 'primary' | 'secondary';
+
 interface SimulatorCardProps {
     icon: LucideIcon;
     title: string;
@@ -18,6 +25,7 @@ interface SimulatorCardProps {
     // Overrides the "Start a projection" CTA — used by the generic
     // "view all simulators" card, which doesn't launch a specific projection.
     ctaLabel?: string;
+    emphasis?: SimulatorCardEmphasis;
 }
 
 // Plain informational badge — never a button (no interactive role, no
@@ -40,8 +48,11 @@ export default function SimulatorCard({
     href,
     note,
     ctaLabel,
+    emphasis = 'primary',
 }: SimulatorCardProps) {
     const { t } = useTranslation();
+
+    const isPrimaryActive = state === 'active' && emphasis === 'primary';
 
     const badgeLabel =
         state === 'locked'
@@ -54,8 +65,11 @@ export default function SimulatorCard({
         <Card
             className={cn(
                 'h-full justify-between gap-6 rounded-2xl py-7',
-                state === 'active' &&
+                isPrimaryActive &&
                     'transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-brand/50',
+                state === 'active' &&
+                    emphasis === 'secondary' &&
+                    'bg-muted/40 shadow-none transition-colors duration-200 hover:bg-muted/60',
                 state !== 'active' && 'border-dashed opacity-75',
             )}
         >
@@ -64,7 +78,7 @@ export default function SimulatorCard({
                     <span
                         className={cn(
                             'inline-flex size-9 shrink-0 items-center justify-center rounded-lg',
-                            state === 'active'
+                            isPrimaryActive
                                 ? 'bg-brand/15 text-brand shadow-[0_0_12px_-2px_var(--brand)]'
                                 : 'bg-muted text-muted-foreground',
                         )}
@@ -86,7 +100,14 @@ export default function SimulatorCard({
                 <p className="max-w-[40ch] text-sm text-muted-foreground">{description}</p>
                 {note && <p className="text-xs text-muted-foreground">{note}</p>}
                 {state === 'active' && (
-                    <span className="mt-4 inline-flex items-center gap-2 text-base font-semibold text-brand [text-shadow:0_0_40px_var(--brand)]">
+                    <span
+                        className={cn(
+                            'mt-4 inline-flex items-center gap-2 text-base font-semibold',
+                            emphasis === 'secondary'
+                                ? 'text-secondary-foreground'
+                                : 'text-brand [text-shadow:0_0_40px_var(--brand)]',
+                        )}
+                    >
                         {ctaLabel ?? t('dashboard.simulatorCard.cta')}
                         <ArrowRight aria-hidden className="size-5" />
                     </span>
