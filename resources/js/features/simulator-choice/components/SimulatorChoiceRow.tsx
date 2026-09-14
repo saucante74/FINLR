@@ -38,24 +38,30 @@ export default function SimulatorChoiceRow({
 
     const body = (
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <span className={cn('text-lg font-semibold tracking-tight', !active && 'text-muted-foreground')}>
-                {title}
-            </span>
+            {/* flex-wrap (same pattern as the dashboard's scenario list
+                header) keeps the chips right next to the title on wide
+                screens, and wraps them below it on narrow ones instead of
+                forcing them onto one cramped line. */}
+            <div className="flex flex-wrap items-center gap-2">
+                <span className={cn('text-lg font-semibold tracking-tight', !active && 'text-muted-foreground')}>
+                    {title}
+                </span>
+
+                {chips && chips.length > 0 && (
+                    <ul className="flex flex-wrap items-center gap-2">
+                        {chips.map((chip) => (
+                            <li
+                                key={chip}
+                                className="rounded-md border border-border px-2 py-1 font-mono text-[11px] text-muted-foreground"
+                            >
+                                {chip}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
             <p className="text-sm text-pretty text-muted-foreground">{description}</p>
-
-            {chips && chips.length > 0 && (
-                <ul className="mt-1 flex flex-wrap items-center gap-2">
-                    {chips.map((chip) => (
-                        <li
-                            key={chip}
-                            className="rounded-md border border-border px-2 py-1 font-mono text-[11px] text-muted-foreground"
-                        >
-                            {chip}
-                        </li>
-                    ))}
-                </ul>
-            )}
         </div>
     );
 
