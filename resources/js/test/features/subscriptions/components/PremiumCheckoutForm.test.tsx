@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -58,7 +58,7 @@ describe('PremiumCheckoutForm', () => {
         await user.click(screen.getByRole('button', { name: i18n.t('dashboard.promo.periods.yearly') }));
         await user.click(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') }));
 
-        expect(postMock).toHaveBeenCalledWith(route('billing.checkout'));
+        expect(postMock).toHaveBeenCalledWith(route('billing.checkout'), expect.anything());
         expect(submittedPeriod).toBe('yearly');
     });
 
@@ -66,5 +66,40 @@ describe('PremiumCheckoutForm', () => {
         render(<PremiumCheckoutForm />);
 
         expect(screen.getByRole('group', { name: i18n.t('dashboard.promo.periodLabel') })).toBeInTheDocument();
+    });
+
+    it('submits only once when the form is sent twice in a row', () => {
+        render(<PremiumCheckoutForm />);
+        const button = screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') });
+
+        // Two synchronous submits: the second one lands before any re-render.
+        fireEvent.submit(button.closest('form') as HTMLFormElement);
+        fireEvent.submit(button.closest('form') as HTMLFormElement);
+
+        expect(postMock).toHaveBeenCalledTimes(1);
+        expect(button).toBeDisabled();
+    });
+
+    it('unlocks the button when the server rejects the request', () => {
+        render(<PremiumCheckoutForm />);
+        const button = screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') });
+
+        fireEvent.submit(button.closest('form') as HTMLFormElement);
+        const options = postMock.mock.calls[0][1] as { onError: () => void };
+        act(() => options.onError());
+
+        expect(button).toBeEnabled();
+    });
+
+    it('unlocks the button when the page is restored from the back/forward cache', () => {
+        render(<PremiumCheckoutForm />);
+        const button = screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') });
+
+        fireEvent.submit(button.closest('form') as HTMLFormElement);
+        act(() => {
+            window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+        });
+
+        expect(button).toBeEnabled();
     });
 });

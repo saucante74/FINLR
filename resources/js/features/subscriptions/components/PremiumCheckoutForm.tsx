@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import type { FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
@@ -19,9 +19,43 @@ export default function PremiumCheckoutForm() {
         period: DEFAULT_BILLING_PERIOD,
     });
 
+    // `processing` only flips once Inertia starts the visit, after a React
+    // re-render: a fast double click lands before that. The ref blocks the
+    // second submit synchronously. It stays set on success, because the
+    // response is a full-page redirect to Stripe and the button must not come
+    // back to life while the browser is leaving the page.
+    const submittingRef = useRef(false);
+    const [submitting, setSubmitting] = useState(false);
+
+    const release = () => {
+        submittingRef.current = false;
+        setSubmitting(false);
+    };
+
+    useEffect(() => {
+        // Coming back from Stripe with the browser's back button restores this
+        // page from the back/forward cache, lock included.
+        const onPageShow = (event: PageTransitionEvent) => {
+            if (event.persisted) {
+                release();
+            }
+        };
+
+        window.addEventListener('pageshow', onPageShow);
+
+        return () => window.removeEventListener('pageshow', onPageShow);
+    }, []);
+
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        post(route('billing.checkout'));
+
+        if (submittingRef.current) {
+            return;
+        }
+
+        submittingRef.current = true;
+        setSubmitting(true);
+        post(route('billing.checkout'), { onError: release, onCancel: release });
     };
 
     return (
@@ -52,7 +86,7 @@ export default function PremiumCheckoutForm() {
                     );
                 })}
             </div>
-            <Button type="submit" variant="brand" size="lg" className="w-fit shrink-0" disabled={processing}>
+            <Button type="submit" variant="brand" size="lg" className="w-fit shrink-0" disabled={processing || submitting}>
                 {t('dashboard.promo.cta')}
             </Button>
         </form>
