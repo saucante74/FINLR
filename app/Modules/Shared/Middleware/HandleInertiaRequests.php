@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
                     // (CONCEPTION.md, section 1, point 9 de la relecture).
                     'two_factor_enabled' => $user->two_factor_enabled_at !== null,
                 ],
-                'plan' => $user?->subscription_plan?->value,
+                'plan' => $user?->plan()->value,
                 'permissions' => $user
                     ? collect(Permission::cases())
                         ->filter(fn (Permission $permission) => $user->hasPermission($permission))

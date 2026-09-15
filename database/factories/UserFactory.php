@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Modules\Subscriptions\Enums\BillingPeriod;
 use App\Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Laravel\Cashier\Subscription;
 
 /**
  * @extends Factory<User>
@@ -43,6 +45,21 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the user holds an active Cashier subscription — the only
+     * source of the premium plan (User::plan()), no network call involved.
+     */
+    public function premium(BillingPeriod $period = BillingPeriod::MONTHLY): static
+    {
+        return $this->has(
+            Subscription::factory()
+                ->active()
+                ->state(['type' => User::SUBSCRIPTION_TYPE])
+                ->withPrice($period->priceId()),
+            'subscriptions',
+        );
     }
 
     /**

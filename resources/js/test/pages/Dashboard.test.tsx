@@ -7,7 +7,7 @@ vi.mock('@inertiajs/react');
 import * as inertia from '@inertiajs/react';
 import Dashboard from '@/pages/Dashboard';
 import type { CalculatorType, ScenarioSummary } from '@/features/dashboard/types';
-import type { Paginated } from '@/types';
+import type { Paginated, Plan } from '@/types';
 
 function paginate(data: ScenarioSummary[]): Paginated<ScenarioSummary> {
     return { data, currentPage: 1, lastPage: 1, perPage: 10, total: data.length };
@@ -18,11 +18,12 @@ const emptyScenarios = paginate([]);
 function renderDashboard(
     scenarios: Paginated<ScenarioSummary>,
     scenarioTypeFilter: CalculatorType | null = null,
+    status: string | null = null,
 ) {
-    return render(<Dashboard scenarios={scenarios} scenarioTypeFilter={scenarioTypeFilter} />);
+    return render(<Dashboard scenarios={scenarios} scenarioTypeFilter={scenarioTypeFilter} status={status} />);
 }
 
-function mockAuth(permissions: string[]) {
+function mockAuth(permissions: string[], plan: Plan = 'free') {
     vi.spyOn(inertia, 'usePage').mockReturnValue({
         url: '/dashboard',
         props: {
@@ -33,7 +34,7 @@ function mockAuth(permissions: string[]) {
                     email: 'jane@example.com',
                     email_verified_at: null,
                 },
-                plan: 'pro_monthly',
+                plan,
                 permissions,
             },
         },
@@ -186,25 +187,49 @@ describe('Dashboard page', () => {
         expect(screen.getByText(i18n.t('dashboard.scenarioList.genericLabel'))).toBeInTheDocument();
     });
 
-    it('never renders a euro amount in the promo block', () => {
-        mockAuth(['advanced_calculator']);
+    it('never renders a euro amount in the promo block: prices only live in Stripe', () => {
+        mockAuth([]);
 
         renderDashboard(emptyScenarios);
 
         expect(screen.getByText(i18n.t('dashboard.promo.title'))).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeDisabled();
+        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.cta') })).toBeEnabled();
         expect(screen.queryByText(/€/)).not.toBeInTheDocument();
     });
 
-    it('renders the promo "coming soon" badge as plain text, not a second button', () => {
-        mockAuth(['advanced_calculator']);
+    it('offers a monthly/yearly choice before going premium, without any trial wording', () => {
+        mockAuth([]);
 
         renderDashboard(emptyScenarios);
 
-        const badges = screen.getAllByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'));
-        expect(badges.some((badge) => badge.tagName === 'SPAN')).toBe(true);
-        expect(
-            screen.queryByRole('button', { name: i18n.t('dashboard.simulatorCard.comingSoonBadge') }),
-        ).not.toBeInTheDocument();
+        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.periods.monthly') })).toHaveAttribute('aria-pressed', 'true');
+        expect(screen.getByRole('button', { name: i18n.t('dashboard.promo.periods.yearly') })).toHaveAttribute('aria-pressed', 'false');
+        expect(screen.queryByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).not.toBeInTheDocument();
+        expect(screen.queryByText(/14/)).not.toBeInTheDocument();
+    });
+
+    it('hides the upgrade offer from a premium user', () => {
+        mockAuth(['advanced_calculator'], 'premium');
+
+        renderDashboard(emptyScenarios);
+
+        expect(screen.queryByText(i18n.t('dashboard.promo.title'))).not.toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: i18n.t('dashboard.promo.cta') })).not.toBeInTheDocument();
+    });
+
+    it('announces a pending activation when coming back from Stripe Checkout', () => {
+        mockAuth([]);
+
+        renderDashboard(emptyScenarios, null, 'premium-checkout-completed');
+
+        expect(screen.getByRole('status')).toHaveTextContent(i18n.t('dashboard.promo.checkoutPending'));
+    });
+
+    it('shows no checkout status message by default', () => {
+        mockAuth([]);
+
+        renderDashboard(emptyScenarios);
+
+        expect(screen.queryByText(i18n.t('dashboard.promo.checkoutPending'))).not.toBeInTheDocument();
     });
 });

@@ -4,10 +4,27 @@ import i18n from '@/i18n';
 
 vi.mock('@inertiajs/react');
 
+import * as inertia from '@inertiajs/react';
 import Simulators from '@/pages/simulator/Simulators';
+import type { Permission, Plan } from '@/types';
+
+function mockAuth(permissions: Permission[], plan: Plan) {
+    vi.spyOn(inertia, 'usePage').mockReturnValue({
+        url: '/simulators',
+        props: {
+            auth: {
+                user: { id: 1, name: 'Jane Doe', email: 'jane@example.com', email_verified_at: null },
+                plan,
+                permissions,
+            },
+        },
+    } as unknown as ReturnType<typeof inertia.usePage>);
+}
 
 describe('Simulators', () => {
     beforeEach(async () => {
+        vi.restoreAllMocks();
+        mockAuth(['export_reports', 'create_project', 'advanced_calculator'], 'premium');
         await i18n.changeLanguage('fr');
     });
 
@@ -66,5 +83,29 @@ describe('Simulators', () => {
         expect(container.querySelector('svg.lucide-layers')).toBeInTheDocument();
         expect(container.querySelector('svg.lucide-scale')).toBeInTheDocument();
         expect(container.querySelector('svg.lucide-flame')).toBeInTheDocument();
+    });
+
+    describe('for a user without the advanced calculator permission', () => {
+        beforeEach(() => {
+            mockAuth(['create_project'], 'free');
+        });
+
+        it('lists every simulator but links to none of them', () => {
+            render(<Simulators />);
+
+            for (const key of ['singleEnvelope', 'multiEnvelope', 'analogy', 'fire']) {
+                const title = i18n.t(`dashboard.simulators.${key}.title`);
+
+                expect(screen.getByText(title)).toBeInTheDocument();
+                expect(screen.queryByRole('link', { name: new RegExp(title) })).not.toBeInTheDocument();
+            }
+        });
+
+        it('marks each simulator as premium instead of coming soon', () => {
+            render(<Simulators />);
+
+            expect(screen.getAllByText(i18n.t('dashboard.simulatorCard.lockedBadge'))).toHaveLength(4);
+            expect(screen.queryByText(i18n.t('dashboard.simulatorCard.comingSoonBadge'))).not.toBeInTheDocument();
+        });
     });
 });

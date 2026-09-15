@@ -55,8 +55,8 @@ services:
     stripe-cli:
         image: 'stripe/stripe-cli:latest'
         environment:
-            STRIPE_API_KEY: '${STRIPE_SECRET_KEY}'
-        command: 'listen --forward-to http://laravel.test:80/api/stripe/webhook'
+            STRIPE_API_KEY: '${STRIPE_SECRET}'
+        command: 'listen --forward-to http://laravel.test:80/stripe/webhook'
         networks:
             - sail
         depends_on:

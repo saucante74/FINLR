@@ -5,7 +5,6 @@ namespace Tests\Feature\SingleEnvelopeSimulator;
 use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\SimulationEngine\Contracts\SimulationEngineInterface;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Composer\InstalledVersions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,7 +34,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
@@ -45,7 +44,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_pro_plan_user_with_valid_data_gets_redirected_to_the_created_scenario(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post('/simulators/single-envelope/france/pea', $this->validPayload());
 
@@ -60,7 +59,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_scenario_submitted_without_a_name_is_rejected(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $payload = $this->validPayload();
         unset($payload['name']);
@@ -73,7 +72,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_scenario_created_with_a_name_stores_it_as_is(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post(
             '/simulators/single-envelope/france/pea',
@@ -87,7 +86,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_pro_plan_user_with_invalid_data_gets_validation_errors_and_no_scenario_is_created(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post(
             '/simulators/single-envelope/france/pea',
@@ -100,7 +99,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_post_to_a_wrapper_outside_the_enum_receives_a_404(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         // The wrapper now lives in the URL, so an unknown one is a wrong URL
         // (404 via implicit enum binding), not a validation error on a field.
@@ -115,7 +114,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_wrapper_forged_in_the_body_cannot_override_the_one_from_the_url(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post(
             '/simulators/single-envelope/france/pea',
@@ -129,7 +128,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_a_container_resolution_failure_redirects_with_a_flashed_error_instead_of_a_500(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         // Simulates SimulationEngineServiceProvider's own failure mode (the
         // private finlr-engine package missing) without depending on it
@@ -147,7 +146,7 @@ class RunSingleEnvelopeSimulationTest extends TestCase
 
     public function test_the_eleventh_request_within_a_minute_receives_a_429(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $this->actingAs($user);
 
         for ($i = 0; $i < 10; $i++) {

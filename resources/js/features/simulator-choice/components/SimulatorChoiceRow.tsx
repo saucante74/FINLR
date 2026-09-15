@@ -11,6 +11,9 @@ interface SimulatorChoiceRowProps {
     description: string;
     chips?: string[];
     active: boolean;
+    // Available, but not on the user's plan: shown dimmed with a premium
+    // badge and no link, instead of the "coming soon" state.
+    locked?: boolean;
     href?: string;
 }
 
@@ -20,6 +23,7 @@ export default function SimulatorChoiceRow({
     description,
     chips,
     active,
+    locked = false,
     href,
 }: SimulatorChoiceRowProps) {
     const { t } = useTranslation();
@@ -29,7 +33,7 @@ export default function SimulatorChoiceRow({
             aria-hidden
             className={cn(
                 'relative inline-flex size-14 shrink-0 items-center justify-center rounded-xl',
-                active ? 'bg-brand/12 text-brand' : 'bg-muted text-muted-foreground',
+                active && !locked ? 'bg-brand/12 text-brand' : 'bg-muted text-muted-foreground',
             )}
         >
             <Icon className="size-6" />
@@ -43,7 +47,7 @@ export default function SimulatorChoiceRow({
                 screens, and wraps them below it on narrow ones instead of
                 forcing them onto one cramped line. */}
             <div className="flex flex-wrap items-center gap-2">
-                <span className={cn('text-lg font-semibold tracking-tight', !active && 'text-muted-foreground')}>
+                <span className={cn('text-lg font-semibold tracking-tight', (!active || locked) && 'text-muted-foreground')}>
                     {title}
                 </span>
 
@@ -65,7 +69,7 @@ export default function SimulatorChoiceRow({
         </div>
     );
 
-    if (active && href) {
+    if (active && !locked && href) {
         return (
             <li className="border-b border-border/70">
                 <Link
@@ -92,7 +96,9 @@ export default function SimulatorChoiceRow({
                 {iconBadge}
                 {body}
                 <span className="shrink-0 self-center">
-                    <DashboardBadge>{t('dashboard.simulatorCard.comingSoonBadge')}</DashboardBadge>
+                    <DashboardBadge>
+                        {t(locked ? 'dashboard.simulatorCard.lockedBadge' : 'dashboard.simulatorCard.comingSoonBadge')}
+                    </DashboardBadge>
                 </span>
             </div>
         </li>

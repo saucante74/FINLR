@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
 import Footer from '@/components/Footer';
@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import { SIMULATOR_ICONS } from '@/features/dashboard/constants';
 import type { SimulatorKey } from '@/features/dashboard/types';
 import SimulatorChoiceRow from '@/features/simulator-choice/components/SimulatorChoiceRow';
+import type { AuthenticatedPageProps } from '@/types';
 
 interface SimulatorChoice {
     key: SimulatorKey;
@@ -16,6 +17,11 @@ interface SimulatorChoice {
 
 export default function Simulators() {
     const { t } = useTranslation();
+    const { auth } = usePage<AuthenticatedPageProps>().props;
+    // Display only, same source as the dashboard cards: every simulator route
+    // enforces the advanced_calculator Gate server-side (PremiumSimulatorRoutes).
+    // A locked row renders no link, so a free user isn't sent to a 403.
+    const locked = !auth.permissions.includes('advanced_calculator');
 
     const choices: SimulatorChoice[] = [
         {
@@ -74,6 +80,7 @@ export default function Simulators() {
                                 description={t(`dashboard.simulators.${choice.key}.description`)}
                                 chips={choice.chips}
                                 active={choice.active}
+                                locked={locked}
                                 href={choice.href}
                             />
                         ))}

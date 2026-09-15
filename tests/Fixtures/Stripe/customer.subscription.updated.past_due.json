@@ -1,0 +1,33 @@
+{
+    "id": "evt_test_subscription_past_due",
+    "object": "event",
+    "type": "customer.subscription.updated",
+    "data": {
+        "object": {
+            "id": "sub_test_finlr",
+            "object": "subscription",
+            "customer": "__CUSTOMER__",
+            "status": "past_due",
+            "cancel_at_period_end": false,
+            "trial_end": null,
+            "metadata": {
+                "type": "default"
+            },
+            "items": {
+                "object": "list",
+                "data": [
+                    {
+                        "id": "si_test_finlr",
+                        "object": "subscription_item",
+                        "quantity": 1,
+                        "price": {
+                            "id": "price_test_monthly",
+                            "object": "price",
+                            "product": "prod_test_premium"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

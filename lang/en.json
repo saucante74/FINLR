@@ -255,7 +255,13 @@
                 "multiEnvelopePreview": "Early access to multi-envelope comparison",
                 "pdfExport": "PDF export for your advisor"
             },
-            "cta": "Try 14 days"
+            "cta": "Go premium",
+            "periodLabel": "Billing period",
+            "periods": {
+                "monthly": "Monthly",
+                "yearly": "Yearly"
+            },
+            "checkoutPending": "Payment received: your premium access will be activated in a moment."
         }
     },
     "scenario": {
@@ -844,10 +850,9 @@
             "dataNotice": "Finlr never stores banking data — only your simulation assumptions, for 24 months.",
             "plans": {
                 "free": "Free",
-                "pro_monthly": "Pro monthly",
-                "pro_yearly": "Pro yearly",
-                "enterprise": "Enterprise"
-            }
+                "premium": "Premium"
+            },
+            "manageSubscription": "Manage my subscription"
         }
     }
 }

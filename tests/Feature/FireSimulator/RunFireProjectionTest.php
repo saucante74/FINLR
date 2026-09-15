@@ -5,7 +5,6 @@ namespace Tests\Feature\FireSimulator;
 use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
 use App\Modules\SimulationEngine\Contracts\FireEngineInterface;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Composer\InstalledVersions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,7 +34,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/simulators/fire', $this->validPayload());
 
@@ -45,7 +44,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_pro_plan_user_with_valid_data_gets_redirected_to_the_created_scenario(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->post('/simulators/fire', $this->validPayload());
 
@@ -60,7 +59,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_the_stored_input_payload_converts_only_the_return_rate_to_a_fraction(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post('/simulators/fire', $this->validPayload());
 
@@ -77,7 +76,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_the_stored_result_payload_carries_required_capital_and_the_three_scenarios(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post('/simulators/fire', $this->validPayload());
 
@@ -92,7 +91,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_scenario_submitted_without_a_name_is_rejected(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $payload = $this->validPayload();
         unset($payload['name']);
@@ -105,7 +104,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_scenario_created_with_a_name_stores_it_as_is(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)->post(
             '/simulators/fire',
@@ -119,7 +118,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_pro_plan_user_with_missing_data_gets_validation_errors_and_no_scenario_is_created(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $payload = $this->validPayload();
         unset($payload['currentAge']);
 
@@ -131,7 +130,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_an_invariant_violation_the_form_does_not_pre_validate_redirects_with_a_flashed_error(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         // negative currentAge: the FormRequest only checks it is an
         // integer, not that it is >= 0 (docs/API.md §4) — the package's own
@@ -148,7 +147,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_a_container_resolution_failure_redirects_with_a_flashed_error_instead_of_a_500(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->app->bind(FireEngineInterface::class, function (): never {
             throw new RuntimeException('The private saucante74/finlr-engine package is not installed.');
@@ -163,7 +162,7 @@ class RunFireProjectionTest extends TestCase
 
     public function test_the_eleventh_request_within_a_minute_receives_a_429(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $this->actingAs($user);
 
         for ($i = 0; $i < 10; $i++) {

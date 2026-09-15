@@ -4,7 +4,6 @@ namespace Tests\Feature\SingleEnvelopeSimulator;
 
 use App\Modules\SingleEnvelopeSimulator\DTOs\JurisdictionWrapperSectionData;
 use App\Modules\SingleEnvelopeSimulator\Enums\Jurisdiction;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -16,7 +15,7 @@ class ShowWrapperChoiceTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope');
 
@@ -25,7 +24,7 @@ class ShowWrapperChoiceTest extends TestCase
 
     public function test_a_pro_plan_user_receives_200_with_the_expected_inertia_component(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope');
 
@@ -35,7 +34,7 @@ class ShowWrapperChoiceTest extends TestCase
 
     public function test_it_passes_one_section_per_jurisdiction_with_its_wrappers(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope');
 
@@ -49,7 +48,7 @@ class ShowWrapperChoiceTest extends TestCase
 
     public function test_the_sections_are_derived_from_the_jurisdiction_enum(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope');
 

@@ -29,6 +29,7 @@ class ShowDashboardController extends Controller
         return Inertia::render('Dashboard', [
             'scenarios' => PaginatedData::fromPaginator($listScenarios->handle($user, $type))->toArray(),
             'scenarioTypeFilter' => $type?->value,
+            'status' => session('status'),
         ]);
     }
 }

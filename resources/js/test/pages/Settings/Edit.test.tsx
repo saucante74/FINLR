@@ -85,6 +85,28 @@ describe('Settings Edit page', () => {
         expect(screen.getByText('3')).toBeInTheDocument();
     });
 
+    it('does not offer to manage a subscription to a free user', () => {
+        render(<Edit {...defaultProps} />);
+
+        expect(
+            screen.queryByRole('link', { name: i18n.t('settings.account.manageSubscription') }),
+        ).not.toBeInTheDocument();
+    });
+
+    it('links a premium user to the Stripe billing portal with a plain full-page link', () => {
+        vi.spyOn(inertia, 'usePage').mockReturnValue({
+            url: '/settings',
+            props: { auth: { user, plan: 'premium', permissions: ['advanced_calculator'] } },
+        } as unknown as ReturnType<typeof inertia.usePage>);
+
+        render(<Edit {...defaultProps} />);
+
+        expect(screen.getByText(i18n.t('settings.account.plans.premium'))).toBeInTheDocument();
+        expect(
+            screen.getByRole('link', { name: i18n.t('settings.account.manageSubscription') }),
+        ).toHaveAttribute('href', route('billing.portal'));
+    });
+
     it('reflects a disabled two-factor status in the account state card', () => {
         render(<Edit {...defaultProps} />);
 
