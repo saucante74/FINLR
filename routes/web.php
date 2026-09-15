@@ -22,6 +22,7 @@ use App\Modules\SingleEnvelopeSimulator\Controllers\ShowWrapperChoiceController;
 use App\Modules\Subscriptions\Controllers\ShowBillingPortalController;
 use App\Modules\Subscriptions\Controllers\ShowCheckoutSuccessController;
 use App\Modules\Subscriptions\Controllers\StartCheckoutController;
+use App\Modules\Subscriptions\Support\PremiumSimulatorRoutes;
 use App\Modules\User\Controllers\DeleteAccountController;
 use App\Modules\User\Controllers\EditSettingsController;
 use App\Modules\User\Controllers\UpdateProfileController;
@@ -69,49 +70,48 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/billing/portal', ShowBillingPortalController::class)->name('billing.portal');
 });
 
-// Entry point: pick a simulator type before reaching a specific choice flow.
+// Listing page, open to every verified user: it only shows which simulators
+// the user's plan unlocks (display). Access itself is enforced by the group
+// below, on every show and run route.
 Route::get('/simulators', ShowSimulatorsController::class)
     ->middleware(['auth', 'verified'])
     ->name('simulators.index');
 
-// Entry point: pick a wrapper before reaching the parameterised form.
-Route::get('/simulators/single-envelope', ShowWrapperChoiceController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
-    ->name('simulators.single-envelope.choose');
+// Every premium simulator route goes in this group: prefix, name and the
+// advanced_calculator Gate come from PremiumSimulatorRoutes, never from the
+// individual route. PremiumSimulatorRoutesTest fails on any simulator route
+// left outside it.
+PremiumSimulatorRoutes::register(function () {
+    // Entry point: pick a wrapper before reaching the parameterised form.
+    Route::get('/single-envelope', ShowWrapperChoiceController::class)->name('single-envelope.choose');
 
-// {jurisdiction} and {wrapper} resolve through Laravel's implicit enum
-// binding, which 404s on values that aren't cases of the enum. The
-// controllers additionally 404 on a wrapper the jurisdiction doesn't offer.
-Route::get('/simulators/single-envelope/{jurisdiction}/{wrapper}', ShowSingleEnvelopeSimulatorController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
-    ->name('simulators.single-envelope.show');
+    // {jurisdiction} and {wrapper} resolve through Laravel's implicit enum
+    // binding, which 404s on values that aren't cases of the enum. The
+    // controllers additionally 404 on a wrapper the jurisdiction doesn't offer.
+    Route::get('/single-envelope/{jurisdiction}/{wrapper}', ShowSingleEnvelopeSimulatorController::class)
+        ->name('single-envelope.show');
 
-Route::post('/simulators/single-envelope/{jurisdiction}/{wrapper}', RunSingleEnvelopeSimulationController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
-    ->name('simulators.single-envelope.run');
+    Route::post('/single-envelope/{jurisdiction}/{wrapper}', RunSingleEnvelopeSimulationController::class)
+        ->middleware('throttle:run-simulation')
+        ->name('single-envelope.run');
 
-Route::get('/simulators/multi-envelope', ShowMultiEnvelopeSimulatorController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
-    ->name('simulators.multi-envelope.show');
+    Route::get('/multi-envelope', ShowMultiEnvelopeSimulatorController::class)->name('multi-envelope.show');
 
-Route::post('/simulators/multi-envelope', RunMultiEnvelopeSimulationController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
-    ->name('simulators.multi-envelope.run');
+    Route::post('/multi-envelope', RunMultiEnvelopeSimulationController::class)
+        ->middleware('throttle:run-simulation')
+        ->name('multi-envelope.run');
 
-Route::get('/simulators/analogy', ShowAnalogySimulatorController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
-    ->name('simulators.analogy.show');
+    Route::get('/analogy', ShowAnalogySimulatorController::class)->name('analogy.show');
 
-Route::post('/simulators/analogy', RunAnalogyComparisonController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
-    ->name('simulators.analogy.run');
+    Route::post('/analogy', RunAnalogyComparisonController::class)
+        ->middleware('throttle:run-simulation')
+        ->name('analogy.run');
 
-Route::get('/simulators/fire', ShowFireSimulatorController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator'])
-    ->name('simulators.fire.show');
+    Route::get('/fire', ShowFireSimulatorController::class)->name('fire.show');
 
-Route::post('/simulators/fire', RunFireProjectionController::class)
-    ->middleware(['auth', 'verified', 'can:advanced_calculator', 'throttle:run-simulation'])
-    ->name('simulators.fire.run');
+    Route::post('/fire', RunFireProjectionController::class)
+        ->middleware('throttle:run-simulation')
+        ->name('fire.run');
+});
 
 require __DIR__.'/auth.php';
