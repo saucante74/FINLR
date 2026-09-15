@@ -255,7 +255,13 @@
                 "multiEnvelopePreview": "Accesso anticipato al confronto multi-involucro",
                 "pdfExport": "Esportazione PDF per il tuo consulente"
             },
-            "cta": "Prova 14 giorni"
+            "cta": "Passa a premium",
+            "periodLabel": "Periodicità di fatturazione",
+            "periods": {
+                "monthly": "Mensile",
+                "yearly": "Annuale"
+            },
+            "checkoutPending": "Pagamento ricevuto: il tuo accesso premium sarà attivato tra pochi istanti."
         }
     },
     "scenario": {
@@ -844,10 +850,9 @@
             "dataNotice": "Finlr non conserva alcun dato bancario — solo le tue ipotesi di simulazione, per 24 mesi.",
             "plans": {
                 "free": "Gratuita",
-                "pro_monthly": "Pro mensile",
-                "pro_yearly": "Pro annuale",
-                "enterprise": "Enterprise"
-            }
+                "premium": "Premium"
+            },
+            "manageSubscription": "Gestisci il mio abbonamento"
         }
     }
 }

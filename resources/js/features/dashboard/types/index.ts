@@ -31,4 +31,7 @@ export interface DashboardPageProps {
     // or invalid) — mirrors the value back so the scenario list's filter
     // dropdown stays in sync across pagination/filter round-trips.
     scenarioTypeFilter: CalculatorType | null;
+    // One-shot session status, e.g. 'premium-checkout-completed' on return
+    // from Stripe Checkout (activation still pending the webhook).
+    status: string | null;
 }

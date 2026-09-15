@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -14,7 +13,7 @@ class SharedInertiaPropsTest extends TestCase
 
     public function test_the_shared_auth_user_exposes_only_the_whitelisted_fields(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $this->actingAs($user)
             ->get('/dashboard')
@@ -35,16 +34,18 @@ class SharedInertiaPropsTest extends TestCase
             );
     }
 
-    public function test_the_shared_auth_user_never_leaks_the_password_or_the_subscription_plan(): void
+    public function test_the_shared_auth_user_never_leaks_the_password_or_billing_data(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/dashboard');
 
         $response->assertInertia(fn (Assert $page) => $page
             ->missing('auth.user.password')
             ->missing('auth.user.remember_token')
-            ->missing('auth.user.subscription_plan')
+            ->missing('auth.user.stripe_id')
+            ->missing('auth.user.pm_type')
+            ->missing('auth.user.pm_last_four')
             ->missing('auth.user.created_at')
             ->missing('auth.user.updated_at')
             // The raw timestamp never leaks, only the derived boolean above.
@@ -54,7 +55,7 @@ class SharedInertiaPropsTest extends TestCase
 
         // The plan itself stays available, but only through its dedicated prop.
         $response->assertInertia(fn (Assert $page) => $page
-            ->where('auth.plan', 'pro_monthly')
+            ->where('auth.plan', 'premium')
             ->etc()
         );
     }

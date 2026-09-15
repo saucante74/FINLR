@@ -3,7 +3,6 @@
 namespace Tests\Feature\FireSimulator;
 
 use App\Modules\FireSimulator\DTOs\SimulatorDefaultsData;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -15,7 +14,7 @@ class ShowFireSimulatorTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/simulators/fire');
 
@@ -24,7 +23,7 @@ class ShowFireSimulatorTest extends TestCase
 
     public function test_a_pro_plan_user_receives_200_with_the_expected_inertia_component(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/fire');
 
@@ -34,7 +33,7 @@ class ShowFireSimulatorTest extends TestCase
 
     public function test_it_passes_the_six_default_values_as_the_defaults_prop(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/fire');
 

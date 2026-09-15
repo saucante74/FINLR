@@ -4,7 +4,6 @@ namespace Tests\Feature\Scenarios;
 
 use App\Modules\Scenarios\Enums\CalculatorType;
 use App\Modules\Scenarios\Models\Scenario;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -16,7 +15,7 @@ class ShowScenarioTest extends TestCase
 
     public function test_the_scenario_owner_receives_200_with_the_expected_inertia_component(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $input = $this->scenarioInputPayload();
         $result = $this->scenarioResultPayload();
         $scenario = Scenario::factory()->create([
@@ -45,7 +44,7 @@ class ShowScenarioTest extends TestCase
 
     public function test_a_scenario_without_a_name_exposes_name_null(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
         $scenario = Scenario::factory()->create([
             'user_id' => $user->id,
             'input_payload' => $this->scenarioInputPayload(),
@@ -63,10 +62,10 @@ class ShowScenarioTest extends TestCase
 
     public function test_another_authenticated_user_receives_404_on_someone_elses_scenario(): void
     {
-        $owner = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $owner = User::factory()->premium()->create();
         $scenario = Scenario::factory()->create(['user_id' => $owner->id]);
 
-        $intruder = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $intruder = User::factory()->premium()->create();
 
         $response = $this->actingAs($intruder)->get(route('scenarios.show', $scenario));
 

@@ -3,7 +3,6 @@
 namespace Tests\Feature\SingleEnvelopeSimulator;
 
 use App\Modules\SingleEnvelopeSimulator\DTOs\SimulatorDefaultsData;
-use App\Modules\Subscriptions\Enums\Plan;
 use App\Modules\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -15,7 +14,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
 
     public function test_a_free_plan_user_receives_a_403(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::FREE]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
@@ -24,7 +23,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
 
     public function test_a_pro_plan_user_receives_200_with_the_expected_inertia_component(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
@@ -34,7 +33,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
 
     public function test_it_passes_the_nine_default_values_as_the_defaults_prop(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope/france/pea');
 
@@ -55,7 +54,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
 
     public function test_a_wrapper_that_is_not_an_enum_case_at_all_receives_a_404(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         // 'av' is no longer a TaxWrapper case, so implicit enum binding
         // rejects the URL before the controller ever runs.
@@ -66,7 +65,7 @@ class ShowSingleEnvelopeSimulatorTest extends TestCase
 
     public function test_an_unknown_jurisdiction_receives_a_404(): void
     {
-        $user = User::factory()->create(['subscription_plan' => Plan::PRO_MONTHLY]);
+        $user = User::factory()->premium()->create();
 
         $response = $this->actingAs($user)->get('/simulators/single-envelope/belgium/pea');
 

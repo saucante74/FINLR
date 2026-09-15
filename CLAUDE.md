@@ -258,6 +258,42 @@ INTERDICTION ABSOLUE DE COMMITER : n'exécute JAMAIS `git commit`, `git add`, `g
       cette entrée elle-même, et l'en-tête de `lang/fr/auth.php` /
       `lang/it/auth.php` qui documente leur statut de surcharge partielle.
 
+- **2026-09 — La facturation Stripe passe par Laravel Cashier
+  (`laravel/cashier`), alors que Fortify avait été écarté pour la 2FA :**
+    - Ce n'est **pas** une incohérence avec le rejet de Fortify (voir
+      `CONCEPTION.md`, « Pas de Fortify/Jetstream ») : Fortify voulait
+      posséder tout le flux d'authentification (routes, contrôleurs,
+      réponses) et entrait en collision frontale avec le module `Auth`
+      déjà écrit à la main. Cashier ne possède que la **donnée de
+      facturation** (`users.stripe_id`/`pm_*`, tables `subscriptions` et
+      `subscription_items`) et **une** route webhook ; il n'existait aucun
+      code de paiement avec lequel entrer en conflit. La couche de droits
+      existante (`Plan`, `Permission`, Gates `can:*`) est conservée : elle
+      **consomme** Cashier au lieu d'une colonne stockée.
+    - Le plan est **dérivé**, jamais stocké : `User::plan()` renvoie
+      `Plan::PREMIUM` si `subscribed('default')`, sinon `Plan::FREE`. La
+      colonne `users.subscription_plan` a été supprimée pour qu'aucune
+      désynchronisation avec Stripe ne soit possible. Ne jamais la
+      réintroduire comme « cache » : toute autorisation passe par la Gate.
+    - Aucun contrôleur webhook, aucune vérification de signature écrite à
+      la main : la route native `cashier.webhook` (`POST /stripe/webhook`)
+      s'en charge. Les montants ne vivent que dans Stripe (un Price par
+      `BillingPeriod`, IDs en config) : aucun prix affiché dans l'app.
+    - Lecture de `vendor/laravel/cashier` autorisée au même titre que
+      l'API publique de `saucante74/finlr-engine` (vérifier le comportement
+      réel de Cashier plutôt que le supposer).
+
+- **2026-09 — Le webhook Stripe ne porte délibérément PAS de `throttle`,
+  par dérogation à la règle « toute route publique en POST porte un
+  `throttle` explicite » (voir « Sécurité » ci-dessus) :**
+    - Stripe envoie des rafales légitimes (plusieurs événements par
+      abonnement) et rejoue les événements non acquittés : un 429 ferait
+      perdre des mises à jour d'abonnement, donc des droits d'accès faux.
+      La protection de cette route est la vérification de signature
+      (`STRIPE_WEBHOOK_SECRET`, middleware de Cashier), pas le débit.
+    - Les autres routes de facturation écrites dans l'app restent
+      conformes : `POST /billing/checkout` porte `throttle:billing-checkout`.
+
 ---
 
 ## Qualité de Code & CI
