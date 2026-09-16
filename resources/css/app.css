@@ -139,4 +139,12 @@
     body {
         @apply bg-background text-foreground;
     }
+    /* The landing page navigates through in-page anchors: the document is the
+       scrolling element, so the behaviour belongs here and not on a component.
+       Honoured only when the visitor hasn't asked for reduced motion. */
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
 }

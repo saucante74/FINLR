@@ -60,7 +60,7 @@ class SharedInertiaPropsTest extends TestCase
         );
     }
 
-    public function test_the_public_calculator_page_shares_a_null_user_for_guests(): void
+    public function test_the_public_landing_page_shares_a_null_user_for_guests(): void
     {
         $this->get('/')
             ->assertInertia(fn (Assert $page) => $page

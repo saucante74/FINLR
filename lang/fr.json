@@ -86,6 +86,182 @@
     "footer": {
         "copyright": "© {{year}} Finlr. Tous droits réservés."
     },
+    "landing": {
+        "meta": {
+            "title": "Simulez votre épargne et votre retraite"
+        },
+        "nav": {
+            "ariaLabel": "Sections de la page",
+            "why": "Pourquoi Finlr",
+            "simulators": "Simulateurs",
+            "pricing": "Tarifs",
+            "faq": "FAQ",
+            "login": "Se connecter",
+            "cta": "Essayer gratuitement"
+        },
+        "hero": {
+            "badge": "Simulation financière personnelle",
+            "title": "Voyez votre retraite avant d'y arriver.",
+            "description": "Finlr simule votre épargne, vos placements et votre retraite en quelques clics.",
+            "ctaPrimary": "Essayer gratuitement",
+            "ctaSecondary": "Voir une démo",
+            "trust": {
+                "noCard": "Sans carte bancaire",
+                "encrypted": "Données chiffrées",
+                "quickStart": "2 min pour démarrer"
+            },
+            "preview": {
+                "label": "Capital projeté · {{years}} ans",
+                "rate": "+4,5 %/an",
+                "amount": "312 480 €",
+                "comparisonLabel": "PEA vs CTO",
+                "comparisonAmount": "+18 240 €",
+                "srDescription": "Exemple illustratif : croissance d'un capital projeté sur {{years}} ans, de {{startYear}} à {{endYear}}. Ces montants ne proviennent pas d'une simulation réelle."
+            }
+        },
+        "problems": {
+            "eyebrow": "Le constat",
+            "title": "Planifier sa retraite, aujourd'hui, reste flou",
+            "description": "Trois obstacles reviennent systématiquement chez les particuliers qui veulent piloter leur épargne eux-mêmes.",
+            "items": {
+                "taxation": {
+                    "title": "Une fiscalité illisible",
+                    "body": "Chaque enveloppe a ses propres règles : abattements, durée de détention, prélèvements sociaux. Les comparer honnêtement demande une expertise que personne n'a le temps d'acquérir.",
+                    "chip": "PEA · Assurance-vie · CTO"
+                },
+                "tools": {
+                    "title": "Trop d'options, aucun outil",
+                    "body": "Simulateurs bancaires génériques ou tableurs faits main : aucun ne montre l'impact réel d'un choix sur vingt ans, net de frais et d'impôt.",
+                    "chip": "Tableurs · Simulateurs bancaires"
+                },
+                "retirement": {
+                    "title": "Une retraite sans repères",
+                    "body": "Âge de départ, montant de pension, durée de vie du capital : sans projection chiffrée, impossible de savoir si l'effort d'épargne actuel suffit.",
+                    "chip": "Âge de départ · Capital restant"
+                }
+            }
+        },
+        "simulators": {
+            "eyebrow": "Les simulateurs",
+            "title": "Trois façons de projeter votre argent",
+            "description": "Chaque simulateur répond à une question précise, sans vous demander de comprendre la mécanique fiscale derrière.",
+            "items": {
+                "classic": {
+                    "title": "Simulateur classique",
+                    "body": "Projetez l'évolution d'une épargne régulière ou d'un capital placé, avec rendement et fiscalité ajustables.",
+                    "chip": "Projection en un écran"
+                },
+                "comparator": {
+                    "title": "Comparateur d'enveloppes",
+                    "body": "Comparez PEA et CTO sur un même scénario et voyez immédiatement lequel vous rapporte le plus net.",
+                    "chip": "PEA vs CTO en un clic"
+                },
+                "fire": {
+                    "title": "Simulateur FIRE",
+                    "body": "Calculez l'âge auquel votre capital peut couvrir vos dépenses, pour viser l'indépendance financière anticipée.",
+                    "chip": "Votre date d'indépendance"
+                }
+            }
+        },
+        "method": {
+            "eyebrow": "La méthode",
+            "title": "Une projection fiable en trois étapes",
+            "steps": {
+                "describe": {
+                    "title": "Créez un scénario",
+                    "body": "Décrivez votre situation : capital de départ, versements, horizon."
+                },
+                "adjust": {
+                    "title": "Ajustez les paramètres",
+                    "body": "Testez différents rendements, enveloppes et durées pour voir leur impact."
+                },
+                "visualize": {
+                    "title": "Visualisez la projection",
+                    "body": "Obtenez un graphique clair de votre capital projeté, net de fiscalité."
+                }
+            }
+        },
+        "socialProof": {
+            "eyebrow": "Ils utilisent Finlr",
+            "text": "Témoignages et statistiques d'usage à venir — cet espace sera complété avec des retours réels d'utilisateurs."
+        },
+        "pricing": {
+            "eyebrow": "Tarifs",
+            "title": "Un plan gratuit, un plan complet",
+            "plans": {
+                "free": {
+                    "name": "Gratuit",
+                    "tagline": "Pour découvrir Finlr",
+                    "price": "0 €",
+                    "cta": "Commencer gratuitement",
+                    "features": {
+                        "classicSimulator": "1 simulateur classique",
+                        "savedScenarios": "3 scénarios enregistrés",
+                        "history": "Historique sur 3 mois",
+                        "pdfExport": "Export PDF basique"
+                    }
+                },
+                "premium": {
+                    "name": "Premium",
+                    "tagline": "Pour piloter sereinement votre épargne",
+                    "badge": "Recommandé",
+                    "priceNote": "Tarif affiché à l'étape de paiement",
+                    "cta": "Passer à Premium",
+                    "features": {
+                        "allSimulators": "Tous les simulateurs (dont FIRE)",
+                        "unlimitedScenarios": "Scénarios illimités",
+                        "comparator": "Comparateur d'enveloppes",
+                        "pdfExport": "Export PDF avancé pour votre conseiller"
+                    }
+                }
+            }
+        },
+        "faq": {
+            "eyebrow": "Questions fréquentes",
+            "title": "Tout ce qu'il faut savoir",
+            "items": {
+                "security": {
+                    "question": "Mes données financières sont-elles en sécurité ?",
+                    "answer": "Oui. Vos données sont chiffrées et ne sont jamais revendues. Vous restez seul propriétaire de vos scénarios."
+                },
+                "cancel": {
+                    "question": "Comment annuler mon abonnement ?",
+                    "answer": "Depuis votre espace de facturation, à tout moment et en quelques clics. Votre accès premium reste actif jusqu'à la fin de la période déjà payée."
+                },
+                "difference": {
+                    "question": "Quelle est la différence entre Gratuit et Premium ?",
+                    "answer": "Le plan gratuit donne accès au simulateur classique et à un nombre limité de scénarios. Premium débloque tous les simulateurs, les scénarios illimités et le comparateur d'enveloppes."
+                },
+                "accuracy": {
+                    "question": "Les calculs sont-ils fiables ?",
+                    "answer": "Les simulateurs s'appuient sur un moteur de calcul unique, testé et tenu à jour. Le calculateur public, lui, reste une estimation rapide : les projections précises se font dans les simulateurs."
+                },
+                "beginner": {
+                    "question": "Puis-je utiliser Finlr sans connaissances financières ?",
+                    "answer": "Oui. Chaque simulateur pose des questions simples et propose des valeurs par défaut ; aucune notion fiscale n'est requise pour obtenir une première projection."
+                }
+            }
+        },
+        "finalCta": {
+            "title": "Voyez votre retraite avant d'y arriver.",
+            "description": "Créez votre premier scénario en moins de deux minutes, sans engagement.",
+            "cta": "Essayer gratuitement"
+        },
+        "footer": {
+            "tagline": "Finlr aide les particuliers à simuler leur épargne et leur retraite en toute clarté.",
+            "legal": {
+                "title": "Légal",
+                "notice": "Mentions légales",
+                "terms": "CGU",
+                "privacy": "Politique de confidentialité"
+            },
+            "social": {
+                "title": "Suivez-nous",
+                "linkedin": "LinkedIn",
+                "twitter": "X (Twitter)"
+            }
+        }
+    },
     "auth": {
         "oauth": {
             "or": "OU",
