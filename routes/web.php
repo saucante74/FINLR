@@ -15,6 +15,7 @@ use App\Modules\MultiEnvelopeSimulator\Controllers\ShowMultiEnvelopeSimulatorCon
 use App\Modules\Scenarios\Controllers\RenameScenarioController;
 use App\Modules\Scenarios\Controllers\ShowScenarioController;
 use App\Modules\Shared\Controllers\ShowDashboardController;
+use App\Modules\Shared\Controllers\ShowLandingController;
 use App\Modules\Shared\Controllers\ShowSimulatorsController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\RunSingleEnvelopeSimulationController;
 use App\Modules\SingleEnvelopeSimulator\Controllers\ShowSingleEnvelopeSimulatorController;
@@ -28,7 +29,12 @@ use App\Modules\User\Controllers\EditSettingsController;
 use App\Modules\User\Controllers\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ShowFreemiumCalculatorController::class)->name('calculator.freemium');
+Route::get('/', ShowLandingController::class)->name('home');
+
+// The freemium calculator used to be served on "/" and moved here when the
+// marketing landing page took that URL over. Its route name is unchanged, so
+// every route('calculator.freemium') call keeps pointing at it.
+Route::get('/calculator', ShowFreemiumCalculatorController::class)->name('calculator.freemium');
 
 Route::get('/dashboard', ShowDashboardController::class)
     ->middleware(['auth', 'verified'])

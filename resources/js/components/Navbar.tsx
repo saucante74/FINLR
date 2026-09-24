@@ -1,63 +1,12 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Moon, Settings, Sun } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import ApplicationLogo from '@/components/ApplicationLogo';
-import { Button } from '@/components/ui/button';
+import LanguageSelector from '@/components/LanguageSelector';
+import ThemeToggle from '@/components/ThemeToggle';
 import { cn } from '@/lib/utils';
-import useDarkMode from '@/hooks/useDarkMode';
 import type { PageProps } from '@/types';
-
-const LOCALES = ['fr', 'en', 'it'] as const;
-
-function LanguageSelector() {
-    const { t, i18n } = useTranslation();
-
-    return (
-        <div
-            role="group"
-            aria-label={t('nav.language')}
-            className="flex items-center gap-1 rounded-full border border-border bg-background p-0.5"
-        >
-            {LOCALES.map((locale) => {
-                const active = i18n.resolvedLanguage === locale;
-                return (
-                    <button
-                        key={locale}
-                        type="button"
-                        onClick={() => i18n.changeLanguage(locale)}
-                        aria-pressed={active}
-                        className={cn(
-                            'rounded-full px-2 py-1 text-xs font-medium uppercase transition-colors',
-                            active
-                                ? 'bg-primary text-primary-foreground'
-                                : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                        )}
-                    >
-                        {locale}
-                    </button>
-                );
-            })}
-        </div>
-    );
-}
-
-function ThemeToggle() {
-    const { t } = useTranslation();
-    const { isDark, toggleTheme } = useDarkMode();
-
-    return (
-        <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            aria-label={t('nav.toggleTheme')}
-            onClick={toggleTheme}
-        >
-            {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-        </Button>
-    );
-}
 
 interface NavbarProps {
     canLogin?: boolean;
@@ -90,7 +39,7 @@ export default function Navbar({ canLogin, canRegister }: NavbarProps) {
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
                 <div className="flex items-center gap-6">
                     <Link
-                        href={route('calculator.freemium')}
+                        href={route('home')}
                         className="flex items-center gap-2 font-semibold tracking-tight text-foreground"
                     >
                         <ApplicationLogo className="size-12" />
