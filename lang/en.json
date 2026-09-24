@@ -86,6 +86,182 @@
     "footer": {
         "copyright": "© {{year}} Finlr. All rights reserved."
     },
+    "landing": {
+        "meta": {
+            "title": "Simulate your savings and your retirement"
+        },
+        "nav": {
+            "ariaLabel": "Page sections",
+            "why": "Why Finlr",
+            "simulators": "Simulators",
+            "pricing": "Pricing",
+            "faq": "FAQ",
+            "login": "Log in",
+            "cta": "Try it for free"
+        },
+        "hero": {
+            "badge": "Personal financial simulation",
+            "title": "See your retirement before you get there.",
+            "description": "Finlr simulates your savings, your investments and your retirement in a few clicks.",
+            "ctaPrimary": "Try it for free",
+            "ctaSecondary": "See a demo",
+            "trust": {
+                "noCard": "No credit card",
+                "encrypted": "Encrypted data",
+                "quickStart": "2 min to get started"
+            },
+            "preview": {
+                "label": "Projected capital · {{years}} years",
+                "rate": "+4.5%/yr",
+                "amount": "€312,480",
+                "comparisonLabel": "PEA vs CTO",
+                "comparisonAmount": "+€18,240",
+                "srDescription": "Illustrative example: capital growth projected over {{years}} years, from {{startYear}} to {{endYear}}. These amounts do not come from a real simulation."
+            }
+        },
+        "problems": {
+            "eyebrow": "The problem",
+            "title": "Planning your retirement, today, is still guesswork",
+            "description": "Three obstacles come up again and again for people who want to manage their own savings.",
+            "items": {
+                "taxation": {
+                    "title": "Unreadable taxation",
+                    "body": "Every wrapper has its own rules: allowances, holding periods, social contributions. Comparing them honestly takes expertise nobody has the time to acquire.",
+                    "chip": "PEA · Life insurance · CTO"
+                },
+                "tools": {
+                    "title": "Too many options, no tool",
+                    "body": "Generic bank simulators or hand-made spreadsheets: none of them shows the real impact of a choice over twenty years, net of fees and tax.",
+                    "chip": "Spreadsheets · Bank simulators"
+                },
+                "retirement": {
+                    "title": "A retirement without landmarks",
+                    "body": "Retirement age, pension amount, how long the capital lasts: without a figured projection, there is no way to know whether today's saving effort is enough.",
+                    "chip": "Retirement age · Remaining capital"
+                }
+            }
+        },
+        "simulators": {
+            "eyebrow": "The simulators",
+            "title": "Three ways to project your money",
+            "description": "Each simulator answers one precise question, without asking you to understand the tax mechanics behind it.",
+            "items": {
+                "classic": {
+                    "title": "Classic simulator",
+                    "body": "Project how regular savings or invested capital grow, with adjustable return and taxation.",
+                    "chip": "A projection in one screen"
+                },
+                "comparator": {
+                    "title": "Wrapper comparator",
+                    "body": "Compare a PEA and a CTO on the same scenario and see immediately which one nets you more.",
+                    "chip": "PEA vs CTO in one click"
+                },
+                "fire": {
+                    "title": "FIRE simulator",
+                    "body": "Work out the age at which your capital can cover your expenses, to aim for early financial independence.",
+                    "chip": "Your independence date"
+                }
+            }
+        },
+        "method": {
+            "eyebrow": "The method",
+            "title": "A reliable projection in three steps",
+            "steps": {
+                "describe": {
+                    "title": "Create a scenario",
+                    "body": "Describe your situation: starting capital, contributions, horizon."
+                },
+                "adjust": {
+                    "title": "Adjust the parameters",
+                    "body": "Test different returns, wrappers and durations to see their impact."
+                },
+                "visualize": {
+                    "title": "Visualise the projection",
+                    "body": "Get a clear chart of your projected capital, net of tax."
+                }
+            }
+        },
+        "socialProof": {
+            "eyebrow": "They use Finlr",
+            "text": "Testimonials and usage statistics are on their way — this space will be filled with real user feedback."
+        },
+        "pricing": {
+            "eyebrow": "Pricing",
+            "title": "A free plan, a complete plan",
+            "plans": {
+                "free": {
+                    "name": "Free",
+                    "tagline": "To discover Finlr",
+                    "price": "€0",
+                    "cta": "Start for free",
+                    "features": {
+                        "classicSimulator": "1 classic simulator",
+                        "savedScenarios": "3 saved scenarios",
+                        "history": "3-month history",
+                        "pdfExport": "Basic PDF export"
+                    }
+                },
+                "premium": {
+                    "name": "Premium",
+                    "tagline": "To manage your savings with peace of mind",
+                    "badge": "Recommended",
+                    "priceNote": "Price shown at the payment step",
+                    "cta": "Go Premium",
+                    "features": {
+                        "allSimulators": "Every simulator (including FIRE)",
+                        "unlimitedScenarios": "Unlimited scenarios",
+                        "comparator": "Wrapper comparator",
+                        "pdfExport": "Advanced PDF export for your adviser"
+                    }
+                }
+            }
+        },
+        "faq": {
+            "eyebrow": "Frequently asked questions",
+            "title": "Everything you need to know",
+            "items": {
+                "security": {
+                    "question": "Is my financial data safe?",
+                    "answer": "Yes. Your data is encrypted and never sold. You remain the sole owner of your scenarios."
+                },
+                "cancel": {
+                    "question": "How do I cancel my subscription?",
+                    "answer": "From your billing area, at any time and in a few clicks. Your premium access stays active until the end of the period you have already paid for."
+                },
+                "difference": {
+                    "question": "What is the difference between Free and Premium?",
+                    "answer": "The free plan gives access to the classic simulator and a limited number of scenarios. Premium unlocks every simulator, unlimited scenarios and the wrapper comparator."
+                },
+                "accuracy": {
+                    "question": "Are the calculations reliable?",
+                    "answer": "The simulators rely on a single calculation engine, tested and kept up to date. The public calculator, on the other hand, remains a quick estimate: precise projections are made in the simulators."
+                },
+                "beginner": {
+                    "question": "Can I use Finlr without any financial knowledge?",
+                    "answer": "Yes. Every simulator asks simple questions and suggests default values; no tax knowledge is required to get a first projection."
+                }
+            }
+        },
+        "finalCta": {
+            "title": "See your retirement before you get there.",
+            "description": "Create your first scenario in under two minutes, with no commitment.",
+            "cta": "Try it for free"
+        },
+        "footer": {
+            "tagline": "Finlr helps individuals simulate their savings and their retirement with complete clarity.",
+            "legal": {
+                "title": "Legal",
+                "notice": "Legal notice",
+                "terms": "Terms of use",
+                "privacy": "Privacy policy"
+            },
+            "social": {
+                "title": "Follow us",
+                "linkedin": "LinkedIn",
+                "twitter": "X (Twitter)"
+            }
+        }
+    },
     "auth": {
         "oauth": {
             "or": "OR",
