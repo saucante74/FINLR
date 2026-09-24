@@ -150,7 +150,7 @@ This project uses the **Strategy Pattern** to decouple the core application logi
    A lightweight, zero-dependency local engine used when the private package is unavailable (e.g., open-source contributors, public CI/CD pipelines) or explicitly forced via configuration.
 
 
-### How It Works Under the Hood
+### How It Works
 
 The application relies on Laravel's Service Container to dynamically bind `CalculatorEngineInterface`:
 
