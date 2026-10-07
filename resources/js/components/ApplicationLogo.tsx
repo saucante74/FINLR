@@ -18,13 +18,13 @@ export default function ApplicationLogo({
     return (
         <span className="inline-flex">
             <img
-                src="/images/logo-light.png"
+                src="/images/logo-light.svg"
                 alt={alt}
                 className={cn('block dark:hidden', className)}
                 {...props}
             />
             <img
-                src="/images/logo-dark.png"
+                src="/images/logo-dark.svg"
                 alt={alt}
                 className={cn('hidden dark:block', className)}
                 {...props}
