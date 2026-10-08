@@ -71,3 +71,28 @@ export const HERO_PROJECTION_TICKS = 3;
 export const HERO_CHART_BARS: readonly number[] = [
     4, 6, 8, 10, 13, 16, 19, 23, 27, 32, 37, 43, 49, 56, 64, 72, 81, 90, 95, 100,
 ];
+
+/** Rise-in of each hero chart bar on first display. */
+export const HERO_CHART_ENTRY_DURATION_MS = 700;
+
+/** Left-to-right delay between two consecutive bars' rise-in. */
+export const HERO_CHART_ENTRY_STAGGER_MS = 40;
+
+/** Length of one light-wave cycle: the sweep, then a pause. */
+export const HERO_CHART_WAVE_CYCLE_MS = 5000;
+
+/** Delay between two consecutive bars lighting up as the wave crosses the chart. */
+export const HERO_CHART_WAVE_STAGGER_MS = 90;
+
+/** The first wave starts once the last bar has finished rising. */
+export const HERO_CHART_WAVE_START_MS =
+    HERO_CHART_ENTRY_DURATION_MS +
+    (HERO_CHART_BARS.length - 1) * HERO_CHART_ENTRY_STAGGER_MS;
+
+/**
+ * Classes shared by every hero chart bar. `hero-chart-bar` (resources/css/
+ * app.css) carries the rise-in and the wave animation, driven by the
+ * `--bar-index` variable set on each bar; the calm state is the plain
+ * brand-coloured bar, without any halo.
+ */
+export const HERO_CHART_BAR_CLASS = 'hero-chart-bar flex-1 rounded-sm bg-brand/70';

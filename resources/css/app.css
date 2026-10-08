@@ -148,3 +148,56 @@
         }
     }
 }
+
+/* Hero "Capital projeté" chart (landing). Calm state: plain bars, no halo.
+   Animated state, only when motion is allowed: bars rise left to right, then
+   a light wave sweeps across them. Only transform and opacity are animated:
+   the halo lives on a pseudo-element whose opacity (compositor-only) moves,
+   so the box-shadow is never repainted. Timings come from the CSS variables
+   set by ProjectionPreview from features/landing/constants.ts. */
+.hero-chart-bar {
+    position: relative;
+    transform-origin: bottom;
+}
+.hero-chart-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: color-mix(in oklab, var(--brand) 55%, white);
+    box-shadow: 0 0 14px 1px color-mix(in oklab, var(--brand) 55%, transparent);
+    opacity: 0;
+    pointer-events: none;
+}
+.dark .hero-chart-bar::after {
+    box-shadow: 0 0 18px 2px color-mix(in oklab, var(--brand) 70%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .hero-chart-bar {
+        animation: hero-bar-rise var(--hero-entry-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: calc(var(--bar-index) * var(--hero-entry-stagger));
+    }
+    .hero-chart-bar::after {
+        will-change: opacity;
+        animation: hero-bar-wave var(--hero-wave-cycle) ease-in-out infinite;
+        animation-delay: calc(var(--hero-wave-start) + var(--bar-index) * var(--hero-wave-stagger));
+    }
+}
+@keyframes hero-bar-rise {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+@keyframes hero-bar-wave {
+    0%,
+    22%,
+    100% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.85;
+    }
+}

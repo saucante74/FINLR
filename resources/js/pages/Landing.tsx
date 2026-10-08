@@ -10,7 +10,6 @@ import MethodSection from '@/features/landing/components/MethodSection';
 import PricingSection from '@/features/landing/components/PricingSection';
 import ProblemsSection from '@/features/landing/components/ProblemsSection';
 import SimulatorsSection from '@/features/landing/components/SimulatorsSection';
-import SocialProofSection from '@/features/landing/components/SocialProofSection';
 import type { LandingPageProps } from '@/features/landing/types';
 
 export default function Landing({ canLogin, canRegister }: LandingPageProps) {
@@ -29,7 +28,6 @@ export default function Landing({ canLogin, canRegister }: LandingPageProps) {
                 <ProblemsSection />
                 <SimulatorsSection />
                 <MethodSection />
-                <SocialProofSection />
                 <PricingSection canRegister={canRegister} />
                 <FaqSection />
                 <FinalCtaSection canRegister={canRegister} />
