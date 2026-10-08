@@ -6,7 +6,7 @@ describe('ApplicationLogo', () => {
     it('shows the light logo by default and hides it in dark mode', () => {
         const { container } = render(<ApplicationLogo />);
         const img = container.querySelector(
-            'img[src="/images/logo-light.png"]',
+            'img[src="/images/logo-light.svg"]',
         );
 
         expect(img).not.toBeNull();
@@ -17,7 +17,7 @@ describe('ApplicationLogo', () => {
     it('hides the dark logo by default and shows it in dark mode', () => {
         const { container } = render(<ApplicationLogo />);
         const img = container.querySelector(
-            'img[src="/images/logo-dark.png"]',
+            'img[src="/images/logo-dark.svg"]',
         );
 
         expect(img).not.toBeNull();
