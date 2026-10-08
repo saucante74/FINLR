@@ -12,7 +12,7 @@ interface NumberedCardProps {
  */
 export default function NumberedCard({ position, title, body, chip }: NumberedCardProps) {
     return (
-        <li className="relative flex flex-col gap-4 overflow-hidden rounded-xl border border-border bg-card p-6 text-card-foreground">
+        <li className="relative flex h-full flex-col gap-4 overflow-hidden rounded-xl border border-border bg-card p-6 text-card-foreground">
             {/* The mockup's hairline: brand green on the left, fading out to the
                 right. Built from the brand token, no literal colour. */}
             <span

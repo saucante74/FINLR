@@ -1,10 +1,26 @@
+import type { CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
+    HERO_CHART_BAR_CLASS,
     HERO_CHART_BARS,
+    HERO_CHART_ENTRY_DURATION_MS,
+    HERO_CHART_ENTRY_STAGGER_MS,
+    HERO_CHART_WAVE_CYCLE_MS,
+    HERO_CHART_WAVE_STAGGER_MS,
+    HERO_CHART_WAVE_START_MS,
     HERO_PROJECTION_TICKS,
     HERO_PROJECTION_YEARS,
 } from '@/features/landing/constants';
+
+/** Timings of the bar animations (see `.hero-chart-bar` in app.css), as CSS variables. */
+const CHART_ANIMATION_VARS = {
+    '--hero-entry-duration': `${HERO_CHART_ENTRY_DURATION_MS}ms`,
+    '--hero-entry-stagger': `${HERO_CHART_ENTRY_STAGGER_MS}ms`,
+    '--hero-wave-cycle': `${HERO_CHART_WAVE_CYCLE_MS}ms`,
+    '--hero-wave-stagger': `${HERO_CHART_WAVE_STAGGER_MS}ms`,
+    '--hero-wave-start': `${HERO_CHART_WAVE_START_MS}ms`,
+} as CSSProperties;
 
 /**
  * The hero's illustrative projection card. Every figure it shows is marketing
@@ -52,13 +68,14 @@ export default function ProjectionPreview() {
 
                     <div
                         aria-hidden
+                        style={CHART_ANIMATION_VARS}
                         className="flex h-32 items-end gap-1 sm:h-40 lg:h-48"
                     >
                         {HERO_CHART_BARS.map((height, index) => (
                             <span
                                 key={index}
-                                style={{ height: `${height}%` }}
-                                className="flex-1 rounded-sm bg-brand/70"
+                                style={{ height: `${height}%`, '--bar-index': index } as CSSProperties}
+                                className={HERO_CHART_BAR_CLASS}
                             />
                         ))}
                     </div>

@@ -18,7 +18,7 @@ export default function ProblemsSection() {
                 description={t('landing.problems.description')}
             />
 
-            <ul className="grid gap-6 md:grid-cols-2">
+            <ul className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {PROBLEM_KEYS.map((key, index) => (
                     <NumberedCard
                         key={key}
